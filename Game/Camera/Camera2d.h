@@ -1,20 +1,23 @@
 #pragma once
-#include "Engine/Lib/Math/MyMatrix.h"
-#include "Engine/Lib/Math/Vector2.h"
+#include "Game/Camera/BaseCamera.h"
+#include "Engine/Module/Components/Attribute/AttributeGui.h"
 
 /// <summary>
 /// 2dのカメラ
 /// </summary>
-class Camera2d {
+class Camera2d :
+	public BaseCamera,
+	public AttributeGui {
 public:
 
 	Camera2d();
-	~Camera2d();
+	~Camera2d() override;
 
-	void Init();
-	void Update();
+	void Finalize() override {};
+	void Init() override;
+	void Update() override;
 
-	void Debug_Gui();
+	void Debug_Gui() override;
 
 public:
 

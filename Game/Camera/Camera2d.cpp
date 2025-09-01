@@ -1,6 +1,7 @@
 #include "Camera2d.h"
 #include "Enviroment.h"
 #include "Engine/Render.h"
+#include "Engine/System/Editer/Window/EditorWindows.h"
 
 Camera2d::Camera2d() {}
 Camera2d::~Camera2d() {}
@@ -14,6 +15,8 @@ void Camera2d::Init() {
 	viewMatrix_ = Matrix4x4::MakeUnit();
 
 	viewportMatrix_ = Matrix4x4::MakeViewport(0, 0, kWindowWidth_, kWindowHeight_, 0, 1);
+
+	EditorWindows::AddObjectWindow(this, "camera2d");
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -26,6 +29,7 @@ void Camera2d::Update() {
 	viewMatrix_ = Inverse(translate_.MakeTranslateMat());
 	worldMat_ = Multiply(Multiply(Matrix4x4::MakeUnit(), Matrix4x4::MakeUnit()), translate_.MakeTranslateMat());
 	// Renderに設定
+
 	Render::SetViewProjection2D(viewMatrix_, projectionMatrix_);
 }
 

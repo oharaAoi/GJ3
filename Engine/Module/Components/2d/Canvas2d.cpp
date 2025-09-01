@@ -9,21 +9,51 @@ void Canvas2d::Init() {
 }
 
 void Canvas2d::Update() {
-	for (auto& sprite : spriteList_) {
-		sprite->Update();
+	for (auto it = spriteList_.begin(); it != spriteList_.end(); ) {
+		if ((*it).sprite->GetIsDestroy()) {
+			it = spriteList_.erase(it);
+		} else {
+			++it;
+		}
 	}
-}
 
-void Canvas2d::Draw() const {
-	Engine::SetPipeline(PSOType::Sprite, "Sprite_Normal.json");
-	Pipeline* pso = Engine::GetLastUsedPipeline();
-	for (const auto& sprite : spriteList_) {
-		if (sprite->GetEnable()) {
-			sprite->Draw(pso);
+	spriteList_.sort([](const ObjectPair& a, const ObjectPair& b) {
+		if (a.renderQueue == b.renderQueue) {
+			return a.renderQueue < b.renderQueue;
+		}
+		return a.renderQueue == b.renderQueue;
+					 });
+
+	for (auto& it : spriteList_) {
+		if (it.sprite->GetEnable()) {
+			it.sprite->Update();
 		}
 	}
 }
 
-void Canvas2d::DeleteSprite(Sprite* _sprite) {
-	spriteList_.remove(_sprite);
+void Canvas2d::Draw() const {
+	for (const auto& it : spriteList_) {
+		if (it.sprite->GetEnable()) {
+			Pipeline* pso = Engine::SetPipeline(PSOType::Sprite, it.psoName);
+			it.sprite->Draw(pso);
+		}
+	}
+}
+
+void Canvas2d::EditObject(const ImVec2& windowSize, const ImVec2& imagePos) {
+	for (const auto& it : spriteList_) {
+		if (it.sprite->GetEnable()) {
+			it.sprite->GetTransform()->Manipulate(windowSize, imagePos);
+		}
+	}
+}
+
+Sprite* Canvas2d::AddSprite(const std::string& textureName, const std::string& psoName, int renderQueue) {
+	auto& newObj = spriteList_.emplace_back(ObjectPair());
+	newObj.sprite = std::make_unique<Sprite>();
+	newObj.sprite->Init(textureName);
+	newObj.psoName = psoName;
+	newObj.renderQueue = renderQueue;
+	
+	return newObj.sprite.get();
 }

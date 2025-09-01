@@ -68,10 +68,13 @@ void Engine::Initialize(uint32_t backBufferWidth, int32_t backBufferHeight) {
 	GeometryFactory& geometryFactory = GeometryFactory::GetInstance();
 	geometryFactory.Init();
 
+	canvas2d_ = std::make_unique<Canvas2d>();
+	canvas2d_->Init();
 
 #ifdef _DEBUG
 	editorWindows_->Init(dxDevice_, dxCmdList_, renderTarget_, dxHeap_);
 	editorWindows_->SetProcessedSceneFrame(processedSceneFrame_.get());
+	editorWindows_->SetCanvas2d(canvas2d_.get());
 	editorWindows_->SetRenderTarget(renderTarget_);
 
 	imguiManager_ = ImGuiManager::GetInstacne();
@@ -83,8 +86,6 @@ void Engine::Initialize(uint32_t backBufferWidth, int32_t backBufferHeight) {
 	
 	postProcess_->Init(dxDevice_, dxHeap_, renderTarget_);
 
-	canvas2d_ = std::make_unique<Canvas2d>();
-	canvas2d_->Init();
 
 	blendTexture_ = std::make_unique<BlendTexture>();
 	blendTexture_->Init(dxDevice_, dxHeap_);
@@ -109,6 +110,7 @@ void Engine::Initialize(uint32_t backBufferWidth, int32_t backBufferHeight) {
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
 void Engine::Finalize() {
+	canvas2d_.reset();
 	blendTexture_.reset();
 	postProcess_->Finalize();
 	audio_->Finalize();
@@ -289,12 +291,6 @@ void Engine::BlendFinalTexture(RenderTargetType renderTargetType) {
 // ↓　生成する関数群
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
-std::unique_ptr<Sprite> Engine::CreateSprite(const std::string& fileName) {
-	std::unique_ptr<Sprite> sprite = std::make_unique<Sprite>();
-	sprite->Init(dxDevice_, fileName);
-	return sprite;
-}
-
 std::unique_ptr<Model> Engine::CreateModel(const std::string& directoryPath, const std::string& filePath) {
 	std::unique_ptr<Model> model = std::make_unique<Model>();
 	model->Init(dxDevice_, directoryPath, filePath);
@@ -317,7 +313,7 @@ void Engine::SetPSOPrimitive() {
 	primitivePipeline_->Draw(dxCmdList_);
 }
 
-void Engine::SetPipeline(PSOType type, const std::string& typeName) {
+Pipeline* Engine::SetPipeline(PSOType type, const std::string& typeName) {
 	switch (type) {
 	case PSOType::Object3d:
 		graphicsPipeline_->SetPipeline(dxCmdList_, type, typeName);
@@ -336,6 +332,8 @@ void Engine::SetPipeline(PSOType type, const std::string& typeName) {
 	default:
 		break;
 	}
+
+	return lastUsedPipeline_;
 }
 
 Pipeline* Engine::GetLastUsedPipeline() {

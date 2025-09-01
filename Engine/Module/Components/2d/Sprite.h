@@ -3,10 +3,13 @@
 #include "Engine/DirectX/Utilities/DirectXUtils.h"
 #include "Engine/Lib/Math/Vector2.h"
 #include "Engine/Lib/Math/MathStructures.h"
+#include "Engine/Module/Components/ScreenTransform.h"
+#include "Engine/Module/Components/Attribute/AttributeGui.h"
 
 class Render;
 
-class Sprite {
+class Sprite :
+public AttributeGui {
 public:
 
 	struct TextureMesh {
@@ -22,16 +25,12 @@ public:
 		Vector2 uvMaxSize;		// 0~1の範囲で指定
 	};
 
-	struct TextureTransformData {
-		Matrix4x4 wvp;
-	};
-
 public:
 
 	Sprite();
 	~Sprite();
 
-	void Init(ID3D12Device* device, const std::string& fileName);
+	void Init(const std::string& fileName);
 	/// <summary>
 	/// 更新処理
 	/// </summary>
@@ -51,7 +50,7 @@ public:
 	/// <param name="commandList"></param>
 	void PostDraw(ID3D12GraphicsCommandList* commandList, const Pipeline* pipeline) const;
 
-	void Debug_Gui();
+	void Debug_Gui() override;
 
 public:
 
@@ -80,8 +79,8 @@ public:
 	// Pivotの位置を変更する
 	void SetAnchorPoint(const Vector2& point) { anchorPoint_ = point; }
 
-	void SetScale(const Vector2 scale) { transform_.scale.x = scale.x, transform_.scale.y = scale.y, transform_.scale.z = 1.0f; }
-	void SetRotate(float rotate) { transform_.rotate.z = rotate; }
+	void SetScale(const Vector2 scale) { transform_->SetScale(scale); }
+	void SetRotate(float rotate) { transform_->SetRotate(rotate); }
 
 	void SetColor(const Vector4& color) { materialData_->color = color; };
 	void SetIsFlipX(bool isFlipX) { isFlipX_ = isFlipX; }
@@ -97,26 +96,31 @@ public:
 
 	void FillAmount(float amount, int type);
 
-	const Vector2 GetTranslate() const { return Vector2{ transform_.translate.x, transform_.translate.y}; }
-	const Vector2 GetScale() const { return Vector2(transform_.scale.x, transform_.scale.y); }
-	const float GetRotate() const { return transform_.rotate.z; }
+	const Vector2 GetTranslate() const { return transform_->GetTranslate(); }
+	const Vector2 GetScale() const { return transform_->GetScale(); }
+	const float GetRotate() const { return transform_->GetRotate(); }
 	const Vector2 GetTextureSize() const { return textureSize_; }
 	const bool GetIsFlipX() const { return isFlipX_; }
 	const bool GetIsFlipY() const { return isFlipY_; }
 
 	const bool GetEnable() const { return isEnable_; }
 	void SetEnable(bool _isEnable) { isEnable_ = _isEnable; }
+
+	void SetIsDestroy(bool isDestroy) { isDestroy_ = isDestroy; }
+	bool GetIsDestroy() const { return isDestroy_; }
+
+	ScreenTransform* GetTransform() { return transform_.get(); }
 	
 private:
 
 	bool isEnable_;
+	bool isDestroy_;
 
 	// 定数バッファ
 	ComPtr<ID3D12Resource> vertexBuffer_;
 	ComPtr<ID3D12Resource> indexBuffer_;
 	ComPtr<ID3D12Resource> materialBuffer_;
-	ComPtr<ID3D12Resource> transformBuffer_;
-
+	
 	// view
 	D3D12_VERTEX_BUFFER_VIEW vertexBufferView_ = {};
 	D3D12_INDEX_BUFFER_VIEW indexBufferView_ = {};
@@ -125,10 +129,9 @@ private:
 	TextureMesh* vertexData_;
 	uint32_t* indexData_;
 	TextureMaterial* materialData_;
-	TextureTransformData* transformData_;
-
+	
 	// Transform情報
-	SRT transform_;
+	std::unique_ptr<ScreenTransform> transform_;
 	SRT uvTransform_;
 
 	std::string textureName_;

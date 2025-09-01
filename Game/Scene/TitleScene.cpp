@@ -38,8 +38,8 @@ void TitleScene::Init() {
 	
 	skybox_ = SceneRenderer::GetInstance()->AddObject<Skybox>("Skybox", "Object_Skybox.json", -999);
 
-	//testObject_ = std::make_unique<TestObject>();
-	//testObject_->Init();
+	uis_ = std::make_unique<TitleUIs>();
+	uis_->Init();
 
 	DirectionalLight* light = Render::GetLightGroup()->GetDirectionalLight();
 	light->SetIntensity(0.3f);
@@ -65,6 +65,8 @@ void TitleScene::Update() {
 		camera3d_->Update();
 	}
 	camera2d_->Update();
+
+	uis_->Update();
 
 	sceneRenderer_->Update();
 

@@ -1,7 +1,7 @@
 #include "Sprite.h"
 #include "Render.h"
 #include "Engine/Module/Geometry/Structs/Vertices.h"
-#include "Engine/Module/Components/Meshes/Mesh.h"
+#include "Engine/Core/GraphicsContext.h"
 #include "Engine/System/Manager/TextureManager.h"
 #include "Engine/System/Manager/ImGuiManager.h"
 
@@ -10,14 +10,17 @@ Sprite::~Sprite() {
 	vertexData_ = nullptr;
 	indexData_ = nullptr;
 	materialData_ = nullptr;
-	transformData_ = nullptr;
 	vertexBuffer_.Reset();
 	indexBuffer_.Reset();
 	materialBuffer_.Reset();
-	transformBuffer_.Reset();
+	transform_.reset();
 }
 
-void Sprite::Init(ID3D12Device* device, const std::string& fileName) {
+void Sprite::Init(const std::string& fileName) {
+	SetName(fileName);
+	GraphicsContext* ctx = GraphicsContext::GetInstance();
+	ID3D12Device* pDevice = ctx->GetDevice();
+
 	textureSize_ = TextureManager::GetInstance()->GetTextureSize(fileName);
 	textureName_ = fileName;
 	drawRange_ = textureSize_;
@@ -25,7 +28,7 @@ void Sprite::Init(ID3D12Device* device, const std::string& fileName) {
 	anchorPoint_ = { 0.5f, 0.5f };
 
 	// ----------------------------------------------------------------------------------
-	vertexBuffer_ = CreateBufferResource(device, sizeof(TextureMesh) * 4);
+	vertexBuffer_ = CreateBufferResource(pDevice, sizeof(TextureMesh) * 4);
 	// リソースの先頭のアドレスから使う
 	vertexBufferView_.BufferLocation = vertexBuffer_->GetGPUVirtualAddress();
 	// 使用するリソースのサイズは頂点3つ分のサイズ
@@ -61,7 +64,7 @@ void Sprite::Init(ID3D12Device* device, const std::string& fileName) {
 	vertexData_[3].texcoord = { 1.0f, 0.0f };
 
 	// ----------------------------------------------------------------------------------
-	indexBuffer_ = CreateBufferResource(device, sizeof(uint32_t) * 6);
+	indexBuffer_ = CreateBufferResource(pDevice, sizeof(uint32_t) * 6);
 	indexBufferView_.BufferLocation = indexBuffer_->GetGPUVirtualAddress();
 	indexBufferView_.SizeInBytes = UINT(sizeof(uint32_t) * 6);
 	indexBufferView_.Format = DXGI_FORMAT_R32_UINT;
@@ -76,7 +79,7 @@ void Sprite::Init(ID3D12Device* device, const std::string& fileName) {
 	indexData_[4] = 3;
 	indexData_[5] = 2;
 	// ----------------------------------------------------------------------------------
-	materialBuffer_ = CreateBufferResource(device, sizeof(TextureMaterial));
+	materialBuffer_ = CreateBufferResource(pDevice, sizeof(TextureMaterial));
 	materialBuffer_->Map(0, nullptr, reinterpret_cast<void**>(&materialData_));
 	materialData_->color = { 1.0f, 1.0f, 1.0f, 1.0f };
 	materialData_->uvTransform = Matrix4x4::MakeUnit();
@@ -84,19 +87,13 @@ void Sprite::Init(ID3D12Device* device, const std::string& fileName) {
 	materialData_->uvMaxSize = { 1.0f, 1.0f };
 
 	// ----------------------------------------------------------------------------------
-	transformBuffer_ = CreateBufferResource(device, sizeof(TextureTransformData));
-	transformBuffer_->Map(0, nullptr, reinterpret_cast<void**>(&transformData_));
-
-	transform_ = { {1.0f,1.0f,1.0f} , {0.0f, 0.0f, 0.0f}, {0, 0, 0} };
+	transform_ = std::make_unique<ScreenTransform>();
+	transform_->Init(pDevice);
+	
 	uvTransform_ = { {1.0f,1.0f,1.0f} , {0.0f, 0.0f, 0.0f}, {0, 0, 0} };
 
-	transformData_->wvp = Matrix4x4(
-		transform_.MakeAffine()
-		* Matrix4x4::MakeUnit()
-		* Matrix4x4::MakeOrthograhic(0.0f, 0.0f, float(1280), float(720), 0.0f, 100.0f)
-	);
-
 	isEnable_ = true;
+	isDestroy_ = false;
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -125,21 +122,14 @@ void Sprite::Draw(const Pipeline* pipeline, bool isBackGround) {
 		(anchorPoint_.y - 0.5f) * textureSize_.y   // ピボットオフセット（中心からのオフセット）
 	};
 
-	Matrix4x4 projection = Render::GetProjection2D();
+	Matrix4x4 projection = Render::GetViewport2D() * Render::GetProjection2D();
 	if (isBackGround) {
-		transform_.translate.z = Render::GetFarClip();
+		transform_->SetTranslateZ(Render::GetFarClip());
 	}
-	// アフィン変換行列の作成
-	Matrix4x4 affineMatrix = transform_.MakeAffine();
+	
 	// テクスチャ位置を保持するための補正行列
 	Matrix4x4 correctionTranslation = Vector3({ pivotOffset.x, pivotOffset.y, 0.0f }).MakeTranslateMat();
-
-	// 最終的なスプライトの変換行列
-	transformData_->wvp = Matrix4x4(
-		affineMatrix *  // ピボットによる変位を元に戻す
-		correctionTranslation *
-		projection
-	);
+	transform_->Update(correctionTranslation, projection);
 
 	Render::DrawSprite(this, pipeline);
 }
@@ -154,7 +144,7 @@ void Sprite::PostDraw(ID3D12GraphicsCommandList* commandList, const Pipeline* pi
 	commandList->IASetIndexBuffer(&indexBufferView_);
 	commandList->SetGraphicsRootConstantBufferView(index, materialBuffer_->GetGPUVirtualAddress());
 	index = pipeline->GetRootSignatureIndex("gTransformationMatrix");
-	commandList->SetGraphicsRootConstantBufferView(index, transformBuffer_->GetGPUVirtualAddress());
+	transform_->BindCommand(commandList, index);
 	index = pipeline->GetRootSignatureIndex("gTexture");
 	TextureManager::GetInstance()->SetGraphicsRootDescriptorTable(commandList, textureName_, index);
 	commandList->DrawIndexedInstanced(6, 1, 0, 0, 0);
@@ -193,16 +183,6 @@ void Sprite::ReSetTexture(const std::string& fileName) {
 	vertexData_[3].pos = rect.rightTop;		// 右上
 	vertexData_[3].texcoord = { 1.0f, 0.0f };
 
-}
-
-//////////////////////////////////////////////////////////////////////////////////////////////////
-// ↓　Textureの中心位置を変更する
-//////////////////////////////////////////////////////////////////////////////////////////////////
-
-void Sprite::SetTranslate(const Vector2& centerPos) {
-	transform_.translate.x = centerPos.x;
-	transform_.translate.y = centerPos.y;
-	transform_.translate.z = 0;
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -252,12 +232,7 @@ void Sprite::FillAmount(float amount, int type) {
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
 void Sprite::Debug_Gui() {
-	if (ImGui::TreeNode("transform")) {
-		ImGui::DragFloat3("translation", &transform_.translate.x, 0.1f);
-		ImGui::DragFloat2("scale", &transform_.scale.x, 0.01f);
-		ImGui::SliderAngle("rotation", &transform_.rotate.z);
-		ImGui::TreePop();
-	}
+	transform_->Debug_Gui();
 
 	if (ImGui::TreeNode("uv")) {
 		ImGui::DragFloat2("uvTranslation", &uvTransform_.translate.x, 0.01f);

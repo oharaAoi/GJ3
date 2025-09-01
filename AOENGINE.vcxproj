@@ -121,10 +121,12 @@ copy "$(ProjectDir)Externals\assimp\build\bin\Release\assimp-vc143-mt.dll" "$(Ta
   <ItemGroup>
     <ClCompile Include="Engine\DirectX\Pipeline\PipelineGroup\ComputeShaderPipelines.cpp" />
     <ClCompile Include="Engine\Lib\GpuParticlesData.cpp" />
+    <ClCompile Include="Engine\Module\Components\2d\BaseEntity2d.cpp" />
     <ClCompile Include="Engine\Module\Components\2d\Canvas2d.cpp" />
     <ClCompile Include="Engine\Module\Components\Materials\BaseMaterial.cpp" />
     <ClCompile Include="Engine\Module\Components\Rigging\EndEffector.cpp" />
     <ClCompile Include="Engine\Module\Components\Rigging\InverseKinematics.cpp" />
+    <ClCompile Include="Engine\Module\Components\ScreenTransform.cpp" />
     <ClCompile Include="Engine\Module\ComputeShader\BlendTexture.cpp" />
     <ClCompile Include="Engine\Module\PostEffect\DepthBasedOutline.cpp" />
     <ClCompile Include="Engine\Module\PostEffect\GaussianFilter.cpp" />
@@ -319,6 +321,7 @@ copy "$(ProjectDir)Externals\assimp\build\bin\Release\assimp-vc143-mt.dll" "$(Ta
     <ClCompile Include="Game\Scene\TitleScene.cpp" />
     <ClCompile Include="Game\State\ICharacterState.cpp" />
     <ClCompile Include="Game\State\StateMachine.cpp" />
+    <ClCompile Include="Game\UI\TitleUIs.cpp" />
     <ClCompile Include="Game\WorldObject\Skybox.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Engine\Module\Geometry\Structs\Vertices.cpp" />
@@ -327,11 +330,13 @@ copy "$(ProjectDir)Externals\assimp\build\bin\Release\assimp-vc143-mt.dll" "$(Ta
   <ItemGroup>
     <ClInclude Include="Engine\DirectX\Pipeline\PipelineGroup\ComputeShaderPipelines.h" />
     <ClInclude Include="Engine\Lib\GpuParticlesData.h" />
+    <ClInclude Include="Engine\Module\Components\2d\BaseEntity2d.h" />
     <ClInclude Include="Engine\Module\Components\2d\Canvas2d.h" />
     <ClInclude Include="Engine\Module\Components\Materials\BaseMaterial.h" />
     <ClInclude Include="Engine\Module\Components\Materials\MaterialStructures.h" />
     <ClInclude Include="Engine\Module\Components\Rigging\EndEffector.h" />
     <ClInclude Include="Engine\Module\Components\Rigging\InverseKinematics.h" />
+    <ClInclude Include="Engine\Module\Components\ScreenTransform.h" />
     <ClInclude Include="Engine\Module\ComputeShader\BlendTexture.h" />
     <ClInclude Include="Engine\Module\PostEffect\DepthBasedOutline.h" />
     <ClInclude Include="Engine\Module\PostEffect\GaussianFilter.h" />
@@ -539,6 +544,7 @@ copy "$(ProjectDir)Externals\assimp\build\bin\Release\assimp-vc143-mt.dll" "$(Ta
     <ClInclude Include="Game\Scene\TitleScene.h" />
     <ClInclude Include="Game\State\ICharacterState.h" />
     <ClInclude Include="Game\State\StateMachine.h" />
+    <ClInclude Include="Game\UI\TitleUIs.h" />
     <ClInclude Include="Game\WorldObject\Skybox.h" />
   </ItemGroup>
   <ItemGroup>

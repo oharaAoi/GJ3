@@ -8,7 +8,7 @@
 #include "Game/Camera/Camera3d.h"
 #include "Game/WorldObject/Skybox.h"
 //ui
-#include "Engine/Module/Components/GameObject/TestObject.h"
+#include "Game/UI/TitleUIs.h"
 
 class TitleScene : 
 	public BaseScene {
@@ -33,6 +33,8 @@ private:
 
 	// ------------------- actor ------------------- //
 	Skybox* skybox_;
+
+	std::unique_ptr<TitleUIs> uis_;
 
 	SceneRenderer* sceneRenderer_;
 };

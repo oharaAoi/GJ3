@@ -260,6 +260,9 @@
     <ClCompile Include="Engine\Render\RenderingCommands.cpp" />
     <ClCompile Include="Engine\Module\Components\Rigging\InverseKinematics.cpp" />
     <ClCompile Include="Engine\Module\Components\Rigging\EndEffector.cpp" />
+    <ClCompile Include="Engine\Module\Components\ScreenTransform.cpp" />
+    <ClCompile Include="Engine\Module\Components\2d\BaseEntity2d.cpp" />
+    <ClCompile Include="Game\UI\TitleUIs.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Module\Components\2d\PrimitiveDrawer.h" />
@@ -477,6 +480,9 @@
     <ClInclude Include="Engine\Render\RenderingCommands.h" />
     <ClInclude Include="Engine\Module\Components\Rigging\InverseKinematics.h" />
     <ClInclude Include="Engine\Module\Components\Rigging\EndEffector.h" />
+    <ClInclude Include="Engine\Module\Components\ScreenTransform.h" />
+    <ClInclude Include="Engine\Module\Components\2d\BaseEntity2d.h" />
+    <ClInclude Include="Game\UI\TitleUIs.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\Resources\HLSL\Object3d.hlsli" />
