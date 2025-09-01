@@ -34,7 +34,9 @@ void SceneManager::Update() {
 	if (reset_) {
 		reset_ = false;
 
-		EditorWindows::GetInstance()->Reset();
+#ifdef _DEBUG
+		EditorWindows::GetInstance()->Reset()
+#endif // _DEBUG
 
 		PostProcess* postProcess = Engine::GetPostProcess();
 		EditorWindows::AddObjectWindow(postProcess, "Post Process");
@@ -94,7 +96,9 @@ void SceneManager::SetChange(const SceneType& type) {
 	nextScene_ = sceneFactory_->CreateScene(sceneFactory_->SceneTypeToString(type));
 	scene_ = std::move(nextScene_);
 
-	EditorWindows::GetInstance()->Reset();
+#ifdef _DEBUG
+	EditorWindows::GetInstance()->Reset()
+#endif // _DEBUG
 
 	PostProcess* postProcess = Engine::GetPostProcess();
 	EditorWindows::AddObjectWindow(postProcess, "Post Process");
