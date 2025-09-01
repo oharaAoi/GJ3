@@ -64,7 +64,7 @@ public:
 	/// Textureの中心位置を変える(Screen座標系)
 	/// </summary>
 	/// <param name="centerPos">: position</param>
-	void SetTranslate(const Vector2& centerPos);
+	void SetTranslate(const Vector2& centerPos) { transform_->SetTranslate(centerPos); } ;
 
 	/// <summary>
 	/// Textureのサイズを再設計する

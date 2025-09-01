@@ -1,16 +1,14 @@
 #pragma once
 #include <memory>
 #include "Game/Scene/BaseScene.h"
+#include "Engine/Render/SceneRenderer.h"
 // camera
 #include "Game/Camera/Camera3d.h"
 #include "Game/Camera/Camera2d.h"
 #include "Game/Camera/DebugCamera.h"
 // actor
 #include "Game/WorldObject/Skybox.h"
-
-#include "Engine/Render/SceneRenderer.h"
-
-
+#include "Game/Manager/StageRegistry.h"
 
 class GameScene 
 	: public BaseScene {
@@ -34,6 +32,8 @@ private:
 	// ------------------- actor ------------------- //
 	
 	Skybox* skybox_;
+
+	std::unique_ptr<StageRegistry> stageRegistry_;
 	
 	SceneRenderer* sceneRenderer_;
 };

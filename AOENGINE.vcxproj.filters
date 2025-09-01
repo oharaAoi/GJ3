@@ -263,6 +263,12 @@
     <ClCompile Include="Engine\Module\Components\ScreenTransform.cpp" />
     <ClCompile Include="Engine\Module\Components\2d\BaseEntity2d.cpp" />
     <ClCompile Include="Game\UI\TitleUIs.cpp" />
+    <ClCompile Include="Game\Tool\MapChipLoader.cpp" />
+    <ClCompile Include="Game\Tool\StageEditor.cpp" />
+    <ClCompile Include="Game\Manager\StageRegistry.cpp" />
+    <ClCompile Include="Game\Actor\Block\IBlock.cpp" />
+    <ClCompile Include="Game\Actor\Block\BlockWall.cpp" />
+    <ClCompile Include="Game\Actor\Block\BlockFactory.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Module\Components\2d\PrimitiveDrawer.h" />
@@ -483,6 +489,13 @@
     <ClInclude Include="Engine\Module\Components\ScreenTransform.h" />
     <ClInclude Include="Engine\Module\Components\2d\BaseEntity2d.h" />
     <ClInclude Include="Game\UI\TitleUIs.h" />
+    <ClInclude Include="Game\Tool\MapChipLoader.h" />
+    <ClInclude Include="Game\Tool\StageEditor.h" />
+    <ClInclude Include="Game\Information\BlockType.h" />
+    <ClInclude Include="Game\Manager\StageRegistry.h" />
+    <ClInclude Include="Game\Actor\Block\IBlock.h" />
+    <ClInclude Include="Game\Actor\Block\BlockWall.h" />
+    <ClInclude Include="Game\Actor\Block\BlockFactory.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\Resources\HLSL\Object3d.hlsli" />

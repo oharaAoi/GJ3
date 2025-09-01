@@ -45,6 +45,8 @@ void GameScene::Init() {
 	// ↓ actorの初期化
 	// -------------------------------------------------
 	
+	stageRegistry_ = std::make_unique<StageRegistry>();
+	stageRegistry_->Register("stage000.csv");
 
 	// -------------------------------------------------
 	// ↓ managerの初期化

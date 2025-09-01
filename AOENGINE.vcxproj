@@ -224,7 +224,11 @@ copy "$(ProjectDir)Externals\assimp\build\bin\Release\assimp-vc143-mt.dll" "$(Ta
     <ClCompile Include="Engine\Core\AoiFramework.cpp" />
     <ClCompile Include="Engine\System\Collision\ColliderCollector.cpp" />
     <ClCompile Include="Engine\System\Collision\PenetrationResolution.cpp" />
+    <ClCompile Include="Game\Actor\Block\BlockFactory.cpp" />
+    <ClCompile Include="Game\Actor\Block\BlockWall.cpp" />
+    <ClCompile Include="Game\Actor\Block\IBlock.cpp" />
     <ClCompile Include="Game\CallBacks\GameCallBacksManager.cpp" />
+    <ClCompile Include="Game\Manager\StageRegistry.cpp" />
     <ClCompile Include="Game\RunTime\GameCore.cpp" />
     <ClCompile Include="Engine\DirectX\Descriptor\DescriptorAllocator.cpp" />
     <ClCompile Include="Engine\DirectX\Descriptor\DescriptorHeap.cpp" />
@@ -321,6 +325,8 @@ copy "$(ProjectDir)Externals\assimp\build\bin\Release\assimp-vc143-mt.dll" "$(Ta
     <ClCompile Include="Game\Scene\TitleScene.cpp" />
     <ClCompile Include="Game\State\ICharacterState.cpp" />
     <ClCompile Include="Game\State\StateMachine.cpp" />
+    <ClCompile Include="Game\Tool\MapChipLoader.cpp" />
+    <ClCompile Include="Game\Tool\StageEditor.cpp" />
     <ClCompile Include="Game\UI\TitleUIs.cpp" />
     <ClCompile Include="Game\WorldObject\Skybox.cpp" />
     <ClCompile Include="main.cpp" />
@@ -435,9 +441,14 @@ copy "$(ProjectDir)Externals\assimp\build\bin\Release\assimp-vc143-mt.dll" "$(Ta
     <ClInclude Include="Engine\Core\AoiFramework.h" />
     <ClInclude Include="Engine\System\Collision\ColliderCollector.h" />
     <ClInclude Include="Engine\System\Collision\PenetrationResolution.h" />
+    <ClInclude Include="Game\Actor\Block\BlockFactory.h" />
+    <ClInclude Include="Game\Actor\Block\BlockWall.h" />
+    <ClInclude Include="Game\Actor\Block\IBlock.h" />
     <ClInclude Include="Game\CallBacks\GameCallBacksManager.h" />
     <ClInclude Include="Game\Information\ActionContext.h" />
+    <ClInclude Include="Game\Information\BlockType.h" />
     <ClInclude Include="Game\Information\ColliderCategory.h" />
+    <ClInclude Include="Game\Manager\StageRegistry.h" />
     <ClInclude Include="Game\RunTime\GameCore.h" />
     <ClInclude Include="Engine\DirectX\Descriptor\DescriptorAllocator.h" />
     <ClInclude Include="Engine\DirectX\Descriptor\DescriptorHeap.h" />
@@ -544,6 +555,8 @@ copy "$(ProjectDir)Externals\assimp\build\bin\Release\assimp-vc143-mt.dll" "$(Ta
     <ClInclude Include="Game\Scene\TitleScene.h" />
     <ClInclude Include="Game\State\ICharacterState.h" />
     <ClInclude Include="Game\State\StateMachine.h" />
+    <ClInclude Include="Game\Tool\MapChipLoader.h" />
+    <ClInclude Include="Game\Tool\StageEditor.h" />
     <ClInclude Include="Game\UI\TitleUIs.h" />
     <ClInclude Include="Game\WorldObject\Skybox.h" />
   </ItemGroup>

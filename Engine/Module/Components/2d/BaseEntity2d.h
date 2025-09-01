@@ -1,6 +1,8 @@
 #pragma once
 #include "Engine/Module/Components/Attribute/AttributeGui.h"
 #include "Engine/Module/Components/2d/Sprite.h"
+#include <Module/Components/ScreenTransform.h>
+#include <Lib/Math/Vector2.h>
 
 /// <summary>
 /// 2dGameObjectの仲介
@@ -21,6 +23,7 @@ public:	// accessor method
 
 	void Destroy() { sprite_->SetIsDestroy(true); };
 
+	void SetPosition(const Vector2& _centerPos) { sprite_->SetTranslate(_centerPos); }
 	Vector2 GetPosition() { return sprite_->GetTranslate(); }
 
 	Sprite* GetSprite() const { return sprite_; }
