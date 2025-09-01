@@ -35,7 +35,7 @@ void SceneManager::Update() {
 		reset_ = false;
 
 #ifdef _DEBUG
-		EditorWindows::GetInstance()->Reset()
+		EditorWindows::GetInstance()->Reset();
 #endif // _DEBUG
 
 		PostProcess* postProcess = Engine::GetPostProcess();
@@ -97,7 +97,7 @@ void SceneManager::SetChange(const SceneType& type) {
 	scene_ = std::move(nextScene_);
 
 #ifdef _DEBUG
-	EditorWindows::GetInstance()->Reset()
+	EditorWindows::GetInstance()->Reset();
 #endif // _DEBUG
 
 	PostProcess* postProcess = Engine::GetPostProcess();
