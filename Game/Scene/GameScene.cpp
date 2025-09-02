@@ -49,7 +49,8 @@ void GameScene::Init()
 	// -------------------------------------------------
 
 	stageRegistry_ = std::make_unique<StageRegistry>();
-	stageRegistry_->Register("stage000.csv");
+	stageRegistry_->Init();
+	stageRegistry_->Register("stage_0.json");
 
 	player_ = std::make_unique<Player>();
 	player_->Init();
@@ -85,6 +86,8 @@ void GameScene::Update()
 	ObjectCommandInvoker::GetInstance().Update();
 	worldObjects_->Update();
 
+	stageRegistry_->Update();
+	
 	// -------------------------------------------------
 	// ↓ spriteの更新
 	// -------------------------------------------------

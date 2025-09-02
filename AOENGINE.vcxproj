@@ -327,6 +327,7 @@ copy "$(ProjectDir)Externals\assimp\build\bin\Release\assimp-vc143-mt.dll" "$(Ta
     <ClCompile Include="Game\State\StateMachine.cpp" />
     <ClCompile Include="Game\Tool\MapChipLoader.cpp" />
     <ClCompile Include="Game\Tool\StageEditor.cpp" />
+    <ClCompile Include="Game\Tool\StageLoader.cpp" />
     <ClCompile Include="Game\UI\TitleUIs.cpp" />
     <ClCompile Include="Game\WorldObject\BackGround.cpp" />
     <ClCompile Include="Game\WorldObject\Skybox.cpp" />
@@ -455,6 +456,7 @@ copy "$(ProjectDir)Externals\assimp\build\bin\Release\assimp-vc143-mt.dll" "$(Ta
     <ClInclude Include="Game\Information\ActionContext.h" />
     <ClInclude Include="Game\Information\BlockType.h" />
     <ClInclude Include="Game\Information\ColliderCategory.h" />
+    <ClInclude Include="Game\Information\StageInformation.h" />
     <ClInclude Include="Game\Manager\StageRegistry.h" />
     <ClInclude Include="Game\RunTime\GameCore.h" />
     <ClInclude Include="Engine\DirectX\Descriptor\DescriptorAllocator.h" />
@@ -564,6 +566,7 @@ copy "$(ProjectDir)Externals\assimp\build\bin\Release\assimp-vc143-mt.dll" "$(Ta
     <ClInclude Include="Game\State\StateMachine.h" />
     <ClInclude Include="Game\Tool\MapChipLoader.h" />
     <ClInclude Include="Game\Tool\StageEditor.h" />
+    <ClInclude Include="Game\Tool\StageLoader.h" />
     <ClInclude Include="Game\UI\TitleUIs.h" />
     <ClInclude Include="Game\WorldObject\BackGround.h" />
     <ClInclude Include="Game\WorldObject\Skybox.h" />
