@@ -330,7 +330,6 @@ copy "$(ProjectDir)Externals\assimp\build\bin\Release\assimp-vc143-mt.dll" "$(Ta
     <ClCompile Include="Game\UI\TitleUIs.cpp" />
     <ClCompile Include="Game\WorldObject\BackGround.cpp" />
     <ClCompile Include="Game\WorldObject\Skybox.cpp" />
-    <ClCompile Include="Game\Actor\Player\IPlayerCommand.cpp" />
     <ClCompile Include="Game\WorldObject\WorldObjects.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Engine\Module\Geometry\Structs\Vertices.cpp" />
