@@ -273,6 +273,9 @@
     <ClCompile Include="Game\Commands\ObjectCommandInvoker.cpp" />
     <ClCompile Include="Game\Actor\Player\Command\PlayerMoveCommand.cpp" />
     <ClCompile Include="Game\Actor\Player\PlayerInputHandler.cpp" />
+    <ClCompile Include="Game\Manager\MapCollisionSystem.cpp" />
+    <ClCompile Include="Game\WorldObject\BackGround.cpp" />
+    <ClCompile Include="Game\WorldObject\WorldObjects.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Module\Components\2d\PrimitiveDrawer.h" />
@@ -505,6 +508,9 @@
     <ClInclude Include="Game\Actor\Player\Command\IPlayerCommand.h" />
     <ClInclude Include="Game\Commands\IObjectCommand.h" />
     <ClInclude Include="Game\Commands\ObjectCommandInvoker.h" />
+    <ClInclude Include="Game\Manager\MapCollisionSystem.h" />
+    <ClInclude Include="Game\WorldObject\BackGround.h" />
+    <ClInclude Include="Game\WorldObject\WorldObjects.h" />
     <ClInclude Include="Game\Actor\Player\Command\PlayerMoveCommand.h" />
     <ClInclude Include="Game\Actor\Player\PlayerInputHandler.h" />
   </ItemGroup>

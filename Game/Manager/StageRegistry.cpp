@@ -34,7 +34,6 @@ void StageRegistry::Register(const std::string& _fileName) {
 				// 位置を決定
 				Vector2 pos = Vector2((128.f) * col, (128.f) * row);
 				newBlock->SetPosition(pos);
-
 			}
 		}
 	}
