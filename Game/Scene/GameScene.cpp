@@ -97,6 +97,8 @@ void GameScene::Update()
 
 	stageRegistry_->Update();
 	
+	mapCollision_->Update();
+
 	// -------------------------------------------------
 	// ↓ spriteの更新
 	// -------------------------------------------------

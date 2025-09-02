@@ -30,6 +30,13 @@ void StageRegistry::Update() {
 		stageEditor_->SetIsChangeStage(false);
 	}
 #endif
+
+	for (auto& row : stageData_) {
+		for (auto& col : row) {
+			if (!col) { continue; }
+			col->Update();
+		}
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -74,11 +81,13 @@ void StageRegistry::CreatesMap(const std::string& _csvFileName) {
 			// 共通して設定する
 			if (newBlock != nullptr) {
 				newBlock->Init();
-				newBlock->SetIndex(Vector2Int{ static_cast<int>(row),static_cast<int>(col) });
+				newBlock->SetIndex(Vector2Int{ static_cast<int>(col),static_cast<int>(row) });
 
 				// 位置を決定
 				newBlock->SetPosition(CalculateTilePos(row, col));
 				newBlock->GetSprite()->ReSetTextureSize(tileSize_);
+				newBlock->SetOffset(mapOffset_);
+				newBlock->SetTileSize(tileSize_);
 			}
 
 			// 特別な情報の取得
@@ -95,8 +104,32 @@ void StageRegistry::CreatesMap(const std::string& _csvFileName) {
 
 void StageRegistry::SetStageData(const Vector2Int& index, const Vector2Int& assignIndex)
 {
+	Vector2Int copyIndex = index;
 	stageData_[index.y][index.x] = std::move(stageData_[assignIndex.y][assignIndex.x]);
+	stageData_[index.y][index.x]->SetIndex(copyIndex);
 	stageData_[assignIndex.y][assignIndex.x] = nullptr;
+}
+
+void StageRegistry::SetGhostData(const Vector2Int& index)
+{
+	stageData_[index.y][index.x] = nullptr;
+	stageData_[index.y][index.x] = CreateBlock(6);
+	IBlock* newBlock = stageData_[index.y][index.x].get();
+
+	newBlock->Init();
+	newBlock->SetIndex(index);
+
+	// 位置を決定
+	newBlock->SetPosition(CalculateTilePos(index.y, index.x));
+	newBlock->GetSprite()->ReSetTextureSize(tileSize_);
+	newBlock->SetOffset(mapOffset_);
+	newBlock->SetTileSize(tileSize_);
+}
+
+void StageRegistry::ClearStageData(const Vector2Int& index)
+{
+	stageData_[index.y][index.x]->GetSprite()->SetEnable(false);
+	stageData_[index.y][index.x] = nullptr;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////

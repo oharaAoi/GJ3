@@ -3,7 +3,11 @@
 void MapCollisionSystem::Init(StageRegistry* stageRegistry)
 {
 	stageRegistry_ = stageRegistry;
+}
 
+void MapCollisionSystem::Update()
+{
+	UpdateSpanGhost();
 }
 
 bool MapCollisionSystem::IsMovable(const Vector2Int& direction, const Vector2Int& playerIndex)
@@ -42,11 +46,18 @@ bool MapCollisionSystem::IsMovable(const Vector2Int& direction, const Vector2Int
 
 void MapCollisionSystem::UpdateSpanGhost()
 {
+	if (!ghostUpdate_) { return; }
+
 	// ステージデータからゴーストブロックを取得
 	const auto& data = stageRegistry_->GetStageData();
 	pairIndex_.clear();
 	for (const auto& row : data) {
 		for (const auto& col : row) {
+			if (col == nullptr) { continue; }
+			if (col->GetType() == BlockType::Ghost) { 
+				stageRegistry_->ClearStageData(col->GetIndex()); 
+				continue;
+			}
 			// ゴーストブロックじゃ無ければコンティニュー
 			if (col->GetType() != BlockType::GhostBlock) { continue; }
 			// ゴーストブロックだったら
@@ -58,17 +69,31 @@ void MapCollisionSystem::UpdateSpanGhost()
 			indexs.push_back(index + Vector2Int{ 0,2 });
 			for (auto& _index : indexs) {
 				if (CheckGhostBlock(_index)) {
-					pairIndex_.push_back(
-						Vector2Int{
-							index.x * static_cast<int>(row.size()) + index.y,
-							_index.x * static_cast<int>(row.size()) + _index.y,
+
+					// ゴーストの出来る座標の間を取得する
+					Vector2Int ghostIndex = {
+						index.x * static_cast<int>(row.size()) + index.y,
+						_index.x * static_cast<int>(row.size()) + _index.y,
+					};
+					bool hitPair = false;
+					for (auto& pair : pairIndex_) {
+						if ((pair.x == ghostIndex.x && pair.y == ghostIndex.y) ||
+							(pair.y == ghostIndex.x && pair.x == ghostIndex.y)) {
+							hitPair = true;
+							continue;
 						}
-					);
+					}
+					if (hitPair) { continue; }
+					pairIndex_.push_back(ghostIndex);
 				}
 			}
 		}
 	}
-
+	for (auto& pair : pairIndex_) {
+		Vector2Int ghostIndex = SearchGhostIndex(pair);
+		stageRegistry_->SetGhostData(ghostIndex);
+	}
+	ghostUpdate_ = false;
 }
 
 bool MapCollisionSystem::OutOfRangeReference(const Vector2Int& index)
@@ -77,7 +102,7 @@ bool MapCollisionSystem::OutOfRangeReference(const Vector2Int& index)
 	size_t row = data.size();
 	size_t col = data[0].size();
 	// 範囲外では無いか検出
-	if (index.x >= 0 && index.x < row && index.y >= 0 && index.y < col) { return true; }
+	if (index.y >= 0 && index.y < row && index.x >= 0 && index.x < col) { return true; }
 	return false;
 }
 
@@ -88,6 +113,7 @@ void MapCollisionSystem::ChengeStage(const Vector2Int& direction, const Vector2I
 	Vector2Int one = index + direction;
 	Vector2Int two = one + direction;
 	stageRegistry_->SetStageData(two, one);
+	ghostUpdate_ = true;
 }
 
 bool MapCollisionSystem::CheckGhostBlock(const Vector2Int& index)
@@ -95,15 +121,20 @@ bool MapCollisionSystem::CheckGhostBlock(const Vector2Int& index)
 	const auto& data = stageRegistry_->GetStageData();
 	// 範囲外では無いか検出
 	if (!OutOfRangeReference(index)) { return false; }
+	if (data[index.y][index.x] == nullptr) { return false; }
 	// ゴーストブロックか判定
-	if (data[index.x][index.y]->GetType() == BlockType::GhostBlock) { 
-		for (auto& pair : pairIndex_) {
-			if ((pair.x == index.x && pair.y == index.y) ||
-				(pair.y == index.x && pair.x == index.y)) {
-				return false;
-			}
-		}
+	if (data[index.y][index.x]->GetType() == BlockType::GhostBlock) { 
 		return true;
 	}
 	return false;
+}
+
+Vector2Int MapCollisionSystem::SearchGhostIndex(const Vector2Int& index)
+{
+	const auto& data = stageRegistry_->GetStageData();
+	int col = static_cast<int>(data[0].size());
+	return Vector2Int{
+		((index.x + index.y) / 2) / col,
+		((index.x + index.y) / 2) % col
+	};
 }
