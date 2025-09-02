@@ -20,8 +20,6 @@ public:
 	// 基本的な動作は大丈夫なはず(何かあったら教えてちょ💛)
 
 
-	
-
 	// ====================================================================== //
 	//					おばけができているか判定する
 	// ====================================================================== //
@@ -42,6 +40,8 @@ private:
 
 	// ステージ上のインデックスをおばけブロックか判定する
 	bool CheckGhostBlock(const Vector2Int& index);
+	// pairIndexを入れたらゴーストのIndexの位置が取得できる
+	Vector2Int SearchGhostIndex(const Vector2Int& index);
 
 private:
 
@@ -49,6 +49,7 @@ private:
 
 	// ゴーストが出来ているペアを保持
 	std::vector<Vector2Int> pairIndex_;
+	bool ghostUpdate_ = false;
 
 };
 

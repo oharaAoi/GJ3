@@ -30,6 +30,8 @@ public:
 	const std::vector<std::vector<std::unique_ptr<IBlock>>>& GetStageData() { return stageData_; }
 
 	void SetStageData(const Vector2Int& index, const Vector2Int& assignIndex);
+	void SetGhostData(const Vector2Int& index);
+	void ClearStageData(const Vector2Int& index);
 
 	void DestroyData();
 

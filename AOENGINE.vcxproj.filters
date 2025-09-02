@@ -281,6 +281,8 @@
     <ClCompile Include="Game\Actor\Block\BlockNormal.cpp" />
     <ClCompile Include="Game\Scene\StageSelectScene.cpp" />
     <ClCompile Include="Game\UI\StageSelector.cpp" />
+    <ClCompile Include="Game\Actor\Block\BlockGhost.cpp" />
+    <ClCompile Include="Game\Actor\Block\TokenGhost.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\DirectX\Pipeline\PipelineGroup\ComputeShaderPipelines.h" />
@@ -524,6 +526,8 @@
     <ClInclude Include="Game\Actor\Block\BlockNormal.h" />
     <ClInclude Include="Game\Scene\StageSelectScene.h" />
     <ClInclude Include="Game\UI\StageSelector.h" />
+    <ClInclude Include="Game\Actor\Block\BlockGhost.h" />
+    <ClInclude Include="Game\Actor\Block\TokenGhost.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\Assets\HLSL\Light.hlsli" />

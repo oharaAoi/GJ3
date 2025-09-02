@@ -1,12 +1,12 @@
 #pragma once
 #include "Game/Actor/Block/IBlock.h"
 
-class BlockNormal :
+class BlockGhost :
 	public IBlock {
 public:
 
-	BlockNormal() = default;
-	~BlockNormal() override = default;
+	BlockGhost() = default;
+	~BlockGhost() override = default;
 
 	void Init() override;
 	void Update() override;

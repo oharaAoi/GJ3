@@ -1,0 +1,24 @@
+#include "BlockGhost.h"
+
+void BlockGhost::Init()
+{
+	SetName("BlockGhost");
+	sprite_ = Engine::GetCanvas2d()->AddSprite("ghostBlock.png", "Sprite_Normal.json");
+	transform_ = sprite_->GetTransform();
+	type_ = BlockType::GhostBlock;
+}
+
+void BlockGhost::Update()
+{
+	/// 座標更新
+	transform_->SetTranslate(ConvertIndexToPosition(index_));
+}
+
+void BlockGhost::Debug_Gui()
+{
+}
+
+Vector2 BlockGhost::ConvertIndexToPosition(const Vector2Int& _index) {
+	return Vector2(offset_.x + _index.x * tileSize_.x + tileSize_.x / 2.0f,
+		offset_.y + _index.y * tileSize_.y + tileSize_.y / 2.0f);
+}
