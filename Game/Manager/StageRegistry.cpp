@@ -68,6 +68,7 @@ void StageRegistry::Register(const std::string& _fileName) {
 		for (size_t col = 0; col < maxSize_.x; ++col) {
 			stageData_[row][col] = CreateBlock(data[row][col]);
 			IBlock* newBlock = stageData_[row][col].get();
+			// 共通して設定する
 			if (newBlock != nullptr) {
 				newBlock->Init();
 				newBlock->SetIndex(Vector2Int{ static_cast<int>(row),static_cast<int>(col) });
@@ -77,16 +78,19 @@ void StageRegistry::Register(const std::string& _fileName) {
 				newBlock->GetSprite()->ReSetTextureSize(tileSize_);
 			}
 
+			// 特別な情報の取得
 			if (data[row][col] == static_cast<int>(BlockType::Player)) {
 				startIndex_ = { (int)col, (int)row };
 				startPos_ = CalculateTilePos(row, col);
+
+			} else if (data[row][col] == static_cast<int>(BlockType::Goal)) {
+				goalIndex_ = { (int)col, (int)row };
 			}
 		}
 	}
 }
 
-void StageRegistry::SetStageData(const Vector2Int& index, std::unique_ptr<IBlock> block)
-{
+void StageRegistry::SetStageData(const Vector2Int& index, std::unique_ptr<IBlock> block) {
 	stageData_[index.x][index.y] = std::move(block);
 }
 
