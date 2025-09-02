@@ -30,6 +30,7 @@ void StageRegistry::Register(const std::string& _fileName) {
 			IBlock* newBlock = stageData_[row][col].get();
 			if (newBlock != nullptr) {
 				newBlock->Init();
+				newBlock->SetIndex(Vector2Int{ static_cast<int>(row),static_cast<int>(col) });
 
 				// 位置を決定
 				Vector2 pos = Vector2((128.f) * col, (128.f) * row);
@@ -37,5 +38,10 @@ void StageRegistry::Register(const std::string& _fileName) {
 			}
 		}
 	}
+}
+
+void StageRegistry::SetStageData(const Vector2Int& index, std::unique_ptr<IBlock> block)
+{
+	stageData_[index.x][index.y] = std::move(block);
 }
 
