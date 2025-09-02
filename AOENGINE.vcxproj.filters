@@ -278,6 +278,7 @@
     <ClCompile Include="Game\Actor\Player\PlayerInputHandler.cpp" />
     <ClCompile Include="Game\Manager\MapCollisionSystem.cpp" />
     <ClCompile Include="Game\Actor\Block\BlockGoal.cpp" />
+    <ClCompile Include="Game\Actor\Block\BlockNormal.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\DirectX\Pipeline\PipelineGroup\ComputeShaderPipelines.h" />
@@ -518,6 +519,7 @@
     <ClInclude Include="Game\Manager\MapCollisionSystem.h" />
     <ClInclude Include="Game\WorldObject\WorldObjects.h" />
     <ClInclude Include="Game\Actor\Block\BlockGoal.h" />
+    <ClInclude Include="Game\Actor\Block\BlockNormal.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\Assets\HLSL\Light.hlsli" />
