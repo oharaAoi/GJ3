@@ -34,8 +34,7 @@ private:
 	// ステージ上のインデックス番号切り替え用
 	void ChengeStage(
 		const Vector2Int& direction,
-		const Vector2Int& playerIndex,
-		bool isSetBlock = false
+		const Vector2Int& playerIndex
 	);
 
 	// ステージ上のインデックスをおばけブロックか判定する

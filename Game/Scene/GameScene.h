@@ -11,6 +11,7 @@
 #include "Game/Actor/Player/Player.h"
 #include "Game/Manager/StageRegistry.h"
 #include "Game/WorldObject/WorldObjects.h"
+#include "Game/Manager/MapCollisionSystem.h"
 
 class GameScene
 	: public BaseScene
@@ -35,6 +36,8 @@ private:
 	Skybox *skybox_;
 
 	std::unique_ptr<StageRegistry> stageRegistry_;
+
+	std::unique_ptr<MapCollisionSystem> mapCollision_;
 
 	std::unique_ptr<WorldObjects> worldObjects_;
 
