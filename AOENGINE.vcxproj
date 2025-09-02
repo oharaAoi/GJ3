@@ -329,11 +329,12 @@ copy "$(ProjectDir)Externals\assimp\build\bin\Release\assimp-vc143-mt.dll" "$(Ta
     <ClCompile Include="Game\Tool\StageEditor.cpp" />
     <ClCompile Include="Game\UI\TitleUIs.cpp" />
     <ClCompile Include="Game\WorldObject\Skybox.cpp" />
+    <ClCompile Include="Game\Actor\Player\IPlayerCommand.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Engine\Module\Geometry\Structs\Vertices.cpp" />
     <ClCompile Include="Engine\System\ParticleSystem\Tool\ParticleSystemEditor.cpp" />
     <ClCompile Include="Game\Actor\Player\Player.cpp" />
-    <ClCompile Include="Engine\Lib\Math\Vector2Int.cpp" />
+    <ClCompile Include="Game\Commands\ObjectCommandInvoker.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\DirectX\Pipeline\PipelineGroup\ComputeShaderPipelines.h" />
@@ -561,8 +562,11 @@ copy "$(ProjectDir)Externals\assimp\build\bin\Release\assimp-vc143-mt.dll" "$(Ta
     <ClInclude Include="Game\Tool\StageEditor.h" />
     <ClInclude Include="Game\UI\TitleUIs.h" />
     <ClInclude Include="Game\WorldObject\Skybox.h" />
-    <ClInclude Include="Game\Actor\Player\Player.h" />
     <ClInclude Include="Engine\Lib\Math\Vector2Int.h" />
+    <ClInclude Include="Game\Actor\Player\Player.h" />
+    <ClInclude Include="Game\Actor\Player\IPlayerCommand.h" />
+    <ClInclude Include="Game\Commands\IObjectCommand.h" />
+    <ClInclude Include="Game\Commands\ObjectCommandInvoker.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Engine\Assets\HLSL\Particle\AccelerationField.CS.hlsl">
