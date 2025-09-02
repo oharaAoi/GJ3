@@ -22,8 +22,8 @@ public:
 	void Update() override;
 	void Debug_Gui() override;
 
-	MapCollisionSystem* GetMapCollision() { return mapCollision_; }
-	void SetMapCollision(MapCollisionSystem* collision) { mapCollision_ = collision; }
+	MapCollisionSystem* GetMapCollision(){ return mapCollision_; }
+	void SetMapCollision(MapCollisionSystem* collision){ mapCollision_ = collision; }
 
 protected:
 	std::unique_ptr<PlayerInputHandler> inputHandler_; // 入力ハンドラ
@@ -33,5 +33,3 @@ private:
 	MapCollisionSystem* mapCollision_ = nullptr;
 public:
 };
-
-/// 一旦ここ
