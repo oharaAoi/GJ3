@@ -63,6 +63,10 @@ void ObjectCommandInvoker::RedoCommand(){
 	++currentIndex_;
 }
 
+void ObjectCommandInvoker::PushCommand(std::unique_ptr<IObjectCommand>&& command){
+	commandRequests_.commandQueue_.emplace_back(std::move(command));
+}
+
 void ObjectCommandInvoker::ClearHistory(){
 	commandHistory_.clear();
 	currentIndex_ = 0;

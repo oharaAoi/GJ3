@@ -18,7 +18,7 @@ class ObjectCommandInvoker{
 	friend class UndoCommand;
 	friend class RedoCommand;
 public:
-	static ObjectCommandInvoker& getInstance(){
+	static ObjectCommandInvoker& GetInstance(){
 		static ObjectCommandInvoker instance;
 		return instance;
 	}
@@ -34,6 +34,8 @@ public:
 
 	void UndoCommand();
 	void RedoCommand();
+
+	void PushCommand(std::unique_ptr<IObjectCommand>&& command);
 
 	void ClearHistory();
 private:
