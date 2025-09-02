@@ -22,11 +22,9 @@ public:
 	void Debug_Gui() override;
 
 protected:
-	Vector2Int index_ = Vector2Int(0,0); // 現在のインデックス
-
 	std::unique_ptr<PlayerInputHandler> inputHandler_; // 入力ハンドラ
 public:
-	const Vector2Int& GetIndex()const{ return index_; }
-	void SetIndex(const Vector2Int& _index){ index_ = _index; }
 };
 
+/// 一旦ここ
+Vector2 ConvertIndexToPosition(const Vector2Int& _index);
