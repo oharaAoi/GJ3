@@ -31,16 +31,24 @@ public:
 
 	void Debug_Gui() override;
 
+public:
+
+	Vector2 GetTileSize() const { return tileSize_; }
+
+private:
+
+	Vector2 CalculateTilePos(size_t row, size_t col);
+
 private:
 
 	const std::string kDirectoryPath_ = "./Game/Assets/GameData/Map/Csv/";
 	std::vector<std::vector<std::unique_ptr<IBlock>>> stageData_;
 
-	Vector2Int maxSize_ = Vector2Int(0, 0);
-
 	std::unique_ptr<StageEditor> stageEditor_;
 	std::unique_ptr<StageLoader> stageLoader_;
 
+	Vector2Int maxSize_ = Vector2Int(0, 0);
+	Vector2 tileSize_;
 	int needGhostNum_;
 };
 
