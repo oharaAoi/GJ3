@@ -54,6 +54,8 @@ void GameScene::Init()
 
 	player_ = std::make_unique<Player>();
 	player_->Init();
+	player_->SetTileSize(stageRegistry_->GetTileSize());
+	player_->GetSprite()->ReSetTextureSize(stageRegistry_->GetTileSize());
 
 	worldObjects_ = std::make_unique<WorldObjects>();
 	worldObjects_->Init();

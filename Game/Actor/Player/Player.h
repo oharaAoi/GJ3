@@ -27,4 +27,4 @@ public:
 };
 
 /// 一旦ここ
-Vector2 ConvertIndexToPosition(const Vector2Int& _index);
+Vector2 ConvertIndexToPosition(const Vector2Int& _index, const Vector2& _size);

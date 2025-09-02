@@ -2,6 +2,7 @@
 
 /// hadler
 #include "PlayerInputHandler.h"
+#include "Game/Information/StageInformation.h"
 
 Player::Player():IBlock(){}
 Player::~Player(){}
@@ -26,14 +27,13 @@ void Player::Update(){
 		inputHandler_->HandleInput();
 	}
 	/// 座標更新
-	transform_->SetTranslate(ConvertIndexToPosition(index_));
+	transform_->SetTranslate(ConvertIndexToPosition(index_, tileSize_));
 }
 
 void Player::Debug_Gui(){
 	ImGui::Text("X : %d\n Y : %d",index_.x,index_.y);
 }
 
-Vector2 ConvertIndexToPosition(const Vector2Int& _index){
-	constexpr Vector2 kBlockSize = {32.0f,32.0f};
-	return Vector2(_index.x * kBlockSize.x,_index.y * kBlockSize.y);
+Vector2 ConvertIndexToPosition(const Vector2Int& _index, const Vector2& _size){
+	return Vector2(_index.x * _size.x,_index.y * _size.y);
 }
