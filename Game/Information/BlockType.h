@@ -7,4 +7,5 @@ enum class BlockType {
 	Wall		= 3,		// 壁(不動ブロック)
 	NormalBlock	= 4,		// 通常ブロック(変化する系)
 	GhostBlock	= 5,		// おばけブロック
+	Ghost		= 6,		// おばけ
 };
