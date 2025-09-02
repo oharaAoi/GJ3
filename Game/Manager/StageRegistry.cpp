@@ -26,9 +26,7 @@ void StageRegistry::Init() {
 void StageRegistry::Update() {
 #ifdef _DEBUG
 	if (stageEditor_->GetIsChangeStage()) {
-		DestroyData();
-
-		Register(stageEditor_->GetStageName());
+		CreatesMap(stageEditor_->GetStageName());
 		stageEditor_->SetIsChangeStage(false);
 	}
 #endif
@@ -50,10 +48,15 @@ void StageRegistry::Register(const std::string& _fileName) {
 	// 構造体の情報を登録
 	needGhostNum_ = information.needGhostNum;
 
+	// mapの修正
+	CreatesMap(information.csvName);
+}
+
+void StageRegistry::CreatesMap(const std::string& _csvFileName) {
 	// stageの情報を登録
 	DestroyData();
 	stageData_.clear();
-	std::vector<std::vector<uint32_t>> data = MapChipLoader::Load(kDirectoryPath_, information.csvName);
+	std::vector<std::vector<uint32_t>> data = MapChipLoader::Load(kDirectoryPath_, _csvFileName);
 	maxSize_.x = static_cast<int>(data[0].size());
 	maxSize_.y = static_cast<int>(data.size());
 

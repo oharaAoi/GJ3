@@ -23,10 +23,13 @@ public:
 
 	void Update();
 
-	void Register(const std::string& _fileName);
+	void Register(const std::string& _jsonFileName);
+
+	void CreatesMap(const std::string& _csvFileName);
 
 	const std::vector<std::vector<std::unique_ptr<IBlock>>>& GetStageData() { return stageData_; }
 	void SetStageData(const Vector2Int& index, std::unique_ptr<IBlock> block);
+
 	void DestroyData();
 
 	void Debug_Gui() override;
