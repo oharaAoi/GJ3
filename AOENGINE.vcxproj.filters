@@ -272,6 +272,8 @@
     <ClCompile Include="Game\Actor\Player\Player.cpp" />
     <ClCompile Include="Game\Actor\Player\IPlayerCommand.cpp" />
     <ClCompile Include="Game\Commands\ObjectCommandInvoker.cpp" />
+    <ClCompile Include="Game\WorldObject\BackGround.cpp" />
+    <ClCompile Include="Game\WorldObject\WorldObjects.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Module\Components\2d\PrimitiveDrawer.h" />
@@ -504,6 +506,8 @@
     <ClInclude Include="Game\Actor\Player\IPlayerCommand.h" />
     <ClInclude Include="Game\Commands\IObjectCommand.h" />
     <ClInclude Include="Game\Commands\ObjectCommandInvoker.h" />
+    <ClInclude Include="Game\WorldObject\BackGround.h" />
+    <ClInclude Include="Game\WorldObject\WorldObjects.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\Resources\HLSL\Object3d.hlsli" />
