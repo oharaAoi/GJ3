@@ -112,6 +112,8 @@ public:
 	void SetIsBackGround(bool _isBackGround) { isBackGround_ = _isBackGround; }
 	bool GetIsBackGround() const { return isBackGround_; }
 
+	void SetIsFront(bool _isFront) { isFront_ = _isFront; }
+
 	ScreenTransform* GetTransform() { return transform_.get(); }
 	
 private:
@@ -119,6 +121,7 @@ private:
 	bool isEnable_;
 	bool isDestroy_;
 	bool isBackGround_;
+	bool isFront_;
 
 	// 定数バッファ
 	ComPtr<ID3D12Resource> vertexBuffer_;

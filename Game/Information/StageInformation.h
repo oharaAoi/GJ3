@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include "Engine/Lib/Json/IJsonConverter.h"
+#include "Engine/Lib/Math/Vector2.h"
 
 struct StageInformation : public IJsonConverter {
 	std::string csvName;	// ステージのcsv名

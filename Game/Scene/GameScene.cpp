@@ -52,8 +52,17 @@ void GameScene::Init()
 	stageRegistry_->Init();
 	stageRegistry_->Register("stage_0.json");
 
+	mapCollision_ = std::make_unique<MapCollisionSystem>();
+	mapCollision_->Init(stageRegistry_.get());
+
 	player_ = std::make_unique<Player>();
 	player_->Init();
+	player_->SetTileSize(stageRegistry_->GetTileSize());
+	player_->GetSprite()->ReSetTextureSize(stageRegistry_->GetTileSize());
+	player_->SetIndex(stageRegistry_->GetStartIndex());
+	player_->SetPosition(stageRegistry_->GetStartPos());
+	player_->SetOffset(stageRegistry_->GetMapOffset());
+	player_->SetMapCollision(mapCollision_.get());
 
 	worldObjects_ = std::make_unique<WorldObjects>();
 	worldObjects_->Init();

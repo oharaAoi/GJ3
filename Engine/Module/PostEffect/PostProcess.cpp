@@ -64,7 +64,7 @@ void PostProcess::Init(ID3D12Device* device, DescriptorHeap* descriptorHeap, Ren
 
 	toonMap_ = std::make_shared<ToonMap>();
 	toonMap_->Init();
-	toonMap_->SetIsEnable(true);
+	toonMap_->SetIsEnable(false);
 
 	bloom_ = std::make_shared<Bloom>();
 	bloom_->Init();

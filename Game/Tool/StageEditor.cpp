@@ -19,6 +19,7 @@ void StageEditor::Init() {
 	}
 
 	// フォルダ内のファイル名を配列に格納
+	filePaths_.clear();
 	for (const auto& entry : fs::recursive_directory_iterator(kCsvDirectoryPath_)) {
 		if (entry.is_regular_file()) {
 			std::string ext = entry.path().extension().string();

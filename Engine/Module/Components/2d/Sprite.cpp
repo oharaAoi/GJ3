@@ -127,6 +127,10 @@ void Sprite::Draw(const Pipeline* pipeline) {
 	if (isBackGround_) {
 		transform_->SetTranslateZ(Render::GetFarClip());
 	}
+
+	if (isFront_) {
+		transform_->SetTranslateZ(Render::GetNearClip());
+	}
 	
 	// テクスチャ位置を保持するための補正行列
 	Matrix4x4 correctionTranslation = Vector3({ pivotOffset.x, pivotOffset.y, 0.0f }).MakeTranslateMat();

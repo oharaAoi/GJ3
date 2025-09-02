@@ -229,6 +229,8 @@ copy "$(ProjectDir)Externals\assimp\build\bin\Release\assimp-vc143-mt.dll" "$(Ta
     <ClCompile Include="Engine\System\Collision\ColliderCollector.cpp" />
     <ClCompile Include="Engine\System\Collision\PenetrationResolution.cpp" />
     <ClCompile Include="Game\Actor\Block\BlockFactory.cpp" />
+    <ClCompile Include="Game\Actor\Block\BlockGoal.cpp" />
+    <ClCompile Include="Game\Actor\Block\BlockNormal.cpp" />
     <ClCompile Include="Game\Actor\Block\BlockWall.cpp" />
     <ClCompile Include="Game\Actor\Block\IBlock.cpp" />
     <ClCompile Include="Game\CallBacks\GameCallBacksManager.cpp" />
@@ -456,6 +458,8 @@ copy "$(ProjectDir)Externals\assimp\build\bin\Release\assimp-vc143-mt.dll" "$(Ta
     <ClInclude Include="Engine\System\Collision\ColliderCollector.h" />
     <ClInclude Include="Engine\System\Collision\PenetrationResolution.h" />
     <ClInclude Include="Game\Actor\Block\BlockFactory.h" />
+    <ClInclude Include="Game\Actor\Block\BlockGoal.h" />
+    <ClInclude Include="Game\Actor\Block\BlockNormal.h" />
     <ClInclude Include="Game\Actor\Block\BlockWall.h" />
     <ClInclude Include="Game\Actor\Block\IBlock.h" />
     <ClInclude Include="Game\CallBacks\GameCallBacksManager.h" />
