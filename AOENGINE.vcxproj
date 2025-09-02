@@ -328,8 +328,10 @@ copy "$(ProjectDir)Externals\assimp\build\bin\Release\assimp-vc143-mt.dll" "$(Ta
     <ClCompile Include="Game\Tool\MapChipLoader.cpp" />
     <ClCompile Include="Game\Tool\StageEditor.cpp" />
     <ClCompile Include="Game\UI\TitleUIs.cpp" />
+    <ClCompile Include="Game\WorldObject\BackGround.cpp" />
     <ClCompile Include="Game\WorldObject\Skybox.cpp" />
     <ClCompile Include="Game\Actor\Player\IPlayerCommand.cpp" />
+    <ClCompile Include="Game\WorldObject\WorldObjects.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Engine\Module\Geometry\Structs\Vertices.cpp" />
     <ClCompile Include="Engine\System\ParticleSystem\Tool\ParticleSystemEditor.cpp" />
@@ -562,6 +564,7 @@ copy "$(ProjectDir)Externals\assimp\build\bin\Release\assimp-vc143-mt.dll" "$(Ta
     <ClInclude Include="Game\Tool\MapChipLoader.h" />
     <ClInclude Include="Game\Tool\StageEditor.h" />
     <ClInclude Include="Game\UI\TitleUIs.h" />
+    <ClInclude Include="Game\WorldObject\BackGround.h" />
     <ClInclude Include="Game\WorldObject\Skybox.h" />
     <ClInclude Include="Engine\Lib\Math\Vector2Int.h" />
     <ClInclude Include="Game\Actor\Player\Player.h" />
@@ -569,6 +572,7 @@ copy "$(ProjectDir)Externals\assimp\build\bin\Release\assimp-vc143-mt.dll" "$(Ta
     <ClInclude Include="Game\Commands\IObjectCommand.h" />
     <ClInclude Include="Game\Commands\ObjectCommandInvoker.h" />
     <ClInclude Include="Game\Manager\MapCollisionSystem.h" />
+    <ClInclude Include="Game\WorldObject\WorldObjects.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Engine\Assets\HLSL\Particle\AccelerationField.CS.hlsl">

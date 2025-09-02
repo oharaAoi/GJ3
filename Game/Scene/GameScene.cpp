@@ -48,6 +48,9 @@ void GameScene::Init() {
 	stageRegistry_ = std::make_unique<StageRegistry>();
 	stageRegistry_->Register("stage000.csv");
 
+	worldObjects_ = std::make_unique<WorldObjects>();
+	worldObjects_->Init();
+
 	// -------------------------------------------------
 	// ↓ managerの初期化
 	// -------------------------------------------------
@@ -74,6 +77,7 @@ void GameScene::Update() {
 	// ↓ actorの更新
 	// -------------------------------------------------
 	
+	worldObjects_->Update();
 	
 	// -------------------------------------------------
 	// ↓ spriteの更新

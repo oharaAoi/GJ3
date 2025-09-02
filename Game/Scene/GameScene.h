@@ -9,6 +9,7 @@
 // actor
 #include "Game/WorldObject/Skybox.h"
 #include "Game/Manager/StageRegistry.h"
+#include "Game/WorldObject/WorldObjects.h"
 
 class GameScene 
 	: public BaseScene {
@@ -34,6 +35,8 @@ private:
 	Skybox* skybox_;
 
 	std::unique_ptr<StageRegistry> stageRegistry_;
+
+	std::unique_ptr<WorldObjects> worldObjects_;
 	
 	SceneRenderer* sceneRenderer_;
 };
