@@ -1,14 +1,14 @@
 #include "GameCore.h"
 
-GameCore::GameCore() {}
-GameCore::~GameCore() {}
+GameCore::GameCore(){}
+GameCore::~GameCore(){}
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 // ↓　終了処理
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
-void GameCore::Finalize() {
+void GameCore::Finalize(){
 	sceneManger_->Finalize();
 	AoiFramework::Finalize();
 }
@@ -17,12 +17,12 @@ void GameCore::Finalize() {
 //////////////////////////////////////////////////////////////////////////////////////////////////
 // ↓　初期化処理
 //////////////////////////////////////////////////////////////////////////////////////////////////
-void GameCore::Init() {
+void GameCore::Init(){
 	AoiFramework::Init();
 
 	sceneManger_ = std::make_unique<SceneManager>();
 	sceneManger_->Init();
-	sceneManger_->SetChange(SceneType::TITLE);
+	sceneManger_->SetChange(SceneType::STAGE_SELECT);
 
 	isReset_ = false;
 }
@@ -31,9 +31,9 @@ void GameCore::Init() {
 // ↓　更新処理
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
-void GameCore::Update() {
+void GameCore::Update(){
 	AoiFramework::Update();
-	if (sceneManger_->CheckReset()) {
+	if(sceneManger_->CheckReset()){
 		isReset_ = true;
 		return;
 	}
@@ -49,15 +49,15 @@ void GameCore::Update() {
 // ↓　描画処理
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
-void GameCore::Draw() {
-	if (isReset_) {
+void GameCore::Draw(){
+	if(isReset_){
 		Engine::EndFrame();
 		sceneManger_->Free();
 		isReset_ = false;
 		return;
 	}
 	sceneManger_->Draw();
-	
+
 	Engine::EndFrame();
 	// fpsの計算
 	gameTimer_.CalculationFrame();
@@ -67,6 +67,6 @@ void GameCore::Draw() {
 // ↓　Debug処理
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
-void GameCore::Debug_Gui() {
+void GameCore::Debug_Gui(){
 	sceneManger_->Debug_Gui();
 }

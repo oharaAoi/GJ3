@@ -277,6 +277,8 @@
     <ClCompile Include="Game\WorldObject\BackGround.cpp" />
     <ClCompile Include="Game\WorldObject\WorldObjects.cpp" />
     <ClCompile Include="Game\Tool\StageLoader.cpp" />
+    <ClCompile Include="Game\Scene\StageSelectScene.cpp" />
+    <ClCompile Include="Game\UI\StageSelector.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Module\Components\2d\PrimitiveDrawer.h" />
@@ -516,6 +518,8 @@
     <ClInclude Include="Game\Actor\Player\PlayerInputHandler.h" />
     <ClInclude Include="Game\Tool\StageLoader.h" />
     <ClInclude Include="Game\Information\StageInformation.h" />
+    <ClInclude Include="Game\Scene\StageSelectScene.h" />
+    <ClInclude Include="Game\UI\StageSelector.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\Resources\HLSL\Object3d.hlsli" />
