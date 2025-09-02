@@ -3,26 +3,26 @@
 GameCore::GameCore() {}
 GameCore::~GameCore() {}
 
-
 //////////////////////////////////////////////////////////////////////////////////////////////////
 // ↓　終了処理
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
-void GameCore::Finalize() {
+void GameCore::Finalize()
+{
 	sceneManger_->Finalize();
 	AoiFramework::Finalize();
 }
 
-
 //////////////////////////////////////////////////////////////////////////////////////////////////
 // ↓　初期化処理
 //////////////////////////////////////////////////////////////////////////////////////////////////
-void GameCore::Init() {
+void GameCore::Init()
+{
 	AoiFramework::Init();
 
 	sceneManger_ = std::make_unique<SceneManager>();
 	sceneManger_->Init();
-	sceneManger_->SetChange(SceneType::TITLE);
+	sceneManger_->SetChange(SceneType::STAGE_SELECT);
 
 	isReset_ = false;
 }
@@ -31,9 +31,11 @@ void GameCore::Init() {
 // ↓　更新処理
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
-void GameCore::Update() {
+void GameCore::Update()
+{
 	AoiFramework::Update();
-	if (sceneManger_->CheckReset()) {
+	if (sceneManger_->CheckReset())
+	{
 		isReset_ = true;
 		return;
 	}
@@ -49,10 +51,12 @@ void GameCore::Update() {
 // ↓　描画処理
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
-void GameCore::Draw() {
+void GameCore::Draw()
+{
 	sceneManger_->Draw();
 	Engine::EndFrame();
-	if (isReset_) {
+	if (isReset_)
+	{
 		sceneManger_->Free();
 		isReset_ = false;
 		return;
@@ -65,6 +69,7 @@ void GameCore::Draw() {
 // ↓　Debug処理
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
-void GameCore::Debug_Gui() {
+void GameCore::Debug_Gui()
+{
 	sceneManger_->Debug_Gui();
 }

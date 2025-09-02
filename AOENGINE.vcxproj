@@ -83,6 +83,10 @@ copy "$(ProjectDir)Externals\assimp\build\lib\Debug\assimp-vc143-mtd.dll" "$(Tar
 copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dxil.dll"
 copy "$(ProjectDir)Externals\assimp\build\lib\Debug\assimp-vc143-mtd.dll" "$(TargetDir)assimp-vc143-mtd.dll"</Command>
     </PreBuildEvent>
+    <ProjectReference>
+      <LinkLibraryDependencies>
+      </LinkLibraryDependencies>
+    </ProjectReference>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -230,6 +234,7 @@ copy "$(ProjectDir)Externals\assimp\build\bin\Release\assimp-vc143-mt.dll" "$(Ta
     <ClCompile Include="Game\Actor\Block\BlockWall.cpp" />
     <ClCompile Include="Game\Actor\Block\IBlock.cpp" />
     <ClCompile Include="Game\CallBacks\GameCallBacksManager.cpp" />
+    <ClCompile Include="Game\Scene\StageSelectScene.cpp" />
     <ClCompile Include="Game\Manager\StageRegistry.cpp" />
     <ClCompile Include="Game\RunTime\GameCore.cpp" />
     <ClCompile Include="Engine\DirectX\Descriptor\DescriptorAllocator.cpp" />
@@ -342,6 +347,7 @@ copy "$(ProjectDir)Externals\assimp\build\bin\Release\assimp-vc143-mt.dll" "$(Ta
     <ClCompile Include="Game\Actor\Player\Command\PlayerMoveCommand.cpp" />
     <ClCompile Include="Game\Actor\Player\PlayerInputHandler.cpp" />
     <ClCompile Include="Game\Manager\MapCollisionSystem.cpp" />
+    <ClCompile Include="Game\UI\StageSelector.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\DirectX\Pipeline\PipelineGroup\ComputeShaderPipelines.h" />
@@ -457,6 +463,7 @@ copy "$(ProjectDir)Externals\assimp\build\bin\Release\assimp-vc143-mt.dll" "$(Ta
     <ClInclude Include="Game\Actor\Block\BlockWall.h" />
     <ClInclude Include="Game\Actor\Block\IBlock.h" />
     <ClInclude Include="Game\CallBacks\GameCallBacksManager.h" />
+    <ClInclude Include="Game\Scene\StageSelectScene.h" />
     <ClInclude Include="Game\Information\ActionContext.h" />
     <ClInclude Include="Game\Information\BlockType.h" />
     <ClInclude Include="Game\Information\ColliderCategory.h" />
@@ -583,6 +590,7 @@ copy "$(ProjectDir)Externals\assimp\build\bin\Release\assimp-vc143-mt.dll" "$(Ta
     <ClInclude Include="Game\Actor\Player\PlayerInputHandler.h" />
     <ClInclude Include="Game\Manager\MapCollisionSystem.h" />
     <ClInclude Include="Game\WorldObject\WorldObjects.h" />
+    <ClInclude Include="Game\UI\StageSelector.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Engine\Assets\HLSL\Particle\AccelerationField.CS.hlsl">
