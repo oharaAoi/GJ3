@@ -24,7 +24,7 @@ void ObjectCommandInvoker::ExecuteCommandRequest(){
 	}
 
 	// 新しい FrameCommand を履歴に push
-	commandHistory_.push_back(commandRequests_);
+	commandHistory_.push_back(std::move(commandRequests_));
 	++currentIndex_;
 
 	// 次のフレーム用に空の commandRequests_ を用意
