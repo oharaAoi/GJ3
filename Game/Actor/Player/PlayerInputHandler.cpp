@@ -5,6 +5,7 @@
 
 /// invoker
 #include "Game/Commands/ObjectCommandInvoker.h"
+#include "Game/Manager/MapCollisionSystem.h"
 
 PlayerInputHandler::PlayerInputHandler(){}
 PlayerInputHandler::~PlayerInputHandler(){}
@@ -18,6 +19,9 @@ void PlayerInputHandler::HandleInput(){
 	Vector2Int moveDirection = DecideMoveDirection();
 
 	if(moveDirection.x == 0 && moveDirection.y == 0){
+		return;
+	}
+	if (!player_->GetMapCollision()->IsMovable(moveDirection, player_->GetIndex())) {
 		return;
 	}
 

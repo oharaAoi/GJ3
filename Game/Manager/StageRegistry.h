@@ -28,7 +28,8 @@ public:
 	void CreatesMap(const std::string& _csvFileName);
 
 	const std::vector<std::vector<std::unique_ptr<IBlock>>>& GetStageData() { return stageData_; }
-	void SetStageData(const Vector2Int& index, std::unique_ptr<IBlock> block);
+
+	void SetStageData(const Vector2Int& index, const Vector2Int& assignIndex);
 
 	void DestroyData();
 

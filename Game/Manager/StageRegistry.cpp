@@ -93,8 +93,10 @@ void StageRegistry::CreatesMap(const std::string& _csvFileName) {
 	}
 }
 
-void StageRegistry::SetStageData(const Vector2Int& index, std::unique_ptr<IBlock> block) {
-	stageData_[index.x][index.y] = std::move(block);
+void StageRegistry::SetStageData(const Vector2Int& index, const Vector2Int& assignIndex)
+{
+	stageData_[index.y][index.x] = std::move(stageData_[assignIndex.y][assignIndex.x]);
+	stageData_[assignIndex.y][assignIndex.x] = nullptr;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
