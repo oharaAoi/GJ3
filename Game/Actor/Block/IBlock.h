@@ -22,6 +22,12 @@ public:
 
 	virtual void Debug_Gui() override = 0;
 
+	const BlockType& GetType()const { return type_; }
+	void SetType(const BlockType& type) { type_ = type; }
+
+	const Vector2Int& GetIndex()const { return index_; }
+	void SetIndex(const Vector2Int& index) { index_ = index; }
+
 protected:
 
 	BlockType type_ = BlockType::None;
