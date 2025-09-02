@@ -8,13 +8,14 @@
 #include "Game/Camera/DebugCamera.h"
 // actor
 #include "Game/WorldObject/Skybox.h"
+#include "Game/Actor/Player/Player.h"
 #include "Game/Manager/StageRegistry.h"
 #include "Game/WorldObject/WorldObjects.h"
 
-class GameScene 
-	: public BaseScene {
+class GameScene
+	: public BaseScene
+{
 public:
-
 	GameScene();
 	~GameScene();
 
@@ -24,19 +25,20 @@ public:
 	void Draw() const override;
 
 private:
-
 	// ------------------- camera ------------------- //
 	std::unique_ptr<DebugCamera> debugCamera_;
 	std::unique_ptr<Camera3d> camera3d_;
 	std::unique_ptr<Camera2d> camera2d_;
 
 	// ------------------- actor ------------------- //
-	
-	Skybox* skybox_;
+
+	Skybox *skybox_;
 
 	std::unique_ptr<StageRegistry> stageRegistry_;
 
 	std::unique_ptr<WorldObjects> worldObjects_;
-	
-	SceneRenderer* sceneRenderer_;
+
+	std::unique_ptr<Player> player_;
+
+	SceneRenderer *sceneRenderer_;
 };

@@ -1,11 +1,13 @@
 #include "GameScene.h"
 #include "Engine.h"
 #include "Engine/Lib/Json/JsonItems.h"
+#include "Game/Commands/ObjectCommandInvoker.h"
 
 GameScene::GameScene() {}
 GameScene::~GameScene() { Finalize(); }
 
-void GameScene::Finalize() {
+void GameScene::Finalize()
+{
 	sceneRenderer_->Finalize();
 }
 
@@ -13,10 +15,11 @@ void GameScene::Finalize() {
 // ↓　初期化
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
-void GameScene::Init() {
+void GameScene::Init()
+{
 	Engine::GetCanvas2d()->Init();
 
-	JsonItems* adjust = JsonItems::GetInstance();
+	JsonItems *adjust = JsonItems::GetInstance();
 	adjust->Init("GameScene");
 
 	// -------------------------------------------------
@@ -33,21 +36,24 @@ void GameScene::Init() {
 	// -------------------------------------------------
 	// ↓ cameraの初期化
 	// -------------------------------------------------
-	
+
 	camera3d_ = std::make_unique<Camera3d>();
 	debugCamera_ = std::make_unique<DebugCamera>();
 	camera2d_ = std::make_unique<Camera2d>();
 	camera3d_->Init();
 	debugCamera_->Init();
 	camera2d_->Init();
-	
+
 	// -------------------------------------------------
 	// ↓ actorの初期化
 	// -------------------------------------------------
-	
+
 	stageRegistry_ = std::make_unique<StageRegistry>();
 	stageRegistry_->Init();
 	stageRegistry_->Register("stage_0.json");
+
+	player_ = std::make_unique<Player>();
+	player_->Init();
 
 	worldObjects_ = std::make_unique<WorldObjects>();
 	worldObjects_->Init();
@@ -55,29 +61,29 @@ void GameScene::Init() {
 	// -------------------------------------------------
 	// ↓ managerの初期化
 	// -------------------------------------------------
+	ObjectCommandInvoker::GetInstance().Initialize();
 
-	
 	// -------------------------------------------------
 	// ↓ spriteの初期化
 	// -------------------------------------------------
-	
 
 	// -------------------------------------------------
 	// ↓ その他設定
 	// -------------------------------------------------
-	
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 // ↓　更新
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
-void GameScene::Update() {
+void GameScene::Update()
+{
 
 	// -------------------------------------------------
 	// ↓ actorの更新
 	// -------------------------------------------------
-	
+	player_->Update();
+	ObjectCommandInvoker::GetInstance().Update();
 	worldObjects_->Update();
 
 	stageRegistry_->Update();
@@ -85,19 +91,22 @@ void GameScene::Update() {
 	// -------------------------------------------------
 	// ↓ spriteの更新
 	// -------------------------------------------------
-	
+
 	// -------------------------------------------------
-	// ↓ cameraの更新 
+	// ↓ cameraの更新
 	// -------------------------------------------------
-	if (debugCamera_->GetIsActive()) {
+	if (debugCamera_->GetIsActive())
+	{
 		debugCamera_->Update();
-	} else {
+	}
+	else
+	{
 		camera3d_->Update();
 	}
 	camera2d_->Update();
 
 	// -------------------------------------------------
-	// ↓ sceneの更新 
+	// ↓ sceneの更新
 	// -------------------------------------------------
 	sceneRenderer_->Update();
 
@@ -106,7 +115,7 @@ void GameScene::Update() {
 	// -------------------------------------------------
 
 	// -------------------------------------------------
-	// ↓ 最後に行いたい更新 
+	// ↓ 最後に行いたい更新
 	// -------------------------------------------------
 
 	sceneRenderer_->PostUpdate();
@@ -116,7 +125,8 @@ void GameScene::Update() {
 // ↓　描画
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
-void GameScene::Draw() const {
+void GameScene::Draw() const
+{
 	// Sceneの描画
 	sceneRenderer_->Draw();
 }

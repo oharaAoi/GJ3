@@ -1,6 +1,6 @@
 #pragma once
 
-enum BlockType {
+enum class BlockType {
 	None	= 0,
 	Player	= 1,
 	Goal	= 2,

@@ -270,8 +270,10 @@
     <ClCompile Include="Game\Actor\Block\BlockWall.cpp" />
     <ClCompile Include="Game\Actor\Block\BlockFactory.cpp" />
     <ClCompile Include="Game\Actor\Player\Player.cpp" />
-    <ClCompile Include="Game\Actor\Player\IPlayerCommand.cpp" />
     <ClCompile Include="Game\Commands\ObjectCommandInvoker.cpp" />
+    <ClCompile Include="Game\Actor\Player\Command\PlayerMoveCommand.cpp" />
+    <ClCompile Include="Game\Actor\Player\PlayerInputHandler.cpp" />
+    <ClCompile Include="Game\Manager\MapCollisionSystem.cpp" />
     <ClCompile Include="Game\WorldObject\BackGround.cpp" />
     <ClCompile Include="Game\WorldObject\WorldObjects.cpp" />
     <ClCompile Include="Game\Tool\StageLoader.cpp" />
@@ -504,11 +506,14 @@
     <ClInclude Include="Game\Actor\Block\BlockFactory.h" />
     <ClInclude Include="Engine\Lib\Math\Vector2Int.h" />
     <ClInclude Include="Game\Actor\Player\Player.h" />
-    <ClInclude Include="Game\Actor\Player\IPlayerCommand.h" />
+    <ClInclude Include="Game\Actor\Player\Command\IPlayerCommand.h" />
     <ClInclude Include="Game\Commands\IObjectCommand.h" />
     <ClInclude Include="Game\Commands\ObjectCommandInvoker.h" />
+    <ClInclude Include="Game\Manager\MapCollisionSystem.h" />
     <ClInclude Include="Game\WorldObject\BackGround.h" />
     <ClInclude Include="Game\WorldObject\WorldObjects.h" />
+    <ClInclude Include="Game\Actor\Player\Command\PlayerMoveCommand.h" />
+    <ClInclude Include="Game\Actor\Player\PlayerInputHandler.h" />
     <ClInclude Include="Game\Tool\StageLoader.h" />
     <ClInclude Include="Game\Information\StageInformation.h" />
   </ItemGroup>
