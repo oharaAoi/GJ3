@@ -8,10 +8,11 @@
 #include "Game/Camera/DebugCamera.h"
 // actor
 #include "Game/WorldObject/Skybox.h"
+#include "Game/Actor/Player/Player.h"
 #include "Game/Manager/StageRegistry.h"
 
-class GameScene 
-	: public BaseScene {
+class GameScene
+	: public BaseScene{
 public:
 
 	GameScene();
@@ -30,10 +31,12 @@ private:
 	std::unique_ptr<Camera2d> camera2d_;
 
 	// ------------------- actor ------------------- //
-	
+
 	Skybox* skybox_;
 
 	std::unique_ptr<StageRegistry> stageRegistry_;
-	
+
+	std::unique_ptr<Player> player_;
+
 	SceneRenderer* sceneRenderer_;
 };

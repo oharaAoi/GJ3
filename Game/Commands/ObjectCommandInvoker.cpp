@@ -1,5 +1,7 @@
 #include "ObjectCommandInvoker.h"
 
+#include "Engine/System/Input/Input.h"
+
 void ObjectCommandInvoker::Initialize(){
 	ClearHistory();
 }
@@ -7,11 +9,35 @@ void ObjectCommandInvoker::Finalize(){
 	ClearHistory();
 }
 
-void ObjectCommandInvoker::ExecuteCommandRequest(){
-	// コマンドを積まれてなければスキップ
-	if(commandRequests_.commandQueue_.empty()){
-		return;
+void ObjectCommandInvoker::Update(){
+	///-------------------------------------------------------------------------------------------------
+	// Commandの実行
+	///-------------------------------------------------------------------------------------------------
+	if(hasCommandRequest()){
+		ExecuteCommandRequest();
+	} else{
+		// Undo Redo
+		Input* input = Input::GetInstance();
+		if(input->IsPressKey(DIK_LCONTROL)){
+			if(input->IsPressKey(DIK_LSHIFT)){
+				// SHIFT あり
+				if(input->IsTriggerKey(DIK_Z)){
+					RedoCommand();
+				}
+			} else{
+				// SHIFT なし
+				if(input->IsTriggerKey(DIK_Z)){
+					UndoCommand();
+				}
+				if(input->IsTriggerKey(DIK_Y)){
+					RedoCommand();
+				}
+			}
+		}
 	}
+}
+
+void ObjectCommandInvoker::ExecuteCommandRequest(){
 
 	// 積まれたコマンドを全て実行する
 	for(auto& cmd : commandRequests_.commandQueue_){

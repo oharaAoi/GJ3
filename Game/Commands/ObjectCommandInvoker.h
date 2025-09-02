@@ -27,6 +27,8 @@ public:
 	void Initialize();
 	void Finalize();
 
+	void Update();
+
 	/// <summary>
 	/// 積まれた コマンドを実行する
 	/// </summary>
@@ -52,4 +54,6 @@ private:
 	FrameCommand commandRequests_;
 	std::deque<FrameCommand> commandHistory_;
 	size_t currentIndex_ = 0;
+public:
+	bool hasCommandRequest()const{ return !commandRequests_.commandQueue_.empty(); }
 };

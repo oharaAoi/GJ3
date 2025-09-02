@@ -4,7 +4,7 @@
 #include "Engine/System/Input/Input.h"
 
 ///Player
-#include "Player.h"
+class Player;
 #include "Command/IPlayerCommand.h"
 
 /// math
@@ -22,10 +22,9 @@ class PlayerInputHandler{
 	static constexpr std::array<uint8_t,2> kMoveUpKey = {DIK_UP,DIK_W};
 	static constexpr std::array<uint8_t,2> kMoveDownKey = {DIK_DOWN,DIK_S};
 
-
 public:
-	PlayerInputHandler() = default;
-	~PlayerInputHandler() = default;
+	PlayerInputHandler();
+	~PlayerInputHandler();
 
 	void HandleInput();
 private:

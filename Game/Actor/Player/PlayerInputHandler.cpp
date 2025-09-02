@@ -6,6 +6,9 @@
 /// invoker
 #include "Game/Commands/ObjectCommandInvoker.h"
 
+PlayerInputHandler::PlayerInputHandler(){}
+PlayerInputHandler::~PlayerInputHandler(){}
+
 void PlayerInputHandler::HandleInput(){
 	if(!player_){
 		return;
