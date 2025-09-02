@@ -1,6 +1,12 @@
 #include "ObjectCommandInvoker.h"
 
-void ObjectCommandInvoker::ExecuteCommandRequest(){}
+void ObjectCommandInvoker::Initialize(){
+	ClearHistory();
+}
+void ObjectCommandInvoker::Finalize(){
+	ClearHistory();
+}
+
 void ObjectCommandInvoker::ExecuteCommandRequest(){
 	// コマンドを積まれてなければスキップ
 	if(commandRequests_.commandQueue_.empty()){
@@ -12,51 +18,53 @@ void ObjectCommandInvoker::ExecuteCommandRequest(){
 		cmd->Execute();
 	}
 
-	// 履歴に保存
-	// currentCommandItr_ より先が残っていたら破棄（Redoのやり直し不可）
-	commandHistory_.erase(std::next(currentCommandItr_),commandHistory_.end());
+	// 現在を指している履歴以降を削除
+	if(currentIndex_ < commandHistory_.size()){
+		commandHistory_.erase(commandHistory_.begin() + currentIndex_,commandHistory_.end());
+	}
 
 	// 新しい FrameCommand を履歴に push
-	commandHistory_.push_back(std::make_unique<FrameCommand>(std::move(commandRequests_)));
-	currentCommandItr_ = std::prev(commandHistory_.end());
+	commandHistory_.push_back(commandRequests_);
+	++currentIndex_;
 
 	// 次のフレーム用に空の commandRequests_ を用意
 	commandRequests_ = FrameCommand{};
 }
 
 void ObjectCommandInvoker::UndoCommand(){
-	if(currentCommandItr_ == commandHistory_.end()){
+	// すべて Undo済み ならスキップ
+	if(currentIndex_ == 0){
 		return;
 	}
 
 	// 逆順に Undo
-	for(auto it = (*currentCommandItr_)->commandQueue_.rbegin();
-		it != (*currentCommandItr_)->commandQueue_.rend(); ++it){
-		(*it)->Undo();
-	}
+	--currentIndex_;
+	FrameCommand& frame = commandHistory_[currentIndex_];
 
-	if(currentCommandItr_ != commandHistory_.begin()){
-		--currentCommandItr_;
-	} else{
-		currentCommandItr_ = commandHistory_.end(); // すべてUndo済み
+	// 逆順に Undo
+	for(auto it = frame.commandQueue_.rbegin(); it != frame.commandQueue_.rend(); ++it){
+		(*it)->Undo();
 	}
 }
 
 void ObjectCommandInvoker::RedoCommand(){
-	if(commandHistory_.empty()){
+	// すべて Redo済み ならスキップ
+	if(currentIndex_ >= commandHistory_.size()){
 		return;
 	}
 
-	if(currentCommandItr_ == commandHistory_.end()){
-		currentCommandItr_ = commandHistory_.begin();
-	} else if(std::next(currentCommandItr_) != commandHistory_.end()){
-		++currentCommandItr_;
-	} else{
-		return; // これ以上Redoできない
+	FrameCommand& frame = commandHistory_[currentIndex_];
+
+	// 順番通りに再実行
+	for(auto& cmd : frame.commandQueue_){
+		cmd->Execute();
 	}
 
-	// 順番通りに Redo
-	for(auto& cmd : (*currentCommandItr_)->commandQueue_){
-		cmd->Execute(); // Redoも基本的に再実行
-	}
+	++currentIndex_;
+}
+
+void ObjectCommandInvoker::ClearHistory(){
+	commandHistory_.clear();
+	currentIndex_ = 0;
+	commandRequests_ = FrameCommand{};
 }

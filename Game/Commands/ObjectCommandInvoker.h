@@ -1,9 +1,9 @@
 #pragma once
 
 /// container
+#include <deque>
 #include <list>
 #include <vector>
-#include <queue>
 /// smart pointer
 #include <memory>
 
@@ -24,6 +24,9 @@ public:
 	}
 
 public:
+	void Initialize();
+	void Finalize();
+
 	/// <summary>
 	/// 積まれた コマンドを実行する
 	/// </summary>
@@ -32,6 +35,8 @@ public:
 	void UndoCommand();
 	void RedoCommand();
 
+	void ClearHistory();
+	void Reset();
 private:
 	ObjectCommandInvoker() = default;
 	ObjectCommandInvoker(const ObjectCommandInvoker&) = delete;
@@ -44,7 +49,6 @@ private:
 	};
 
 	FrameCommand commandRequests_;
-	std::list<std::unique_ptr<FrameCommand>> commandHistory_;
-	std::list<std::unique_ptr<FrameCommand>>::iterator currentCommandItr_ = commandHistory_.end();
-
+	std::deque<FrameCommand> commandHistory_;
+	size_t currentIndex_ = 0;
 };
