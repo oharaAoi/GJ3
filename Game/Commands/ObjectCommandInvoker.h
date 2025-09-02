@@ -36,7 +36,6 @@ public:
 	void RedoCommand();
 
 	void ClearHistory();
-	void Reset();
 private:
 	ObjectCommandInvoker() = default;
 	ObjectCommandInvoker(const ObjectCommandInvoker&) = delete;
