@@ -269,6 +269,8 @@
     <ClCompile Include="Game\Actor\Block\IBlock.cpp" />
     <ClCompile Include="Game\Actor\Block\BlockWall.cpp" />
     <ClCompile Include="Game\Actor\Block\BlockFactory.cpp" />
+    <ClCompile Include="Game\Actor\Player\Player.cpp" />
+    <ClCompile Include="Engine\Lib\Math\Vector2Int.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Module\Components\2d\PrimitiveDrawer.h" />
@@ -496,6 +498,8 @@
     <ClInclude Include="Game\Actor\Block\IBlock.h" />
     <ClInclude Include="Game\Actor\Block\BlockWall.h" />
     <ClInclude Include="Game\Actor\Block\BlockFactory.h" />
+    <ClInclude Include="Game\Actor\Player\Player.h" />
+    <ClInclude Include="Engine\Lib\Math\Vector2Int.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\Resources\HLSL\Object3d.hlsli" />
