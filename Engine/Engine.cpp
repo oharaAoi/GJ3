@@ -183,6 +183,10 @@ void Engine::EndFrame() {
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
 void Engine::RenderFrame() {
+	canvas2d_->Update();
+
+	canvas2d_->PreDraw();
+
 	// -------------------------------------------------
 	// ↓ 線の描画
 	// -------------------------------------------------
@@ -213,6 +217,7 @@ void Engine::RenderFrame() {
 	std::vector<RenderTargetType> postRenderTypes;
 	postRenderTypes.push_back(RenderTargetType::Object3D_RenderTarget);
 	Render::SetRenderTarget(postRenderTypes, dxCommon_->GetDepthHandle());
+	Engine::SetPipeline(PSOType::ProcessedScene, "PostProcess_Normal_16.json");
 	processedSceneFrame_->Draw(dxCmdList_);
 	SceneRenderer::GetInstance()->PostDraw();
 	BlendFinalTexture(Object3D_RenderTarget);
@@ -220,7 +225,6 @@ void Engine::RenderFrame() {
 	// -------------------------------------------------
 	// ↓ Sprite描画
 	// -------------------------------------------------
-	canvas2d_->Update();
 
 	std::vector<RenderTargetType> types;
 	types.push_back(RenderTargetType::Sprite2d_RenderTarget);

@@ -13,7 +13,8 @@ void Player::Init(){
 	type_ = BlockType::Player;
 
 	/// sprite 
-	sprite_ = Engine::GetCanvas2d()->AddSprite("player.png","Sprite_Normal.json");
+	sprite_ = Engine::GetCanvas2d()->AddSprite("player.png","Sprite_Normal.json", 100, true);
+	sprite_->SetIsFront(true);
 	transform_ = sprite_->GetTransform();
 
 	/// input handler

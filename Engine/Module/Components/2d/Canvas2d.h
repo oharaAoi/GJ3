@@ -11,6 +11,7 @@ public:
 		std::unique_ptr<Sprite> sprite;
 		std::string psoName;
 		int renderQueue = 0;
+		bool isPreDraw = false;
 	};
 
 public:
@@ -22,13 +23,15 @@ public:
 
 	void Update();
 
+	void PreDraw() const;
+
 	void Draw() const;
 
 	void EditObject(const ImVec2& windowSize, const ImVec2& imagePos);
 
 public:
 
-	Sprite* AddSprite(const std::string& textureName, const std::string& psoName, int renderQueue = 0);
+	Sprite* AddSprite(const std::string& _textureName, const std::string& _psoName, int _renderQueue = 0, bool _isPreDraw = false);
 
 private:
 
