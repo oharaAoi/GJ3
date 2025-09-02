@@ -94,6 +94,7 @@ void Sprite::Init(const std::string& fileName) {
 
 	isEnable_ = true;
 	isDestroy_ = false;
+	isBackGround_ = false;
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -116,14 +117,14 @@ void Sprite::Update() {
 // ↓　描画前処理
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
-void Sprite::Draw(const Pipeline* pipeline, bool isBackGround) {
+void Sprite::Draw(const Pipeline* pipeline) {
 	Vector2 pivotOffset = {
 		(anchorPoint_.x - 0.5f) * textureSize_.x,  // ピボットオフセット（中心からのオフセット）
 		(anchorPoint_.y - 0.5f) * textureSize_.y   // ピボットオフセット（中心からのオフセット）
 	};
 
 	Matrix4x4 projection = Render::GetViewport2D() * Render::GetProjection2D();
-	if (isBackGround) {
+	if (isBackGround_) {
 		transform_->SetTranslateZ(Render::GetFarClip());
 	}
 	

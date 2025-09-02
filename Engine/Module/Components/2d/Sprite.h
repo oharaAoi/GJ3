@@ -9,7 +9,7 @@
 class Render;
 
 class Sprite :
-public AttributeGui {
+	public AttributeGui {
 public:
 
 	struct TextureMesh {
@@ -41,8 +41,8 @@ public:
 	/// <summary>
 	/// 描画
 	/// </summary>
-	/// <param name="isBackGround">: バックグラウンド描画を行うか</param>
-	void Draw(const Pipeline* pipeline, bool isBackGround = false);
+	/// <param name="pipeline">: 描画パイプラインのポインタ</param>
+	void Draw(const Pipeline* pipeline);
 
 	/// <summary>
 	/// 描画
@@ -64,7 +64,7 @@ public:
 	/// Textureの中心位置を変える(Screen座標系)
 	/// </summary>
 	/// <param name="centerPos">: position</param>
-	void SetTranslate(const Vector2& centerPos) { transform_->SetTranslate(centerPos); } ;
+	void SetTranslate(const Vector2& centerPos) { transform_->SetTranslate(centerPos); };
 
 	/// <summary>
 	/// Textureのサイズを再設計する
@@ -109,12 +109,16 @@ public:
 	void SetIsDestroy(bool isDestroy) { isDestroy_ = isDestroy; }
 	bool GetIsDestroy() const { return isDestroy_; }
 
+	void SetIsBackGround(bool _isBackGround) { isBackGround_ = _isBackGround; }
+	bool GetIsBackGround() const { return isBackGround_; }
+
 	ScreenTransform* GetTransform() { return transform_.get(); }
 	
 private:
 
 	bool isEnable_;
 	bool isDestroy_;
+	bool isBackGround_;
 
 	// 定数バッファ
 	ComPtr<ID3D12Resource> vertexBuffer_;
