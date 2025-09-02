@@ -3,6 +3,7 @@
 #include "Engine/Module/Components/2d/BaseEntity2d.h"
 #include "Engine/Module/Components/2d/Canvas2d.h"
 #include "Engine/System/Editer/Window/EditorWindows.h"
+#include "Engine/Lib/Math/Vector2Int.h"
 #include "Game/Information/BlockType.h"
 
 /// <summary>
@@ -24,6 +25,8 @@ public:
 protected:
 
 	BlockType type_ = BlockType::None;
+
+	Vector2Int index_ = { 0,0 };
 
 };
 
