@@ -23,8 +23,9 @@ public:
 
 protected:
 	std::unique_ptr<PlayerInputHandler> inputHandler_; // 入力ハンドラ
+private:
+	Vector2 ConvertIndexToPosition(const Vector2Int& _index);	// 座標計算処理
 public:
 };
 
 /// 一旦ここ
-Vector2 ConvertIndexToPosition(const Vector2Int& _index, const Vector2& _size);

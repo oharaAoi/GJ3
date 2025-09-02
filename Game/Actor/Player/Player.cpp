@@ -27,13 +27,14 @@ void Player::Update(){
 		inputHandler_->HandleInput();
 	}
 	/// 座標更新
-	transform_->SetTranslate(ConvertIndexToPosition(index_, tileSize_));
+	transform_->SetTranslate(ConvertIndexToPosition(index_));
 }
 
 void Player::Debug_Gui(){
 	ImGui::Text("X : %d\n Y : %d",index_.x,index_.y);
 }
 
-Vector2 ConvertIndexToPosition(const Vector2Int& _index, const Vector2& _size){
-	return Vector2(_index.x * _size.x,_index.y * _size.y);
+Vector2 Player::ConvertIndexToPosition(const Vector2Int& _index) {
+	return Vector2(offset_.x + _index.x * tileSize_.x + tileSize_.x / 2.0f,
+				   offset_.y + _index.y * tileSize_.y + tileSize_.y / 2.0f);
 }

@@ -64,7 +64,6 @@ void StageRegistry::Register(const std::string& _fileName) {
 		row.resize(maxSize_.x);
 	}
 
-	
 	for (size_t row = 0; row < maxSize_.y; ++row) {
 		for (size_t col = 0; col < maxSize_.x; ++col) {
 			stageData_[row][col] = CreateBlock(data[row][col]);
@@ -76,6 +75,11 @@ void StageRegistry::Register(const std::string& _fileName) {
 				// 位置を決定
 				newBlock->SetPosition(CalculateTilePos(row, col));
 				newBlock->GetSprite()->ReSetTextureSize(tileSize_);
+			}
+
+			if (data[row][col] == static_cast<int>(BlockType::Player)) {
+				startIndex_ = { (int)col, (int)row };
+				startPos_ = CalculateTilePos(row, col);
 			}
 		}
 	}
@@ -140,13 +144,13 @@ Vector2 StageRegistry::CalculateTilePos(size_t row, size_t col) {
 
 	// マップの大きさを計算
 	Vector2 mapSize = Vector2(tileSize_.x * maxSize_.x, tileSize_.y * maxSize_.y);
-	Vector2 offset = Vector2(
+	mapOffset_ = Vector2(
 		(static_cast<float>(kWindowWidth_) - mapSize.x) / 2.0f,
 		(static_cast<float>(kWindowHeight_) - mapSize.y) / 2.0f
 	);
 	Vector2 centerPos = Vector2(
-		offset.x + col * tileSize_.x + tileSize_.x / 2.0f,
-		offset.y + row * tileSize_.y + tileSize_.y / 2.0f
+		mapOffset_.x + col * tileSize_.x + tileSize_.x / 2.0f,
+		mapOffset_.y + row * tileSize_.y + tileSize_.y / 2.0f
 	);
 	return centerPos;
 }

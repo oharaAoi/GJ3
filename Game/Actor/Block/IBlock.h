@@ -31,6 +31,9 @@ public:
 	const Vector2& GetTileSize() const { return tileSize_; }
 	void SetTileSize(const Vector2& size) { tileSize_ = size; }
 
+	const Vector2& GetOffset() const { return offset_; }
+	void SetOffset(const Vector2& offset) { offset_ = offset; }
+
 protected:
 
 	BlockType type_ = BlockType::None;
@@ -38,6 +41,8 @@ protected:
 	Vector2Int index_ = { 0,0 };
 
 	Vector2 tileSize_ = { 32.f, 32.f };
+
+	Vector2 offset_ = { 0.f, 0.f };
 
 };
 

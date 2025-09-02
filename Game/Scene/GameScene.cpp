@@ -56,6 +56,9 @@ void GameScene::Init()
 	player_->Init();
 	player_->SetTileSize(stageRegistry_->GetTileSize());
 	player_->GetSprite()->ReSetTextureSize(stageRegistry_->GetTileSize());
+	player_->SetIndex(stageRegistry_->GetStartIndex());
+	player_->SetPosition(stageRegistry_->GetStartPos());
+	player_->SetOffset(stageRegistry_->GetMapOffset());
 
 	worldObjects_ = std::make_unique<WorldObjects>();
 	worldObjects_->Init();

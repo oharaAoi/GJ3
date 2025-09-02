@@ -33,7 +33,10 @@ public:
 
 public:
 
-	Vector2 GetTileSize() const { return tileSize_; }
+	const Vector2& GetTileSize() const { return tileSize_; }
+	const Vector2& GetStartPos() const { return startPos_; }
+	const Vector2& GetMapOffset() const { return mapOffset_; }
+	const Vector2Int& GetStartIndex() const { return startIndex_; }
 
 private:
 
@@ -50,5 +53,9 @@ private:
 	Vector2Int maxSize_ = Vector2Int(0, 0);
 	Vector2 tileSize_;
 	int needGhostNum_;
+
+	Vector2Int startIndex_ = Vector2Int(0, 0);
+	Vector2 startPos_;
+	Vector2 mapOffset_;
 };
 
