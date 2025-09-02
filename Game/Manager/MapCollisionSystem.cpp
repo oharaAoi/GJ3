@@ -13,13 +13,17 @@ bool MapCollisionSystem::IsMovable(const Vector2Int& direction, const Vector2Int
 
 	// プレイヤーブロック
 	Vector2Int index = playerIndex + direction;
+	// 範囲外か見る
+	if (!OutOfRangeReference(index)) { return false; }
 
 	// 進む方向1マス目ブロック
 	IBlock* one = data[index.y][index.x].get();
 	if (one == nullptr) {									// 何もないなら進める
 		return true; 						
-	}else if (one->GetType() == BlockType::Wall) {			// 壁だから進めない
-		return false;								
+	} else if (one->GetType() == BlockType::Goal) {			// ゴールまでは進める
+		return true;
+	} else if (one->GetType() == BlockType::Wall) {			// 壁だから進めない
+		return false;
 	}
 
 	// 進む方向2マス目ブロック
@@ -67,6 +71,16 @@ void MapCollisionSystem::UpdateSpanGhost()
 
 }
 
+bool MapCollisionSystem::OutOfRangeReference(const Vector2Int& index)
+{
+	const auto& data = stageRegistry_->GetStageData();
+	size_t row = data.size();
+	size_t col = data[0].size();
+	// 範囲外では無いか検出
+	if (index.x >= 0 && index.x < row && index.y >= 0 && index.y < col) { return true; }
+	return false;
+}
+
 void MapCollisionSystem::ChengeStage(const Vector2Int& direction, const Vector2Int& playerIndex)
 {
 	// プレイヤーの元居たIndex番号からうめていく
@@ -79,10 +93,8 @@ void MapCollisionSystem::ChengeStage(const Vector2Int& direction, const Vector2I
 bool MapCollisionSystem::CheckGhostBlock(const Vector2Int& index)
 {
 	const auto& data = stageRegistry_->GetStageData();
-	size_t row = data.size();
-	size_t col = data[0].size();
 	// 範囲外では無いか検出
-	if (index.x >= row || index.y >= col) { return false; }
+	if (!OutOfRangeReference(index)) { return false; }
 	// ゴーストブロックか判定
 	if (data[index.x][index.y]->GetType() == BlockType::GhostBlock) { 
 		for (auto& pair : pairIndex_) {
