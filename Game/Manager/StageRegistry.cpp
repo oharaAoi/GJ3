@@ -134,7 +134,6 @@ void StageRegistry::CreateStageData(const Vector2Int& index, BlockType type)
 	newBlock->GetSprite()->ReSetTextureSize(tileSize_);
 	newBlock->SetOffset(mapOffset_);
 	newBlock->SetTileSize(tileSize_);
-	newBlock->SetInGhost(true);
 }
 
 void StageRegistry::ClearStageData(const Vector2Int& index)

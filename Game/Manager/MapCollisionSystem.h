@@ -40,16 +40,25 @@ private:
 
 	// ステージ上のインデックスをおばけブロックか判定する
 	bool CheckGhostBlock(const Vector2Int& playerIndex, const Vector2Int& index);
+
 	// pairIndexを入れたらゴーストのIndexの位置が取得できる
 	Vector2Int SearchGhostIndex(const Vector2Int& index);
+
+	// ゴーストが墓石に変わる
+	void ChangeGrave(const Vector2Int& index);
 
 private:
 
 	StageRegistry* stageRegistry_ = nullptr;
 
+	// プレイヤーのIndex
+	Vector2Int playerIndex_ = { 0,0 };
+
 	// ゴーストが出来ているペアを保持
 	std::vector<Vector2Int> pairIndex_;
 	bool ghostUpdate_ = false;
+	// 触れたゴーストの数を保持
+	//int 
 
 };
 

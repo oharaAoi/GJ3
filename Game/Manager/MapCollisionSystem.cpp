@@ -25,9 +25,11 @@ bool MapCollisionSystem::IsMovable(const Vector2Int& direction, const Vector2Int
 	if (one == nullptr) {									// 何もないなら進める
 		return true; 						
 	} else if (one->GetType() == BlockType::Goal ||			// ゴールまでは進める
-		one->GetInGhost()) {
+		one->GetType() == BlockType::Ghost) {
+		ChangeGrave(index);
 		return true;
-	} else if (one->GetType() == BlockType::Wall) {			// 壁だから進めない
+	} else if (one->GetType() == BlockType::Wall ||			// 壁だから進めない
+		one->GetType() == BlockType::Grave) {			
 		return false;
 	}
 
@@ -36,12 +38,12 @@ bool MapCollisionSystem::IsMovable(const Vector2Int& direction, const Vector2Int
 	IBlock* two = data[index.y][index.x].get();
 	// 1マス目が動かせるブロックで2マス目がないなら早期return
 	if (one->GetType() == BlockType::NormalBlock || one->GetType() == BlockType::GhostBlock) {
-		if (two == nullptr || two->GetInGhost()) {
+		if (two == nullptr || two->GetType() == BlockType::Ghost) {
+			playerIndex_ = playerIndex + direction;;
 			ChengeStage(direction, playerIndex);
 			return true;
 		}
 	}
-
 	return false;
 }
 
@@ -95,7 +97,12 @@ void MapCollisionSystem::UpdateSpanGhost()
 		if (data[ghostIndex.y][ghostIndex.x] == nullptr || 
 		   (data[ghostIndex.y][ghostIndex.x]->GetType() != BlockType::NormalBlock &&
 			data[ghostIndex.y][ghostIndex.x]->GetType() != BlockType::GhostBlock)) {
-			stageRegistry_->CreateStageData(ghostIndex, BlockType::Ghost);
+			// ブロックを押したタイミングでゴーストに当たっているなら
+			if (ghostIndex.x == playerIndex_.x && ghostIndex.y == playerIndex_.y) {
+				stageRegistry_->CreateStageData(ghostIndex, BlockType::Grave);
+			} else {
+				stageRegistry_->CreateStageData(ghostIndex, BlockType::Ghost);
+			}
 		}
 	}
 	ghostUpdate_ = false;
@@ -149,4 +156,13 @@ Vector2Int MapCollisionSystem::SearchGhostIndex(const Vector2Int& index)
 		((index.x + index.y) / 2) / col,
 		((index.x + index.y) / 2) % col
 	};
+}
+
+void MapCollisionSystem::ChangeGrave(const Vector2Int& index)
+{
+	const auto& data = stageRegistry_->GetStageData();
+	if (data[index.y][index.x] == nullptr) { return; }
+	if (data[index.y][index.x]->GetType() == BlockType::Ghost) {
+		stageRegistry_->CreateStageData(index, BlockType::Grave);
+	}
 }
