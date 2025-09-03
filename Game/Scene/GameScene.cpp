@@ -52,7 +52,7 @@ void GameScene::Init()
 	player_->Init(Engine::GetCanvas2d());
 
 	stageRegistry_ = std::make_unique<StageRegistry>();
-	stageRegistry_->Init();
+	stageRegistry_->Init(Engine::GetCanvas2d());
 	stageRegistry_->SetPlayer(player_.get());
 	stageRegistry_->Register("stage_0.json");
 

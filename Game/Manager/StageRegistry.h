@@ -22,7 +22,7 @@ public:
 	StageRegistry() = default;
 	~StageRegistry() = default;
 
-	void Init();
+	void Init(Canvas2d* _canvas2d);
 
 	void Update();
 
@@ -64,7 +64,8 @@ private:
 	std::unique_ptr<StageEditor> stageEditor_;
 	std::unique_ptr<StageLoader> stageLoader_;
 
-	// その他クラスのポインタ
+	// その他クラスのポイン
+	Canvas2d* pCanvas2d_;
 	Player* pPlayer_ = nullptr;
 
 	// Stageに関連する情報変数

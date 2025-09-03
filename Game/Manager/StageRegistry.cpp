@@ -6,8 +6,10 @@
 #include "Game/Information/StageInformation.h"
 #include "Enviroment.h"
 
-void StageRegistry::Init() {
+void StageRegistry::Init(Canvas2d* _canvas2d) {
 	SetName("StageRegistry");
+
+	pCanvas2d_ = _canvas2d;
 
 	stageEditor_ = std::make_unique<StageEditor>();
 	stageEditor_->Init();
@@ -84,7 +86,7 @@ void StageRegistry::CreatesMap(const std::string& _csvFileName) {
 			IBlock* newBlock = stageData_[row][col].get();
 			// 共通して設定する
 			if (newBlock != nullptr) {
-				newBlock->Init(Engine::GetCanvas2d());
+				newBlock->Init(pCanvas2d_);
 				newBlock->SetIndex(Vector2Int{ static_cast<int>(col),static_cast<int>(row) });
 
 				// 位置を決定
@@ -124,7 +126,7 @@ void StageRegistry::CreateStageData(const Vector2Int& index, BlockType type)
 	stageData_[index.y][index.x] = CreateBlock(static_cast<uint32_t>(type));
 	IBlock* newBlock = stageData_[index.y][index.x].get();
 
-	newBlock->Init(Engine::GetCanvas2d());
+	newBlock->Init(pCanvas2d_);
 	newBlock->SetIndex(index);
 
 	// 位置を決定
