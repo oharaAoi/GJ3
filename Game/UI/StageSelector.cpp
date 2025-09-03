@@ -14,6 +14,7 @@ void StageSelector::Init(){
 		stagePreview = std::make_unique<BlockWall>();
 		stagePreview->Init(Engine::GetCanvas2d());
 		stagePreview->GetSprite()->SetTextureResource(pStageRenderTarget_->GetResource(index));
+		stagePreview->GetSprite()->ReSetTextureSize({kWindowWidth_ * 0.3f, kWindowHeight_ * 0.3f});
 		index++;
 	}
 

@@ -44,6 +44,7 @@ public:
 
 	void SetPlayer(Player* _player) { pPlayer_ = _player; }
 	void SetWindowSize(const Vector2& _size) { windowSize_ = _size; }
+	void SetTileRatio(float _ratio) { tileRatio_ = _ratio; }
 
 	const Vector2& GetTileSize() const { return tileSize_; }
 	const Vector2& GetStartPos() const { return startPos_; }
@@ -80,5 +81,7 @@ private:
 	Vector2 mapOffset_;
 
 	Vector2Int goalIndex_ = Vector2Int(0, 0);
+
+	float tileRatio_ = 0.7f;
 };
 

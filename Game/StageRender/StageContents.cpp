@@ -22,6 +22,7 @@ void StageContents::Init() {
 		stageRegistries_[i]->Init(canvas2ds_[i].get());
 		stageRegistries_[i]->SetPlayer(player_[i].get());
 		stageRegistries_[i]->SetWindowSize({ kWindowWidth_ * 0.3f, kWindowHeight_ * 0.3f });
+		stageRegistries_[i]->SetTileRatio(0.9f);
 		stageRegistries_[i]->Register("stage_0.json");
 	}
 }

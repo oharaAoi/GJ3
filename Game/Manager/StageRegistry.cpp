@@ -179,11 +179,9 @@ Vector2 StageRegistry::CalculateTilePos(size_t row, size_t col) {
 	// 大体の横縦のタイルの数
 	const int baseCols = 12;
 	const int baseRows = 10;
-	// どのくらいの大きさ可の割合
-	float raito = 0.7f;
-
+	
 	// タイルのサイズを画面の比率から計算
-	tileSize_ = Vector2(static_cast<float>(windowSize_.x * raito) / baseCols, static_cast<float>(windowSize_.y * raito) / baseRows);
+	tileSize_ = Vector2(static_cast<float>(windowSize_.x * tileRatio_) / baseCols, static_cast<float>(windowSize_.y * tileRatio_) / baseRows);
 
 	// scalringの大きさをマップの縦横の大きさから計算
 	float scaleX = static_cast<float>(baseCols) / maxSize_.x;
