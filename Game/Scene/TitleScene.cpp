@@ -3,18 +3,17 @@
 #include "Engine/System/Input/Input.h"
 #include "Engine/Lib/Json/JsonItems.h"
 
-TitleScene::TitleScene() {
-}
+TitleScene::TitleScene(){}
 
-TitleScene::~TitleScene() {
+TitleScene::~TitleScene(){
 	Finalize();
 }
 
-void TitleScene::Finalize() {
+void TitleScene::Finalize(){
 	sceneRenderer_->Finalize();
 }
 
-void TitleScene::Init() {
+void TitleScene::Init(){
 
 	Engine::GetCanvas2d()->Init();
 
@@ -35,33 +34,49 @@ void TitleScene::Init() {
 	camera2d_->Init();
 	camera3d_->Init();
 	debugCamera_->Init();
-	
-	skybox_ = SceneRenderer::GetInstance()->AddObject<Skybox>("Skybox", "Object_Skybox.json", -999);
+
+	skybox_ = SceneRenderer::GetInstance()->AddObject<Skybox>("Skybox","Object_Skybox.json",-999);
 
 	uis_ = std::make_unique<TitleUIs>();
 	uis_->Init();
 
 	DirectionalLight* light = Render::GetLightGroup()->GetDirectionalLight();
 	light->SetIntensity(0.3f);
-
-	putButton_ = false;
 }
 
-void TitleScene::Update() {
+void TitleScene::Update(){
 	// -------------------------------------------------
 	// ↓ 入力処理
 	// -------------------------------------------------
+	Input* input = Input::GetInstance();
+	bool doTransition = false;
+	for(auto& key : kTransitionKeys){
+		if(Input::IsTriggerKey(key)){
+			doTransition = true;
+			break;
+		}
+	}
+	if(!doTransition){
+		if(input->IsControllerConnected()){
+			for(auto& button : kTransitionButtons){
+				if(Input::IsTriggerButton(button)){
+					doTransition = true;
+					break;
+				}
+			}
+		}
+	}
 
-	if (Input::GetInstance()->IsPressButton(XInputButtons::BUTTON_A) || Input::GetInstance()->GetKey(DIK_SPACE)) {
+	if(doTransition){
 		nextSceneType_ = SceneType::GAME;
-	} 
+	}
 
 	// -------------------------------------------------
 	// ↓ cameraの更新 
 	// -------------------------------------------------
-	if (debugCamera_->GetIsActive()) {
+	if(debugCamera_->GetIsActive()){
 		debugCamera_->Update();
-	} else {
+	} else{
 		camera3d_->Update();
 	}
 	camera2d_->Update();
@@ -73,7 +88,7 @@ void TitleScene::Update() {
 	sceneRenderer_->PostUpdate();
 }
 
-void TitleScene::Draw() const {
-	
+void TitleScene::Draw() const{
+
 	sceneRenderer_->Draw();
 }
