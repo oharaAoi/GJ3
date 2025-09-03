@@ -286,6 +286,8 @@
     <ClCompile Include="Game\Actor\Block\TokenGhost.cpp" />
     <ClCompile Include="Engine\Module\PostEffect\DistortionEffect.cpp" />
     <ClCompile Include="Game\Actor\Block\BlockGrave.cpp" />
+    <ClCompile Include="Game\StageRender\StageRenderTarget.cpp" />
+    <ClCompile Include="Game\StageRender\StageContents.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\DirectX\Pipeline\PipelineGroup\ComputeShaderPipelines.h" />
@@ -533,6 +535,8 @@
     <ClInclude Include="Game\Actor\Block\TokenGhost.h" />
     <ClInclude Include="Engine\Module\PostEffect\DistortionEffect.h" />
     <ClInclude Include="Game\Actor\Block\BlockGrave.h" />
+    <ClInclude Include="Game\StageRender\StageRenderTarget.h" />
+    <ClInclude Include="Game\StageRender\StageContents.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\Assets\HLSL\Light.hlsli" />
