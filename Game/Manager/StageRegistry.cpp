@@ -102,18 +102,22 @@ void StageRegistry::CreatesMap(const std::string& _csvFileName) {
 	}
 }
 
-void StageRegistry::SetStageData(const Vector2Int& index, const Vector2Int& assignIndex)
+void StageRegistry::ChangeStageData(const Vector2Int& index, const Vector2Int& assignIndex)
 {
 	Vector2Int copyIndex = index;
+	if (stageData_[index.y][index.x] != nullptr) {
+		stageData_[index.y][index.x]->Destroy();
+	}
 	stageData_[index.y][index.x] = std::move(stageData_[assignIndex.y][assignIndex.x]);
 	stageData_[index.y][index.x]->SetIndex(copyIndex);
 	stageData_[assignIndex.y][assignIndex.x] = nullptr;
 }
 
-void StageRegistry::SetGhostData(const Vector2Int& index)
+void StageRegistry::CreateStageData(const Vector2Int& index, BlockType type)
 {
+	if (stageData_[index.y][index.x] != nullptr) { stageData_[index.y][index.x]->Destroy(); }
 	stageData_[index.y][index.x] = nullptr;
-	stageData_[index.y][index.x] = CreateBlock(6);
+	stageData_[index.y][index.x] = CreateBlock(static_cast<uint32_t>(type));
 	IBlock* newBlock = stageData_[index.y][index.x].get();
 
 	newBlock->Init();
@@ -124,11 +128,12 @@ void StageRegistry::SetGhostData(const Vector2Int& index)
 	newBlock->GetSprite()->ReSetTextureSize(tileSize_);
 	newBlock->SetOffset(mapOffset_);
 	newBlock->SetTileSize(tileSize_);
+	newBlock->SetInGhost(true);
 }
 
 void StageRegistry::ClearStageData(const Vector2Int& index)
 {
-	stageData_[index.y][index.x]->GetSprite()->SetEnable(false);
+	stageData_[index.y][index.x]->Destroy();
 	stageData_[index.y][index.x] = nullptr;
 }
 

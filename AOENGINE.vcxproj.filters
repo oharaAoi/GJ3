@@ -283,6 +283,7 @@
     <ClCompile Include="Game\UI\StageSelector.cpp" />
     <ClCompile Include="Game\Actor\Block\BlockGhost.cpp" />
     <ClCompile Include="Game\Actor\Block\TokenGhost.cpp" />
+    <ClCompile Include="Game\Actor\Block\BlockGrave.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\DirectX\Pipeline\PipelineGroup\ComputeShaderPipelines.h" />
@@ -528,6 +529,7 @@
     <ClInclude Include="Game\UI\StageSelector.h" />
     <ClInclude Include="Game\Actor\Block\BlockGhost.h" />
     <ClInclude Include="Game\Actor\Block\TokenGhost.h" />
+    <ClInclude Include="Game\Actor\Block\BlockGrave.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\Assets\HLSL\Light.hlsli" />

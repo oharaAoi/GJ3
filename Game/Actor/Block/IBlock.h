@@ -34,6 +34,9 @@ public:
 	const Vector2& GetOffset() const { return offset_; }
 	void SetOffset(const Vector2& offset) { offset_ = offset; }
 
+	const bool GetInGhost() const { return inGhost_; }
+	void SetInGhost(bool inGhost) { inGhost_ = inGhost; }
+
 protected:
 
 	BlockType type_ = BlockType::None;
@@ -43,6 +46,8 @@ protected:
 	Vector2 tileSize_ = { 32.f, 32.f };
 
 	Vector2 offset_ = { 0.f, 0.f };
+
+	bool inGhost_ = false;
 
 };
 
