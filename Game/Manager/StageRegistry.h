@@ -43,7 +43,7 @@ public:
 	const Vector2& GetStartPos() const { return startPos_; }
 	const Vector2& GetMapOffset() const { return mapOffset_; }
 	const Vector2Int& GetStartIndex() const { return startIndex_; }
-	const Vector2Int& GetGaolIndex() const { return goalIndex_; }
+	const Vector2Int& GetGoalIndex() const { return goalIndex_; }
 
 private:
 
