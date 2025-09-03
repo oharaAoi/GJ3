@@ -48,6 +48,7 @@ Vector2Int PlayerInputHandler::DecideMoveDirection(){
 
 	MoveDirection currentMoveDirection = MoveDirection::NONE;
 
+	// キー入力をチェック
 	for(auto moveLeftKey : kMoveLeftKey){
 		if(input->IsPressKey(moveLeftKey)){
 			currentMoveDirection = MoveDirection::LEFT;
@@ -66,6 +67,41 @@ Vector2Int PlayerInputHandler::DecideMoveDirection(){
 	for(auto moveDownKey : kMoveDownKey){
 		if(input->IsPressKey(moveDownKey)){
 			currentMoveDirection = MoveDirection::DOWN;
+		}
+	}
+
+	// ゲームパッド入力をチェック
+	if(input->IsControllerConnected()){
+		// 十字キー
+		if(input->IsPressButton(kMoveLeftButton)){
+			currentMoveDirection = MoveDirection::LEFT;
+		}
+		if(input->IsPressButton(kMoveRightButton)){
+			currentMoveDirection = MoveDirection::RIGHT;
+		}
+		if(input->IsPressButton(kMoveUpButton)){
+			currentMoveDirection = MoveDirection::UP;
+		}
+		if(input->IsPressButton(kMoveDownButton)){
+			currentMoveDirection = MoveDirection::DOWN;
+		}
+
+		// 左スティック
+		Vector2 leftStick = input->GetLeftJoyStick(0.5f);
+		if(std::abs(leftStick.x) > std::abs(leftStick.y)){
+			// 横移動
+			if(leftStick.x < 0.f){
+				currentMoveDirection = MoveDirection::LEFT;
+			} else if(leftStick.x > 0.f){
+				currentMoveDirection = MoveDirection::RIGHT;
+			}
+		} else if(std::abs(leftStick.x) < std::abs(leftStick.y)){
+			// 縦移動
+			if(leftStick.y < 0.f){
+				currentMoveDirection = MoveDirection::DOWN;
+			} else if(leftStick.y > 0.f){
+				currentMoveDirection = MoveDirection::UP;
+			}
 		}
 	}
 

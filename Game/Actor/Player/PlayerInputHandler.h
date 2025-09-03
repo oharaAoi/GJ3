@@ -22,6 +22,11 @@ class PlayerInputHandler{
 	static constexpr std::array<uint8_t,2> kMoveUpKey = {DIK_UP,DIK_W};
 	static constexpr std::array<uint8_t,2> kMoveDownKey = {DIK_DOWN,DIK_S};
 
+	static constexpr XInputButtons kMoveLeftButton = XInputButtons::DPAD_LEFT;
+	static constexpr XInputButtons kMoveRightButton = XInputButtons::DPAD_RIGHT;
+	static constexpr XInputButtons kMoveUpButton = XInputButtons::DPAD_UP;
+	static constexpr XInputButtons kMoveDownButton = XInputButtons::DPAD_DOWN;
+
 public:
 	PlayerInputHandler();
 	~PlayerInputHandler();
