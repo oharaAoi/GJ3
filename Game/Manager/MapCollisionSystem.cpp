@@ -99,6 +99,7 @@ void MapCollisionSystem::UpdateSpanGhost()
 			data[ghostIndex.y][ghostIndex.x]->GetType() != BlockType::GhostBlock)) {
 			// ブロックを押したタイミングでゴーストに当たっているなら
 			if (ghostIndex.x == playerIndex_.x && ghostIndex.y == playerIndex_.y) {
+				++ghostCounter_;
 				stageRegistry_->CreateStageData(ghostIndex, BlockType::Grave);
 			} else {
 				stageRegistry_->CreateStageData(ghostIndex, BlockType::Ghost);
@@ -163,6 +164,7 @@ void MapCollisionSystem::ChangeGrave(const Vector2Int& index)
 	const auto& data = stageRegistry_->GetStageData();
 	if (data[index.y][index.x] == nullptr) { return; }
 	if (data[index.y][index.x]->GetType() == BlockType::Ghost) {
+		++ghostCounter_;
 		stageRegistry_->CreateStageData(index, BlockType::Grave);
 	}
 }
