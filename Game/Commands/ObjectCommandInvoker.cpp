@@ -1,5 +1,7 @@
 #include "ObjectCommandInvoker.h"
 
+/// System
+#include "Engine/Lib/GameTimer.h"
 #include "Engine/System/Input/Input.h"
 
 void ObjectCommandInvoker::Initialize(){
@@ -18,21 +20,44 @@ void ObjectCommandInvoker::Update(){
 	} else{
 		// Undo Redo
 		Input* input = Input::GetInstance();
-		if(input->IsPressKey(DIK_LCONTROL)){
-			if(input->IsPressKey(DIK_LSHIFT)){
-				// SHIFT あり
-				if(input->IsTriggerKey(DIK_Z)){
-					RedoCommand();
-				}
-			} else{
-				// SHIFT なし
-				if(input->IsTriggerKey(DIK_Z)){
-					UndoCommand();
-				}
-				if(input->IsTriggerKey(DIK_Y)){
-					RedoCommand();
+
+		UndoRedoState currentAutoUndoRedoState = UndoRedoState::MANUAL;
+
+		for(auto undoKey : kUndoKey){
+			if(input->IsTriggerKey(undoKey)){
+				currentAutoUndoRedoState = UndoRedoState::UNDO;
+				break;
+			}
+		}
+		for(auto undoButton : kUndoButton){
+			if(input->IsTriggerButton(undoButton)){
+				currentAutoUndoRedoState = UndoRedoState::UNDO;
+				break;
+			}
+		}
+		if(currentAutoUndoRedoState == UndoRedoState::MANUAL){
+			for(auto redoKey : kRedoKey){
+				if(input->IsTriggerKey(redoKey)){
+					currentAutoUndoRedoState = UndoRedoState::REDO;
+					break;
 				}
 			}
+			for(auto redoButton : kRedoButton){
+				if(input->IsTriggerButton(redoButton)){
+					currentAutoUndoRedoState = UndoRedoState::REDO;
+					break;
+				}
+			}
+		}
+
+
+		if(currentAutoUndoRedoState == UndoRedoState::MANUAL || currentAutoUndoRedoState != preAutoUndoRedoState_){
+			isAutoUndoRedo_ = false;
+		}
+		leftUndoRedoDelay_ -= GameTimer::DeltaTime();
+		if(leftUndoRedoDelay_ <= 0.f){
+			leftUndoRedoDelay_ = isAutoUndoRedo_ ? autoUndoRedoStepInterval_ : autoUndoRedoStartDelay_;
+			isAutoUndoRedo_ = true;
 		}
 	}
 }
