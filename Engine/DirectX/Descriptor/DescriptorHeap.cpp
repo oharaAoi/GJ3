@@ -2,6 +2,8 @@
 #include "Engine/DirectX/Descriptor/DescriptorAllocator.h"
 
 std::list<int> DescriptorHeap::freeSrvList_;
+std::list<int> DescriptorHeap::freeRtvList_;
+std::list<int> DescriptorHeap::freeDsvList_;
 
 void DescriptorHeap::Init(ID3D12Device* device) {
 	assert(device);
@@ -37,13 +39,14 @@ void DescriptorHeap::Init(ID3D12Device* device) {
 		1
 	);
 
-	/*rtvAllocator_ = std::make_unique<DescriptorAllocator>(
-		 7,
+	rtvAllocator_ = std::make_unique<DescriptorAllocator>(
+		DescriptorType::RTV,
+		9 + 4 + gameRTVHeap,
 		descriptorSize_->GetRTV(),
 		0
 	);
 
-	dsvAllocator_ = std::make_unique<DescriptorAllocator>(
+	/*dsvAllocator_ = std::make_unique<DescriptorAllocator>(
 		2,
 		descriptorSize_->GetDSV(),
 		0
@@ -97,11 +100,33 @@ void DescriptorHeap::FreeList() {
 		FreeSRV(index);
 	}
 	freeSrvList_.clear();
+
+	for (int index : freeRtvList_) {
+		FreeRTV(index);
+	}
+	freeRtvList_.clear();
+
+	for (int index : freeDsvList_) {
+		FreeDSV(index);
+	}
+	freeDsvList_.clear();
 }
 
 void DescriptorHeap::AddFreeSrvList(int index) {
 	if (index >= 0) {
 		freeSrvList_.push_back(index);
+	}
+}
+
+void DescriptorHeap::AddFreeRtvList(int index) {
+	if (index >= 0) {
+		freeRtvList_.push_back(index);
+	}
+}
+
+void DescriptorHeap::AddFreeDsvList(int index) {
+	if (index >= 0) {
+		freeRtvList_.push_back(index);
 	}
 }
 

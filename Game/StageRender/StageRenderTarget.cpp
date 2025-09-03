@@ -24,22 +24,19 @@ void StageRenderTarget::Init() {
 	// 振動情報の初期化
 	depthResource_ = std::make_unique<DxResource>();
 	depthResource_->Init(device_, dxHeap_, ResourceType::DEPTH);
-	depthResource_->CreateDepthResource(kWindowWidth_, kWindowHeight_);
+	depthResource_->CreateDepthResource(kWindowWidth_, kWindowHeight_, desc);
 	
-	depthHandle_ = dxHeap_->AllocateDSV();
-	device_->CreateDepthStencilView(depthResource_->GetResource(), &desc, depthHandle_.handleCPU);
-
 }
 
 void StageRenderTarget::SetRenderTarget(ID3D12GraphicsCommandList* commandList, uint32_t index) {
 	// MRT用に複数のRTVハンドルを用意
-	commandList->OMSetRenderTargets(1, &renderTargetResource_[index]->GetRTV().handleCPU, FALSE, &depthHandle_.handleCPU);
+	commandList->OMSetRenderTargets(1, &renderTargetResource_[index]->GetRTV().handleCPU, FALSE, &depthResource_->GetDSV().handleCPU);
 	float clearColor[] = { 0.0f, 0.0f, 0.0f, 1.0f };
 	// RenderTargetはoffScreen用のRenderTargetを指定しておく
 	// 各レンダーターゲットをクリア
 	commandList->ClearRenderTargetView(renderTargetResource_[index]->GetRTV().handleCPU, clearColor, 0, nullptr);
 	// 指定した深度で画面をクリア
-	commandList->ClearDepthStencilView(depthHandle_.handleCPU, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
+	commandList->ClearDepthStencilView(depthResource_->GetDSV().handleCPU, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
 	// srv
 	ID3D12DescriptorHeap* descriptorHeaps[] = { dxHeap_->GetSRVHeap() };
 	commandList->SetDescriptorHeaps(_countof(descriptorHeaps), descriptorHeaps);

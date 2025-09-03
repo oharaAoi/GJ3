@@ -100,6 +100,9 @@ void StageRegistry::CreatesMap(const std::string& _csvFileName) {
 			if (data[row][col] == static_cast<int>(BlockType::Player)) {
 				startIndex_ = { (int)col, (int)row };
 				startPos_ = CalculateTilePos(row, col);
+				startBlock_ = pCanvas2d_->AddSprite("startBlock.png", "Sprite_Normal.json");
+				startBlock_->SetTranslate(startPos_);
+				startBlock_->ReSetTextureSize(tileSize_);
 
 			} else if (data[row][col] == static_cast<int>(BlockType::Goal)) {
 				goalIndex_ = { (int)col, (int)row };

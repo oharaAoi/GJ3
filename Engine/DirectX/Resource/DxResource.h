@@ -22,7 +22,7 @@ public:
 	void CreateResource(const size_t& size);
 	void CreateResource(D3D12_RESOURCE_DESC* resourceDesc, D3D12_HEAP_PROPERTIES* heapProperties,
 							const D3D12_HEAP_FLAGS& heapFlags, const D3D12_RESOURCE_STATES& resourceState);
-	void CreateDepthResource(uint32_t width, uint32_t height);
+	void CreateDepthResource(uint32_t width, uint32_t height, const D3D12_DEPTH_STENCIL_VIEW_DESC& desc);
 
 	void CreateSRV(const D3D12_SHADER_RESOURCE_VIEW_DESC& desc);
 	void CreateUAV(const D3D12_UNORDERED_ACCESS_VIEW_DESC& desc);
@@ -43,6 +43,7 @@ public:
 	const DescriptorHandles& GetSRV() const;
 	const DescriptorHandles& GetUAV() const;
 	const DescriptorHandles& GetRTV() const;
+	const DescriptorHandles& GetDSV() const;
 
 private:
 
@@ -55,6 +56,7 @@ private:
 	std::optional<DescriptorHandles> uavAddress_ = std::nullopt;
 	std::optional<DescriptorHandles> srvAddress_ = std::nullopt;
 	std::optional<DescriptorHandles> rtvAddress_ = std::nullopt;
+	std::optional<DescriptorHandles> dsvAddress_ = std::nullopt;
 
 	ResourceType type_;
 };

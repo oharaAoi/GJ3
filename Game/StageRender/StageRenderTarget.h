@@ -29,8 +29,7 @@ private:
 
 	std::unique_ptr<DxResource> renderTargetResource_[stageRenderTargetNum_];
 	std::unique_ptr<DxResource> depthResource_;
-	DescriptorHandles depthHandle_;
-
+	
 	ID3D12Device* device_ = nullptr;
 	// heap
 	DescriptorHeap* dxHeap_ = nullptr;
