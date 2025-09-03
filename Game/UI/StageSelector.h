@@ -19,9 +19,12 @@ class StageSelector
 private:
 	static int32_t currentStageIndex_;
 
-	static constexpr std::array<uint8_t,2> kStageIndexSubKeys_ = {DIK_LEFT,DIK_A};
-	static constexpr std::array<uint8_t,2> kStageIndexAddKeys_ = {DIK_RIGHT,DIK_D};
+	static constexpr std::array<uint8_t,2> kStageIndexAddKeys_ = {DIK_LEFT,DIK_A};
+	static constexpr std::array<uint8_t,2> kStageIndexSubKeys_ = {DIK_RIGHT,DIK_D};
 	static constexpr std::array<uint8_t,2> kStageDecideKeys_ = {DIK_RETURN,DIK_SPACE};
+	static constexpr XInputButtons kStageIndexAddButtons_ = XInputButtons::DPAD_LEFT;
+	static constexpr XInputButtons kStageIndexSubButtons_ = XInputButtons::DPAD_RIGHT;
+	static constexpr std::array<XInputButtons,2> kStageDecideButtons_ = {XInputButtons::BUTTON_A,XInputButtons::BUTTON_B};
 public:
 	static int32_t GetCurrentStageIndex(){ return currentStageIndex_; }
 	static void SetCurrentStageIndex(int32_t index){ currentStageIndex_ = index; }

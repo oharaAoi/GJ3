@@ -35,6 +35,26 @@ void StageSelector::InputHandle(){
 	}
 
 	bool isPressing = false;
+
+	if(input->IsControllerConnected()){
+		Vector2 leftStick = input->GetLeftJoyStick(0.5f);
+		if(leftStick.x < -0.1f){
+			isPressing  = true;
+			scrollDirection_ = +1;
+		} else if(leftStick.x > +0.1f){
+			isPressing  = true;
+			scrollDirection_ = -1;
+		}
+
+		if(input->IsPressButton(kStageIndexSubButtons_)){
+			isPressing  = true;
+			scrollDirection_ = -1;
+		} else if(input->IsPressButton(kStageIndexAddButtons_)){
+			isPressing  = true;
+			scrollDirection_ = +1;
+		}
+	}
+
 	for(auto addIndexKey : kStageIndexAddKeys_){
 		if(input->IsPressKey(addIndexKey)){
 			isPressing  = true;
@@ -42,6 +62,7 @@ void StageSelector::InputHandle(){
 			break;
 		}
 	}
+
 	if(!isPressing){
 		for(auto subIndexKey : kStageIndexSubKeys_){
 			if(input->IsPressKey(subIndexKey)){
@@ -68,6 +89,13 @@ void StageSelector::InputHandle(){
 		}
 	} else{
 		leftPressTime_ = 0.0f;
+	}
+
+	for(auto decideButton : kStageDecideButtons_){
+		if(input->IsTriggerButton(decideButton)){
+			decidedStage_ = true;
+			break;
+		}
 	}
 
 	for(auto decideKey : kStageDecideKeys_){
