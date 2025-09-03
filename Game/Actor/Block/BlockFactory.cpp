@@ -4,6 +4,7 @@
 #include "Game/Actor/Block/BlockNormal.h"
 #include "Game/Actor/Block/BlockGhost.h"
 #include "Game/Actor/Block/TokenGhost.h"
+#include "Game/Actor/Block/BlockGrave.h"
 
 std::unique_ptr<IBlock> CreateBlock(uint32_t _type) {
 	switch (static_cast<BlockType>(_type)) {
@@ -21,6 +22,8 @@ std::unique_ptr<IBlock> CreateBlock(uint32_t _type) {
 		return std::make_unique<BlockGhost>();
 	case BlockType::Ghost:
 		return std::make_unique<TokenGhost>();
+	case BlockType::Grave:
+		return std::make_unique<BlockGrave>();
 	default:
 		return nullptr;
 	}
