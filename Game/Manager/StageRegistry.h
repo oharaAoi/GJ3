@@ -2,12 +2,15 @@
 #include <vector>
 #include <string>
 #include <memory>
+// Engine
 #include "Engine/Module/Components/Attribute/AttributeGui.h"
 #include "Engine/Lib/Math/Vector2Int.h"
+// Game
 #include "Game/Actor/Block/IBlock.h"
 #include "Game/Information/BlockType.h"
 #include "Game/Tool/StageEditor.h"
 #include "Game/Tool/StageLoader.h"
+#include "Game/Actor/Player/Player.h"
 
 /// <summary>
 /// Stageの情報を所有しているクラス
@@ -27,10 +30,6 @@ public:
 
 	void CreatesMap(const std::string& _csvFileName);
 
-	const std::vector<std::vector<std::unique_ptr<IBlock>>>& GetStageData() { return stageData_; }
-
-	void SetStageData(const Vector2Int& index, const Vector2Int& assignIndex);
-	void SetGhostData(const Vector2Int& index);
 	void ClearStageData(const Vector2Int& index);
 
 	void DestroyData();
@@ -38,6 +37,13 @@ public:
 	void Debug_Gui() override;
 
 public:
+
+	const std::vector<std::vector<std::unique_ptr<IBlock>>>& GetStageData() { return stageData_; }
+
+	void SetStageData(const Vector2Int& index, const Vector2Int& assignIndex);
+	void SetGhostData(const Vector2Int& index);
+
+	void SetPlayer(Player* _player) { pPlayer_ = _player; }
 
 	const Vector2& GetTileSize() const { return tileSize_; }
 	const Vector2& GetStartPos() const { return startPos_; }
@@ -49,6 +55,8 @@ private:
 
 	Vector2 CalculateTilePos(size_t row, size_t col);
 
+	void ResetPlayer(); // playerの位置と情報をリセットする
+
 private:
 
 	const std::string kDirectoryPath_ = "./Game/Assets/GameData/Map/Csv/";
@@ -56,6 +64,9 @@ private:
 
 	std::unique_ptr<StageEditor> stageEditor_;
 	std::unique_ptr<StageLoader> stageLoader_;
+
+	// その他クラスのポインタ
+	Player* pPlayer_ = nullptr;
 
 	// Stageに関連する情報変数
 	Vector2Int maxSize_ = Vector2Int(0, 0);

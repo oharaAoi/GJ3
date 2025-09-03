@@ -27,6 +27,7 @@ void StageRegistry::Update() {
 #ifdef _DEBUG
 	if (stageEditor_->GetIsChangeStage()) {
 		CreatesMap(stageEditor_->GetStageName());
+		ResetPlayer();
 		stageEditor_->SetIsChangeStage(false);
 	}
 #endif
@@ -57,6 +58,9 @@ void StageRegistry::Register(const std::string& _fileName) {
 
 	// mapの修正
 	CreatesMap(information.csvName);
+
+	// playerに座標などの設定を行う
+	ResetPlayer();
 }
 
 void StageRegistry::CreatesMap(const std::string& _csvFileName) {
@@ -197,3 +201,10 @@ Vector2 StageRegistry::CalculateTilePos(size_t row, size_t col) {
 	return centerPos;
 }
 
+void StageRegistry::ResetPlayer() {
+	pPlayer_->SetTileSize(tileSize_);
+	pPlayer_->GetSprite()->ReSetTextureSize(tileSize_);
+	pPlayer_->SetIndex(startIndex_);
+	pPlayer_->SetPosition(startPos_);
+	pPlayer_->SetOffset(mapOffset_);
+}
