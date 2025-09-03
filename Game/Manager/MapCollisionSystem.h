@@ -16,16 +16,15 @@ public:
 	// ====================================================================== //
 
 	bool IsMovable(const Vector2Int& direction, const Vector2Int& playerIndex);
-	// 現状ゴーストを通ったり、墓石を押せなかったりは対応無し。
-	// 基本的な動作は大丈夫なはず(何かあったら教えてちょ💛)
 
+private:
 
 	// ====================================================================== //
 	//					おばけができているか判定する
 	// ====================================================================== //
 
 	void UpdateSpanGhost();
-	// 完成してない(デバッグをしていないからバグが起きると思う)
+
 
 private:
 
@@ -33,10 +32,7 @@ private:
 	bool OutOfRangeReference(const Vector2Int& index);
 
 	// ステージ上のインデックス番号切り替え用
-	void ChengeStage(
-		const Vector2Int& direction,
-		const Vector2Int& playerIndex
-	);
+	void ChengeStage(const Vector2Int& direction, const Vector2Int& playerIndex);
 
 	// ステージ上のインデックスをおばけブロックか判定する
 	bool CheckGhostBlock(const Vector2Int& playerIndex, const Vector2Int& index);
@@ -47,6 +43,15 @@ private:
 	// ゴーストが墓石に変わる
 	void ChangeGrave(const Vector2Int& index);
 
+public:
+
+	// ====================================================================== //
+	//					回収したおばけの数を取得する		
+	// ====================================================================== //
+
+	const uint32_t GetGhostCounter()const { return ghostCounter_; }
+	void ResetGhostCounter() { ghostCounter_ = 0; }
+
 private:
 
 	StageRegistry* stageRegistry_ = nullptr;
@@ -54,11 +59,12 @@ private:
 	// プレイヤーのIndex
 	Vector2Int playerIndex_ = { 0,0 };
 
-	// ゴーストが出来ているペアを保持
+	// おばけが出来ているペアを保持
 	std::vector<Vector2Int> pairIndex_;
 	bool ghostUpdate_ = false;
-	// 触れたゴーストの数を保持
-	//int 
+
+	// 触れたおばけの数を保持
+	uint32_t ghostCounter_ = 0;
 
 };
 
