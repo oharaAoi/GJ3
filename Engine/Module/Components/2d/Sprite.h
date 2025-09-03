@@ -115,6 +115,8 @@ public:
 	void SetIsFront(bool _isFront) { isFront_ = _isFront; }
 
 	ScreenTransform* GetTransform() { return transform_.get(); }
+
+	void SetTextureResource(DxResource* _resource) { textureResource_ = _resource; }
 	
 private:
 
@@ -122,6 +124,8 @@ private:
 	bool isDestroy_;
 	bool isBackGround_;
 	bool isFront_;
+
+	DxResource* textureResource_;
 
 	// 定数バッファ
 	ComPtr<ID3D12Resource> vertexBuffer_;

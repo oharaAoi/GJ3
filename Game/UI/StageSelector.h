@@ -10,6 +10,7 @@
 
 /// game
 #include "Game/Actor/Block/BlockWall.h"
+#include "Game/StageRender/StageRenderTarget.h"
 
 /// math
 #include <stdint.h>
@@ -62,10 +63,14 @@ private:
 	float theSpaceBetweenButtons_ = 600.f;    // 描画用のオフセット（-1.0 ~ 1.0）
 	float currentOffset_ = 0.0f;   // 現在のオフセット位置
 
+	StageRenderTarget* pStageRenderTarget_;
+
 public:
 	bool IsDecidedStage() const{ return decidedStage_; }
 	void SetDecidedStage(bool decided){ decidedStage_ = decided; }
 
 	int32_t GetTotalStageNum() const{ return totalStageNum_; }
 	void SetTotalStageNum(int32_t num){ totalStageNum_ = num; }
+
+	void SetStageRenderTarget(StageRenderTarget* _stageRenderTarget) { pStageRenderTarget_ = _stageRenderTarget; }
 };

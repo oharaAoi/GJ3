@@ -16,9 +16,12 @@ void DescriptorHeap::Init(ID3D12Device* device) {
 	}
 
 	// ヒープの生成
-	rtvHeap_ = CreateDescriptorHeap(device_, D3D12_DESCRIPTOR_HEAP_TYPE_RTV, 9 + 4, false);
+	int gameRTVHeap = 3;
+	int gameDSVHeap = 4;
+
+	rtvHeap_ = CreateDescriptorHeap(device_, D3D12_DESCRIPTOR_HEAP_TYPE_RTV, 9 + 4 + gameRTVHeap, false);
 	srvHeap_ = CreateDescriptorHeap(device_, D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV, (1 << 16), true);
-	dsvHeap_ = CreateDescriptorHeap(device_, D3D12_DESCRIPTOR_HEAP_TYPE_DSV, 4 + 1, false);
+	dsvHeap_ = CreateDescriptorHeap(device_, D3D12_DESCRIPTOR_HEAP_TYPE_DSV, 4 + 1 + gameDSVHeap, false);
 
 	srvAllocator_ = std::make_unique<DescriptorAllocator>(
 		DescriptorType::SAHADERVIEW,
@@ -29,7 +32,7 @@ void DescriptorHeap::Init(ID3D12Device* device) {
 
 	dsvAllocator_ = std::make_unique<DescriptorAllocator>(
 		DescriptorType::DSV,
-		5,
+		4 + 1 + gameDSVHeap,
 		descriptorSize_->GetDSV(),
 		1
 	);

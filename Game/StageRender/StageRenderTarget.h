@@ -19,6 +19,8 @@ public:
 
 	void Transition(ID3D12GraphicsCommandList* commandList, uint32_t index, const D3D12_RESOURCE_STATES& beforState, const D3D12_RESOURCE_STATES& afterState);
 
+	DxResource* GetResource(uint32_t index) { return renderTargetResource_[index].get(); }
+
 private:
 
 	void CreateRenderTarget();
@@ -26,7 +28,7 @@ private:
 private:
 
 	std::unique_ptr<DxResource> renderTargetResource_[stageRenderTargetNum_];
-	ID3D12Resource* depthResource_;
+	std::unique_ptr<DxResource> depthResource_;
 	DescriptorHandles depthHandle_;
 
 	ID3D12Device* device_ = nullptr;

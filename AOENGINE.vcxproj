@@ -237,6 +237,7 @@ copy "$(ProjectDir)Externals\assimp\build\bin\Release\assimp-vc143-mt.dll" "$(Ta
     <ClCompile Include="Game\Actor\Block\BlockWall.cpp" />
     <ClCompile Include="Game\Actor\Block\IBlock.cpp" />
     <ClCompile Include="Game\CallBacks\GameCallBacksManager.cpp" />
+    <ClCompile Include="Game\Camera\StageContentCamera.cpp" />
     <ClCompile Include="Game\Scene\StageSelectScene.cpp" />
     <ClCompile Include="Game\Manager\StageRegistry.cpp" />
     <ClCompile Include="Game\RunTime\GameCore.cpp" />
@@ -472,6 +473,7 @@ copy "$(ProjectDir)Externals\assimp\build\bin\Release\assimp-vc143-mt.dll" "$(Ta
     <ClInclude Include="Game\Actor\Block\BlockWall.h" />
     <ClInclude Include="Game\Actor\Block\IBlock.h" />
     <ClInclude Include="Game\CallBacks\GameCallBacksManager.h" />
+    <ClInclude Include="Game\Camera\StageContentCamera.h" />
     <ClInclude Include="Game\Scene\StageSelectScene.h" />
     <ClInclude Include="Game\Information\ActionContext.h" />
     <ClInclude Include="Game\Information\BlockType.h" />

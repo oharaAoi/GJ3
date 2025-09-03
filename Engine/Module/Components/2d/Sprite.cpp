@@ -95,6 +95,7 @@ void Sprite::Init(const std::string& fileName) {
 	isEnable_ = true;
 	isDestroy_ = false;
 	isBackGround_ = false;
+	textureResource_ = nullptr;
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -151,7 +152,12 @@ void Sprite::PostDraw(ID3D12GraphicsCommandList* commandList, const Pipeline* pi
 	index = pipeline->GetRootSignatureIndex("gTransformationMatrix");
 	transform_->BindCommand(commandList, index);
 	index = pipeline->GetRootSignatureIndex("gTexture");
-	TextureManager::GetInstance()->SetGraphicsRootDescriptorTable(commandList, textureName_, index);
+	if (textureResource_ == nullptr) {
+		TextureManager::GetInstance()->SetGraphicsRootDescriptorTable(commandList, textureName_, index);
+	} else {
+		commandList->SetGraphicsRootDescriptorTable(index, textureResource_->GetSRV().handleGPU);
+	}
+	
 	commandList->DrawIndexedInstanced(6, 1, 0, 0, 0);
 }
 

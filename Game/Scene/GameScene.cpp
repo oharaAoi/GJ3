@@ -15,11 +15,10 @@ void GameScene::Finalize()
 // ↓　初期化
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
-void GameScene::Init()
-{
+void GameScene::Init() {
 	Engine::GetCanvas2d()->Init();
 
-	JsonItems *adjust = JsonItems::GetInstance();
+	JsonItems* adjust = JsonItems::GetInstance();
 	adjust->Init("GameScene");
 
 	// -------------------------------------------------
@@ -54,6 +53,7 @@ void GameScene::Init()
 	stageRegistry_ = std::make_unique<StageRegistry>();
 	stageRegistry_->Init(Engine::GetCanvas2d());
 	stageRegistry_->SetPlayer(player_.get());
+	stageRegistry_->SetWindowSize({kWindowWidth_, kWindowHeight_});
 	stageRegistry_->Register("stage_0.json");
 
 	mapCollision_ = std::make_unique<MapCollisionSystem>();

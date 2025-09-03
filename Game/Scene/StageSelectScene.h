@@ -11,6 +11,7 @@
 #include "Game/WorldObject/WorldObjects.h"
 // ui
 #include "Game/UI/StageSelector.h"
+#include "Game/StageRender/StageContents.h"
 
 class StageSelectScene
 	: public BaseScene{
@@ -36,6 +37,8 @@ private:
 
 	// ------------------- ui ------------------- //
 	std::unique_ptr<StageSelector> stageSelector_;
+
+	std::unique_ptr<StageContents> stageContents_;
 
 	SceneRenderer* sceneRenderer_;
 };

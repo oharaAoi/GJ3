@@ -183,7 +183,7 @@ Vector2 StageRegistry::CalculateTilePos(size_t row, size_t col) {
 	float raito = 0.7f;
 
 	// タイルのサイズを画面の比率から計算
-	tileSize_ = Vector2(static_cast<float>(kWindowWidth_ * raito) / baseCols, static_cast<float>(kWindowHeight_ * raito) / baseRows);
+	tileSize_ = Vector2(static_cast<float>(windowSize_.x * raito) / baseCols, static_cast<float>(windowSize_.y * raito) / baseRows);
 
 	// scalringの大きさをマップの縦横の大きさから計算
 	float scaleX = static_cast<float>(baseCols) / maxSize_.x;
@@ -197,8 +197,8 @@ Vector2 StageRegistry::CalculateTilePos(size_t row, size_t col) {
 	// マップの大きさを計算
 	Vector2 mapSize = Vector2(tileSize_.x * maxSize_.x, tileSize_.y * maxSize_.y);
 	mapOffset_ = Vector2(
-		(static_cast<float>(kWindowWidth_) - mapSize.x) / 2.0f,
-		(static_cast<float>(kWindowHeight_) - mapSize.y) / 2.0f
+		(static_cast<float>(windowSize_.x) - mapSize.x) / 2.0f,
+		(static_cast<float>(windowSize_.y) - mapSize.y) / 2.0f
 	);
 	Vector2 centerPos = Vector2(
 		mapOffset_.x + col * tileSize_.x + tileSize_.x / 2.0f,

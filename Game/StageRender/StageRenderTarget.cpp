@@ -5,6 +5,7 @@ StageRenderTarget::~StageRenderTarget() {
 	for (uint32_t oi = 0; oi < stageRenderTargetNum_; ++oi) {
 		renderTargetResource_[oi]->Finalize();
 	}
+	depthResource_->Finalize();
 }
 
 void StageRenderTarget::Init() {
@@ -15,16 +16,19 @@ void StageRenderTarget::Init() {
 
 	CreateRenderTarget();
 
-	// 振動情報の初期化
-	depthResource_ = graphicsCtx->GetDxCommon()->GetDepthStencilResource();
-	depthHandle_ = graphicsCtx->GetDxHeap()->AllocateSRV();
+	// heap上にDSCを構築
+	D3D12_DEPTH_STENCIL_VIEW_DESC desc{};
+	desc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
+	desc.ViewDimension = D3D12_DSV_DIMENSION_TEXTURE2D;
 
-	D3D12_SHADER_RESOURCE_VIEW_DESC depthSrvDesc{};
-	depthSrvDesc.Format = DXGI_FORMAT_R24_UNORM_X8_TYPELESS;
-	depthSrvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
-	depthSrvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
-	depthSrvDesc.Texture2D.MipLevels = 1;
-	graphicsCtx->GetDevice()->CreateShaderResourceView(depthResource_, &depthSrvDesc, depthHandle_.handleCPU);
+	// 振動情報の初期化
+	depthResource_ = std::make_unique<DxResource>();
+	depthResource_->Init(device_, dxHeap_, ResourceType::DEPTH);
+	depthResource_->CreateDepthResource(kWindowWidth_, kWindowHeight_);
+	
+	depthHandle_ = dxHeap_->AllocateDSV();
+	device_->CreateDepthStencilView(depthResource_->GetResource(), &desc, depthHandle_.handleCPU);
+
 }
 
 void StageRenderTarget::SetRenderTarget(ID3D12GraphicsCommandList* commandList, uint32_t index) {

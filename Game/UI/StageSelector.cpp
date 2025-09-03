@@ -9,9 +9,12 @@
 int32_t StageSelector::currentStageIndex_ = 0;
 
 void StageSelector::Init(){
+	uint32_t index = 0;
 	for(auto& stagePreview : stagePreviews_){
 		stagePreview = std::make_unique<BlockWall>();
 		stagePreview->Init(Engine::GetCanvas2d());
+		stagePreview->GetSprite()->SetTextureResource(pStageRenderTarget_->GetResource(index));
+		index++;
 	}
 
 	decidedStage_ = false;

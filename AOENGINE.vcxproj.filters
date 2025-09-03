@@ -57,6 +57,9 @@
     <FxCompile Include="Game\Assets\HLSL\Distortion.PS.hlsl" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Engine\Module\PostEffect\DistortionEffect.cpp" />
+    <ClCompile Include="Game\Actor\Block\BlockGrave.cpp" />
+    <ClCompile Include="Game\Actor\Block\BlockGhost.cpp" />
     <ClCompile Include="Engine\DirectX\Pipeline\PipelineGroup\ComputeShaderPipelines.cpp" />
     <ClCompile Include="Engine\Lib\GpuParticlesData.cpp" />
     <ClCompile Include="Engine\Module\Components\2d\BaseEntity2d.cpp" />
@@ -163,9 +166,12 @@
     <ClCompile Include="Engine\System\Collision\ColliderCollector.cpp" />
     <ClCompile Include="Engine\System\Collision\PenetrationResolution.cpp" />
     <ClCompile Include="Game\Actor\Block\BlockFactory.cpp" />
+    <ClCompile Include="Game\Actor\Block\BlockGoal.cpp" />
+    <ClCompile Include="Game\Actor\Block\BlockNormal.cpp" />
     <ClCompile Include="Game\Actor\Block\BlockWall.cpp" />
     <ClCompile Include="Game\Actor\Block\IBlock.cpp" />
     <ClCompile Include="Game\CallBacks\GameCallBacksManager.cpp" />
+    <ClCompile Include="Game\Scene\StageSelectScene.cpp" />
     <ClCompile Include="Game\Manager\StageRegistry.cpp" />
     <ClCompile Include="Game\RunTime\GameCore.cpp" />
     <ClCompile Include="Engine\DirectX\Descriptor\DescriptorAllocator.cpp" />
@@ -261,6 +267,7 @@
     <ClCompile Include="Game\Scene\SceneFactory.cpp" />
     <ClCompile Include="Game\Scene\TestScene.cpp" />
     <ClCompile Include="Game\Scene\TitleScene.cpp" />
+    <ClCompile Include="Game\StageRender\StageRenderTarget.cpp" />
     <ClCompile Include="Game\State\ICharacterState.cpp" />
     <ClCompile Include="Game\State\StateMachine.cpp" />
     <ClCompile Include="Game\Tool\MapChipLoader.cpp" />
@@ -278,18 +285,15 @@
     <ClCompile Include="Game\Actor\Player\Command\PlayerMoveCommand.cpp" />
     <ClCompile Include="Game\Actor\Player\PlayerInputHandler.cpp" />
     <ClCompile Include="Game\Manager\MapCollisionSystem.cpp" />
-    <ClCompile Include="Game\Actor\Block\BlockGoal.cpp" />
-    <ClCompile Include="Game\Actor\Block\BlockNormal.cpp" />
-    <ClCompile Include="Game\Scene\StageSelectScene.cpp" />
     <ClCompile Include="Game\UI\StageSelector.cpp" />
-    <ClCompile Include="Game\Actor\Block\BlockGhost.cpp" />
     <ClCompile Include="Game\Actor\Block\TokenGhost.cpp" />
-    <ClCompile Include="Engine\Module\PostEffect\DistortionEffect.cpp" />
-    <ClCompile Include="Game\Actor\Block\BlockGrave.cpp" />
-    <ClCompile Include="Game\StageRender\StageRenderTarget.cpp" />
     <ClCompile Include="Game\StageRender\StageContents.cpp" />
+    <ClCompile Include="Game\Camera\StageContentCamera.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Engine\Module\PostEffect\DistortionEffect.h" />
+    <ClInclude Include="Game\Actor\Block\BlockGrave.h" />
+    <ClInclude Include="Game\Actor\Block\BlockGhost.h" />
     <ClInclude Include="Engine\DirectX\Pipeline\PipelineGroup\ComputeShaderPipelines.h" />
     <ClInclude Include="Engine\Lib\GpuParticlesData.h" />
     <ClInclude Include="Engine\Module\Components\2d\BaseEntity2d.h" />
@@ -398,9 +402,12 @@
     <ClInclude Include="Engine\System\Collision\ColliderCollector.h" />
     <ClInclude Include="Engine\System\Collision\PenetrationResolution.h" />
     <ClInclude Include="Game\Actor\Block\BlockFactory.h" />
+    <ClInclude Include="Game\Actor\Block\BlockGoal.h" />
+    <ClInclude Include="Game\Actor\Block\BlockNormal.h" />
     <ClInclude Include="Game\Actor\Block\BlockWall.h" />
     <ClInclude Include="Game\Actor\Block\IBlock.h" />
     <ClInclude Include="Game\CallBacks\GameCallBacksManager.h" />
+    <ClInclude Include="Game\Scene\StageSelectScene.h" />
     <ClInclude Include="Game\Information\ActionContext.h" />
     <ClInclude Include="Game\Information\BlockType.h" />
     <ClInclude Include="Game\Information\ColliderCategory.h" />
@@ -510,6 +517,7 @@
     <ClInclude Include="Game\Scene\SceneType.h" />
     <ClInclude Include="Game\Scene\TestScene.h" />
     <ClInclude Include="Game\Scene\TitleScene.h" />
+    <ClInclude Include="Game\StageRender\StageRenderTarget.h" />
     <ClInclude Include="Game\State\ICharacterState.h" />
     <ClInclude Include="Game\State\StateMachine.h" />
     <ClInclude Include="Game\Tool\MapChipLoader.h" />
@@ -527,16 +535,10 @@
     <ClInclude Include="Game\Actor\Player\PlayerInputHandler.h" />
     <ClInclude Include="Game\Manager\MapCollisionSystem.h" />
     <ClInclude Include="Game\WorldObject\WorldObjects.h" />
-    <ClInclude Include="Game\Actor\Block\BlockGoal.h" />
-    <ClInclude Include="Game\Actor\Block\BlockNormal.h" />
-    <ClInclude Include="Game\Scene\StageSelectScene.h" />
     <ClInclude Include="Game\UI\StageSelector.h" />
-    <ClInclude Include="Game\Actor\Block\BlockGhost.h" />
     <ClInclude Include="Game\Actor\Block\TokenGhost.h" />
-    <ClInclude Include="Engine\Module\PostEffect\DistortionEffect.h" />
-    <ClInclude Include="Game\Actor\Block\BlockGrave.h" />
-    <ClInclude Include="Game\StageRender\StageRenderTarget.h" />
     <ClInclude Include="Game\StageRender\StageContents.h" />
+    <ClInclude Include="Game\Camera\StageContentCamera.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\Assets\HLSL\Light.hlsli" />

@@ -43,6 +43,7 @@ public:
 public:
 
 	void SetPlayer(Player* _player) { pPlayer_ = _player; }
+	void SetWindowSize(const Vector2& _size) { windowSize_ = _size; }
 
 	const Vector2& GetTileSize() const { return tileSize_; }
 	const Vector2& GetStartPos() const { return startPos_; }
@@ -69,6 +70,7 @@ private:
 	Player* pPlayer_ = nullptr;
 
 	// Stageに関連する情報変数
+	Vector2 windowSize_;
 	Vector2Int maxSize_ = Vector2Int(0, 0);
 	Vector2 tileSize_;
 	int needGhostNum_;
