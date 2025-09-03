@@ -54,6 +54,7 @@
     <FxCompile Include="Engine\Resources\HLSL\Sprite.VS.hlsl" />
     <FxCompile Include="Engine\Resources\HLSL\Textureless.PS.hlsl" />
     <FxCompile Include="Engine\Resources\HLSL\CS\VerticalBlur.CS.hlsl" />
+    <FxCompile Include="Game\Assets\HLSL\Distortion.PS.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\DirectX\Pipeline\PipelineGroup\ComputeShaderPipelines.cpp" />
@@ -283,6 +284,7 @@
     <ClCompile Include="Game\UI\StageSelector.cpp" />
     <ClCompile Include="Game\Actor\Block\BlockGhost.cpp" />
     <ClCompile Include="Game\Actor\Block\TokenGhost.cpp" />
+    <ClCompile Include="Engine\Module\PostEffect\DistortionEffect.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\DirectX\Pipeline\PipelineGroup\ComputeShaderPipelines.h" />
@@ -528,6 +530,7 @@
     <ClInclude Include="Game\UI\StageSelector.h" />
     <ClInclude Include="Game\Actor\Block\BlockGhost.h" />
     <ClInclude Include="Game\Actor\Block\TokenGhost.h" />
+    <ClInclude Include="Engine\Module\PostEffect\DistortionEffect.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\Assets\HLSL\Light.hlsli" />

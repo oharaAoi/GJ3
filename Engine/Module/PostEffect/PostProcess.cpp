@@ -21,6 +21,7 @@ void PostProcess::Finalize() {
 	luminanceOutline_.reset();
 	depthOutline_.reset();
 	motionBlur_.reset();
+	distortion_.reset();
 	effectList_.clear();
 	depthStencilResource_.Reset();
 }
@@ -89,6 +90,10 @@ void PostProcess::Init(ID3D12Device* device, DescriptorHeap* descriptorHeap, Ren
 	motionBlur_->SetMotionResource(renderTarget->GetRenderTargetResource(RenderTargetType::MotionVector_RenderTarget));
 	motionBlur_->SetIsEnable(true);
 
+	distortion_ = std::make_shared<DistortionEffect>();
+	distortion_->Init();
+	distortion_->SetIsEnable(true);
+
 	AddEffect(PostEffectType::RADIALBLUR);
 	AddEffect(PostEffectType::GLITCHNOISE);
 	AddEffect(PostEffectType::VIGNETTE);
@@ -100,6 +105,7 @@ void PostProcess::Init(ID3D12Device* device, DescriptorHeap* descriptorHeap, Ren
 	AddEffect(PostEffectType::SMOOTHING);
 	AddEffect(PostEffectType::GAUSSIANFILTER);
 	AddEffect(PostEffectType::GRAYSCALE);
+	AddEffect(PostEffectType::DISTORTION);
 	AddEffect(PostEffectType::TOONMAP);
 
 	EditorWindows::AddObjectWindow(this, "Post Process");
@@ -197,6 +203,9 @@ void PostProcess::AddEffect(PostEffectType type) {
 		case PostEffectType::MOTIONBLUR:
 			effectList_.push_back(motionBlur_);
 			break;
+		case PostEffectType::DISTORTION:
+			effectList_.push_back(distortion_);
+			break;
 		default:
 			break;
 		}
@@ -216,40 +225,30 @@ std::shared_ptr<IPostEffect> PostProcess::GetEffect(PostEffectType type) {
 	switch (type) {
 	case PostEffectType::GRAYSCALE:
 		return grayscale_;
-		break;
 	case PostEffectType::RADIALBLUR:
 		return radialBlur_;
-		break;
 	case PostEffectType::GLITCHNOISE:
 		return glitchNoise_;
-		break;
 	case PostEffectType::VIGNETTE:
 		return vignette_;
-		break;
 	case PostEffectType::DISSOLVE:
 		return dissolve_;
-		break;
 	case PostEffectType::TOONMAP:
 		return toonMap_;
-		break;
 	case PostEffectType::BLOOM:
 		return bloom_;
-		break;
 	case PostEffectType::SMOOTHING:
 		return smoothing_;
-		break;
 	case PostEffectType::GAUSSIANFILTER:
 		return gaussianFilter_;
-		break;
 	case PostEffectType::LUMINANCE_OUTLINE:
 		return luminanceOutline_;
-		break;
 	case PostEffectType::DEPTH_OUTLINE:
 		return depthOutline_;
-		break;
 	case PostEffectType::MOTIONBLUR:
 		return motionBlur_;
-		break;
+	case PostEffectType::DISTORTION:
+		return distortion_;
 	default:
 		return nullptr;
 		break;
