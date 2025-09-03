@@ -42,7 +42,7 @@ void ParticleManager::Init() {
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
 void ParticleManager::Update() {
-	this->SetView(Render::GetViewProjectionMat(), Matrix4x4::MakeUnit());
+	this->SetView(Render::GetViewProjectionMat(), Render::GetProjection2D(), Matrix4x4::MakeUnit());
 
 	ParticlesUpdate();
 
@@ -130,11 +130,15 @@ void ParticleManager::ParticlesUpdate() {
 				Matrix4x4 billMatrix = Matrix4x4::MakeUnit();
 				rotateMatrix = pr.rotate.MakeMatrix();
 			}
+			if (pr.isDraw2d) {
+				pr.translate.z = 1.0f;
+			}
 			Matrix4x4 translateMatrix = pr.translate.MakeTranslateMat();
 			Matrix4x4 localWorld = Multiply(Multiply(scaleMatrix, rotateMatrix), translateMatrix);
 
 			particles.second.forGpuData_[index].worldMat = localWorld;
 			particles.second.forGpuData_[index].color = pr.color;
+			particles.second.forGpuData_[index].draw2d = pr.isDraw2d;
 
 			particles.second.isAddBlend = pr.isAddBlend;
 

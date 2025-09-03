@@ -6,8 +6,9 @@ struct VertexShaderOutput{
 };
 
 struct CpuParticle {
-	float4 color;
 	float4x4 worldMat;
+	float4 color;
+	int draw2d;
 };
 
 struct GpuParticle {

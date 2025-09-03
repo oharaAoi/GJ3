@@ -145,6 +145,7 @@ void BaseParticles::Emit(const Vector3& pos) {
 	newParticle.stretchBillboard = emitter_.stretchBillboard;
 	newParticle.stretchScaleFactor = emitter_.stretchScale;
 	newParticle.isBillBord = emitter_.isBillBord;
+	newParticle.isDraw2d = emitter_.isDraw2d;
 }
 
 void BaseParticles::EmitUpdate() {

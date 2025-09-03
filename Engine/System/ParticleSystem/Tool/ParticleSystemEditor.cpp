@@ -83,7 +83,7 @@ void ParticleSystemEditor::Update() {
 	gpuParticleRenderer_->SetView(camera_->GetViewMatrix() * camera_->GetProjectionMatrix(), camera_->GetBillBordMatrix());
 	gpuParticleRenderer_->Update();
 
-	particleRenderer_->SetView(camera_->GetViewMatrix() * camera_->GetProjectionMatrix(), camera_->GetBillBordMatrix());
+	particleRenderer_->SetView(camera_->GetViewMatrix() * camera_->GetProjectionMatrix(), Render::GetProjection2D(), camera_->GetBillBordMatrix());
 	for (auto& particle : particlesMap_) {
 		particleRenderer_->Update(particle.first, particle.second.forGpuData_, particle.second.isAddBlend);
 	}
@@ -189,12 +189,15 @@ void ParticleSystemEditor::ParticlesUpdate() {
 				Matrix4x4 billMatrix = Matrix4x4::MakeUnit();
 				rotateMatrix = pr.rotate.MakeMatrix();
 			}
-			
+			if (pr.isDraw2d) {
+				pr.translate.z = 0.0f;
+			}
 			Matrix4x4 translateMatrix = pr.translate.MakeTranslateMat();
 			Matrix4x4 localWorld = Multiply(Multiply(scaleMatrix, rotateMatrix), translateMatrix);
 
 			particles.second.forGpuData_[index].worldMat = localWorld;
 			particles.second.forGpuData_[index].color = pr.color;
+			particles.second.forGpuData_[index].draw2d = pr.isDraw2d;
 
 			particles.second.isAddBlend = pr.isAddBlend;
 

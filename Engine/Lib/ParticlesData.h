@@ -27,6 +27,7 @@ struct ParticleSingle {
 	float stretchScaleFactor;
 	Vector3 upScale;
 	bool isBillBord = true;
+	bool isDraw2d = true;
 };
 
 struct ParticleEmit : public IJsonConverter {
@@ -59,6 +60,7 @@ struct ParticleEmit : public IJsonConverter {
 	float stretchScale = 4.0f;
 
 	bool isParticleAddBlend = false;	// blendModeをAddBlendにするかのフラグ
+	bool isDraw2d = false;	// blendModeをAddBlendにするかのフラグ
 	bool isBillBord = true;
 
 	bool isScaleUp;				// サイズを大きくするか
@@ -100,6 +102,7 @@ struct ParticleEmit : public IJsonConverter {
 			.Add("isLifeOfScale", isLifeOfScale)
 			.Add("isLifeOfAlpha", isLifeOfAlpha)
 			.Add("isParticleAddBlend", isParticleAddBlend)
+			.Add("isDraw2d", isDraw2d)
 			.Add("isScaleUp", isScaleUp)
 			.Add("scaleUpScale", scaleUpScale)
 			.Add("isBillBord", isBillBord)
@@ -133,6 +136,7 @@ struct ParticleEmit : public IJsonConverter {
 		fromJson(jsonData, "isLifeOfScale", isLifeOfScale);
 		fromJson(jsonData, "isLifeOfAlpha", isLifeOfAlpha);
 		fromJson(jsonData, "isParticleAddBlend", isParticleAddBlend);
+		fromJson(jsonData, "isDraw2d", isDraw2d);
 		fromJson(jsonData, "isScaleUp", isScaleUp);
 		fromJson(jsonData, "scaleUpScale", scaleUpScale);
 		fromJson(jsonData, "isBillBord", isBillBord);

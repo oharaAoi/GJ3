@@ -48,6 +48,7 @@ void ParticleEmit::Attribute_Gui() {
 		}
 
 		ImGui::Checkbox("isParticleAddBlend", &isParticleAddBlend);
+		ImGui::Checkbox("isDraw2d", &isDraw2d);
 		ImGui::Checkbox("isScaleUp", &isScaleUp);
 		ImGui::DragFloat3("scaleUpScale", (float*)&scaleUpScale, 0.01f);
 

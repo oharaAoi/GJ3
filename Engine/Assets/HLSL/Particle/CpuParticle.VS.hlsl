@@ -2,6 +2,7 @@
 
 struct PerView {
 	float4x4 viewProjection;
+	float4x4 viewProjection2d;
 	float4x4 billboardMat;
 };
 
@@ -17,7 +18,12 @@ VertexShaderOutput main(VertexShaderInput input, uint instanceId : SV_InstanceID
 	VertexShaderOutput output;
 	
 	CpuParticle particle = gParticles[instanceId];
-	output.position = mul(input.position, mul(particle.worldMat,gPerView.viewProjection));
+	if (particle.draw2d == 0) {
+		output.position = mul(input.position, mul(particle.worldMat, gPerView.viewProjection));
+	} else {
+		float4x4 wvp2d = mul(particle.worldMat, gPerView.viewProjection2d);
+		output.position = mul(input.position, wvp2d);
+	}
 	output.texcoord = input.texcoord;
 	output.color = particle.color;
 	
