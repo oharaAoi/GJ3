@@ -8,7 +8,7 @@ public:
 	BlockGrave() = default;
 	~BlockGrave() override = default;
 
-	void Init() override;
+	void Init(Canvas2d* _canvas2d) override;
 
 	void Update() override;
 

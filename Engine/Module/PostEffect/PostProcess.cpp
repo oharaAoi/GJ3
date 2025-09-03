@@ -92,7 +92,7 @@ void PostProcess::Init(ID3D12Device* device, DescriptorHeap* descriptorHeap, Ren
 
 	distortion_ = std::make_shared<DistortionEffect>();
 	distortion_->Init();
-	distortion_->SetIsEnable(true);
+	distortion_->SetIsEnable(false);
 
 	AddEffect(PostEffectType::RADIALBLUR);
 	AddEffect(PostEffectType::GLITCHNOISE);

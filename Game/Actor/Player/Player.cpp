@@ -7,13 +7,13 @@
 Player::Player():IBlock(){}
 Player::~Player(){}
 
-void Player::Init(){
+void Player::Init(Canvas2d* _canvas2d){
 	/// Tag
 	SetName("Player");
 	type_ = BlockType::Player;
 
 	/// sprite 
-	sprite_ = Engine::GetCanvas2d()->AddSprite("player.png","Sprite_Normal.json", 100, true);
+	sprite_ = _canvas2d->AddSprite("player.png","Sprite_Normal.json", 100, true);
 	sprite_->SetIsFront(true);
 	transform_ = sprite_->GetTransform();
 

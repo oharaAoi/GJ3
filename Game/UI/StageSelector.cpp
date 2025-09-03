@@ -11,7 +11,7 @@ int32_t StageSelector::currentStageIndex_ = 0;
 void StageSelector::Init(){
 	for(auto& stagePreview : stagePreviews_){
 		stagePreview = std::make_unique<BlockWall>();
-		stagePreview->Init();
+		stagePreview->Init(Engine::GetCanvas2d());
 	}
 
 	decidedStage_ = false;

@@ -8,7 +8,7 @@ public:
 	TokenGhost() = default;
 	~TokenGhost() override = default;
 
-	void Init() override;
+	void Init(Canvas2d* _canvas2d) override;
 	void Update() override;
 	void Debug_Gui() override;
 

@@ -16,7 +16,7 @@ public:
 	IBlock() = default;
 	virtual ~IBlock() = default;
 
-	virtual void Init() = 0;
+	virtual void Init(Canvas2d* _canvas2d) = 0;
 
 	virtual void Update() = 0;
 

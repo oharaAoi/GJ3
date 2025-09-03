@@ -18,7 +18,7 @@ public:
 	Player();
 	~Player();
 
-	void Init();
+	void Init(Canvas2d* _canvas2d);
 	void Update() override;
 	void Debug_Gui() override;
 

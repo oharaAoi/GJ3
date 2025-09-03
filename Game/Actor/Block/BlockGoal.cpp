@@ -1,8 +1,8 @@
 #include "BlockGoal.h"
 
-void BlockGoal::Init() {
+void BlockGoal::Init(Canvas2d* _canvas2d) {
 	SetName("BlockWall");
-	sprite_ = Engine::GetCanvas2d()->AddSprite("goal.png", "Sprite_Normal.json");
+	sprite_ = _canvas2d->AddSprite("goal.png", "Sprite_Normal.json");
 	transform_ = sprite_->GetTransform();
 	type_ = BlockType::Goal;
 }

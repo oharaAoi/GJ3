@@ -84,7 +84,7 @@ void StageRegistry::CreatesMap(const std::string& _csvFileName) {
 			IBlock* newBlock = stageData_[row][col].get();
 			// 共通して設定する
 			if (newBlock != nullptr) {
-				newBlock->Init();
+				newBlock->Init(Engine::GetCanvas2d());
 				newBlock->SetIndex(Vector2Int{ static_cast<int>(col),static_cast<int>(row) });
 
 				// 位置を決定
@@ -124,7 +124,7 @@ void StageRegistry::CreateStageData(const Vector2Int& index, BlockType type)
 	stageData_[index.y][index.x] = CreateBlock(static_cast<uint32_t>(type));
 	IBlock* newBlock = stageData_[index.y][index.x].get();
 
-	newBlock->Init();
+	newBlock->Init(Engine::GetCanvas2d());
 	newBlock->SetIndex(index);
 
 	// 位置を決定

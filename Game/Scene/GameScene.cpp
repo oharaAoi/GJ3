@@ -49,7 +49,7 @@ void GameScene::Init()
 	// -------------------------------------------------
 
 	player_ = std::make_unique<Player>();
-	player_->Init();
+	player_->Init(Engine::GetCanvas2d());
 
 	stageRegistry_ = std::make_unique<StageRegistry>();
 	stageRegistry_->Init();
