@@ -8,4 +8,5 @@ enum class BlockType {
 	NormalBlock	= 4,		// 通常ブロック(変化する系)
 	GhostBlock	= 5,		// おばけブロック
 	Ghost		= 6,		// おばけ
+	Grave		= 7,		// お墓
 };

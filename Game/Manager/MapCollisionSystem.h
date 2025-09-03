@@ -9,7 +9,7 @@ public:
 
 	void Init(StageRegistry* stageRegistry);
 
-	void Update();
+	void Update(); 
 
 	// ====================================================================== //
 	//			進めるか判定する(進む方向、プレイヤーインデックス)
@@ -39,7 +39,7 @@ private:
 	);
 
 	// ステージ上のインデックスをおばけブロックか判定する
-	bool CheckGhostBlock(const Vector2Int& index);
+	bool CheckGhostBlock(const Vector2Int& playerIndex, const Vector2Int& index);
 	// pairIndexを入れたらゴーストのIndexの位置が取得できる
 	Vector2Int SearchGhostIndex(const Vector2Int& index);
 

@@ -30,6 +30,10 @@ public:
 
 	void CreatesMap(const std::string& _csvFileName);
 
+	const std::vector<std::vector<std::unique_ptr<IBlock>>>& GetStageData() { return stageData_; }
+
+	void ChangeStageData(const Vector2Int& index, const Vector2Int& assignIndex);
+	void CreateStageData(const Vector2Int& index, BlockType type);
 	void ClearStageData(const Vector2Int& index);
 
 	void DestroyData();
@@ -37,11 +41,6 @@ public:
 	void Debug_Gui() override;
 
 public:
-
-	const std::vector<std::vector<std::unique_ptr<IBlock>>>& GetStageData() { return stageData_; }
-
-	void SetStageData(const Vector2Int& index, const Vector2Int& assignIndex);
-	void SetGhostData(const Vector2Int& index);
 
 	void SetPlayer(Player* _player) { pPlayer_ = _player; }
 
