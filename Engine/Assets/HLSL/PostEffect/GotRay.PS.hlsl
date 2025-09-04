@@ -1,0 +1,109 @@
+#include "ProcessedScene.hlsli"
+
+struct GotRayParam {
+	float4 color;
+	float2 pos;
+	float pad[2];
+	float angle; // 光の角度
+	float spread; // 光の広がり
+	float cutoff; // 光筋のカットオフ
+	float falloff; // 下方向へのフェード
+	float edgeFade; // 左右端のフェード
+	float speed;
+	float ray1Density;
+	float ray2Density;
+	float ray3Density;
+	float seed;
+	float time;
+};
+
+Texture2D g_SceneTex : register(t0); // シーン全体のスクリーンテクスチャ
+SamplerState g_Sampler : register(s0);
+
+struct PixelShaderOutput {
+	float4 color : SV_TARGET0;
+};
+
+float random(float2 uv) {
+	return frac(sin(dot(uv.xy, float2(12.9898, 78.233))) * 43758.5453123);
+}
+
+float noise(float2 uv) {
+	float2 i = floor(uv);
+	float2 f = frac(uv);
+
+	float a = random(i);
+	float b = random(i + float2(1.0, 0.0));
+	float c = random(i + float2(0.0, 1.0));
+	float d = random(i + float2(1.0, 1.0));
+
+	float2 u = f * f * (3.0 - 2.0 * f);
+
+	return lerp(a, b, u.x) +
+           (c - a) * u.y * (1.0 - u.x) +
+           (d - b) * u.x * u.y;
+}
+
+// 回転行列をUVに適用
+float2 rotateUV(float2 uv, float ang) {
+	float s = sin(ang);
+	float c = cos(ang);
+	return mul(uv, float2x2(c, -s, s, c));
+}
+
+// Screen blend
+float3 ScreenBlend(float3 base, float3 blend) {
+	return 1.0 - (1.0 - base) * (1.0 - blend);
+}
+
+// ------------------
+// Pixel Shader Entry
+// ------------------
+struct PSInput {
+	float4 pos : SV_POSITION;
+	float2 uv : TEXCOORD0;
+};
+
+float4 mainPS(PSInput input) : SV_TARGET {
+	float2 uv = input.uv;
+
+    // Rotate, skew, move UVs
+	float2 transformed = rotateUV(uv - position, angle);
+	transformed /= ((uv.y + spread) - (uv.y * spread));
+
+    // Ray coords
+	float2 ray1 = float2(transformed.x * ray1_density +
+                         sin(time * 0.1 * speed) * (ray1_density * 0.2) + seed, 1.0);
+	float2 ray2 = float2(transformed.x * ray2_density +
+                         sin(time * 0.2 * speed) * (ray1_density * 0.2) + seed, 1.0);
+
+    // Cutoff
+	float cut = step(cutoff, transformed.x) * step(cutoff, 1.0 - transformed.x);
+	ray1 *= cut;
+	ray2 *= cut;
+
+    // Noise rays
+	float rays = 0.0;
+	if (hdr > 0.5f) {
+		rays = noise(ray1) + noise(ray2) * ray2_intensity;
+	}
+	else {
+		rays = saturate(noise(ray1) + noise(ray2) * ray2_intensity);
+	}
+
+    // Fade out edges
+	rays *= smoothstep(0.0, falloff, (1.0 - uv.y)); // Bottom
+	rays *= smoothstep(cutoff, edge_fade + cutoff, transformed.x); // Left
+	rays *= smoothstep(cutoff, edge_fade + cutoff, 1.0 - transformed.x); // Right
+
+    // Sample scene
+	float3 sceneCol = g_SceneTex.Sample(g_Sampler, uv).rgb;
+
+    // Rays color
+	float3 rayCol = rays * color.rgb;
+
+    // Blend with scene (Screen)
+	float3 finalCol = ScreenBlend(sceneCol, rayCol);
+
+	return float4(finalCol, 1.0);
+}

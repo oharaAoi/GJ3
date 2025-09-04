@@ -123,6 +123,7 @@ copy "$(ProjectDir)Externals\assimp\build\bin\Release\assimp-vc143-mt.dll" "$(Ta
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Engine\Module\PostEffect\ScreenGotRay.cpp" />
     <ClCompile Include="Game\Actor\Block\BlockLimit.cpp" />
     <ClCompile Include="Game\Actor\Block\BlockSpecial.cpp" />
     <ClCompile Include="Engine\Module\PostEffect\DistortionEffect.cpp" />
@@ -362,6 +363,7 @@ copy "$(ProjectDir)Externals\assimp\build\bin\Release\assimp-vc143-mt.dll" "$(Ta
     <ClCompile Include="Game\Manager\Collision\Map\SpecialBlockCollision.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Engine\Module\PostEffect\ScreenGotRay.h" />
     <ClInclude Include="Game\Actor\Block\BlockLimit.h" />
     <ClInclude Include="Game\Actor\Block\BlockSpecial.h" />
     <ClInclude Include="Engine\Module\PostEffect\DistortionEffect.h" />
@@ -702,6 +704,12 @@ copy "$(ProjectDir)Externals\assimp\build\bin\Release\assimp-vc143-mt.dll" "$(Ta
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </FxCompile>
     <FxCompile Include="Engine\Assets\HLSL\ObjectTextureBlend.PS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Engine\Assets\HLSL\PostEffect\GotRay.PS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
