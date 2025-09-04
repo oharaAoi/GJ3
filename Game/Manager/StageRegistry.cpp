@@ -124,7 +124,11 @@ void StageRegistry::ChangeStageData(const Vector2Int& index, const Vector2Int& a
 
 void StageRegistry::CreateStageData(const Vector2Int& index, BlockType type)
 {
-	if (stageData_[index.y][index.x] != nullptr) { stageData_[index.y][index.x]->Destroy(); }
+	bool copy = false;
+	if (stageData_[index.y][index.x] != nullptr) { 
+		copy = stageData_[index.y][index.x]->GetIsSpecialBlock();
+		stageData_[index.y][index.x]->Destroy(); 
+	}
 	stageData_[index.y][index.x] = nullptr;
 	stageData_[index.y][index.x] = CreateBlock(static_cast<uint32_t>(type));
 	IBlock* newBlock = stageData_[index.y][index.x].get();
@@ -137,6 +141,7 @@ void StageRegistry::CreateStageData(const Vector2Int& index, BlockType type)
 	newBlock->GetSprite()->ReSetTextureSize(tileSize_);
 	newBlock->SetOffset(mapOffset_);
 	newBlock->SetTileSize(tileSize_);
+	if (copy) { newBlock->SetIsSpecialBlock(true); }
 }
 
 void StageRegistry::ClearStageData(const Vector2Int& index)
