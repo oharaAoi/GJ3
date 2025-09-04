@@ -42,7 +42,7 @@ void GpuParticleManager::Update() {
 		field->Execute(commandList);
 	}
 
-	renderer_->SetView(Render::GetViewProjectionMat(), Render::GetCameraRotate().MakeMatrix());
+	renderer_->SetView(Render::GetViewProjectionMat(), Render::GetProjection2D(), Render::GetCameraRotate().MakeMatrix());
 	renderer_->Update();
 
 	for (auto& emitter : emitterList_) {

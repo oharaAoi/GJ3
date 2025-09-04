@@ -80,7 +80,7 @@ void ParticleSystemEditor::Update() {
 	ParticlesUpdate();
 
 	// particleをRendererに送る
-	gpuParticleRenderer_->SetView(camera_->GetViewMatrix() * camera_->GetProjectionMatrix(), camera_->GetBillBordMatrix());
+	gpuParticleRenderer_->SetView(camera_->GetViewMatrix() * camera_->GetProjectionMatrix(), Render::GetProjection2D(), camera_->GetBillBordMatrix());
 	gpuParticleRenderer_->Update();
 
 	particleRenderer_->SetView(camera_->GetViewMatrix() * camera_->GetProjectionMatrix(), Render::GetProjection2D(), camera_->GetBillBordMatrix());

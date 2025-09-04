@@ -26,10 +26,13 @@ public:	// メンバ構造体
 		int lifeOfScaleDown;
 		int lifeOfScaleUp;
 		int lifeOfAlpha;
+
+		int isDraw2d;
 	};
 
 	struct PerView {
 		Matrix4x4 viewProjection;
+		Matrix4x4 viewProjection2d;
 		Matrix4x4 billboardMat;
 	};
 
@@ -64,8 +67,9 @@ public:
 	D3D12_GPU_DESCRIPTOR_HANDLE GetFreeListHandle() const { return freeListResource_->GetUAV().handleGPU; }
 	ID3D12Resource* GetMaxBufferResource() const { return maxParticleBuffer_.Get(); }
 
-	void SetView(const Matrix4x4& view, const Matrix4x4& bill) {
+	void SetView(const Matrix4x4& view, const Matrix4x4& viewProj2d,  const Matrix4x4& bill) {
 		perView_->viewProjection = view;
+		perView_->viewProjection2d = viewProj2d;
 		perView_->billboardMat = Multiply(Quaternion::AngleAxis(kPI, CVector3::UP).MakeMatrix(), bill);
 	}
 

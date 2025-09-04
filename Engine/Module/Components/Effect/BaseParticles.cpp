@@ -70,6 +70,14 @@ void BaseParticles::Emit(const Vector3& pos) {
 
 	newParticle.translate = pos;
 	newParticle.color = emitter_.color;
+
+	if (emitter_.isRandomColor) {
+		float t = RandomFloat(0.f, 1.f);
+		newParticle.color = Vector4::Lerp(emitter_.randColor1, emitter_.randColor2, t);
+	} else {
+		newParticle.color = emitter_.color;
+	}
+
 	if (emitter_.shape == 0) {
 		// 親の回転成分を取り出す
 		Quaternion rotate;

@@ -29,6 +29,8 @@ struct GpuParticle {
 	int lifeOfScaleDown;
 	int lifeOfScaleUp;
 	int lifeOfAlpha;
+	
+	int isDraw2d;
 };
 
 struct MaxParticle {

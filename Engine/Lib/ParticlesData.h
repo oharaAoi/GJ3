@@ -44,6 +44,9 @@ struct ParticleEmit : public IJsonConverter {
 	
 	// particle自体のparameter
 	Vector4 color = Vector4{ 1,1,1,1 };			// 色
+	Vector4 randColor1 = Vector4{ 1,0,0,1 };			// 色
+	Vector4 randColor2 = Vector4{ 0,0,1,1 };			// 色
+	bool isRandomColor = false;
 	Vector3 minScale = CVector3::UNIT;		// 最小の大きさ
 	Vector3 maxScale = CVector3::UNIT;		// 最大の大きさ
 	float speed = 1.0f;			// 速度
@@ -90,6 +93,9 @@ struct ParticleEmit : public IJsonConverter {
 			.Add("emitType", emitType)
 			.Add("emitOrigin", emitOrigin)
 			.Add("color", color)
+			.Add("isRandomColor", isRandomColor)
+			.Add("randColor1", randColor1)
+			.Add("randColor2", randColor2)
 			.Add("minScale", minScale)
 			.Add("maxScale", maxScale)
 			.Add("speed", speed)
@@ -124,6 +130,9 @@ struct ParticleEmit : public IJsonConverter {
 		fromJson(jsonData, "emitType", emitType);
 		fromJson(jsonData, "emitOrigin", emitOrigin);
 		fromJson(jsonData, "color", color);
+		fromJson(jsonData, "isRandomColor", isRandomColor);
+		fromJson(jsonData, "randColor1", randColor1);
+		fromJson(jsonData, "randColor2", randColor2);
 		fromJson(jsonData, "minScale", minScale);
 		fromJson(jsonData, "maxScale", maxScale);
 		fromJson(jsonData, "speed", speed);

@@ -39,6 +39,8 @@ void GpuParticleEmitter::Init(const std::string& name) {
 	// preFrameの作成
 	perFrameBuffer_ = CreateBufferResource(dxDevice_, sizeof(PerFrame));
 	perFrameBuffer_->Map(0, nullptr, reinterpret_cast<void**>(&perFrame_));
+
+	parentWorldMat_ = nullptr;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -150,6 +152,7 @@ void GpuParticleEmitter::SetItem() {
 	emitterData_->radius = emitterItem_.radius;
 	emitterData_->angle = emitterItem_.angle;
 	emitterData_->height = emitterItem_.height;
+	emitterData_->isDraw2d = emitterItem_.isDraw2d;
 }
 
 

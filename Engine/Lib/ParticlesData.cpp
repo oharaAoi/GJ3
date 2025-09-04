@@ -25,7 +25,13 @@ void ParticleEmit::Attribute_Gui() {
 		ImGui::Separator();
 
 		ImGui::BulletText("Particle Parameters");
-		ImGui::ColorEdit4("Color", (float*)&color); // 色はColorEditの方が視覚的に便利
+		ImGui::Checkbox("RandomColor", &isRandomColor);
+		if (isRandomColor) {
+			ImGui::ColorEdit4("randColor1", (float*)&randColor1);
+			ImGui::ColorEdit4("randColor2", (float*)&randColor2);
+		} else {
+			ImGui::ColorEdit4("Color", (float*)&color); 
+		}
 		ImGui::Text("2way Random");
 		ImGui::DragFloat3("Min Scale", (float*)&minScale, 0.01f);
 		ImGui::DragFloat3("Max Scale", (float*)&maxScale, 0.01f);

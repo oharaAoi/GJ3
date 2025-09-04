@@ -18,3 +18,4 @@ float3 ApplyEuler(float3 euler, float3 dire) {
     // 上方向ベクトルに回転を適用
 	return mul(dire, rotMatrix); // 行ベクトル×行列
 }
+
