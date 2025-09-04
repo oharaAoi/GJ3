@@ -59,19 +59,17 @@ void AssetsManager::LoadModels(const std::string& rootPath) {
 	}
 
 	for (const auto& entry : fs::recursive_directory_iterator(rootPath)) {
-		
+		Logger::Log((std::string)entry.path().string());
 		if (entry.is_regular_file()) {
 			Logger::Log(" regular= true" );
 		} else {
 			Logger::Log(" regular= false");
 		}
-		Logger::Log("\n");
 		if (entry.is_symlink()) {
 			Logger::Log(" symlink= true");
 		} else {
 			Logger::Log(" symlink= false");
 		}
-		Logger::Log("\n");
 		if (entry.is_regular_file()) {
 			std::string ext = entry.path().extension().string();
 			if (ext == ".obj" || ext == ".gltf") {
