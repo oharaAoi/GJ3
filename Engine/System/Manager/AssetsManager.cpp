@@ -59,10 +59,11 @@ void AssetsManager::LoadModels(const std::string& rootPath) {
 	}
 
 	for (const auto& entry : fs::recursive_directory_iterator(rootPath)) {
-
+		std::cout << entry.path() << std::endl;
+		Logger::Log((std::string)entry.path().string());
+		Logger::Log("\n");
 		if (entry.is_regular_file()) {
 			std::string ext = entry.path().extension().string();
-			
 			if (ext == ".obj" || ext == ".gltf") {
 				std::string directory = entry.path().parent_path().string();
 				std::string fileName = entry.path().filename().string();
