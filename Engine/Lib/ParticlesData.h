@@ -6,6 +6,24 @@
 #include "Engine/Lib/Math/Matrix4x4.h"
 #include "Engine/Lib/Json/IJsonConverter.h"
 
+enum class CpuEmitDirection {
+	UP,			// 上方向に射出
+	RANDOM,		// ランダム方向に射出
+	OUTSIDE,	// 中心から反対に射出
+	CENTERFOR	// 中心に向かって射出
+};
+
+enum class CpuEmitOrigin {
+	CENTER,		// 中心から
+	RANGE,		// 範囲からランダムに
+};
+
+enum class CpuEmitterShape {
+	SPHERE,
+	BOX,
+	CONE
+};
+
 struct ParticleSingle {
 	Vector4 color;			// 色
 	Vector3 scale;			// 拡縮
@@ -14,6 +32,7 @@ struct ParticleSingle {
 	Vector3 velocity;		// 速度
 	Vector3 acceleration;	// 加速度
 	Vector3 firstScale;		// 初期拡縮
+	Vector3 emitterCenter;	// Emitterの中心
 	float lifeTime;			// 生存時間
 	float firstLifeTime;	// 初期生存時間
 	float currentTime;		// 現在の時間
@@ -28,25 +47,25 @@ struct ParticleSingle {
 	Vector3 upScale;
 	bool isBillBord = true;
 	bool isDraw2d = true;
+	bool isCenterFor = false; 
 };
 
 struct ParticleEmit : public IJsonConverter {
 	bool isLoop = true;						// Loopをするか
 	float duration = 5.0f;					// 継続時間
-	Vector4 rotate = Quaternion();			// 回転(Quaternion)
-	float rotateAngle = 0;					// 回転量
 	Vector3 translate = CVector3::ZERO;		// 位置
-	Vector3 direction = CVector3::UP;		// 射出方向
-	uint32_t shape = 0;						// emitterの種類(0 = 全方向, 1 = 一方方向)
+	Vector3 rotate = CVector3::ZERO;		// 射出方向
 	uint32_t rateOverTimeCout = 10;			// 射出数
-	int emitType = 1;
+	int shape = 0;						// emitterの種類
+	int emitDirection = 1;
 	int emitOrigin = 0;
 	
 	// particle自体のparameter
+	bool isRandomColor = false;
 	Vector4 color = Vector4{ 1,1,1,1 };			// 色
 	Vector4 randColor1 = Vector4{ 1,0,0,1 };			// 色
 	Vector4 randColor2 = Vector4{ 0,0,1,1 };			// 色
-	bool isRandomColor = false;
+	bool separateByAxisScale = false;
 	Vector3 minScale = CVector3::UNIT;		// 最小の大きさ
 	Vector3 maxScale = CVector3::UNIT;		// 最大の大きさ
 	float speed = 1.0f;			// 速度
@@ -69,9 +88,12 @@ struct ParticleEmit : public IJsonConverter {
 	bool isScaleUp;				// サイズを大きくするか
 	Vector3 scaleUpScale;
 
-	float radius;
+	float radius = 0.5f;
+	float angle = 27.f;
+	float height = 1;
+	Vector3 size = CVector3::UNIT;
 
-	std::string useTexture = "white.png";
+	std::string useTexture = "circle.png";
 	std::string useMesh = "plane";
 
 	ParticleEmit() {
@@ -85,17 +107,16 @@ struct ParticleEmit : public IJsonConverter {
 			.Add("isLoop", isLoop)
 			.Add("duration", duration)
 			.Add("rotate", rotate)
-			.Add("rotateAngle", rotateAngle)
 			.Add("translate", translate)
-			.Add("direction", direction)
 			.Add("shape", shape)
 			.Add("rateOverTimeCout", rateOverTimeCout)
-			.Add("emitType", emitType)
+			.Add("emitDirection", emitDirection)
 			.Add("emitOrigin", emitOrigin)
 			.Add("color", color)
 			.Add("isRandomColor", isRandomColor)
 			.Add("randColor1", randColor1)
 			.Add("randColor2", randColor2)
+			.Add("separateByAxisScale", separateByAxisScale)
 			.Add("minScale", minScale)
 			.Add("maxScale", maxScale)
 			.Add("speed", speed)
@@ -115,6 +136,9 @@ struct ParticleEmit : public IJsonConverter {
 			.Add("useTexture", useTexture)
 			.Add("useMesh", useMesh)
 			.Add("radius", radius)
+			.Add("size", size)
+			.Add("angle", angle)
+			.Add("height", height)
 			.Build();
 	}
 
@@ -122,17 +146,16 @@ struct ParticleEmit : public IJsonConverter {
 		fromJson(jsonData, "isLoop", isLoop);
 		fromJson(jsonData, "duration", duration);
 		fromJson(jsonData, "rotate", rotate);
-		fromJson(jsonData, "rotateAngle", rotateAngle);
 		fromJson(jsonData, "translate", translate);
-		fromJson(jsonData, "direction", direction);
 		fromJson(jsonData, "shape", shape);
 		fromJson(jsonData, "rateOverTimeCout", rateOverTimeCout);
-		fromJson(jsonData, "emitType", emitType);
+		fromJson(jsonData, "emitDirection", emitDirection);
 		fromJson(jsonData, "emitOrigin", emitOrigin);
 		fromJson(jsonData, "color", color);
 		fromJson(jsonData, "isRandomColor", isRandomColor);
 		fromJson(jsonData, "randColor1", randColor1);
 		fromJson(jsonData, "randColor2", randColor2);
+		fromJson(jsonData, "separateByAxisScale", separateByAxisScale);
 		fromJson(jsonData, "minScale", minScale);
 		fromJson(jsonData, "maxScale", maxScale);
 		fromJson(jsonData, "speed", speed);
@@ -152,6 +175,9 @@ struct ParticleEmit : public IJsonConverter {
 		fromJson(jsonData, "useTexture", useTexture);
 		fromJson(jsonData, "useMesh", useMesh);
 		fromJson(jsonData, "radius", radius);
+		fromJson(jsonData, "size", size);
+		fromJson(jsonData, "angle", angle);
+		fromJson(jsonData, "height", height);
 	}
 
 	void Attribute_Gui();

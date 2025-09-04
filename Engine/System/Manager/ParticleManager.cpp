@@ -86,6 +86,13 @@ void ParticleManager::ParticlesUpdate() {
 			// ---------------------------
 			// Parameterの更新
 			// ---------------------------
+			
+			if (pr.isCenterFor) {
+				if (Length(pr.emitterCenter - pr.translate) < 0.1f) {
+					pr.velocity = CVector3::ZERO;
+				}
+			}
+			
 			// 速度を更新
 			pr.velocity *= std::powf((1.0f - pr.damping), GameTimer::DeltaTime());
 

@@ -109,6 +109,10 @@ void ParticleSystemEditor::Draw() {
 	particleRenderer_->Draw(commandList_);
 	gpuParticleRenderer_->Draw();
 
+	for (auto& emitter : cpuEmitterList_) {
+		emitter->DrawShape();
+	}
+
 	for (auto& emitter : gpuEmitterList_) {
 		emitter->DrawShape();
 	}
@@ -146,6 +150,13 @@ void ParticleSystemEditor::ParticlesUpdate() {
 			// ---------------------------
 			// Parameterの更新
 			// ---------------------------
+			
+			if (pr.isCenterFor) {
+				if (Length(pr.emitterCenter - pr.translate) < 0.1f) {
+					pr.velocity = CVector3::ZERO;
+				}
+			}
+
 			// 速度を更新
 			pr.velocity *= std::powf((1.0f - pr.damping), GameTimer::DeltaTime());
 

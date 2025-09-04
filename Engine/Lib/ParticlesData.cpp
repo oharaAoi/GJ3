@@ -4,24 +4,26 @@
 void ParticleEmit::Attribute_Gui() {
 	if (ImGui::CollapsingHeader("Emitter Settings")) {
 		ImGui::Checkbox("IsLoop", &isLoop);
-		ImGui::DragFloat("duration", &duration);
+		ImGui::DragFloat("Duration", &duration);
 		ImGui::Checkbox("isBillBord", &isBillBord);
 		ImGui::BulletText("Emitter Settings");
-		ImGui::DragFloat4("Rotate (Quaternion)", (float*)&rotate, 0.01f);
-		ImGui::DragFloat("rotateAngle", (float*)&rotateAngle, 0.01f);
+		ImGui::DragFloat3("Rotate", &rotate.x, 0.01f);
 		ImGui::DragFloat3("Translate", (float*)&translate, 0.1f);
-		ImGui::DragFloat3("Direction", (float*)&direction, 0.1f);
 		ImGui::DragScalar("Shape", ImGuiDataType_U32, &shape, 1.0f);
 		ImGui::DragScalar("RateOverTimeCout", ImGuiDataType_U32, &rateOverTimeCout, 1.0f);
 		
-		ImGui::Combo("emitType##type", &emitType, "UP\0ALLDIRE\0CENTER");
-		ImGui::Combo("emitOrigin##emitOrigin", &emitOrigin, "CENTER\0RANGE\0OUTSIDE");
-		
-		ImGui::DragFloat("radius", &radius, 0.1f);
-
-		direction.x = std::clamp(direction.x, -1.0f, 1.0f);
-		direction.y = std::clamp(direction.y, -1.0f, 1.0f);
-		direction.z = std::clamp(direction.z, -1.0f, 1.0f);
+		ImGui::Combo("Shape##", &shape, "SPHERE\0BOX\0CONE");
+		if (shape == (int)CpuEmitterShape::SPHERE) {
+			ImGui::DragFloat("radius", &radius, 0.1f);
+		} else if (shape == (int)CpuEmitterShape::BOX) {
+			ImGui::DragFloat3("size", &size.x, 0.1f);
+		} else if (shape == (int)CpuEmitterShape::CONE) {
+			ImGui::DragFloat("radius", &radius, 0.1f);
+			ImGui::DragFloat("angle", &angle, 0.1f);
+			ImGui::DragFloat("height", &height, 0.1f);
+		}
+		ImGui::Combo("emitOrigin##emitOrigin", &emitOrigin, "CENTER\0RANGE\0");
+		ImGui::Combo("emitDirection##type", &emitDirection, "UP\0ALLDIRE\0OUTSIDE\0CENTERFOR");
 		ImGui::Separator();
 
 		ImGui::BulletText("Particle Parameters");
@@ -32,9 +34,14 @@ void ParticleEmit::Attribute_Gui() {
 		} else {
 			ImGui::ColorEdit4("Color", (float*)&color); 
 		}
-		ImGui::Text("2way Random");
-		ImGui::DragFloat3("Min Scale", (float*)&minScale, 0.01f);
-		ImGui::DragFloat3("Max Scale", (float*)&maxScale, 0.01f);
+		ImGui::Checkbox("SeparateByAxisScale", &separateByAxisScale);
+		if (separateByAxisScale) {
+			ImGui::DragFloat3("minScale", &minScale.x, 0.1f);
+			ImGui::DragFloat3("maxScale", &maxScale.x, 0.1f);
+		} else {
+			ImGui::DragFloat("scaleMinScaler", &minScale.x);
+			ImGui::DragFloat("scaleMaxScaler", &maxScale.x);
+		}
 		ImGui::Text("Parameter");
 		ImGui::DragFloat("Speed", &speed, 0.01f);
 		ImGui::DragFloat("Lifetime", &lifeTime, 0.01f);
