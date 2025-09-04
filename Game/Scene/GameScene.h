@@ -11,7 +11,7 @@
 #include "Game/Actor/Player/Player.h"
 #include "Game/Manager/StageRegistry.h"
 #include "Game/WorldObject/WorldObjects.h"
-#include "Game/Manager/MapCollisionSystem.h"
+#include "Game/Manager/Collision/Common/MapCollisionSystem.h"
 
 class GameScene
 	: public BaseScene

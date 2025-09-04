@@ -347,6 +347,7 @@ copy "$(ProjectDir)Externals\assimp\build\bin\Release\assimp-vc143-mt.dll" "$(Ta
     <ClCompile Include="Game\WorldObject\BackGround.cpp" />
     <ClCompile Include="Game\WorldObject\Skybox.cpp" />
     <ClCompile Include="Game\WorldObject\WorldObjects.cpp" />
+    <ClCompile Include="Game\Manager\Collision\Map\GhostBlockCollision.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Engine\Module\Geometry\Structs\Vertices.cpp" />
     <ClCompile Include="Engine\System\ParticleSystem\Tool\ParticleSystemEditor.cpp" />
@@ -354,10 +355,11 @@ copy "$(ProjectDir)Externals\assimp\build\bin\Release\assimp-vc143-mt.dll" "$(Ta
     <ClCompile Include="Game\Commands\ObjectCommandInvoker.cpp" />
     <ClCompile Include="Game\Actor\Player\Command\PlayerMoveCommand.cpp" />
     <ClCompile Include="Game\Actor\Player\PlayerInputHandler.cpp" />
-    <ClCompile Include="Game\Manager\MapCollisionSystem.cpp" />
+    <ClCompile Include="Game\Manager\Collision\Common\MapCollisionSystem.cpp" />
     <ClCompile Include="Game\UI\StageSelector.cpp" />
     <ClCompile Include="Game\Actor\Block\TokenGhost.cpp" />
     <ClCompile Include="Game\StageRender\StageContents.cpp" />
+    <ClCompile Include="Game\Manager\Collision\Map\SpecialBlockCollision.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Actor\Block\BlockLimit.h" />
@@ -606,11 +608,13 @@ copy "$(ProjectDir)Externals\assimp\build\bin\Release\assimp-vc143-mt.dll" "$(Ta
     <ClInclude Include="Game\Commands\ObjectCommandInvoker.h" />
     <ClInclude Include="Game\Actor\Player\Command\PlayerMoveCommand.h" />
     <ClInclude Include="Game\Actor\Player\PlayerInputHandler.h" />
-    <ClInclude Include="Game\Manager\MapCollisionSystem.h" />
+    <ClInclude Include="Game\Manager\Collision\Common\MapCollisionSystem.h" />
     <ClInclude Include="Game\WorldObject\WorldObjects.h" />
     <ClInclude Include="Game\UI\StageSelector.h" />
     <ClInclude Include="Game\Actor\Block\TokenGhost.h" />
     <ClInclude Include="Game\StageRender\StageContents.h" />
+    <ClInclude Include="Game\Manager\Collision\Map\SpecialBlockCollision.h" />
+    <ClInclude Include="Game\Manager\Collision\Map\GhostBlockCollision.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Engine\Assets\HLSL\Particle\AccelerationField.CS.hlsl">

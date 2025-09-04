@@ -284,7 +284,7 @@
     <ClCompile Include="Game\Commands\ObjectCommandInvoker.cpp" />
     <ClCompile Include="Game\Actor\Player\Command\PlayerMoveCommand.cpp" />
     <ClCompile Include="Game\Actor\Player\PlayerInputHandler.cpp" />
-    <ClCompile Include="Game\Manager\MapCollisionSystem.cpp" />
+    <ClCompile Include="Game\Manager\Collision\Common\MapCollisionSystem.cpp" />
     <ClCompile Include="Game\UI\StageSelector.cpp" />
     <ClCompile Include="Game\Actor\Block\TokenGhost.cpp" />
     <ClCompile Include="Game\StageRender\StageContents.cpp" />
@@ -292,6 +292,8 @@
     <ClCompile Include="Game\Actor\Block\BlockStart.cpp" />
     <ClCompile Include="Game\Actor\Block\BlockSpecial.cpp" />
     <ClCompile Include="Game\Actor\Block\BlockLimit.cpp" />
+    <ClCompile Include="Game\Manager\Collision\Map\SpecialBlockCollision.cpp" />
+    <ClCompile Include="Game\Manager\Collision\Map\GhostBlockCollision.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Module\PostEffect\DistortionEffect.h" />
@@ -536,7 +538,7 @@
     <ClInclude Include="Game\Commands\ObjectCommandInvoker.h" />
     <ClInclude Include="Game\Actor\Player\Command\PlayerMoveCommand.h" />
     <ClInclude Include="Game\Actor\Player\PlayerInputHandler.h" />
-    <ClInclude Include="Game\Manager\MapCollisionSystem.h" />
+    <ClInclude Include="Game\Manager\Collision\Common\MapCollisionSystem.h" />
     <ClInclude Include="Game\WorldObject\WorldObjects.h" />
     <ClInclude Include="Game\UI\StageSelector.h" />
     <ClInclude Include="Game\Actor\Block\TokenGhost.h" />
@@ -545,6 +547,8 @@
     <ClInclude Include="Game\Actor\Block\BlockStart.h" />
     <ClInclude Include="Game\Actor\Block\BlockSpecial.h" />
     <ClInclude Include="Game\Actor\Block\BlockLimit.h" />
+    <ClInclude Include="Game\Manager\Collision\Map\SpecialBlockCollision.h" />
+    <ClInclude Include="Game\Manager\Collision\Map\GhostBlockCollision.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\Assets\HLSL\Light.hlsli" />
