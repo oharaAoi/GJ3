@@ -2,6 +2,7 @@
 #include <memory>
 #include "Game/Scene/BaseScene.h"
 #include "Engine/Render/SceneRenderer.h"
+#include "Engine/Module/Components/Effect/BaseParticles.h"
 // camera
 #include "Game/Camera/Camera3d.h"
 #include "Game/Camera/Camera2d.h"
@@ -31,14 +32,15 @@ private:
 	std::unique_ptr<Camera2d> camera2d_;
 
 	// ------------------- actor ------------------- //
-	Skybox* skybox_;
-
+	
 	std::unique_ptr<WorldObjects> worldObjects_;
 
 	// ------------------- ui ------------------- //
 	std::unique_ptr<StageSelector> stageSelector_;
 
 	std::unique_ptr<StageContents> stageContents_;
+
+	BaseParticles* particle_;
 
 	SceneRenderer* sceneRenderer_;
 };

@@ -12,12 +12,11 @@ TitleScene::~TitleScene() {
 
 void TitleScene::Finalize() {
 	sceneRenderer_->Finalize();
+	ParticleManager::GetInstance()->Finalize();
+	GpuParticleManager::GetInstance()->Finalize();
 }
 
 void TitleScene::Init() {
-
-	Engine::GetCanvas2d()->Init();
-
 	JsonItems* adjust = JsonItems::GetInstance();
 	adjust->Init("GameScene");
 

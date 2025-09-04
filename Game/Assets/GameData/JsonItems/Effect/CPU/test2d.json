@@ -1,0 +1,64 @@
+{
+    "test2d": {
+        "angleMax": 360.0,
+        "angleMin": 0.0,
+        "color": {
+            "w": 1.0,
+            "x": 1.0,
+            "y": 0.2720605134963989,
+            "z": 0.027906954288482666
+        },
+        "damping": 0.0,
+        "direction": {
+            "x": 0.0,
+            "y": 1.0,
+            "z": 0.0
+        },
+        "duration": 5.0,
+        "emitOrigin": 0,
+        "emitType": 0,
+        "gravity": -50.0,
+        "isBillBord": false,
+        "isDirectionRotate": false,
+        "isDraw2d": true,
+        "isLifeOfAlpha": true,
+        "isLifeOfScale": true,
+        "isLoop": true,
+        "isParticleAddBlend": false,
+        "isScaleUp": false,
+        "lifeTime": 1.0,
+        "maxScale": {
+            "x": 100.0,
+            "y": 100.0000991821289,
+            "z": 1.0
+        },
+        "minScale": {
+            "x": 100.0,
+            "y": 100.0,
+            "z": 1.0
+        },
+        "radius": 0.0,
+        "rateOverTimeCout": 10,
+        "rotate": {
+            "w": 1.0,
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "rotateAngle": 0.0,
+        "scaleUpScale": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "shape": 0,
+        "speed": -59.150001525878906,
+        "translate": {
+            "x": 428.3999938964844,
+            "y": 222.3000030517578,
+            "z": 0.0
+        },
+        "useMesh": "plane",
+        "useTexture": "circle.png"
+    }
+}

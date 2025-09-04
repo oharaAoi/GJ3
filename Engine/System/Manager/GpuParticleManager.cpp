@@ -19,6 +19,7 @@ void GpuParticleManager::Finalize() {
 	emitterList_.clear();
 	fileds_.clear();
 	renderer_.reset();
+	ClearChild();
 }
 
 void GpuParticleManager::Debug_Gui() {

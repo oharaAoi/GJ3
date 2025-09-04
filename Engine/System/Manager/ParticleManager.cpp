@@ -18,6 +18,7 @@ void ParticleManager::Finalize() {
 	particlesMap_.clear();
 	emitterList_.clear();
 	particleRenderer_ = nullptr;
+	ClearChild();
 }
 
 void ParticleManager::Debug_Gui() {

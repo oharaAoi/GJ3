@@ -33,8 +33,6 @@ private:
 
 	// ------------------- actor ------------------- //
 
-	Skybox *skybox_;
-
 	std::unique_ptr<StageRegistry> stageRegistry_;
 
 	std::unique_ptr<MapCollisionSystem> mapCollision_;
