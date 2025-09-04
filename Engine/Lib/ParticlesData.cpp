@@ -54,10 +54,10 @@ void ParticleEmit::Attribute_Gui() {
 		ImGui::Checkbox("isDirectionRotate", &isDirectionRotate);
 		ImGui::Checkbox("isLifeOfScale", &isLifeOfScale);
 		ImGui::Checkbox("isLifeOfAlpha", &isLifeOfAlpha);
-
-		ImGui::Checkbox("StrechBillbard", &stretchBillboard);
-		if (stretchBillboard) {
-			ImGui::DragFloat("stretchScale", &stretchScale, 0.1f);
+		ImGui::Checkbox("FadeInOut", &isFadeInOut);
+		if (isFadeInOut) {
+			ImGui::DragFloat("fadeInTime", &fadeInTime, 0.1f);
+			ImGui::DragFloat("fadeOutTime", &fadeOutTime, 0.1f);
 		}
 
 		ImGui::Checkbox("isParticleAddBlend", &isParticleAddBlend);

@@ -172,7 +172,6 @@ void BaseParticles::Emit(const Vector3& pos) {
 
 	// EmitterからParticleのパラメータを取得する
 	newParticle.lifeTime = emitter_.lifeTime;
-	newParticle.firstLifeTime = emitter_.lifeTime;
 	newParticle.currentTime = 0.0f;
 	newParticle.damping = emitter_.dampig;
 	newParticle.gravity = emitter_.gravity;
@@ -181,11 +180,14 @@ void BaseParticles::Emit(const Vector3& pos) {
 	newParticle.isLifeOfScale = emitter_.isLifeOfScale;
 	newParticle.isAddBlend = emitter_.isParticleAddBlend;
 
+	newParticle.isFadeInOut = emitter_.isFadeInOut;
+	newParticle.fadeInTime = emitter_.fadeInTime;
+	newParticle.fadeOutTime = emitter_.fadeOutTime;
+	newParticle.initAlpha_ = emitter_.color.w;
+
 	newParticle.isScaleUpScale = emitter_.isScaleUp;
 	newParticle.upScale = emitter_.scaleUpScale;
 
-	newParticle.stretchBillboard = emitter_.stretchBillboard;
-	newParticle.stretchScaleFactor = emitter_.stretchScale;
 	newParticle.isBillBord = emitter_.isBillBord;
 	newParticle.isDraw2d = emitter_.isDraw2d;
 	if (emitter_.emitDirection == (int)CpuEmitDirection::CENTERFOR) {

@@ -65,7 +65,7 @@ void CpuParticles::Update(const Quaternion& bill) {
 		// ---------------------------
 		// 状態の更新
 		// ---------------------------
-		float t = pr.lifeTime / pr.firstLifeTime;
+		/*float t = pr.lifeTime / pr.firstLifeTime;
 		t = 1.0f - t;
 		if (pr.isLifeOfAlpha) {
 			pr.color.w = Lerp(1.0f, 0.0f, t);
@@ -79,7 +79,7 @@ void CpuParticles::Update(const Quaternion& bill) {
 			float scaleT = pr.lifeTime / pr.firstLifeTime;
 			scaleT = 1.0f - scaleT;
 			pr.scale = Vector3::Lerp(CVector3::ZERO, pr.upScale, scaleT);
-		}
+		}*/
 
 		Matrix4x4 scaleMatrix = pr.scale.MakeScaleMat();
 		Matrix4x4 billMatrix = bill.MakeMatrix(); // ← ビルボード行列（カメラからの視線で作る）
@@ -186,7 +186,10 @@ void CpuParticles::Emit(const Vector3& pos) {
 			sinTheta * sin(phi),
 			cosTheta
 		);
-		newParticle.velocity = localDir;
+		Vector3 up = CVector3::UP;
+		Vector3 right = CVector3::RIGHT;
+		Vector3 forward = CVector3::FORWARD;
+		newParticle.velocity = right * localDir.x + forward * localDir.y + CVector3::UP * localDir.z;
 	}
 
 	// Objectの回転に進行方向をあわせる
@@ -223,7 +226,6 @@ void CpuParticles::Emit(const Vector3& pos) {
 
 	// EmitterからParticleのパラメータを取得する
 	newParticle.lifeTime = emitter_.lifeTime;
-	newParticle.firstLifeTime = emitter_.lifeTime;
 	newParticle.currentTime = 0.0f;
 	newParticle.damping = emitter_.dampig;
 	newParticle.gravity = emitter_.gravity;
@@ -232,12 +234,21 @@ void CpuParticles::Emit(const Vector3& pos) {
 	newParticle.isLifeOfScale = emitter_.isLifeOfScale;
 	newParticle.isAddBlend = emitter_.isParticleAddBlend;
 
+	newParticle.isFadeInOut = emitter_.isFadeInOut;
+	newParticle.fadeInTime = emitter_.fadeInTime;
+	newParticle.fadeOutTime = emitter_.fadeOutTime;
+	newParticle.initAlpha_ = emitter_.color.w;
+
 	newParticle.isScaleUpScale = emitter_.isScaleUp;
 	newParticle.upScale = emitter_.scaleUpScale;
 
-	newParticle.stretchBillboard = emitter_.stretchBillboard;
-	newParticle.stretchScaleFactor = emitter_.stretchScale;
 	newParticle.isBillBord = emitter_.isBillBord;
+	newParticle.isDraw2d = emitter_.isDraw2d;
+	if (emitter_.emitDirection == (int)CpuEmitDirection::CENTERFOR) {
+		newParticle.isCenterFor = true;
+	} else {
+		newParticle.isCenterFor = false;
+	}
 	newParticle.isDraw2d = emitter_.isDraw2d;
 }
 

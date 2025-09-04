@@ -34,16 +34,17 @@ struct ParticleSingle {
 	Vector3 firstScale;		// 初期拡縮
 	Vector3 emitterCenter;	// Emitterの中心
 	float lifeTime;			// 生存時間
-	float firstLifeTime;	// 初期生存時間
 	float currentTime;		// 現在の時間
 	float damping;			// 減衰
 	float gravity;			// 重力
 	bool isLifeOfScale = false;	// 生存時間によるサイズ
 	bool isLifeOfAlpha = false;	// 生存時間による透明度
+	bool isFadeInOut = false;
+	float fadeInTime = 0.0f;
+	float fadeOutTime = 0.0f;
+	float initAlpha_ = 0.0f;
 	bool isScaleUpScale = false;	// 生存時間による透明度
 	bool isAddBlend = true;
-	bool stretchBillboard;
-	float stretchScaleFactor;
 	Vector3 upScale;
 	bool isBillBord = true;
 	bool isDraw2d = true;
@@ -63,29 +64,29 @@ struct ParticleEmit : public IJsonConverter {
 	// particle自体のparameter
 	bool isRandomColor = false;
 	Vector4 color = Vector4{ 1,1,1,1 };			// 色
-	Vector4 randColor1 = Vector4{ 1,0,0,1 };			// 色
-	Vector4 randColor2 = Vector4{ 0,0,1,1 };			// 色
+	Vector4 randColor1 = Vector4{ 1,0,0,1 };	// 色
+	Vector4 randColor2 = Vector4{ 0,0,1,1 };	// 色
 	bool separateByAxisScale = false;
-	Vector3 minScale = CVector3::UNIT;		// 最小の大きさ
-	Vector3 maxScale = CVector3::UNIT;		// 最大の大きさ
-	float speed = 1.0f;			// 速度
-	float lifeTime = 5.0f;			// particleの生存時間
-	float gravity = 0;			// 重力を付与するか
-	float dampig = 0;			// 減衰率
-	float angleMin = 0.0f;		// 最小の回転
-	float angleMax = 360.0f;	// 最大の回転
-	bool isDirectionRotate = false;		// 進行方向にParticleを向ける処理
-	bool isLifeOfScale = false;	// 生存時間によるサイズ
-	bool isLifeOfAlpha = false;	// 生存時間による透明度
-
-	bool stretchBillboard = false;	// 生存時間による透明度
-	float stretchScale = 4.0f;
-
-	bool isParticleAddBlend = false;	// blendModeをAddBlendにするかのフラグ
-	bool isDraw2d = false;	// blendModeをAddBlendにするかのフラグ
+	Vector3 minScale = CVector3::UNIT;			// 最小の大きさ
+	Vector3 maxScale = CVector3::UNIT;			// 最大の大きさ
+	float speed = 1.0f;							// 速度
+	float lifeTime = 5.0f;						// particleの生存時間
+	float gravity = 0;							// 重力を付与するか
+	float dampig = 0;							// 減衰率
+	float angleMin = 0.0f;						// 最小の回転
+	float angleMax = 360.0f;					// 最大の回転
+	bool isDirectionRotate = false;				// 進行方向にParticleを向ける処理
+	bool isLifeOfScale = false;					// 生存時間によるサイズ
+	bool isLifeOfAlpha = false;					// 生存時間による透明度
+	bool isFadeInOut = false;					// FadeInOutで出現
+	float fadeInTime = 0;
+	float fadeOutTime = 0;
+	
+	bool isParticleAddBlend = false;			// blendModeをAddBlendにするかのフラグ
+	bool isDraw2d = false;						// blendModeをAddBlendにするかのフラグ
 	bool isBillBord = true;
 
-	bool isScaleUp;				// サイズを大きくするか
+	bool isScaleUp;								// サイズを大きくするか
 	Vector3 scaleUpScale;
 
 	float radius = 0.5f;
@@ -128,6 +129,9 @@ struct ParticleEmit : public IJsonConverter {
 			.Add("isDirectionRotate", isDirectionRotate)
 			.Add("isLifeOfScale", isLifeOfScale)
 			.Add("isLifeOfAlpha", isLifeOfAlpha)
+			.Add("isFadeInOut", isFadeInOut)
+			.Add("fadeInTime", fadeInTime)
+			.Add("fadeOutTime", fadeOutTime)
 			.Add("isParticleAddBlend", isParticleAddBlend)
 			.Add("isDraw2d", isDraw2d)
 			.Add("isScaleUp", isScaleUp)
@@ -167,6 +171,9 @@ struct ParticleEmit : public IJsonConverter {
 		fromJson(jsonData, "isDirectionRotate", isDirectionRotate);
 		fromJson(jsonData, "isLifeOfScale", isLifeOfScale);
 		fromJson(jsonData, "isLifeOfAlpha", isLifeOfAlpha);
+		fromJson(jsonData, "isFadeInOut", isFadeInOut);
+		fromJson(jsonData, "fadeInTime", fadeInTime);
+		fromJson(jsonData, "fadeOutTime", fadeOutTime);
 		fromJson(jsonData, "isParticleAddBlend", isParticleAddBlend);
 		fromJson(jsonData, "isDraw2d", isDraw2d);
 		fromJson(jsonData, "isScaleUp", isScaleUp);

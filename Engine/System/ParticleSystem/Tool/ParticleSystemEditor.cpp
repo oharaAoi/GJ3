@@ -141,8 +141,9 @@ void ParticleSystemEditor::ParticlesUpdate() {
 			// ---------------------------
 			// 生存時間の更新
 			// ---------------------------
-			pr.lifeTime -= GameTimer::DeltaTime();
-			if (pr.lifeTime <= 0.0f) {
+
+			pr.currentTime += GameTimer::DeltaTime();
+			if (pr.currentTime >= pr.lifeTime) {
 				it = particles.second.particles->erase(it); // 削除して次の要素にスキップ
 				continue;
 			}
@@ -169,8 +170,7 @@ void ParticleSystemEditor::ParticlesUpdate() {
 			// ---------------------------
 			// 状態の更新
 			// ---------------------------
-			float t = pr.lifeTime / pr.firstLifeTime;
-			t = 1.0f - t;
+			float t = pr.currentTime / pr.lifeTime;
 			if (pr.isLifeOfAlpha) {
 				pr.color.w = Lerp(1.0f, 0.0f, t);
 			}
@@ -180,14 +180,19 @@ void ParticleSystemEditor::ParticlesUpdate() {
 			}
 
 			if (pr.isScaleUpScale) {
-				float scaleT = pr.lifeTime / pr.firstLifeTime;
-				scaleT = 1.0f - scaleT;
-				pr.scale = Vector3::Lerp(CVector3::ZERO, pr.upScale, scaleT);
+				pr.scale = Vector3::Lerp(CVector3::ZERO, pr.upScale, t);
 			}
 
-			if (pr.stretchBillboard) {
-				float stretchLength = pr.velocity.Length() * pr.stretchScaleFactor;
-				pr.scale.y = pr.firstScale.y * stretchLength;
+			if (pr.isFadeInOut) {
+				if (pr.currentTime <= pr.fadeInTime) {
+					float alphaT = pr.currentTime / pr.fadeInTime;
+					pr.color.w = Lerp(0.0f, pr.initAlpha_, alphaT);
+				}
+
+				if ((pr.lifeTime - pr.currentTime) <= pr.fadeOutTime) {
+					float alphaT = (pr.fadeOutTime - (pr.lifeTime - pr.currentTime)) / pr.fadeOutTime;
+					pr.color.w = Lerp(pr.initAlpha_, 0.0f, alphaT);
+				}
 			}
 
 			Matrix4x4 scaleMatrix = pr.scale.MakeScaleMat();
