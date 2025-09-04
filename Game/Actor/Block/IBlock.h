@@ -34,6 +34,12 @@ public:
 	const Vector2& GetOffset() const { return offset_; }
 	void SetOffset(const Vector2& offset) { offset_ = offset; }
 
+	const bool GetIsSpecialBlock() const { return isSpecialBlock_; }
+	void SetIsSpecialBlock(const bool flag) { isSpecialBlock_ = flag; }
+
+	const bool GetIsChengeBlock() const { return isChengeBlock_; }
+	void SetIsChengeBlock(const bool flag) { isChengeBlock_ = flag; }
+
 protected:
 
 	BlockType type_ = BlockType::None;
@@ -43,6 +49,10 @@ protected:
 	Vector2 tileSize_ = { 32.f, 32.f };
 
 	Vector2 offset_ = { 0.f, 0.f };
+
+	bool isSpecialBlock_ = false;
+
+	bool isChengeBlock_ = false;
 
 };
 

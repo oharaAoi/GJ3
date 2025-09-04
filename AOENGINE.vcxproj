@@ -123,6 +123,8 @@ copy "$(ProjectDir)Externals\assimp\build\bin\Release\assimp-vc143-mt.dll" "$(Ta
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Game\Actor\Block\BlockLimit.cpp" />
+    <ClCompile Include="Game\Actor\Block\BlockSpecial.cpp" />
     <ClCompile Include="Engine\Module\PostEffect\DistortionEffect.cpp" />
     <ClCompile Include="Game\Actor\Block\BlockGrave.cpp" />
     <ClCompile Include="Game\Actor\Block\BlockGhost.cpp" />
@@ -357,6 +359,8 @@ copy "$(ProjectDir)Externals\assimp\build\bin\Release\assimp-vc143-mt.dll" "$(Ta
     <ClCompile Include="Game\StageRender\StageContents.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Game\Actor\Block\BlockLimit.h" />
+    <ClInclude Include="Game\Actor\Block\BlockSpecial.h" />
     <ClInclude Include="Engine\Module\PostEffect\DistortionEffect.h" />
     <ClInclude Include="Game\Actor\Block\BlockGrave.h" />
     <ClInclude Include="Game\Actor\Block\BlockGhost.h" />
