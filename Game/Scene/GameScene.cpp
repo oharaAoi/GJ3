@@ -71,6 +71,9 @@ void GameScene::Init() {
 	orb_ = ParticleManager::GetInstance()->CrateParticle("orb");
 	orb_->Reset();
 
+	dust_ = ParticleManager::GetInstance()->CrateParticle("dust");
+	dust_->Reset();
+
 	// -------------------------------------------------
 	// ↓ その他設定
 	// -------------------------------------------------

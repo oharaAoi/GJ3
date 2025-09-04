@@ -58,7 +58,7 @@ void StageSelectScene::Init(){
 	stageSelector_->SetStageRenderTarget(stageContents_->GetStageRenderTarget());
 	stageSelector_->Init();
 
-	particle_ = ParticleManager::GetInstance()->CrateParticle("test2d");
+	particle_ = ParticleManager::GetInstance()->CrateParticle("dust");
 	particle_->Reset();
 	
 }

@@ -43,6 +43,7 @@ private:
 	std::unique_ptr<Player> player_;
 
 	BaseParticles* orb_;
+	BaseParticles* dust_;
 
 	SceneRenderer *sceneRenderer_;
 };
