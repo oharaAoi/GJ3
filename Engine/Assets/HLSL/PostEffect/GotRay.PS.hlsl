@@ -3,7 +3,6 @@
 struct GotRayParam {
 	float4 color;
 	float2 pos;
-	float pad[2];
 	float angle; // 光の角度
 	float spread; // 光の広がり
 	float cutoff; // 光筋のカットオフ
@@ -19,6 +18,7 @@ struct GotRayParam {
 
 Texture2D g_SceneTex : register(t0); // シーン全体のスクリーンテクスチャ
 SamplerState g_Sampler : register(s0);
+ConstantBuffer<GotRayParam> gGotRay : register(b0);
 
 struct PixelShaderOutput {
 	float4 color : SV_TARGET0;
@@ -56,54 +56,46 @@ float3 ScreenBlend(float3 base, float3 blend) {
 	return 1.0 - (1.0 - base) * (1.0 - blend);
 }
 
-// ------------------
-// Pixel Shader Entry
-// ------------------
-struct PSInput {
-	float4 pos : SV_POSITION;
-	float2 uv : TEXCOORD0;
-};
-
-float4 mainPS(PSInput input) : SV_TARGET {
-	float2 uv = input.uv;
+PixelShaderOutput main(VertexShaderOutput input) {
+	PixelShaderOutput output;
+	float2 uv = input.texcoord;
 
     // Rotate, skew, move UVs
-	float2 transformed = rotateUV(uv - position, angle);
-	transformed /= ((uv.y + spread) - (uv.y * spread));
+	float2 transformed = rotateUV(uv - gGotRay.pos, gGotRay.angle);
+	transformed /= ((uv.y + gGotRay.spread) - (uv.y * gGotRay.spread));
 
     // Ray coords
-	float2 ray1 = float2(transformed.x * ray1_density +
-                         sin(time * 0.1 * speed) * (ray1_density * 0.2) + seed, 1.0);
-	float2 ray2 = float2(transformed.x * ray2_density +
-                         sin(time * 0.2 * speed) * (ray1_density * 0.2) + seed, 1.0);
+	float2 ray1 = float2(transformed.x * gGotRay.ray1Density +
+                         sin(gGotRay.time * 0.1 * gGotRay.speed) * (gGotRay.ray1Density * 0.2) + gGotRay.seed, 1.0);
+	float2 ray2 = float2(transformed.x * gGotRay.ray2Density +
+                         sin(gGotRay.time * 0.2 * gGotRay.speed) * (gGotRay.ray1Density * 0.2) + gGotRay.seed, 1.0);
 
     // Cutoff
-	float cut = step(cutoff, transformed.x) * step(cutoff, 1.0 - transformed.x);
+	float cut = step(gGotRay.cutoff, transformed.x) * step(gGotRay.cutoff, 1.0 - transformed.x);
 	ray1 *= cut;
 	ray2 *= cut;
 
     // Noise rays
 	float rays = 0.0;
-	if (hdr > 0.5f) {
-		rays = noise(ray1) + noise(ray2) * ray2_intensity;
-	}
-	else {
-		rays = saturate(noise(ray1) + noise(ray2) * ray2_intensity);
-	}
+	rays = saturate(noise(ray1) + noise(ray2) * 0.8f);
+	
 
     // Fade out edges
-	rays *= smoothstep(0.0, falloff, (1.0 - uv.y)); // Bottom
-	rays *= smoothstep(cutoff, edge_fade + cutoff, transformed.x); // Left
-	rays *= smoothstep(cutoff, edge_fade + cutoff, 1.0 - transformed.x); // Right
+	rays *= smoothstep(0.0, gGotRay.falloff, (1.0 - uv.y)); // Bottom
+	rays *= smoothstep(gGotRay.cutoff, gGotRay.edgeFade + gGotRay.cutoff, transformed.x); // Left
+	rays *= smoothstep(gGotRay.cutoff, gGotRay.edgeFade + gGotRay.cutoff, 1.0 - transformed.x); // Right
 
     // Sample scene
 	float3 sceneCol = g_SceneTex.Sample(g_Sampler, uv).rgb;
 
     // Rays color
-	float3 rayCol = rays * color.rgb;
+	float3 rayCol = rays * gGotRay.color.rgb;
 
     // Blend with scene (Screen)
 	float3 finalCol = ScreenBlend(sceneCol, rayCol);
 
-	return float4(finalCol, 1.0);
+	output.color.rgb = finalCol;
+	output.color.a = 1.0f;
+
+	return output;
 }

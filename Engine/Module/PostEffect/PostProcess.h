@@ -14,6 +14,7 @@
 #include "Engine/Module/PostEffect/DepthBasedOutline.h"
 #include "Engine/Module/PostEffect/MotionBlur.h"
 #include "Engine/Module/PostEffect/DistortionEffect.h"
+#include "Engine/Module/PostEffect/ScreenGotRay.h"
 
 #include "Engine/Module/PostEffect/PingPongBuffer.h"
 #include "Engine/Module/Components/Attribute/AttributeGui.h"
@@ -34,6 +35,7 @@ enum class PostEffectType {
 	DEPTH_OUTLINE,
 	MOTIONBLUR,
 	DISTORTION,
+	GOTRAY,
 };
 
 /// <summary>
@@ -104,6 +106,7 @@ private:
 	std::shared_ptr<DepthBasedOutline> depthOutline_;
 	std::shared_ptr<MotionBlur> motionBlur_;
 	std::shared_ptr<DistortionEffect> distortion_;
+	std::shared_ptr<ScreenGotRay> gotRay_;
 
 	std::list<std::shared_ptr<IPostEffect>> effectList_;
 	std::list<PostEffectType> addEffectList_;

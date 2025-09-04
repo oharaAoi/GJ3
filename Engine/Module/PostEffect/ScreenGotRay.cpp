@@ -31,6 +31,12 @@ void ScreenGotRay::Init() {
 }
 
 void ScreenGotRay::SetCommand(ID3D12GraphicsCommandList* commandList, DxResource* pingResource) {
+	Pipeline* pso = Engine::SetPipeline(PSOType::ProcessedScene, "PostProcess_Distortion.json");
+	UINT index = pso->GetRootSignatureIndex("g_SceneTex");
+	commandList->SetGraphicsRootDescriptorTable(index, pingResource->GetSRV().handleGPU);
+	index = pso->GetRootSignatureIndex("gGotRay");
+	commandList->SetGraphicsRootConstantBufferView(index, cBuffer_->GetResource()->GetGPUVirtualAddress());
+	commandList->DrawIndexedInstanced(3, 1, 0, 0, 0);
 }
 
 void ScreenGotRay::CheckBox() {
