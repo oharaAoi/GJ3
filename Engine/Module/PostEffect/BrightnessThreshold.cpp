@@ -14,7 +14,7 @@ void BrightnessThreshold::Init() {
 	bloomBuffer_->CreateResource(sizeof(BloomSettings));
 	bloomBuffer_->GetResource()->Map(0, nullptr, reinterpret_cast<void**>(&bloomSetting_));
 
-	bloomSetting_->threshold = 1.0f;
+	bloomSetting_->threshold = 0.7f;
 
 }
 

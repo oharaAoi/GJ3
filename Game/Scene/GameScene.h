@@ -2,6 +2,7 @@
 #include <memory>
 #include "Game/Scene/BaseScene.h"
 #include "Engine/Render/SceneRenderer.h"
+#include "Engine/Module/Components/Effect/BaseParticles.h"
 // camera
 #include "Game/Camera/Camera3d.h"
 #include "Game/Camera/Camera2d.h"
@@ -40,6 +41,8 @@ private:
 	std::unique_ptr<WorldObjects> worldObjects_;
 
 	std::unique_ptr<Player> player_;
+
+	BaseParticles* orb_;
 
 	SceneRenderer *sceneRenderer_;
 };
