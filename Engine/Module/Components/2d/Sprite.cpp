@@ -1,9 +1,12 @@
 #include "Sprite.h"
 #include "Render.h"
+#include "ImGui.h"
 #include "Engine/Module/Geometry/Structs/Vertices.h"
 #include "Engine/Core/GraphicsContext.h"
 #include "Engine/System/Manager/TextureManager.h"
-#include "Engine/System/Manager/ImGuiManager.h"
+#include "Engine/Lib/Json/JsonItems.h"
+#include "Engine/Utilities/ImGuiHelperFunc.h"
+#include "Engine/Utilities/Loader.h"
 
 Sprite::Sprite() {}
 Sprite::~Sprite() {
@@ -17,7 +20,6 @@ Sprite::~Sprite() {
 }
 
 void Sprite::Init(const std::string& fileName) {
-	SetName(fileName);
 	GraphicsContext* ctx = GraphicsContext::GetInstance();
 	ID3D12Device* pDevice = ctx->GetDevice();
 
@@ -57,7 +59,7 @@ void Sprite::Init(const std::string& fileName) {
 	vertexData_[0].pos = rect.leftBottom;		// 左下
 	vertexData_[0].texcoord = { 0.0f, 1.0f };
 	vertexData_[1].pos = rect.leftTop;			// 左上
-	vertexData_[1].texcoord = { 0.0f, 0.0f };	
+	vertexData_[1].texcoord = { 0.0f, 0.0f };
 	vertexData_[2].pos = rect.rightBottom;		// 右下
 	vertexData_[2].texcoord = { 1.0f, 1.0f };
 	vertexData_[3].pos = rect.rightTop;			// 右上
@@ -89,7 +91,7 @@ void Sprite::Init(const std::string& fileName) {
 	// ----------------------------------------------------------------------------------
 	transform_ = std::make_unique<ScreenTransform>();
 	transform_->Init(pDevice);
-	
+
 	uvTransform_ = { {1.0f,1.0f,1.0f} , {0.0f, 0.0f, 0.0f}, {0, 0, 0} };
 
 	isEnable_ = true;
@@ -104,7 +106,7 @@ void Sprite::Init(const std::string& fileName) {
 
 void Sprite::Update() {
 	materialData_->uvTransform = uvTransform_.MakeAffine();
-	
+
 	// -------------------------------------------------
 	// ↓ UVの変更
 	// -------------------------------------------------
@@ -132,7 +134,7 @@ void Sprite::Draw(const Pipeline* pipeline) {
 	if (isFront_) {
 		transform_->SetTranslateZ(Render::GetNearClip());
 	}
-	
+
 	// テクスチャ位置を保持するための補正行列
 	Matrix4x4 correctionTranslation = Vector3({ pivotOffset.x, pivotOffset.y, 0.0f }).MakeTranslateMat();
 	transform_->Update(correctionTranslation, projection);
@@ -157,7 +159,7 @@ void Sprite::PostDraw(ID3D12GraphicsCommandList* commandList, const Pipeline* pi
 	} else {
 		commandList->SetGraphicsRootDescriptorTable(index, textureResource_->GetSRV().handleGPU);
 	}
-	
+
 	commandList->DrawIndexedInstanced(6, 1, 0, 0, 0);
 }
 
@@ -168,8 +170,6 @@ void Sprite::PostDraw(ID3D12GraphicsCommandList* commandList, const Pipeline* pi
 void Sprite::ReSetTexture(const std::string& fileName) {
 	textureName_ = fileName;
 	textureSize_ = TextureManager::GetInstance()->GetTextureSize(fileName);
-	drawRange_ = textureSize_;
-	leftTop_ = { 0.0f, 0.0f };
 
 	Vector3 pivotOffset = {
 		textureSize_.x * anchorPoint_.x,
@@ -238,6 +238,65 @@ void Sprite::FillAmount(float amount, int type) {
 	}
 }
 
+void Sprite::SaveData() {
+	spriteData_.color = materialData_->color;
+	spriteData_.uvMaxSize = materialData_->uvMaxSize;
+	spriteData_.uvMinSize = materialData_->uvMinSize;
+
+	spriteData_.uvScale = uvTransform_.scale;
+	spriteData_.uvRotate = uvTransform_.rotate;
+	spriteData_.uvTranslate = uvTransform_.translate;
+
+	spriteData_.scale = transform_->GetScale();
+	spriteData_.rotate = { 0, 0, transform_->GetRotate() }; // z回転だけならこう
+	spriteData_.centerPos = {  transform_->GetTranslate().x,
+							   transform_->GetTranslate().y,
+							   0.0f };
+	spriteData_.textureSize = textureSize_;
+	spriteData_.drawRange = drawRange_;
+	spriteData_.leftTop = leftTop_;
+	spriteData_.anchorPoint = anchorPoint_;
+
+	spriteData_.isFlipX = isFlipX_;
+	spriteData_.isFlipY = isFlipY_;
+
+	spriteData_.isBackGround = isBackGround_;
+	spriteData_.isFront = isFront_;
+
+	spriteData_.textureName = textureName_;
+}
+
+void Sprite::ApplySaveData() {
+	spriteData_.FromJson(JsonItems::GetData("Sprite", GetName()));
+
+	materialData_->color = spriteData_.color;
+	materialData_->uvMaxSize = spriteData_.uvMaxSize;
+	materialData_->uvMinSize = spriteData_.uvMinSize;
+	uvTransform_.scale = spriteData_.uvScale;
+	uvTransform_.rotate = spriteData_.uvRotate;
+	uvTransform_.translate = spriteData_.uvTranslate;
+
+	transform_->SetScale(spriteData_.scale);
+	transform_->SetRotate(spriteData_.rotate.z);
+	transform_->SetTranslate({ spriteData_.centerPos.x, spriteData_.centerPos.y });
+
+	textureSize_ = spriteData_.textureSize;
+	drawRange_ = spriteData_.drawRange;
+	leftTop_ = spriteData_.leftTop;
+	anchorPoint_ = spriteData_.anchorPoint;
+
+	isFlipX_ = spriteData_.isFlipX;
+	isFlipY_ = spriteData_.isFlipY;
+
+	isBackGround_ = spriteData_.isBackGround;
+	isFront_ = spriteData_.isFront;
+
+	textureName_ = spriteData_.textureName;
+
+	ReSetTexture(textureName_);
+	ReSetTextureSize(textureSize_);
+}
+
 //////////////////////////////////////////////////////////////////////////////////////////////////
 // ↓　Debug表示
 //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -258,7 +317,66 @@ void Sprite::Debug_Gui() {
 	ImGui::DragFloat2("leftTop", &leftTop_.x, 1.0f);
 	ImGui::DragFloat2("uvMin", &materialData_->uvMinSize.x, 0.01f);
 	ImGui::DragFloat2("uvMax", &materialData_->uvMaxSize.x, 0.01f);
-
 	ImGui::ColorEdit4("color", &materialData_->color.x);
 
+	std::string name = GetName();
+	if (InputTextWithString("SaveName", "##Sprite", name)) {
+		SetName(name);
+	}
+	if (ImGui::Button("Save")) {
+		SaveData();
+		JsonItems::Save("Sprite", spriteData_.ToJson(GetName()));
+	}
+
+	if (ImGui::Button("Apply")) {
+		ApplySaveData();
+	}
+}
+
+json Sprite::SpriteData::ToJson(const std::string& id) const {
+	return JsonBuilder(id)
+		.Add("color", color)
+		.Add("uvScale", uvScale)
+		.Add("uvRotate", uvRotate)
+		.Add("uvTranslate", uvTranslate)
+		.Add("uvMinSize", uvMinSize)
+		.Add("uvMaxSize", uvMaxSize)
+		.Add("scale", scale)
+		.Add("rotate", rotate)
+		.Add("centerPos", centerPos)
+		.Add("textureSize", textureSize)
+		.Add("drawRange", drawRange)
+		.Add("leftTop", leftTop)
+		.Add("anchorPoint", anchorPoint)
+		.Add("isFlipX", isFlipX)
+		.Add("isFlipY", isFlipY)
+		.Add("isBackGround", isBackGround)
+		.Add("isFront", isFront)
+		.Add("textureName", textureName)
+		.Build();
+}
+
+void Sprite::SpriteData::FromJson(const json& jsonData) {
+	// material関連
+	fromJson(jsonData, "color", color);
+	fromJson(jsonData, "uvScale", uvScale);
+	fromJson(jsonData, "uvRotate", uvRotate);
+	fromJson(jsonData, "uvTranslate", uvTranslate);
+	fromJson(jsonData, "uvMinSize", uvMinSize);
+	fromJson(jsonData, "uvMaxSize", uvMaxSize);
+	// baseParam
+	fromJson(jsonData, "scale", scale);
+	fromJson(jsonData, "rotate", rotate);
+	fromJson(jsonData, "centerPos", centerPos);
+	fromJson(jsonData, "textureSize", textureSize);
+	fromJson(jsonData, "drawRange", drawRange);
+	fromJson(jsonData, "leftTop", leftTop);
+	fromJson(jsonData, "anchorPoint", anchorPoint);
+	// bool
+	fromJson(jsonData, "isFlipX", isFlipX);
+	fromJson(jsonData, "isFlipY", isFlipY);
+	fromJson(jsonData, "isBackGround", isBackGround);
+	fromJson(jsonData, "isFront", isFront);
+	// texture
+	fromJson(jsonData, "textureName", textureName);
 }

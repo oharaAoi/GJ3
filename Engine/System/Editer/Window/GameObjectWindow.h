@@ -29,6 +29,7 @@ private:
 
 	std::vector<Pair> attributeArray_;
 	AttributeGui* selectAttribute_ = nullptr;
+	std::string selectAttributeName_;
 
 };
 

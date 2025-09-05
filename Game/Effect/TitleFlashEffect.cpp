@@ -44,7 +44,7 @@ void ThunderFlash::Init(){
 	// 読み込み
 	parameter_.FromJson(JsonItems::GetData("TitleScene","ThunderFlash"));
 
-	flashOverlaySprite_ = Engine::GetCanvas2d()->AddSprite("white.png","Sprite_Add.json",3);
+	flashOverlaySprite_ = Engine::GetCanvas2d()->AddSprite("white.png", GetName(), "Sprite_Add.json",3);
 
 	flashOverlaySprite_->SetColor({0.9f,0.95f,1.f,1.f});
 
@@ -158,7 +158,7 @@ void LightFlash::Init(){
 	// 読み込み
 	parameter_.FromJson(JsonItems::GetData("TitleScene","LightFlash"));
 
-	flashOverlaySprite_ = Engine::GetCanvas2d()->AddSprite("white.png","Sprite_Normal.json",6);
+	flashOverlaySprite_ = Engine::GetCanvas2d()->AddSprite("white.png", GetName(), "Sprite_Normal.json",6);
 	flashOverlaySprite_->SetAnchorPoint({1.f,1.f});
 	flashOverlaySprite_->SetScale(Vector2(1920.f,1080.f));
 	flashOverlaySprite_->SetColor(Vector4(0.f,0.f,0.f,0.f));
