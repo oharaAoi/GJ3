@@ -107,10 +107,10 @@ void StageRegistry::CreatesStageByMapData(){
 			}
 
 			// 特別な情報の取得
-			if (data[row][col] == static_cast<int>(BlockType::Player)) {
-				startIndex_ = { (int)col, (int)row };
-				startPos_ = CalculateTilePos(row, col);
-				startBlock_ = pCanvas2d_->AddSprite("startBlock.png", "startBlock", "Sprite_Normal.json");
+			if(mapData_[row][col] == static_cast<int>(BlockType::Player)){
+				startIndex_ = {(int)col,(int)row};
+				startPos_ = CalculateTilePos(row,col);
+				startBlock_ = pCanvas2d_->AddSprite("startBlock.png","startBlock","Sprite_Normal.json");
 				startBlock_->SetTranslate(startPos_);
 				startBlock_->ReSetTextureSize(tileSize_);
 
