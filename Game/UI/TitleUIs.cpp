@@ -36,7 +36,7 @@ void TitleUIs::Init(){
 	titleBar_->SetAnchorPoint({0.5f,0.5f});
 	backGround_->SetAnchorPoint({1.f,1.f});
 
-	Vector4 defaultColor = {0.5f,0.42f,0.4f,1.f};
+	Vector4 defaultColor = {1.f,1.f,1.f,1.f};
 	backGround_->SetColor(defaultColor);
 	shelf_->SetColor(defaultColor);
 	ghost_->SetColor(defaultColor);

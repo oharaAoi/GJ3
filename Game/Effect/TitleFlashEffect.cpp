@@ -46,7 +46,7 @@ void ThunderFlash::Init(){
 
 	flashOverlaySprite_ = Engine::GetCanvas2d()->AddSprite("white.png","Sprite_Add.json",3);
 
-	flashOverlaySprite_->SetColor({0.79f,0.66f,0.95f,1.f});
+	flashOverlaySprite_->SetColor({0.9f,0.95f,1.f,1.f});
 
 	flashOverlaySprite_->SetScale(Vector2(1920.f,1080.f));
 
