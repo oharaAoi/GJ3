@@ -3,7 +3,7 @@
 void BlockLimit::Init(Canvas2d* _canvas2d)
 {
 	SetName("BlockLimit");
-	sprite_ = _canvas2d->AddSprite("limitBlock.png", "Sprite_Normal.json");
+	sprite_ = _canvas2d->AddSprite("limitBlock.png", "limitBlock", "Sprite_Normal.json");
 	transform_ = sprite_->GetTransform();
 	type_ = BlockType::LimitBlock;
 }

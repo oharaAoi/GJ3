@@ -13,7 +13,7 @@ void Player::Init(Canvas2d* _canvas2d){
 	type_ = BlockType::Player;
 
 	/// sprite 
-	sprite_ = _canvas2d->AddSprite("player.png","Sprite_Normal.json", 100, true);
+	sprite_ = _canvas2d->AddSprite("player.png", "player", "Sprite_Normal.json", 100, true);
 	sprite_->SetIsFront(true);
 	transform_ = sprite_->GetTransform();
 

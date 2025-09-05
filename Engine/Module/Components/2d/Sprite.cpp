@@ -20,7 +20,6 @@ Sprite::~Sprite() {
 }
 
 void Sprite::Init(const std::string& fileName) {
-	SetName(GetBaseName(fileName));
 	GraphicsContext* ctx = GraphicsContext::GetInstance();
 	ID3D12Device* pDevice = ctx->GetDevice();
 

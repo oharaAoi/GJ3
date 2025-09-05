@@ -58,7 +58,7 @@ void TitleScene::Update(){
 		TransitionUpdate();
 		if(lightFlash_->GetIsFinish()){
 			isTransition_ = false;
-			//	nextSceneType_ = SceneType::STAGE_SELECT;
+			nextSceneType_ = SceneType::STAGE_SELECT;
 		}
 	} else{
 		InputHandle();
