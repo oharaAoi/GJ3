@@ -15,8 +15,10 @@
 #include "Game/Manager/Collision/Common/MapCollisionSystem.h"
 
 class GameScene
-	: public BaseScene
-{
+	: public BaseScene{
+public:
+	static constexpr float kResetTime_ = 0.6f; // リセットするまでの時間
+
 public:
 	GameScene();
 	~GameScene();
@@ -45,5 +47,7 @@ private:
 	BaseParticles* orb_;
 	BaseParticles* dust_;
 
-	SceneRenderer *sceneRenderer_;
+	float resetTimer_ = 0.0f; // 現在のリセットまでの時間
+
+	SceneRenderer* sceneRenderer_;
 };
