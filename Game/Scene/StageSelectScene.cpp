@@ -76,11 +76,11 @@ void StageSelectScene::Update(){
 	// -------------------------------------------------
 	worldObjects_->Update();
 	stageSelector_->Update();
-	if(stageSelector_->IsDecidedStage()){
-		// ステージが決定したら次のシーンへ
-		// StageSelector::GetCurrentStageIndex(); // 現在のステージ番号を取得
-		nextSceneType_ = SceneType::GAME;
-	}
+	//if(stageSelector_->IsDecidedStage()){
+	//	// ステージが決定したら次のシーンへ
+	//	// StageSelector::GetCurrentStageIndex(); // 現在のステージ番号を取得
+	//	nextSceneType_ = SceneType::GAME;
+	//}
 
 	// -------------------------------------------------
 	// ↓ spriteの更新

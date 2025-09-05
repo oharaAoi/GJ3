@@ -6,6 +6,8 @@ void WorldObjects::Init() {
 	backGround_ = std::make_unique<BackGround>();
 	backGround_->Init();
 
+	AddChild(backGround_.get());
+
 	EditorWindows::AddObjectWindow(this, GetName());
 }
 

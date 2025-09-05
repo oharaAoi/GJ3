@@ -3,6 +3,7 @@
 #include "Engine/DirectX/Utilities/DirectXUtils.h"
 #include "Engine/Lib/Math/Vector2.h"
 #include "Engine/Lib/Math/MathStructures.h"
+#include "Engine/Lib/Json/IJsonConverter.h"
 #include "Engine/Module/Components/ScreenTransform.h"
 #include "Engine/Module/Components/Attribute/AttributeGui.h"
 
@@ -23,6 +24,37 @@ public:
 		Matrix4x4 uvTransform;
 		Vector2 uvMinSize;		// 0~1の範囲で指定
 		Vector2 uvMaxSize;		// 0~1の範囲で指定
+	};
+
+	struct SpriteData : public IJsonConverter {
+		// material関連
+		Vector4 color = {1,1,1,1};
+		Vector3 uvScale = CVector3::UNIT;
+		Vector3 uvRotate = CVector3::ZERO;
+		Vector3 uvTranslate = CVector3::ZERO;
+		Vector2 uvMinSize = {0,0};		// 0~1の範囲で指定
+		Vector2 uvMaxSize = {1,1};		// 0~1の範囲で指定
+
+		// baseParam
+		Vector2 scale = {1,1};
+		Vector3 rotate = CVector3::ZERO;
+		Vector3 centerPos = CVector3::ZERO;
+		Vector2 textureSize = { 1,1 };
+		Vector2 drawRange = { 1,1 };
+		Vector2 leftTop = { 0,0 };
+		Vector2 anchorPoint = { 0.5f, 0.5f };
+
+		bool isFlipX = false;	// 左右フリップ
+		bool isFlipY = false;	// 上下フリップ
+
+		bool isBackGround = false;
+		bool isFront = false;
+
+		std::string textureName = "white.png";
+
+		json ToJson(const std::string& id) const override;
+
+		void FromJson(const json& jsonData) override;
 	};
 
 public:
@@ -51,6 +83,8 @@ public:
 	void PostDraw(ID3D12GraphicsCommandList* commandList,const Pipeline* pipeline) const;
 
 	void Debug_Gui() override;
+
+	void ApplySaveData();
 
 public:
 
@@ -121,6 +155,10 @@ public:
 
 private:
 
+	void SaveData();
+
+private:
+
 	bool isEnable_;
 	bool isDestroy_;
 	bool isBackGround_;
@@ -161,4 +199,6 @@ private:
 
 	// Textureのサイズ
 	Vector2 textureSize_;
+
+	SpriteData spriteData_;
 };
