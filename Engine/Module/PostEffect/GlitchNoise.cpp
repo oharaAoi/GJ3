@@ -50,6 +50,8 @@ void GlitchNoise::SetCommand(ID3D12GraphicsCommandList* commandList, DxResource*
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
 void GlitchNoise::StartNoise(float startStrength, float time) {
+	CopyData();
+
 	setting_->strength = startStrength;
 	noiseTime_ = time;
 	setting_->time = 0.0f;
@@ -73,5 +75,24 @@ void GlitchNoise::Debug_Gui() {
 			setting_->time = 0.0f;
 			setting_->frameIndex = 0;
 		}
+
+		if (ImGui::Button("Save")) {
+			param_.isEnable = isEnable_;
+			JsonItems::Save("PostEffect", param_.ToJson(param_.GetName()));
+		}
+		if (ImGui::Button("Apply")) {
+			param_.FromJson(JsonItems::GetData("PostEffect", param_.GetName()));
+		}
 	}
+}
+
+void GlitchNoise::ApplySaveData() {
+	param_.FromJson(JsonItems::GetData("PostEffect", param_.GetName()));
+	isEnable_ = param_.isEnable;
+	CopyData();
+}
+
+void GlitchNoise::CopyData() {
+	setting_->texelSize = param_.texelSize;
+	setting_->strength = param_.strength;
 }

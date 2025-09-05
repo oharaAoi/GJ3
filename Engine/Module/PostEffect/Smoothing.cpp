@@ -16,6 +16,8 @@ void Smoothing::Init() {
 }
 
 void Smoothing::SetCommand(ID3D12GraphicsCommandList* commandList, DxResource* pingResource) {
+	CopyData();
+
 	Engine::SetPipeline(PSOType::ProcessedScene, "PostProcess_Smoothing.json");
 	Pipeline* pso = Engine::GetLastUsedPipeline();
 	UINT index = pso->GetRootSignatureIndex("gTexture");
@@ -27,4 +29,28 @@ void Smoothing::SetCommand(ID3D12GraphicsCommandList* commandList, DxResource* p
 
 void Smoothing::CheckBox() {
 	ImGui::Checkbox("Smoothing##Smoothing_checkbox", &isEnable_);
+}
+
+void Smoothing::Debug_Gui() {
+	if (ImGui::CollapsingHeader("Smoothing")) {
+		ImGui::DragScalar("size", ImGuiDataType_U32, &param_.size);
+
+		if (ImGui::Button("Save")) {
+			param_.isEnable = isEnable_;
+			JsonItems::Save("PostEffect", param_.ToJson(param_.GetName()));
+		}
+		if (ImGui::Button("Apply")) {
+			param_.FromJson(JsonItems::GetData("PostEffect", param_.GetName()));
+		}
+	}
+}
+
+void Smoothing::ApplySaveData() {
+	param_.FromJson(JsonItems::GetData("PostEffect", param_.GetName()));
+	isEnable_ = param_.isEnable;
+	CopyData();
+}
+
+void Smoothing::CopyData() {
+	setting_->size = param_.size;
 }

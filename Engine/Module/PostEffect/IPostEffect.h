@@ -1,5 +1,7 @@
 #pragma once
 #include "Engine/DirectX/Resource/DxResource.h"
+#include "Engine/Lib/Json/JsonItems.h"
+#include "Engine/Lib/Json/IJsonConverter.h"
 
 class IPostEffect {
 public:
@@ -14,6 +16,9 @@ public:
 	virtual void CheckBox() = 0;
 
 	virtual void Debug_Gui() = 0;
+
+	virtual void ApplySaveData() = 0;
+	virtual void CopyData() = 0;
 
 public:
 

@@ -13,6 +13,7 @@
 // ui
 #include "Game/UI/StageSelector.h"
 #include "Game/StageRender/StageContents.h"
+#include "Engine/Module/PostEffect/IPostEffect.h"
 
 class StageSelectScene
 	: public BaseScene{
@@ -43,4 +44,6 @@ private:
 	BaseParticles* particle_;
 
 	SceneRenderer* sceneRenderer_;
+
+	std::shared_ptr<IPostEffect> gotRay_;
 };

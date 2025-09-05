@@ -20,6 +20,8 @@ void Dissolve::Init() {
 }
 
 void Dissolve::SetCommand(ID3D12GraphicsCommandList* commandList, DxResource* pingResource) {
+	CopyData();
+
 	Engine::SetPipeline(PSOType::ProcessedScene, "PostProcess_Dissolve.json");
 	Pipeline* pso = Engine::GetLastUsedPipeline();
 	UINT index = pso->GetRootSignatureIndex("gSetting");
@@ -37,7 +39,31 @@ void Dissolve::CheckBox() {
 
 void Dissolve::Debug_Gui() {
 	if (ImGui::CollapsingHeader("Dissolve##Dissolve_Header")) {
-		ImGui::DragFloat("threshold", &setting_->threshold, 0.01f);
-		setting_->threshold = std::clamp(setting_->threshold, 0.0f, 1.0f);
+		ImGui::DragFloat("threshold", &param_.threshold, 0.01f);
+		param_.threshold = std::clamp(param_.threshold, 0.0f, 1.0f);
+
+		if (ImGui::Button("Save")) {
+			param_.isEnable = isEnable_;
+			JsonItems::Save("PostEffect", param_.ToJson(param_.GetName()));
+		}
+		if (ImGui::Button("Apply")) {
+			param_.FromJson(JsonItems::GetData("PostEffect", param_.GetName()));
+		}
 	}
+}
+
+void Dissolve::ApplySaveData() {
+	param_.FromJson(JsonItems::GetData("PostEffect", param_.GetName()));
+	isEnable_ = param_.isEnable;
+	CopyData();
+}
+
+void Dissolve::CopyData() {
+	setting_->color = param_.color;
+	setting_->edgeColor = param_.edgeColor;
+	setting_->threshold = param_.threshold;
+
+	uvTransform_.scale = param_.uvTransform.scale;
+	uvTransform_.rotate = param_.uvTransform.rotate;
+	uvTransform_.translate = param_.uvTransform.translate;
 }

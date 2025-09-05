@@ -1,6 +1,7 @@
 #include "StageSelectScene.h"
 #include "Engine.h"
 #include "Engine/Lib/Json/JsonItems.h"
+#include "Engine/Module/PostEffect/PostProcess.h"
 
 StageSelectScene::StageSelectScene(){}
 StageSelectScene::~StageSelectScene(){ Finalize(); }
@@ -60,7 +61,9 @@ void StageSelectScene::Init(){
 
 	particle_ = ParticleManager::GetInstance()->CrateParticle("dust");
 	particle_->Reset();
-	
+
+	gotRay_ = Engine::GetPostProcess()->GetEffect(PostEffectType::GOTRAY);
+	gotRay_->ApplySaveData();
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////

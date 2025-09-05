@@ -18,6 +18,7 @@ void GaussianBlurHeight::Init() {
 }
 
 void GaussianBlurHeight::SetCommand(ID3D12GraphicsCommandList* commandList, DxResource* pingResource) {
+	CopyData();
 	// blur
 	Engine::SetPipeline(PSOType::ProcessedScene, "PostProcess_GaussianBlurHight.json");
 	Pipeline* pso = Engine::GetLastUsedPipeline();
@@ -36,5 +37,21 @@ void GaussianBlurHeight::CheckBox() {
 void GaussianBlurHeight::Debug_Gui() {
 	static float sample = 1;
 	ImGui::DragFloat("sampleHeight", &sample, 0.1f, 0.0f, 10.0f);
-	blurSetting_->texelSize = { sample / (float)kWindowWidth_, sample / (float)kWindowHeight_ };
+	param_.texelSize = { sample / (float)kWindowWidth_, sample / (float)kWindowHeight_ };
+
+	if (ImGui::Button("Save")) {
+		JsonItems::Save("PostEffect", param_.ToJson(param_.GetName()));
+	}
+	if (ImGui::Button("Apply")) {
+		param_.FromJson(JsonItems::GetData("PostEffect", param_.GetName()));
+	}
+}
+
+void GaussianBlurHeight::ApplySaveData() {
+	param_.FromJson(JsonItems::GetData("PostEffect", param_.GetName()));
+	CopyData();
+}
+
+void GaussianBlurHeight::CopyData() {
+	blurSetting_->texelSize = param_.texelSize;
 }
