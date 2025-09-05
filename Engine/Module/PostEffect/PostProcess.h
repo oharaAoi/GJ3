@@ -85,6 +85,15 @@ public:
 	std::shared_ptr<GlitchNoise> GetGlitchNoise() { return glitchNoise_; }
 	std::shared_ptr<Vignette> GetVignette() { return vignette_; }
 	std::shared_ptr<Dissolve> GetDissolve() { return dissolve_; }
+	std::shared_ptr<ToonMap> GetToonMap() { return toonMap_; }
+	std::shared_ptr<Bloom> GetBloom() { return bloom_; }
+	std::shared_ptr<Smoothing> GetSmoothing() { return smoothing_; }
+	std::shared_ptr<GaussianFilter> GetGaussianFilter() { return gaussianFilter_; }
+	std::shared_ptr<LuminanceBasedOutline> GetLuminance() { return luminanceOutline_; }
+	std::shared_ptr<DepthBasedOutline> GetDepthOutline() { return depthOutline_; }
+	std::shared_ptr<MotionBlur> GetMotionBlur() { return motionBlur_; }
+	std::shared_ptr<DistortionEffect> GetDistortionEffect() { return distortion_; }
+	std::shared_ptr<ScreenGotRay> GetGotRay() { return gotRay_; }
 
 private:
 

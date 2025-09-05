@@ -109,5 +109,29 @@ void Bloom::Debug_Gui() {
 		blurWidthBuffer_->Debug_Gui();
 		blurHeightBuffer_->Debug_Gui();
 		ImGui::DragFloat("bloomIntensity", &setting_->bloomIntensity, 0.1f);
+
+		if (ImGui::Button("Save")) {
+			param_.isEnable = isEnable_;
+			JsonItems::Save("PostEffect", param_.ToJson(param_.GetName()));
+		}
+		if (ImGui::Button("Apply")) {
+			param_.FromJson(JsonItems::GetData("PostEffect", param_.GetName()));
+		}
 	}
+}
+
+void Bloom::ApplySaveData() {
+	param_.FromJson(JsonItems::GetData("PostEffect", param_.GetName()));
+	isEnable_ = param_.isEnable;
+	brightnessBuffer_->ApplySaveData();
+	blurWidthBuffer_->ApplySaveData();
+	blurHeightBuffer_->ApplySaveData();
+	CopyData();
+}
+
+void Bloom::CopyData() {
+	setting_->bloomIntensity = param_.bloomIntensity;
+	brightnessBuffer_->ApplySaveData();
+	blurWidthBuffer_->ApplySaveData();
+	blurHeightBuffer_->ApplySaveData();
 }

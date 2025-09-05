@@ -299,6 +299,13 @@
     <ClCompile Include="Engine\Utilities\Timeline.cpp" />
     <ClCompile Include="Game\Effect\TitleFlashEffect.cpp" />
     <ClCompile Include="Game\Input\StageInputHandler.cpp" />
+    <ClCompile Include="Game\UI\Menu\MenuUIs.cpp" />
+    <ClCompile Include="Game\UI\Menu\MenuSelector.cpp" />
+    <ClCompile Include="Game\UI\Menu\button\IMenuButtonUI.cpp" />
+    <ClCompile Include="Game\UI\Menu\button\SelectButtonUI.cpp" />
+    <ClCompile Include="Game\UI\Menu\button\ResetButtonUI.cpp" />
+    <ClCompile Include="Game\UI\Menu\button\OperationButtonUI.cpp" />
+    <ClCompile Include="Game\UI\Menu\button\BackButtonUI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Module\PostEffect\DistortionEffect.h" />
@@ -558,6 +565,14 @@
     <ClInclude Include="Engine\Utilities\Timeline.h" />
     <ClInclude Include="Game\Effect\TitleFlashEffect.h" />
     <ClInclude Include="Game\Input\StageInputHandler.h" />
+    <ClInclude Include="Game\UI\Menu\MenuUIs.h" />
+    <ClInclude Include="Game\UI\Menu\MenuSelector.h" />
+    <ClInclude Include="Game\UI\Menu\button\IMenuButtonUI.h" />
+    <ClInclude Include="Game\UI\Menu\button\SelectButtonUI.h" />
+    <ClInclude Include="Game\UI\Menu\button\ResetButtonUI.h" />
+    <ClInclude Include="Game\UI\Menu\button\OperationButtonUI.h" />
+    <ClInclude Include="Game\UI\Menu\button\BackButtonUI.h" />
+    <ClInclude Include="Game\UI\Menu\button\MenuButtonType.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\Assets\HLSL\Light.hlsli" />

@@ -10,6 +10,22 @@ public:	// 構造体
 		Vector2 texelSize;
 	};
 
+	struct GaussianBlurHeightParam : public IJsonConverter {
+		Vector2 texelSize;
+
+		GaussianBlurHeightParam() { SetName("GaussianBlurHeight"); }
+
+		json ToJson(const std::string& id) const override {
+			return JsonBuilder(id)
+				.Add("texelSize", texelSize)
+				.Build();
+		}
+
+		void FromJson(const json& jsonData) override {
+			fromJson(jsonData, "texelSize", texelSize);
+		}
+	};
+
 public:
 
 	GaussianBlurHeight() = default;
@@ -23,9 +39,15 @@ public:
 
 	void Debug_Gui() override;
 
+	void ApplySaveData() override;
+
+	void CopyData() override;
+
 private:
 
 	std::unique_ptr<DxResource> blurBuffer_;
 	BlurSettings* blurSetting_;
+
+	GaussianBlurHeightParam param_;
 };
 

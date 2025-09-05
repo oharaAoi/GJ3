@@ -12,6 +12,26 @@ public:	// 構造体
 	struct BloomSettings {
 		float bloomIntensity;
 	};
+
+	struct BloomParam : public IJsonConverter {
+		float bloomIntensity;
+		bool isEnable;
+		
+		BloomParam() { SetName("GaussianFilter"); }
+
+		json ToJson(const std::string& id) const override {
+			return JsonBuilder(id)
+				.Add("bloomIntensity", bloomIntensity)
+				.Add("isEnable", isEnable)
+				.Build();
+		}
+
+		void FromJson(const json& jsonData) override {
+			fromJson(jsonData, "bloomIntensity", bloomIntensity);
+			fromJson(jsonData, "isEnable", isEnable);
+		}
+	};
+
 public:
 
 	Bloom() = default;
@@ -24,6 +44,10 @@ public:
 	void CheckBox() override;
 
 	void Debug_Gui() override;
+
+	void ApplySaveData() override;
+
+	void CopyData() override;
 
 	void SetPongResource(PingPongBuffer* _resource) { postProcessResource_ = _resource; }
 
@@ -48,5 +72,7 @@ private:
 	DescriptorHeap* dxHeap_ = nullptr;
 
 	D3D12_CPU_DESCRIPTOR_HANDLE depthHandle_;
+
+	BloomParam param_;
 };
 

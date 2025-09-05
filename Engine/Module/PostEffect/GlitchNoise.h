@@ -16,6 +16,28 @@ public:
 		int frameIndex;
 	};
 
+	struct GlitchNoiseParam : public IJsonConverter {
+		Vector2 texelSize;	// texelのサイズ
+		float strength;
+		bool isEnable;
+
+		GlitchNoiseParam() { SetName("GlitchNoise"); }
+
+		json ToJson(const std::string& id) const override {
+			return JsonBuilder(id)
+				.Add("texelSize", texelSize)
+				.Add("strength", strength)
+				.Add("isEnable", isEnable)
+				.Build();
+		}
+
+		void FromJson(const json& jsonData) override {
+			fromJson(jsonData, "texelSize", texelSize);
+			fromJson(jsonData, "strength", strength);
+			fromJson(jsonData, "isEnable", isEnable);
+		}
+	};
+
 public:
 
 	GlitchNoise() = default;
@@ -31,11 +53,17 @@ public:
 
 	void Debug_Gui() override;
 
+	void ApplySaveData() override;
+
+	void CopyData() override;
+
 private:
 
 	std::unique_ptr<DxResource> glitchBuffer_;
 	GlitchSetting* setting_;
 
 	float noiseTime_;
+
+	GlitchNoiseParam param_;
 };
 

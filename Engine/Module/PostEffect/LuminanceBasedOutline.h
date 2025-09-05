@@ -16,5 +16,8 @@ public:
 
 	void Debug_Gui() override {};
 
+	void ApplySaveData() override {};
+	void CopyData() override {};
+
 };
 

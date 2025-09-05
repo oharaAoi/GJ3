@@ -16,6 +16,34 @@ public:
 		int sampleCount = 16;				// サンプル数（例: 16）
 	};
 
+	struct RadialBlurParam : public IJsonConverter {
+		Vector2 blurCenter;
+		float blurStrength = 0.00f;	
+		float blurStart = 0.2f;	
+		int sampleCount = 16;
+		bool isEnable;
+
+		RadialBlurParam() { SetName("RadialBlur"); }
+
+		json ToJson(const std::string& id) const override {
+			return JsonBuilder(id)
+				.Add("blurCenter", blurCenter)
+				.Add("blurStrength", blurStrength)
+				.Add("blurStart", blurStart)
+				.Add("sampleCount", sampleCount)
+				.Add("isEnable", isEnable)
+				.Build();
+		}
+
+		void FromJson(const json& jsonData) override {
+			fromJson(jsonData, "blurCenter", blurCenter);
+			fromJson(jsonData, "blurStrength", blurStrength);
+			fromJson(jsonData, "blurStart", blurStart);
+			fromJson(jsonData, "sampleCount", blurStart);
+			fromJson(jsonData, "isEnable", isEnable);
+		}
+	};
+
 public:
 
 	RadialBlur() = default;
@@ -28,6 +56,10 @@ public:
 	void CheckBox() override;
 
 	void Debug_Gui() override;
+
+	void ApplySaveData() override;
+
+	void CopyData() override;
 
 public:
 
@@ -51,5 +83,7 @@ private:
 	float startTime_;
 	float stopTime_;
 	float timer_;
+
+	RadialBlurParam param_;
 };
 
