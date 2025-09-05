@@ -78,10 +78,11 @@ void Canvas2d::EditObject(const ImVec2& windowSize, const ImVec2& imagePos) {
 // ↓　追加処理
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
-Sprite* Canvas2d::AddSprite(const std::string& _textureName, const std::string& _psoName, int _renderQueue, bool _isPreDraw) {
+Sprite* Canvas2d::AddSprite(const std::string& _textureName, const std::string& _attributeName, const std::string& _psoName, int _renderQueue, bool _isPreDraw) {
 	auto& newObj = spriteList_.emplace_back(ObjectPair());
 	newObj.sprite = std::make_unique<Sprite>();
 	newObj.sprite->Init(_textureName);
+	newObj.sprite->SetName(_attributeName);
 	newObj.psoName = _psoName;
 	newObj.renderQueue = _renderQueue;
 	newObj.isPreDraw = _isPreDraw;

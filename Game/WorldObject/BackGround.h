@@ -4,7 +4,8 @@
 /// <summary>
 /// 背景
 /// </summary>
-class BackGround {
+class BackGround :
+	public AttributeGui {
 public:
 
 	BackGround() = default;
@@ -13,6 +14,8 @@ public:
 	void Init();
 
 	void Update();
+
+	void Debug_Gui() override;
 
 private:
 

@@ -2,7 +2,7 @@
 
 void BlockNormal::Init(Canvas2d* _canvas2d) {
 	SetName("BlockNormal");
-	sprite_ = _canvas2d->AddSprite("normalBlock.png", "Sprite_Normal.json");
+	sprite_ = _canvas2d->AddSprite("normalBlock.png", "normalBlock", "Sprite_Normal.json");
 	transform_ = sprite_->GetTransform();
 	type_ = BlockType::NormalBlock;
 }

@@ -12,12 +12,12 @@ void TitleUIs::Init(){
 	///===========================================
 	// Sprites
 	///===========================================
-	backGround_ = Engine::GetCanvas2d()->AddSprite("title_bg.png","Sprite_Normal.json",-10);
-	titleBar_ = Engine::GetCanvas2d()->AddSprite("title_bar.png","Sprite_Normal.json",1);
+	backGround_ = Engine::GetCanvas2d()->AddSprite("title_bg.png", "title_bg.png", "Sprite_Normal.json",-10);
+	titleBar_ = Engine::GetCanvas2d()->AddSprite("title_bar.png", "title_bar.png", "Sprite_Normal.json",1);
 
-	shelf_ = Engine::GetCanvas2d()->AddSprite("shelf.png","Sprite_Normal.json",2);
+	shelf_ = Engine::GetCanvas2d()->AddSprite("shelf.png", "shelf.png", "Sprite_Normal.json",2);
 
-	ghost_ = Engine::GetCanvas2d()->AddSprite("title_ghost.png","Sprite_Normal.json",5);
+	ghost_ = Engine::GetCanvas2d()->AddSprite("title_ghost.png", "title_ghost.png", "Sprite_Normal.json",5);
 
 
 	///===========================================

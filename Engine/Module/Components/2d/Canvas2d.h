@@ -31,7 +31,7 @@ public:
 
 public:
 
-	Sprite* AddSprite(const std::string& _textureName, const std::string& _psoName, int _renderQueue = 0, bool _isPreDraw = false);
+	Sprite* AddSprite(const std::string& _textureName, const std::string& _attributeName, const std::string& _psoName, int _renderQueue = 0, bool _isPreDraw = false);
 
 private:
 
