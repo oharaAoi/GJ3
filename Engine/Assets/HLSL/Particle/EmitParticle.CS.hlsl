@@ -28,6 +28,9 @@ struct Emitter {
 	float damping;
 	
 	float radius;
+	float angle;
+	float height;
+	int isDraw2d;
 };
 
 struct PerFrame {
@@ -131,6 +134,7 @@ void CSmain(uint3 DTid : SV_DispatchThreadID) {
 			gParticles[particleIndex].lifeOfScaleDown = gEmitter.lifeOfScaleDown;
 			gParticles[particleIndex].lifeOfScaleUp = gEmitter.lifeOfScaleDown;
 			gParticles[particleIndex].lifeOfAlpha = gEmitter.lifeOfAlpha;
+			gParticles[particleIndex].isDraw2d = gEmitter.isDraw2d;
 			
 			if (gEmitter.emitType == 0) {
 				gParticles[particleIndex].velocity = ApplyEuler(gEmitter.rotate, float3(0, 1, 0)) * gEmitter.speed;

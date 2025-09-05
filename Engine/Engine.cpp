@@ -68,13 +68,9 @@ void Engine::Initialize(uint32_t backBufferWidth, int32_t backBufferHeight) {
 	GeometryFactory& geometryFactory = GeometryFactory::GetInstance();
 	geometryFactory.Init();
 
-	canvas2d_ = std::make_unique<Canvas2d>();
-	canvas2d_->Init();
-
 #ifdef _DEBUG
 	editorWindows_->Init(dxDevice_, dxCmdList_, renderTarget_, dxHeap_);
 	editorWindows_->SetProcessedSceneFrame(processedSceneFrame_.get());
-	editorWindows_->SetCanvas2d(canvas2d_.get());
 	editorWindows_->SetRenderTarget(renderTarget_);
 
 	imguiManager_ = ImGuiManager::GetInstacne();
@@ -110,7 +106,6 @@ void Engine::Initialize(uint32_t backBufferWidth, int32_t backBufferHeight) {
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
 void Engine::Finalize() {
-	canvas2d_.reset();
 	blendTexture_.reset();
 	postProcess_->Finalize();
 	audio_->Finalize();
@@ -183,9 +178,6 @@ void Engine::EndFrame() {
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
 void Engine::RenderFrame() {
-	canvas2d_->Update();
-
-	canvas2d_->PreDraw();
 
 	// -------------------------------------------------
 	// ↓ 線の描画
@@ -231,7 +223,7 @@ void Engine::RenderFrame() {
 	Render::SetRenderTarget(types, dxCommon_->GetDepthHandle());
 	Engine::SetPipeline(PSOType::ProcessedScene, "PostProcess_Normal.json");
 	processedSceneFrame_->Draw(dxCmdList_);
-	canvas2d_->Draw();
+	pCanvas2d_->Draw();
 
 	BlendFinalTexture(Sprite2d_RenderTarget);
 
@@ -368,7 +360,12 @@ void Engine::SetPipelineCS(const std::string& jsonFile) {
 }
 
 Canvas2d* Engine::GetCanvas2d() {
-	return canvas2d_.get();
+	return pCanvas2d_;
+}
+
+void Engine::SetCanvas2d(Canvas2d* _canvas) {
+	pCanvas2d_ = _canvas;
+	editorWindows_->SetCanvas2d(pCanvas2d_);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////

@@ -7,6 +7,8 @@ StageSelectScene::~StageSelectScene(){ Finalize(); }
 
 void StageSelectScene::Finalize(){
 	sceneRenderer_->Finalize();
+	ParticleManager::GetInstance()->Finalize();
+	GpuParticleManager::GetInstance()->Finalize();
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -14,8 +16,6 @@ void StageSelectScene::Finalize(){
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
 void StageSelectScene::Init(){
-	Engine::GetCanvas2d()->Init();
-
 	JsonItems* adjust = JsonItems::GetInstance();
 	adjust->Init("StageSelectScene");
 
@@ -26,9 +26,6 @@ void StageSelectScene::Init(){
 	sceneRenderer_ = SceneRenderer::GetInstance();
 	sceneRenderer_->Init();
 	EditorWindows::GetInstance()->SetSceneRenderer(sceneRenderer_);
-
-	skybox_ = SceneRenderer::GetInstance()->AddObject<Skybox>("Skybox","Object_Skybox.json",-999);
-	Render::SetSkyboxTexture(skybox_->GetTexture());
 
 	// -------------------------------------------------
 	// ↓ cameraの初期化
@@ -61,9 +58,9 @@ void StageSelectScene::Init(){
 	stageSelector_->SetStageRenderTarget(stageContents_->GetStageRenderTarget());
 	stageSelector_->Init();
 
-	// -------------------------------------------------
-	// ↓ その他設定
-	// -------------------------------------------------
+	particle_ = ParticleManager::GetInstance()->CrateParticle("dust");
+	particle_->Reset();
+	
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////

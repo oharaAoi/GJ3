@@ -23,7 +23,7 @@ void Bloom::Init() {
 	settingBuffer_->CreateResource(sizeof(BloomSettings));
 	settingBuffer_->GetResource()->Map(0, nullptr, reinterpret_cast<void**>(&setting_));
 	
-	setting_->bloomIntensity = 1.8f;
+	setting_->bloomIntensity = 20.8f;
 
 	// ブルームを実行するのに必要なResourceを作詞絵する
 	// resourceの設定

@@ -20,7 +20,7 @@ public:
 
 	ID3D12Resource* GetDepthResource() { return depthStencilResource_->GetResource(); }
 
-	DescriptorHandles GetDepthDsvHandle() { return depthDsvHandle_; }
+	DescriptorHandles GetDepthDsvHandle() { return depthStencilResource_->GetDSV(); }
 	DescriptorHandles GetDeptSrvHandle() { return depthSrvHandle_; }
 
 	void Debug_Gui() override;
@@ -28,7 +28,6 @@ public:
 private:
 
 	std::unique_ptr<DxResource> depthStencilResource_ = nullptr;
-	DescriptorHandles depthDsvHandle_;
 	DescriptorHandles depthSrvHandle_;
 
 };

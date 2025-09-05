@@ -9,6 +9,8 @@ GameScene::~GameScene() { Finalize(); }
 void GameScene::Finalize()
 {
 	sceneRenderer_->Finalize();
+	ParticleManager::GetInstance()->Finalize();
+	GpuParticleManager::GetInstance()->Finalize();
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -16,8 +18,6 @@ void GameScene::Finalize()
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
 void GameScene::Init() {
-	Engine::GetCanvas2d()->Init();
-
 	JsonItems* adjust = JsonItems::GetInstance();
 	adjust->Init("GameScene");
 
@@ -28,9 +28,6 @@ void GameScene::Init() {
 	sceneRenderer_ = SceneRenderer::GetInstance();
 	sceneRenderer_->Init();
 	EditorWindows::GetInstance()->SetSceneRenderer(sceneRenderer_);
-
-	skybox_ = SceneRenderer::GetInstance()->AddObject<Skybox>("Skybox", "Object_Skybox.json", -999);
-	Render::SetSkyboxTexture(skybox_->GetTexture());
 
 	// -------------------------------------------------
 	// ↓ cameraの初期化
@@ -69,7 +66,13 @@ void GameScene::Init() {
 
 	// -------------------------------------------------
 	// ↓ spriteの初期化
-	// -------------------------------------------------
+	// ------------------------------------------------
+
+	orb_ = ParticleManager::GetInstance()->CrateParticle("orb");
+	orb_->Reset();
+
+	dust_ = ParticleManager::GetInstance()->CrateParticle("dust");
+	dust_->Reset();
 
 	// -------------------------------------------------
 	// ↓ その他設定

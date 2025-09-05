@@ -1,4 +1,6 @@
 
+static const float PI = 3.141592653589f;
+
 float4x4 MakeUnit() {
 	return float4x4(1.0, 0.0, 0.0, 0.0,
                     0.0, 1.0, 0.0, 0.0,

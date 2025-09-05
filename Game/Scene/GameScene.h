@@ -2,6 +2,7 @@
 #include <memory>
 #include "Game/Scene/BaseScene.h"
 #include "Engine/Render/SceneRenderer.h"
+#include "Engine/Module/Components/Effect/BaseParticles.h"
 // camera
 #include "Game/Camera/Camera3d.h"
 #include "Game/Camera/Camera2d.h"
@@ -11,7 +12,7 @@
 #include "Game/Actor/Player/Player.h"
 #include "Game/Manager/StageRegistry.h"
 #include "Game/WorldObject/WorldObjects.h"
-#include "Game/Manager/MapCollisionSystem.h"
+#include "Game/Manager/Collision/Common/MapCollisionSystem.h"
 
 class GameScene
 	: public BaseScene
@@ -33,8 +34,6 @@ private:
 
 	// ------------------- actor ------------------- //
 
-	Skybox *skybox_;
-
 	std::unique_ptr<StageRegistry> stageRegistry_;
 
 	std::unique_ptr<MapCollisionSystem> mapCollision_;
@@ -42,6 +41,9 @@ private:
 	std::unique_ptr<WorldObjects> worldObjects_;
 
 	std::unique_ptr<Player> player_;
+
+	BaseParticles* orb_;
+	BaseParticles* dust_;
 
 	SceneRenderer *sceneRenderer_;
 };

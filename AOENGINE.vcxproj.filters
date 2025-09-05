@@ -55,6 +55,7 @@
     <FxCompile Include="Engine\Resources\HLSL\Textureless.PS.hlsl" />
     <FxCompile Include="Engine\Resources\HLSL\CS\VerticalBlur.CS.hlsl" />
     <FxCompile Include="Game\Assets\HLSL\Distortion.PS.hlsl" />
+    <FxCompile Include="Engine\Assets\HLSL\PostEffect\GotRay.PS.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Module\PostEffect\DistortionEffect.cpp" />
@@ -284,11 +285,17 @@
     <ClCompile Include="Game\Commands\ObjectCommandInvoker.cpp" />
     <ClCompile Include="Game\Actor\Player\Command\PlayerMoveCommand.cpp" />
     <ClCompile Include="Game\Actor\Player\PlayerInputHandler.cpp" />
-    <ClCompile Include="Game\Manager\MapCollisionSystem.cpp" />
+    <ClCompile Include="Game\Manager\Collision\Common\MapCollisionSystem.cpp" />
     <ClCompile Include="Game\UI\StageSelector.cpp" />
     <ClCompile Include="Game\Actor\Block\TokenGhost.cpp" />
     <ClCompile Include="Game\StageRender\StageContents.cpp" />
     <ClCompile Include="Game\Camera\StageContentCamera.cpp" />
+    <ClCompile Include="Game\Actor\Block\BlockStart.cpp" />
+    <ClCompile Include="Game\Actor\Block\BlockSpecial.cpp" />
+    <ClCompile Include="Game\Actor\Block\BlockLimit.cpp" />
+    <ClCompile Include="Game\Manager\Collision\Map\SpecialBlockCollision.cpp" />
+    <ClCompile Include="Game\Manager\Collision\Map\GhostBlockCollision.cpp" />
+    <ClCompile Include="Engine\Module\PostEffect\ScreenGotRay.cpp" />
     <ClCompile Include="Engine\Utilities\Timeline.cpp" />
     <ClCompile Include="Game\Effect\TitleFlashEffect.cpp" />
   </ItemGroup>
@@ -535,12 +542,18 @@
     <ClInclude Include="Game\Commands\ObjectCommandInvoker.h" />
     <ClInclude Include="Game\Actor\Player\Command\PlayerMoveCommand.h" />
     <ClInclude Include="Game\Actor\Player\PlayerInputHandler.h" />
-    <ClInclude Include="Game\Manager\MapCollisionSystem.h" />
+    <ClInclude Include="Game\Manager\Collision\Common\MapCollisionSystem.h" />
     <ClInclude Include="Game\WorldObject\WorldObjects.h" />
     <ClInclude Include="Game\UI\StageSelector.h" />
     <ClInclude Include="Game\Actor\Block\TokenGhost.h" />
     <ClInclude Include="Game\StageRender\StageContents.h" />
     <ClInclude Include="Game\Camera\StageContentCamera.h" />
+    <ClInclude Include="Game\Actor\Block\BlockStart.h" />
+    <ClInclude Include="Game\Actor\Block\BlockSpecial.h" />
+    <ClInclude Include="Game\Actor\Block\BlockLimit.h" />
+    <ClInclude Include="Game\Manager\Collision\Map\SpecialBlockCollision.h" />
+    <ClInclude Include="Game\Manager\Collision\Map\GhostBlockCollision.h" />
+    <ClInclude Include="Engine\Module\PostEffect\ScreenGotRay.h" />
     <ClInclude Include="Engine\Utilities\Timeline.h" />
     <ClInclude Include="Game\Effect\TitleFlashEffect.h" />
   </ItemGroup>

@@ -22,6 +22,7 @@ void PostProcess::Finalize() {
 	depthOutline_.reset();
 	motionBlur_.reset();
 	distortion_.reset();
+	gotRay_.reset();
 	effectList_.clear();
 	depthStencilResource_.Reset();
 }
@@ -70,7 +71,7 @@ void PostProcess::Init(ID3D12Device* device, DescriptorHeap* descriptorHeap, Ren
 	bloom_ = std::make_shared<Bloom>();
 	bloom_->Init();
 	bloom_->SetPongResource(pingPongBuff_.get());
-	bloom_->SetIsEnable(true);
+	bloom_->SetIsEnable(false);
 	bloom_->SetDepthHandle(depthHandle_.handleCPU);
 
 	smoothing_ = std::make_unique<Smoothing>();
@@ -94,6 +95,10 @@ void PostProcess::Init(ID3D12Device* device, DescriptorHeap* descriptorHeap, Ren
 	distortion_->Init();
 	distortion_->SetIsEnable(false);
 
+	gotRay_ = std::make_shared<ScreenGotRay>();
+	gotRay_->Init();
+	gotRay_->SetIsEnable(true);
+
 	AddEffect(PostEffectType::RADIALBLUR);
 	AddEffect(PostEffectType::GLITCHNOISE);
 	AddEffect(PostEffectType::VIGNETTE);
@@ -106,6 +111,7 @@ void PostProcess::Init(ID3D12Device* device, DescriptorHeap* descriptorHeap, Ren
 	AddEffect(PostEffectType::GAUSSIANFILTER);
 	AddEffect(PostEffectType::GRAYSCALE);
 	AddEffect(PostEffectType::DISTORTION);
+	AddEffect(PostEffectType::GOTRAY);
 	AddEffect(PostEffectType::TOONMAP);
 
 	EditorWindows::AddObjectWindow(this, "Post Process");
@@ -206,6 +212,9 @@ void PostProcess::AddEffect(PostEffectType type) {
 		case PostEffectType::DISTORTION:
 			effectList_.push_back(distortion_);
 			break;
+		case PostEffectType::GOTRAY:
+			effectList_.push_back(gotRay_);
+			break;
 		default:
 			break;
 		}
@@ -249,6 +258,8 @@ std::shared_ptr<IPostEffect> PostProcess::GetEffect(PostEffectType type) {
 		return motionBlur_;
 	case PostEffectType::DISTORTION:
 		return distortion_;
+	case PostEffectType::GOTRAY:
+		return gotRay_;
 	default:
 		return nullptr;
 		break;

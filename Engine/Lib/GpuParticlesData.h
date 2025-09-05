@@ -38,7 +38,8 @@ struct GpuParticleEmitterData {
 	float radius;
 	float angle;
 	float height;
-	float pad6;
+
+	int isDraw2d;
 };
 
 enum EmitType {
@@ -92,6 +93,8 @@ struct GpuParticleEmitterItem : public IJsonConverter {
 	float angle = 1.2f;
 	float height = 2.0f;
 
+	bool isDraw2d = false;
+
 	GpuParticleEmitterItem() {
 		toJsonFunction_ = [this](const std::string& id) {
 			return this->ToJson(id);
@@ -125,6 +128,7 @@ struct GpuParticleEmitterItem : public IJsonConverter {
 			.Add("size", size)
 			.Add("angle", angle)
 			.Add("height", height)
+			.Add("isDraw2d", isDraw2d)
 			
 			.Build();
 	}
@@ -156,6 +160,7 @@ struct GpuParticleEmitterItem : public IJsonConverter {
 		fromJson(jsonData, "size", size);
 		fromJson(jsonData, "angle", angle);
 		fromJson(jsonData, "height", height);
+		fromJson(jsonData, "isDraw2d", isDraw2d);
 	}
 
 	void Attribute_Gui();

@@ -106,7 +106,7 @@ public:
 
 	ID3D12Resource* GetDepthStencilResource() { return depthStencilResource_->GetResource(); }
 
-	const DescriptorHandles& GetDepthHandle() const { return depthHandle_; }
+	const DescriptorHandles& GetDepthHandle() const { return depthStencilResource_->GetDSV(); }
 
 private:
 
@@ -148,6 +148,5 @@ private:
 
 	// dsv
 	std::unique_ptr<DxResource> depthStencilResource_ = nullptr;
-	DescriptorHandles depthHandle_;
 };
 

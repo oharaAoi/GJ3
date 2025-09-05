@@ -106,6 +106,7 @@ public:
 	static Matrix4x4 GetViewport3D();
 	static Matrix4x4 GetProjection3D();
 	static Matrix4x4 GetViewProjectionMat();
+	static Matrix4x4 GetViewProjectionMat2D();
 
 	static float GetNearClip();
 	static float GetNearClip2D();

@@ -1,5 +1,6 @@
 #include "SceneRenderer.h"
 #include "Engine/Engine.h"
+#include "Engine/Core/GraphicsContext.h"
 #include "Engine/Module/Components/GameObject/BaseGameObject.h"
 
 SceneRenderer* SceneRenderer::GetInstance() {
@@ -9,6 +10,7 @@ SceneRenderer* SceneRenderer::GetInstance() {
 
 void SceneRenderer::Finalize() {
 	objectList_.clear();
+	canvas2d_.reset();
 	particleManager_->Finalize();
 	gpuParticleManager_->Finalize();
 }
@@ -20,11 +22,16 @@ void SceneRenderer::Finalize() {
 void SceneRenderer::Init() {
 	objectList_.clear();
 
+	canvas2d_ = std::make_unique<Canvas2d>();
+	canvas2d_->Init();
+
 	particleManager_ = ParticleManager::GetInstance();
 	particleManager_->Init();
 
 	gpuParticleManager_ = GpuParticleManager::GetInstance();
 	gpuParticleManager_->Init();
+
+	Engine::SetCanvas2d(canvas2d_.get());
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -54,6 +61,7 @@ void SceneRenderer::Update() {
 		}
 	}
 
+	canvas2d_->Update();
 	particleManager_->Update();
 	gpuParticleManager_->Update();
 }
@@ -72,6 +80,7 @@ void SceneRenderer::PostUpdate() {
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
 void SceneRenderer::Draw() const {
+
 	Render::SetShadowMap();
 	for (auto& pair : objectList_) {
 		ISceneObject* obj = pair->GetSceneObject();
@@ -81,6 +90,9 @@ void SceneRenderer::Draw() const {
 	}
 
 	Engine::SetRenderTarget();
+	// 背景描画
+	canvas2d_->PreDraw();
+
 	Render::ChangeShadowMap();
 	for (auto& pair : objectList_) {
 		if (pair->GetPostDraw()) {

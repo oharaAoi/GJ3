@@ -29,6 +29,7 @@ public:
 			children_.end()
 		);
 	}
+	void ClearChild() { children_.clear(); }
 
 	const std::vector<AttributeGui*>& GetChildren() const { return children_; }
 
