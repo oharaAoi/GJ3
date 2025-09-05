@@ -1,7 +1,7 @@
 #include "Player.h"
 
 /// hadler
-#include "PlayerInputHandler.h"
+#include "Game/Input/PlayerInputHandler.h"
 #include "Game/Information/StageInformation.h"
 
 Player::Player():IBlock(){}

@@ -356,13 +356,14 @@ copy "$(ProjectDir)Externals\assimp\build\bin\Release\assimp-vc143-mt.dll" "$(Ta
     <ClCompile Include="Game\Actor\Player\Player.cpp" />
     <ClCompile Include="Game\Commands\ObjectCommandInvoker.cpp" />
     <ClCompile Include="Game\Actor\Player\Command\PlayerMoveCommand.cpp" />
-    <ClCompile Include="Game\Actor\Player\PlayerInputHandler.cpp" />
+    <ClCompile Include="Game\Input\PlayerInputHandler.cpp" />
     <ClCompile Include="Game\Manager\Collision\Common\MapCollisionSystem.cpp" />
     <ClCompile Include="Game\UI\StageSelector.cpp" />
     <ClCompile Include="Game\Actor\Block\TokenGhost.cpp" />
     <ClCompile Include="Game\StageRender\StageContents.cpp" />
     <ClCompile Include="Game\Manager\Collision\Map\SpecialBlockCollision.cpp" />
     <ClCompile Include="Game\Effect\TitleFlashEffect.cpp" />
+    <ClCompile Include="Game\Input\StageInputHandler.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Module\PostEffect\ScreenGotRay.h" />
@@ -612,7 +613,7 @@ copy "$(ProjectDir)Externals\assimp\build\bin\Release\assimp-vc143-mt.dll" "$(Ta
     <ClInclude Include="Game\Commands\IObjectCommand.h" />
     <ClInclude Include="Game\Commands\ObjectCommandInvoker.h" />
     <ClInclude Include="Game\Actor\Player\Command\PlayerMoveCommand.h" />
-    <ClInclude Include="Game\Actor\Player\PlayerInputHandler.h" />
+    <ClInclude Include="Game\Input\PlayerInputHandler.h" />
     <ClInclude Include="Game\Manager\Collision\Common\MapCollisionSystem.h" />
     <ClInclude Include="Game\WorldObject\WorldObjects.h" />
     <ClInclude Include="Game\UI\StageSelector.h" />
@@ -621,6 +622,7 @@ copy "$(ProjectDir)Externals\assimp\build\bin\Release\assimp-vc143-mt.dll" "$(Ta
     <ClInclude Include="Game\Manager\Collision\Map\SpecialBlockCollision.h" />
     <ClInclude Include="Game\Manager\Collision\Map\GhostBlockCollision.h" />
     <ClInclude Include="Game\Effect\TitleFlashEffect.h" />
+    <ClInclude Include="Game\Input\StageInputHandler.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Engine\Assets\HLSL\Particle\AccelerationField.CS.hlsl">
