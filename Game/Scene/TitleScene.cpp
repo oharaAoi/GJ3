@@ -35,19 +35,62 @@ void TitleScene::Init(){
 	camera3d_->Init();
 	debugCamera_->Init();
 
+	// -------------------------------------------------
+	// ↓ objectの初期化
+	// -------------------------------------------------
+
 	skybox_ = SceneRenderer::GetInstance()->AddObject<Skybox>("Skybox","Object_Skybox.json",-999);
 
 	uis_ = std::make_unique<TitleUIs>();
 	uis_->Init();
+
+	thunderFlash_ = std::make_unique<ThunderFlash>();
+	thunderFlash_->Init();
+
+	lightFlash_ = std::make_unique<LightFlash>();
+	lightFlash_->Init();
 
 	DirectionalLight* light = Render::GetLightGroup()->GetDirectionalLight();
 	light->SetIntensity(0.3f);
 }
 
 void TitleScene::Update(){
+	if(isTransition_){
+		TransitionUpdate();
+		if(lightFlash_->GetIsFinish()){
+			nextSceneType_ = SceneType::STAGE_SELECT;
+		}
+	} else{
+		InputHandle();
+		thunderFlash_->Update();
+		Vector4 ghostColor = uis_->GetGhostSprite()->GetColor();
+		ghostColor.w = thunderFlash_->GetFlashColor().w;
+		uis_->GetGhostSpriteRef()->SetColor(ghostColor);
+
+		//float othersColor = 1.f - thunderFlash_->GetFlashColor().w;
+		//uis_->GetShelfRef()->SetColor(Vector4(othersColor,othersColor,othersColor,1.f));
+		//uis_->GetTitleBarRef()->SetColor(Vector4(othersColor,othersColor,othersColor,1.f));
+		//uis_->GetBackGroundRef()->SetColor(Vector4(othersColor,othersColor,othersColor,1.f));
+	}
+
 	// -------------------------------------------------
-	// ↓ 入力処理
+	// ↓ cameraの更新 
 	// -------------------------------------------------
+	if(debugCamera_->GetIsActive()){
+		debugCamera_->Update();
+	} else{
+		camera3d_->Update();
+	}
+	camera2d_->Update();
+
+	uis_->Update();
+
+	sceneRenderer_->Update();
+
+	sceneRenderer_->PostUpdate();
+}
+
+void TitleScene::InputHandle(){
 	Input* input = Input::GetInstance();
 	bool doTransition = false;
 	for(auto& key : kTransitionKeys){
@@ -68,24 +111,17 @@ void TitleScene::Update(){
 	}
 
 	if(doTransition){
-		nextSceneType_ = SceneType::GAME;
+		isTransition_ = true;
+		thunderFlash_->SetFlashColor(Vector4(0.f,0.f,0.f,0.f));
+		lightFlash_->SetFlashColor(Vector4(0.f,0.f,0.f,0.f));
 	}
+}
 
-	// -------------------------------------------------
-	// ↓ cameraの更新 
-	// -------------------------------------------------
-	if(debugCamera_->GetIsActive()){
-		debugCamera_->Update();
-	} else{
-		camera3d_->Update();
-	}
-	camera2d_->Update();
-
-	uis_->Update();
-
-	sceneRenderer_->Update();
-
-	sceneRenderer_->PostUpdate();
+void TitleScene::TransitionUpdate(){
+	lightFlash_->Update();
+	Vector4 ghostColor = uis_->GetGhostSprite()->GetColor();
+	ghostColor.w = 1.f - lightFlash_->GetFlashColor().w;
+	uis_->GetGhostSpriteRef()->SetColor(ghostColor);
 }
 
 void TitleScene::Draw() const{

@@ -10,6 +10,7 @@
 #include "Game/WorldObject/Skybox.h"
 //ui
 #include "Game/UI/TitleUIs.h"
+#include "Game/Effect/TitleFlashEffect.h"
 
 class TitleScene :
 	public BaseScene{
@@ -20,10 +21,13 @@ public:
 	TitleScene();
 	~TitleScene();
 
-	void Finalize() override;
 	void Init() override;
+	void Finalize() override;
 	void Update() override;
 	void Draw() const override;
+
+	void InputHandle();
+	void TransitionUpdate();
 
 private:
 	// ------------------- camera ------------------- //
@@ -34,7 +38,13 @@ private:
 	// ------------------- actor ------------------- //
 	Skybox* skybox_;
 
+	// ------------------- ui ------------------- //
 	std::unique_ptr<TitleUIs> uis_;
+	std::unique_ptr<ThunderFlash> thunderFlash_; // 通常エフェクト
+
+	// ------------------- transition ------------------- //
+	bool isTransition_ = false;
+	std::unique_ptr<LightFlash> lightFlash_;     // 遷移エフェクト
 
 	SceneRenderer* sceneRenderer_;
 };

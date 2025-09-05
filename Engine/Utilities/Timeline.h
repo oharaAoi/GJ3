@@ -1,0 +1,52 @@
+#pragma once
+
+/// stl
+// pointer
+#include <functional>
+// container
+#include <vector>
+// string
+#include "Engine/Module/Components/Animation/AnimationStructures.h"
+
+#include <string>
+
+namespace ImGui {
+/// <summary>
+/// タイムラインボタン
+/// </summary>
+/// <param name="_label">ラベル</param>
+/// <param name="_nodeTimes">ノードの時間</param>
+/// <param name="_duration">アニメーションの時間</param>
+/// <param name="_updateOnNodeDragged">ノードがドラッグされたときの更新</param>
+/// <param name="_sliderPopupUpdate">スライダーポップアップの更新</param>
+/// <param name="_nodePopupUpdate">ノードポップアップの更新</param>
+/// <returns>更新されたか</returns>
+bool TimeLineButtons(
+    const std::string& _label,
+    std::vector<float>& _nodeTimes,
+    float _duration,
+    std::function<void(float newNodeTime)> _updateOnNodeDragged = nullptr,
+    std::function<void(float _currentTime)> _sliderPopupUpdate  = nullptr,
+    std::function<bool(int nodeIndex)> _nodePopupUpdate         = nullptr);
+
+bool TimeLineButtons(
+    const std::string& _label,
+    AnimationCurve<int>& _keyFrames,
+    float _duration,
+    std::function<void(float newNodeTime)> _updateOnNodeDragged = nullptr,
+    std::function<void(float _currentTime)> _sliderPopupUpdate  = nullptr,
+    std::function<bool(int nodeIndex)> _nodePopupUpdate         = nullptr);
+/// <summary>
+/// AnimationCurve<>を編集
+/// </summary>
+/// <param name="_label">ラベル</param>
+/// <param name="_keyFrames">編集対象</param>
+/// <param name="_duration">総合時間</param>
+/// <returns></returns>
+bool EditKeyFrame(
+    const std::string& _label,
+    AnimationCurve<float>& _keyFrames,
+    float _duration,
+    float _defaultValue                   = 0.0f,
+    std::function<void(int)> _howEditItem = nullptr);
+} // namespace ImGui

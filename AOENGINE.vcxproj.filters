@@ -289,6 +289,8 @@
     <ClCompile Include="Game\Actor\Block\TokenGhost.cpp" />
     <ClCompile Include="Game\StageRender\StageContents.cpp" />
     <ClCompile Include="Game\Camera\StageContentCamera.cpp" />
+    <ClCompile Include="Engine\Utilities\Timeline.cpp" />
+    <ClCompile Include="Game\Effect\TitleFlashEffect.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Module\PostEffect\DistortionEffect.h" />
@@ -539,6 +541,8 @@
     <ClInclude Include="Game\Actor\Block\TokenGhost.h" />
     <ClInclude Include="Game\StageRender\StageContents.h" />
     <ClInclude Include="Game\Camera\StageContentCamera.h" />
+    <ClInclude Include="Engine\Utilities\Timeline.h" />
+    <ClInclude Include="Game\Effect\TitleFlashEffect.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\Assets\HLSL\Light.hlsli" />

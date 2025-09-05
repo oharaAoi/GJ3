@@ -124,6 +124,7 @@ copy "$(ProjectDir)Externals\assimp\build\bin\Release\assimp-vc143-mt.dll" "$(Ta
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Module\PostEffect\DistortionEffect.cpp" />
+    <ClCompile Include="Engine\Utilities\Timeline.cpp" />
     <ClCompile Include="Game\Actor\Block\BlockGrave.cpp" />
     <ClCompile Include="Game\Actor\Block\BlockGhost.cpp" />
     <ClCompile Include="Engine\DirectX\Pipeline\PipelineGroup\ComputeShaderPipelines.cpp" />
@@ -355,9 +356,11 @@ copy "$(ProjectDir)Externals\assimp\build\bin\Release\assimp-vc143-mt.dll" "$(Ta
     <ClCompile Include="Game\UI\StageSelector.cpp" />
     <ClCompile Include="Game\Actor\Block\TokenGhost.cpp" />
     <ClCompile Include="Game\StageRender\StageContents.cpp" />
+    <ClCompile Include="Game\Effect\TitleFlashEffect.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Module\PostEffect\DistortionEffect.h" />
+    <ClInclude Include="Engine\Utilities\Timeline.h" />
     <ClInclude Include="Game\Actor\Block\BlockGrave.h" />
     <ClInclude Include="Game\Actor\Block\BlockGhost.h" />
     <ClInclude Include="Engine\DirectX\Pipeline\PipelineGroup\ComputeShaderPipelines.h" />
@@ -605,6 +608,7 @@ copy "$(ProjectDir)Externals\assimp\build\bin\Release\assimp-vc143-mt.dll" "$(Ta
     <ClInclude Include="Game\UI\StageSelector.h" />
     <ClInclude Include="Game\Actor\Block\TokenGhost.h" />
     <ClInclude Include="Game\StageRender\StageContents.h" />
+    <ClInclude Include="Game\Effect\TitleFlashEffect.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Engine\Assets\HLSL\Particle\AccelerationField.CS.hlsl">

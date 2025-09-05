@@ -18,7 +18,7 @@ using json = nlohmann::json;
 /// このクラスは構造体やクラスのメンバ変数をjson形式に変換(逆もまた)する
 /// 関数の定義を提供するクラス
 /// </summary>
-class IJsonConverter {
+class IJsonConverter{
 
 public:
 	virtual ~IJsonConverter() = default;
@@ -35,8 +35,8 @@ public:
 	/// <param name="jsonData">: 任意のデータが格納されたjsonデータ</param>
 	virtual void FromJson(const json& jsonData) = 0;
 
-	void SetName(const std::string& name) { name_ = name; }
-	const std::string& GetName() const { return name_; }
+	void SetName(const std::string& name){ name_ = name; }
+	const std::string& GetName() const{ return name_; }
 
 protected:
 
@@ -51,105 +51,105 @@ protected:
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
 template <typename T>
-struct is_vector : std::false_type {};
+struct is_vector : std::false_type{};
 
-template <typename T, typename A>
-struct is_vector<std::vector<T, A>> : std::true_type {};
+template <typename T,typename A>
+struct is_vector<std::vector<T,A>> : std::true_type{};
 
 template <typename T>
-inline json toJson(const T& v) {
-	if constexpr (std::is_same_v<T, Vector4>) {
+inline json toJson(const T& v){
+	if constexpr(std::is_same_v<T,Vector4>){
 		// Vector4型に対する処理
-		return json{ {"x", v.x}, {"y", v.y}, {"z", v.z}, {"w", v.w} };
-	} else if constexpr (std::is_same_v<T, Vector3>) {
+		return json{{"x",v.x},{"y",v.y},{"z",v.z},{"w",v.w}};
+	} else if constexpr(std::is_same_v<T,Vector3>){
 		// Vector3型に対する処理
-		return json{ {"x", v.x}, {"y", v.y}, {"z", v.z} };
-	} else if constexpr (std::is_same_v<T, Vector2>) {
+		return json{{"x",v.x},{"y",v.y},{"z",v.z}};
+	} else if constexpr(std::is_same_v<T,Vector2>){
 		// Vector2型に対する処理
-		return json{ {"x", v.x}, {"y", v.y} };
-	} else if constexpr (std::is_same_v<T, float>) {
+		return json{{"x",v.x},{"y",v.y}};
+	} else if constexpr(std::is_same_v<T,float>){
 		// float型に対する処理
 		return v;
-	} else if constexpr (std::is_same_v<T, int>) {
+	} else if constexpr(std::is_same_v<T,int>){
 		// int型に対する処理
 		return v;
-	} else if constexpr (std::is_same_v<T, uint32_t>) {
+	} else if constexpr(std::is_same_v<T,uint32_t>){
 		// uint32_t型に対する処理
 		return v;
-	} else if constexpr (std::is_same_v<T, std::string>) {
+	} else if constexpr(std::is_same_v<T,std::string>){
 		// std::string型に対する処理
 		return v;
-	} else if constexpr (std::is_same_v<T, Quaternion>) {
+	} else if constexpr(std::is_same_v<T,Quaternion>){
 		// Quaternion型に対する処理
-		return json{ {"x", v.x}, {"y", v.y}, {"z", v.z}, {"w", v.w} };
-	} else if constexpr (std::is_same_v<T, bool>) {
+		return json{{"x",v.x},{"y",v.y},{"z",v.z},{"w",v.w}};
+	} else if constexpr(std::is_same_v<T,bool>){
 		// bool型に対する処理
 		return v;
-	} else if constexpr (is_vector<T>::value) {
+	} else if constexpr(is_vector<T>::value){
 		// std::vector対応（後述する is_vector を利用）
 		json arr = json::array();
-		for (const auto& item : v) {
+		for(const auto& item : v){
 			arr.push_back(toJson(item));
 		}
 		return arr;
-	} else {
+	} else{
 		assert(false && "Unsupported type in toJson");
 	}
 }
 
 template <typename T>
-inline void fromJson(const json& j, const std::string& name, T& value) {
-	if (j.is_object()) {
+inline void fromJson(const json& j,const std::string& name,T& value){
+	if(j.is_object()){
 		// JSON オブジェクト内で最初のキーを取得
 		auto rootKey = j.begin().key(); // 最上位キーを取得
 
 		// jsonにnameが含まれていたら
-		if (j.at(rootKey).contains(name)) {
-			if constexpr (std::is_same_v<T, Vector4>) {
+		if(j.at(rootKey).contains(name)){
+			if constexpr(std::is_same_v<T,Vector4>){
 				// Vector4型に対する処理
 				value.x = j.at(rootKey).at(name).at("x").get<float>();
 				value.y = j.at(rootKey).at(name).at("y").get<float>();
 				value.z = j.at(rootKey).at(name).at("z").get<float>();
 				value.w = j.at(rootKey).at(name).at("w").get<float>();
 
-			} else if constexpr (std::is_same_v<T, Vector3>) {
+			} else if constexpr(std::is_same_v<T,Vector3>){
 				// Vector3型に対する処理
 				value.x = j.at(rootKey).at(name).at("x").get<float>();
 				value.y = j.at(rootKey).at(name).at("y").get<float>();
 				value.z = j.at(rootKey).at(name).at("z").get<float>();
 
-			} else if constexpr (std::is_same_v<T, Vector2>) {
+			} else if constexpr(std::is_same_v<T,Vector2>){
 				// Vector2型に対する処理
 				value.x = j.at(rootKey).at(name).at("x").get<float>();
 				value.y = j.at(rootKey).at(name).at("y").get<float>();
-			} else if constexpr (std::is_same_v<T, float>) {
+			} else if constexpr(std::is_same_v<T,float>){
 				// float型に対する処理
 				value = j.at(rootKey).at(name).get<float>();
-			} else if constexpr (std::is_same_v<T, bool>) {
+			} else if constexpr(std::is_same_v<T,bool>){
 				// float型に対する処理
 				value = j.at(rootKey).at(name).get<bool>();
-			} else if constexpr (std::is_same_v<T, int>) {
+			} else if constexpr(std::is_same_v<T,int>){
 				// int型に対する処理
 				value = j.at(rootKey).at(name).get<int>();
-			} else if constexpr (std::is_same_v<T, uint32_t>) {
+			} else if constexpr(std::is_same_v<T,uint32_t>){
 				// uint32_t型に対する処理
 				value = j.at(rootKey).at(name).get<uint32_t>();
-			} else if constexpr (std::is_same_v<T, std::string>) {
+			} else if constexpr(std::is_same_v<T,std::string>){
 				// std::string型に対する処理
 				value = j.at(rootKey).at(name).get<std::string>();
 
-			} else if constexpr (std::is_same_v<T, Quaternion>) {
+			} else if constexpr(std::is_same_v<T,Quaternion>){
 				// Quaternion型に対する処理
 				value.x = j.at(rootKey).at(name).at("x").get<float>();
 				value.y = j.at(rootKey).at(name).at("y").get<float>();
 				value.z = j.at(rootKey).at(name).at("z").get<float>();
 				value.w = j.at(rootKey).at(name).at("w").get<float>();
 
-			} else if constexpr (std::is_same_v<T, bool>) {
+			} else if constexpr(std::is_same_v<T,bool>){
 				// int型に対する処理
 				value = j.at(rootKey).at(name).get<bool>();
 			}
-		} else {
+		} else{
 			// json内にnameが存在していなかったら
 			std::string erroeLog = "not contains jsonData  : " + name;
 			//Log(erroeLog);
@@ -159,8 +159,8 @@ inline void fromJson(const json& j, const std::string& name, T& value) {
 }
 
 template <typename T>
-inline void fromJson(const json& j, const std::string& key, std::vector<T>& out) {
-	if (j.contains(key) && j[key].is_array()) {
+inline void fromJson(const json& j,const std::string& key,std::vector<T>& out){
+	if(j.contains(key) && j[key].is_array()){
 		out = j[key].get<std::vector<T>>();
 	}
 }
@@ -169,10 +169,10 @@ inline void fromJson(const json& j, const std::string& key, std::vector<T>& out)
 // ↓　json形式のデータを構築するようのクラス
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
-class JsonBuilder {
+class JsonBuilder{
 public:
 
-	JsonBuilder(const std::string& name) : hierarchyName_(name) {};
+	JsonBuilder(const std::string& name): hierarchyName_(name){};
 	~JsonBuilder() = default;
 
 	/// <summary>
@@ -183,14 +183,14 @@ public:
 	/// <param name="value">] 値</param>
 	/// <returns>: json型にkeyとvalueのペアが登録される</returns>
 	template <typename T>
-	JsonBuilder& Add(const std::string& key, const T& value) {
+	JsonBuilder& Add(const std::string& key,const T& value){
 		auto jsonValue = toJson(value);
 		jsonData_[hierarchyName_][key] = std::move(jsonValue);
 		return *this;// 自分自身を返す
 	}
 
 	template <typename T>
-	JsonBuilder& AddArray(const std::string& key, const std::vector<T>& values) {
+	JsonBuilder& AddArray(const std::string& key,const std::vector<T>& values){
 		jsonData_[hierarchyName_][key] = values;
 		return *this;
 	}
@@ -199,7 +199,7 @@ public:
 	/// 構築を実行する
 	/// </summary>
 	/// <returns></returns>
-	json Build() const {
+	json Build() const{
 		return std::move(jsonData_);
 	}
 
