@@ -1,5 +1,8 @@
 #include "PlayerInputHandler.h"
 
+/// engine
+#include "Engine/System/AUdio/AudioPlayer.h"
+
 ///command
 #include "Game/Actor/Player/Command/PlayerMoveCommand.h"
 
@@ -117,11 +120,13 @@ Vector2Int PlayerInputHandler::DecideMoveDirection(){
 		if(leftMoveEventTime_ <= 0.f){
 			isMoving = true;
 			leftMoveEventTime_ = autoMoveStepInterval;
+			AudioPlayer::SinglShotPlay("panch.mp3", 0.3f);
 		}
 	} else if(preMoveDirection != currentMoveDirection){
 		// 前回と違う方向
 		isMoving = true;
 		leftMoveEventTime_ = autoMoveStartDelay;
+		AudioPlayer::SinglShotPlay("panch.mp3", 0.3f);
 	}
 
 	preMoveDirection = currentMoveDirection;

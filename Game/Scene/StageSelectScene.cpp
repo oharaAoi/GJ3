@@ -95,6 +95,7 @@ void StageSelectScene::Update(){
 		// ステージが決定したら次のシーンへ
 		// StageSelector::GetCurrentStageIndex(); // 現在のステージ番号を取得
 		nextSceneType_ = SceneType::GAME;
+		AudioPlayer::SinglShotPlay("fanfare.wav", 0.3f);
 	}
 
 	// -------------------------------------------------

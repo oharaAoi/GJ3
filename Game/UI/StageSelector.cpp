@@ -2,6 +2,7 @@
 
 /// engine
 #include "Engine/System/Input/Input.h"
+#include "Engine/System/AUdio/AudioPlayer.h"
 
 /// cmath
 #include <cmath>
@@ -82,6 +83,7 @@ void StageSelector::InputHandle(){
 		if(leftPressTime_){
 			targetStageIndex_ = (currentStageIndex_ + scrollDirection_ + totalStageNum_) % totalStageNum_;
 			if(!isScrolling_){
+				AudioPlayer::SinglShotPlay("asobi.mp3", 0.5f);
 				scrollTime_ = 0.0f;
 				scrollStartIndex_ = currentStageIndex_;
 

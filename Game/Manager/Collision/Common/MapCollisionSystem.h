@@ -63,7 +63,7 @@ public:
 	// ====================================================================== //
 
 	const uint32_t GetGhostCounter()const { return ghostCounter_; }
-	void AddGhostCounter() { ++ghostCounter_; }
+	void AddGhostCounter();
 	void ResetGhostCounter() { ghostCounter_ = 0; }
 
 	// ====================================================================== //
@@ -71,6 +71,8 @@ public:
 	// ====================================================================== //
 
 	StageRegistry* GetStageRegi()const { return stageRegistry_; }
+
+	bool GetIsClear() const { return isClear_; }
 
 	const std::array<Vector2Int, 8>& GetNeighborOffsets()const { return neighborOffsets_; }
 
@@ -98,5 +100,7 @@ private:
 	// 触れたおばけの数を保持
 	uint32_t ghostCounter_ = 0;
 
+	// クリア判定を返す
+	bool isClear_ = false;
 };
 

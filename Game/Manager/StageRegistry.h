@@ -56,6 +56,8 @@ public:
 	const Vector2Int& GetStartIndex() const{ return startIndex_; }
 	const Vector2Int& GetGoalIndex() const{ return goalIndex_; }
 
+	uint32_t GetNeedGhostNum() const { return needGhostNum_; }
+
 private:
 
 	Vector2 CalculateTilePos(size_t row,size_t col);
@@ -81,7 +83,7 @@ private:
 	Vector2 windowSize_;
 	Vector2Int maxSize_ = Vector2Int(0,0);
 	Vector2 tileSize_;
-	int needGhostNum_;
+	uint32_t needGhostNum_;
 
 	Vector2Int startIndex_ = Vector2Int(0,0);
 	Vector2 startPos_;

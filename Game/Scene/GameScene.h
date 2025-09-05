@@ -60,6 +60,7 @@ private:
 	std::unique_ptr<AudioPlayer> bgm_;
 
 	float resetTimer_ = 0.0f; // 現在のリセットまでの時間
+	bool isClearConditionMet_ = false; // クリア条件を満たしたかどうか
 
 	SceneRenderer* sceneRenderer_;
 };

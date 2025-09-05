@@ -1,4 +1,6 @@
 #include "MapCollisionSystem.h"
+/// engine
+#include "Engine/System/AUdio/AudioPlayer.h"
 
 void MapCollisionSystem::Init(StageRegistry* stageRegistry)
 {
@@ -14,6 +16,8 @@ void MapCollisionSystem::Init(StageRegistry* stageRegistry)
 	// 初期化時に一回だけ更新をかけてゴーストを反映させる
 	playerIndex_ = stageRegistry_->GetStartIndex();
 	UpdateSpanGhost();
+
+	isClear_ = false;
 }
 
 void MapCollisionSystem::Update()
@@ -37,9 +41,15 @@ bool MapCollisionSystem::IsMovable(const Vector2Int& direction, const Vector2Int
 	if (firstStepIndex == nullptr) {
 		return true; 						
 	}
-	// ゴールまでは進める
-	if (firstStepIndex->GetType() == BlockType::Goal ||
-		firstStepIndex->GetType() == BlockType::Ghost) {
+
+	// ゴールと当たった時
+	if (firstStepIndex->GetType() == BlockType::Goal) {
+		isClear_ = true;
+		return true;
+	}
+
+	// ghoustと当たったた時
+	if (firstStepIndex->GetType() == BlockType::Ghost) {
 		ghostBlockCollision_->ChangeGrave(index);
 		// おばけが変わったなら更新を入れる
 		spBlockCollision_->ChangeBlock();
@@ -47,7 +57,8 @@ bool MapCollisionSystem::IsMovable(const Vector2Int& direction, const Vector2Int
 	}
 	// 壁だから進めない
 	if (firstStepIndex->GetType() == BlockType::Wall ||
-		firstStepIndex->GetType() == BlockType::GraveBlock) {			
+		firstStepIndex->GetType() == BlockType::GraveBlock) {	
+		AudioPlayer::SinglShotPlay("don.mp3", 0.6f);	// 壁にあたったときの音
 		return false;
 	}
 
@@ -153,4 +164,9 @@ bool MapCollisionSystem::CheckLimitBlock(const Vector2Int& _index)
 		}
 	}
 	return true;
+}
+
+void MapCollisionSystem::AddGhostCounter() {
+	++ghostCounter_;
+	AudioPlayer::SinglShotPlay("yaruja.mp3", 0.6f); // ゴースト獲得時の音
 }

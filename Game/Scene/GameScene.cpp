@@ -96,6 +96,7 @@ void GameScene::Init(){
 	player_->SetMapCollision(mapCollision_.get());
 
 	resetTimer_ = 0.f;
+	isClearConditionMet_ = false;
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -124,21 +125,40 @@ void GameScene::Update(){
 	if(StageInputHandler::UndoInput()){
 		ObjectCommandInvoker::GetInstance().UndoCommand();
 		resetTimer_ = 0.f;
+		AudioPlayer::SinglShotPlay("osii.mp3", 0.5f);
 	} else if(StageInputHandler::RedoInput()){
 		resetTimer_ = 0.f;
 		ObjectCommandInvoker::GetInstance().RedoCommand();
+		AudioPlayer::SinglShotPlay("osii.mp3", 0.5f);
 	} else if(StageInputHandler::ResetInput()){
 		resetTimer_ += GameTimer::DeltaTime();
 		if(resetTimer_ >= kResetTime_){
 			stageRegistry_->ResetStage();
 			mapCollision_->ResetGhostCounter();
 			ObjectCommandInvoker::GetInstance().ClearHistory();
+			AudioPlayer::SinglShotPlay("osii.mp3", 0.5f);
 		}
 	} else{
 		resetTimer_ = 0.f;
 		// 特殊操作がないなら
 		ObjectCommandInvoker::GetInstance().Update();
 	}
+
+	// クリア条件を満たしているかの判定
+	if (!isClearConditionMet_) {
+		if (stageRegistry_->GetNeedGhostNum() == mapCollision_->GetGhostCounter()) {
+			AudioPlayer::SinglShotPlay("doragon.mp3", 0.5f);
+			isClearConditionMet_ = true;
+		}
+	}
+
+	// ステージをクリアしたかどうかの判定
+	if (mapCollision_->GetIsClear()) {
+		AudioPlayer::SinglShotPlay("fanfare.wav", 0.5f);
+		nextSceneType_ = SceneType::STAGE_SELECT;
+	}
+
+	menuSelector_->Update();
 
 	// -------------------------------------------------
 	// ↓ spriteの更新
