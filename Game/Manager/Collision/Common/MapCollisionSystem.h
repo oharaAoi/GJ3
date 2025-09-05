@@ -71,6 +71,8 @@ public:
 
 	StageRegistry* GetStageRegi()const{ return stageRegistry_; }
 
+	GhostBlockCollision* GetGhostBlockCollision()const{ return ghostBlockCollision_.get(); }
+
 	const std::array<Vector2Int,8>& GetNeighborOffsets()const{ return neighborOffsets_; }
 
 	const Vector2Int& GetPlayerIndex(){ return playerIndex_; }
