@@ -296,6 +296,8 @@
     <ClCompile Include="Game\Manager\Collision\Map\SpecialBlockCollision.cpp" />
     <ClCompile Include="Game\Manager\Collision\Map\GhostBlockCollision.cpp" />
     <ClCompile Include="Engine\Module\PostEffect\ScreenGotRay.cpp" />
+    <ClCompile Include="Engine\Utilities\Timeline.cpp" />
+    <ClCompile Include="Game\Effect\TitleFlashEffect.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Module\PostEffect\DistortionEffect.h" />
@@ -552,6 +554,8 @@
     <ClInclude Include="Game\Manager\Collision\Map\SpecialBlockCollision.h" />
     <ClInclude Include="Game\Manager\Collision\Map\GhostBlockCollision.h" />
     <ClInclude Include="Engine\Module\PostEffect\ScreenGotRay.h" />
+    <ClInclude Include="Engine\Utilities\Timeline.h" />
+    <ClInclude Include="Game\Effect\TitleFlashEffect.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\Assets\HLSL\Light.hlsli" />
