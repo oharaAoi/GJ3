@@ -100,15 +100,22 @@ void GameScene::Update(){
 	stageRegistry_->Update();
 
 	mapCollision_->Update();
+
 	if(StageInputHandler::UndoInput()){
 		ObjectCommandInvoker::GetInstance().UndoCommand();
+		resetTimer_ = 0.f;
 	} else if(StageInputHandler::RedoInput()){
 		ObjectCommandInvoker::GetInstance().RedoCommand();
+		resetTimer_ = 0.f;
 	} else if(StageInputHandler::ResetInput()){
-		stageRegistry_->ResetStage();
-		mapCollision_->ResetGhostCounter();
-		ObjectCommandInvoker::GetInstance().ClearHistory();
+		resetTimer_ += GameTimer::DeltaTime();
+		if(resetTimer_ >= kResetTime_){
+			stageRegistry_->ResetStage();
+			mapCollision_->ResetGhostCounter();
+			ObjectCommandInvoker::GetInstance().ClearHistory();
+		}
 	} else{
+		resetTimer_ = 0.f;
 		// 特殊操作がないなら
 		ObjectCommandInvoker::GetInstance().Update();
 	}
