@@ -296,6 +296,13 @@
     <ClCompile Include="Game\Manager\Collision\Map\SpecialBlockCollision.cpp" />
     <ClCompile Include="Game\Manager\Collision\Map\GhostBlockCollision.cpp" />
     <ClCompile Include="Engine\Module\PostEffect\ScreenGotRay.cpp" />
+    <ClCompile Include="Game\UI\Menu\MenuUIs.cpp" />
+    <ClCompile Include="Game\UI\Menu\MenuSelector.cpp" />
+    <ClCompile Include="Game\UI\Menu\button\IMenuButtonUI.cpp" />
+    <ClCompile Include="Game\UI\Menu\button\SelectButtonUI.cpp" />
+    <ClCompile Include="Game\UI\Menu\button\ResetButtonUI.cpp" />
+    <ClCompile Include="Game\UI\Menu\button\OperationButtonUI.cpp" />
+    <ClCompile Include="Game\UI\Menu\button\BackButtonUI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Module\PostEffect\DistortionEffect.h" />
@@ -552,6 +559,14 @@
     <ClInclude Include="Game\Manager\Collision\Map\SpecialBlockCollision.h" />
     <ClInclude Include="Game\Manager\Collision\Map\GhostBlockCollision.h" />
     <ClInclude Include="Engine\Module\PostEffect\ScreenGotRay.h" />
+    <ClInclude Include="Game\UI\Menu\MenuUIs.h" />
+    <ClInclude Include="Game\UI\Menu\MenuSelector.h" />
+    <ClInclude Include="Game\UI\Menu\button\IMenuButtonUI.h" />
+    <ClInclude Include="Game\UI\Menu\button\SelectButtonUI.h" />
+    <ClInclude Include="Game\UI\Menu\button\ResetButtonUI.h" />
+    <ClInclude Include="Game\UI\Menu\button\OperationButtonUI.h" />
+    <ClInclude Include="Game\UI\Menu\button\BackButtonUI.h" />
+    <ClInclude Include="Game\UI\Menu\button\MenuButtonType.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\Assets\HLSL\Light.hlsli" />

@@ -13,6 +13,7 @@
 #include "Game/Manager/StageRegistry.h"
 #include "Game/WorldObject/WorldObjects.h"
 #include "Game/Manager/Collision/Common/MapCollisionSystem.h"
+#include "Game/UI/Menu/MenuSelector.h"
 
 class GameScene
 	: public BaseScene
@@ -41,6 +42,8 @@ private:
 	std::unique_ptr<WorldObjects> worldObjects_;
 
 	std::unique_ptr<Player> player_;
+
+	std::unique_ptr<MenuSelector> menuSelector_;
 
 	BaseParticles* orb_;
 	BaseParticles* dust_;

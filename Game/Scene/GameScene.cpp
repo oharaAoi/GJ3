@@ -59,6 +59,9 @@ void GameScene::Init() {
 	worldObjects_ = std::make_unique<WorldObjects>();
 	worldObjects_->Init();
 
+	menuSelector_ = std::make_unique<MenuSelector>();
+	menuSelector_->Init();
+
 	// -------------------------------------------------
 	// ↓ managerの初期化
 	// -------------------------------------------------
@@ -102,6 +105,8 @@ void GameScene::Update()
 	stageRegistry_->Update();
 	
 	mapCollision_->Update();
+
+	menuSelector_->Update();
 
 	// -------------------------------------------------
 	// ↓ spriteの更新
