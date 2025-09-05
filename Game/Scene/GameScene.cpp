@@ -2,12 +2,12 @@
 #include "Engine.h"
 #include "Engine/Lib/Json/JsonItems.h"
 #include "Game/Commands/ObjectCommandInvoker.h"
+#include "Game/Input/StageInputHandler.h"
 
-GameScene::GameScene() {}
-GameScene::~GameScene() { Finalize(); }
+GameScene::GameScene(){}
+GameScene::~GameScene(){ Finalize(); }
 
-void GameScene::Finalize()
-{
+void GameScene::Finalize(){
 	sceneRenderer_->Finalize();
 	ParticleManager::GetInstance()->Finalize();
 	GpuParticleManager::GetInstance()->Finalize();
@@ -17,7 +17,7 @@ void GameScene::Finalize()
 // ↓　初期化
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
-void GameScene::Init() {
+void GameScene::Init(){
 	JsonItems* adjust = JsonItems::GetInstance();
 	adjust->Init("GameScene");
 
@@ -50,7 +50,7 @@ void GameScene::Init() {
 	stageRegistry_ = std::make_unique<StageRegistry>();
 	stageRegistry_->Init(Engine::GetCanvas2d());
 	stageRegistry_->SetPlayer(player_.get());
-	stageRegistry_->SetWindowSize({kWindowWidth_, kWindowHeight_});
+	stageRegistry_->SetWindowSize({kWindowWidth_,kWindowHeight_});
 	stageRegistry_->Register("stage_0.json");
 
 	mapCollision_ = std::make_unique<MapCollisionSystem>();
@@ -89,19 +89,29 @@ void GameScene::Init() {
 // ↓　更新
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
-void GameScene::Update()
-{
+void GameScene::Update(){
 
 	// -------------------------------------------------
 	// ↓ actorの更新
 	// -------------------------------------------------
 	player_->Update();
-	ObjectCommandInvoker::GetInstance().Update();
 	worldObjects_->Update();
 
 	stageRegistry_->Update();
-	
+
 	mapCollision_->Update();
+	if(StageInputHandler::UndoInput()){
+		ObjectCommandInvoker::GetInstance().UndoCommand();
+	} else if(StageInputHandler::RedoInput()){
+		ObjectCommandInvoker::GetInstance().RedoCommand();
+	} else if(StageInputHandler::ResetInput()){
+		stageRegistry_->ResetStage();
+		mapCollision_->ResetGhostCounter();
+		ObjectCommandInvoker::GetInstance().ClearHistory();
+	} else{
+		// 特殊操作がないなら
+		ObjectCommandInvoker::GetInstance().Update();
+	}
 
 	// -------------------------------------------------
 	// ↓ spriteの更新
@@ -110,12 +120,9 @@ void GameScene::Update()
 	// -------------------------------------------------
 	// ↓ cameraの更新
 	// -------------------------------------------------
-	if (debugCamera_->GetIsActive())
-	{
+	if(debugCamera_->GetIsActive()){
 		debugCamera_->Update();
-	}
-	else
-	{
+	} else{
 		camera3d_->Update();
 	}
 	camera2d_->Update();
@@ -140,8 +147,7 @@ void GameScene::Update()
 // ↓　描画
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
-void GameScene::Draw() const
-{
+void GameScene::Draw() const{
 	// Sceneの描画
 	sceneRenderer_->Draw();
 }
