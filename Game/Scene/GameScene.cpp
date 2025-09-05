@@ -97,7 +97,14 @@ void GameScene::Update(){
 	// -------------------------------------------------
 	// ↓ actorの更新
 	// -------------------------------------------------
-	player_->Update();
+
+	menuSelector_->Update();
+	ChengeScene();
+	// メニューを開いていなければ更新
+	if (!menuSelector_->GetOpenMenu()) {
+		player_->Update();
+	}
+
 	worldObjects_->Update();
 
 	stageRegistry_->Update();
@@ -122,8 +129,6 @@ void GameScene::Update(){
 		// 特殊操作がないなら
 		ObjectCommandInvoker::GetInstance().Update();
 	}
-
-	menuSelector_->Update();
 
 	// -------------------------------------------------
 	// ↓ spriteの更新
@@ -162,4 +167,26 @@ void GameScene::Update(){
 void GameScene::Draw() const{
 	// Sceneの描画
 	sceneRenderer_->Draw();
+}
+
+void GameScene::ChengeScene()
+{
+	if (menuSelector_->GetChengeScene()) {
+		const auto type = menuSelector_->GetButtonType();
+		switch (type)
+		{
+		case MenuButtonType::Select:
+			// セレクトに戻る
+			nextSceneType_ = SceneType::STAGE_SELECT;
+			menuSelector_->SetChengeScene(false);
+			break;
+		case MenuButtonType::Reset :
+			// ステージをリセットする
+			stageRegistry_->ResetStage();
+			menuSelector_->SetChengeScene(false);
+			break;
+		default:
+			break;
+		}
+	}
 }

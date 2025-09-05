@@ -30,6 +30,10 @@ public:
 	void Draw() const override;
 
 private:
+
+	void ChengeScene();
+
+private:
 	// ------------------- camera ------------------- //
 	std::unique_ptr<DebugCamera> debugCamera_;
 	std::unique_ptr<Camera3d> camera3d_;

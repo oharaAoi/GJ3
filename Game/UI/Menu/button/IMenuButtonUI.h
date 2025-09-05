@@ -34,7 +34,7 @@ protected:
 	MenuButtonType type_ = MenuButtonType::Back;
 
 	// 点滅時間と点滅間隔
-	float blinkingTime_ = 1.0f;
+	float blinkingTime_ = 2.0f;
 	float blinkingFrame_ = 0.0f;
 
 };

@@ -10,7 +10,7 @@ void IMenuButtonUI::Blinking()
 		blinkingFrame_ = 0.0f;
 	}
 	// カラーをセットする
-	float a = blinkingFrame_ / blinkingTime_;
+	float a = std::abs((blinkingFrame_ / blinkingTime_) - 0.5f);
 	buttonUI_->SetColor(Vector4{ 1.0f,1.0f,1.0f,a });
 }
 
