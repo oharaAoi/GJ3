@@ -83,6 +83,8 @@ void GameScene::Init(){
 	player_->SetPosition(stageRegistry_->GetStartPos());
 	player_->SetOffset(stageRegistry_->GetMapOffset());
 	player_->SetMapCollision(mapCollision_.get());
+
+	resetTimer_ = 0.f;
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -105,8 +107,8 @@ void GameScene::Update(){
 		ObjectCommandInvoker::GetInstance().UndoCommand();
 		resetTimer_ = 0.f;
 	} else if(StageInputHandler::RedoInput()){
-		ObjectCommandInvoker::GetInstance().RedoCommand();
 		resetTimer_ = 0.f;
+		ObjectCommandInvoker::GetInstance().RedoCommand();
 	} else if(StageInputHandler::ResetInput()){
 		resetTimer_ += GameTimer::DeltaTime();
 		if(resetTimer_ >= kResetTime_){

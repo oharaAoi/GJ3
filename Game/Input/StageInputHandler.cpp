@@ -31,12 +31,12 @@ bool StageInputHandler::RedoInput(){
 }
 bool StageInputHandler::ResetInput(){
 	for(const auto& key : kResetKey_){
-		if(Input::IsTriggerKey(key)){
+		if(Input::IsPressKey(key)){
 			return true;
 		}
 	}
 	for(const auto& button : kResetButton_){
-		if(Input::IsTriggerButton(button)){
+		if(Input::IsPressButton(button)){
 			return true;
 		}
 	}
