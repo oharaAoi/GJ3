@@ -49,6 +49,14 @@ void TitleScene::Init(){
 	lightFlash_ = std::make_unique<LightFlash>();
 	lightFlash_->Init();
 
+	// -------------------------------------------------
+	// ↓ audioの初期化
+	// ------------------------------------------------
+
+	bgm_ = std::make_unique<AudioPlayer>();
+	bgm_->Init("kinmokusei.mp3");
+	bgm_->Play(true, 0.5f);
+
 	DirectionalLight* light = Render::GetLightGroup()->GetDirectionalLight();
 	light->SetIntensity(0.3f);
 }

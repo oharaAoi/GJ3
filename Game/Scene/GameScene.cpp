@@ -78,6 +78,14 @@ void GameScene::Init(){
 	dust_->Reset();
 
 	// -------------------------------------------------
+	// ↓ audioの初期化
+	// ------------------------------------------------
+
+	bgm_ = std::make_unique<AudioPlayer>();
+	bgm_->Init("kinmokusei.mp3");
+	bgm_->Play(true, 0.5f);
+
+	// -------------------------------------------------
 	// ↓ その他設定
 	// -------------------------------------------------
 	player_->SetTileSize(stageRegistry_->GetTileSize());

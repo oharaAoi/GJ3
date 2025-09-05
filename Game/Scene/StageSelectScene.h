@@ -1,6 +1,8 @@
 #pragma once
 #include <memory>
 #include "Game/Scene/BaseScene.h"
+// engine
+#include "Engine/System/Audio/AudioPlayer.h"
 #include "Engine/Render/SceneRenderer.h"
 #include "Engine/Module/Components/Effect/BaseParticles.h"
 // camera
@@ -41,7 +43,11 @@ private:
 
 	std::unique_ptr<StageContents> stageContents_;
 
+	// ------------------- effect ------------------- //
 	BaseParticles* particle_;
+
+	// ------------------- audio ------------------- //
+	std::unique_ptr<AudioPlayer> bgm_;
 
 	SceneRenderer* sceneRenderer_;
 

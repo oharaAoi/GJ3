@@ -14,6 +14,7 @@
 #include "Game/WorldObject/WorldObjects.h"
 #include "Game/Manager/Collision/Common/MapCollisionSystem.h"
 #include "Game/UI/Menu/MenuSelector.h"
+#include "Engine/System/Audio/AudioPlayer.h"
 
 class GameScene
 	: public BaseScene{
@@ -51,8 +52,12 @@ private:
 
 	std::unique_ptr<MenuSelector> menuSelector_;
 
+	// ------------------- effect ------------------- //
 	BaseParticles* orb_;
 	BaseParticles* dust_;
+
+	// ------------------- sound ------------------- //
+	std::unique_ptr<AudioPlayer> bgm_;
 
 	float resetTimer_ = 0.0f; // 現在のリセットまでの時間
 
