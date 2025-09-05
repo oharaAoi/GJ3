@@ -9,26 +9,24 @@
 #include "Game/Manager/Collision/Map/SpecialBlockCollision.h"
 #include "Game/Manager/Collision/Map/GhostBlockCollision.h"
 
-class MapCollisionSystem
-{
+class MapCollisionSystem{
 public:
 
 	MapCollisionSystem()
-		: neighborOffsets_{ 
-			Vector2Int{1,0}, Vector2Int{-1,0}, Vector2Int{0,1}, Vector2Int{0,-1},
-			Vector2Int{1,1}, Vector2Int{1,-1}, Vector2Int{-1,1}, Vector2Int{-1,-1}
-		}
-	{}
+		: neighborOffsets_{
+			Vector2Int{1,0},Vector2Int{-1,0},Vector2Int{0,1},Vector2Int{0,-1},
+			Vector2Int{1,1},Vector2Int{1,-1},Vector2Int{-1,1},Vector2Int{-1,-1}
+		}{}
 
 	void Init(StageRegistry* stageRegistry);
 
-	void Update(); 
+	void Update();
 
 	// ====================================================================== //
 	//			進めるか判定する(進む方向、プレイヤーインデックス)
 	// ====================================================================== //
 
-	bool IsMovable(const Vector2Int& direction, const Vector2Int& playerIndex);
+	bool IsMovable(const Vector2Int& direction,const Vector2Int& playerIndex);
 
 private:
 
@@ -41,7 +39,7 @@ private:
 private:
 
 	// ステージ上のインデックス番号切り替え用
-	void ChengeStage(const Vector2Int& direction, const Vector2Int& playerIndex);
+	void ChengeStage(const Vector2Int& direction,const Vector2Int& playerIndex);
 
 public:
 
@@ -54,32 +52,33 @@ public:
 	// ゴーストができるか判定する(ゴーストブロックのIndex)
 	void CheckTokenGhost(const Vector2Int& index){ ghostBlockCollision_->CheckTokenGhost(index); }
 	// ゴーストを作成する
-	void CreateTokenGhost() { ghostBlockCollision_->CreateTokenGhost(); };
+	void CreateTokenGhost(){ ghostBlockCollision_->CreateTokenGhost(); };
 	// pairIndexを入れたらゴーストのIndexの位置が取得できる
-	Vector2Int SearchGhostIndex(const Vector2Int& index) { return ghostBlockCollision_->SearchGhostIndex(index); }
+	Vector2Int SearchGhostIndex(const Vector2Int& index){ return ghostBlockCollision_->SearchGhostIndex(index); }
 
 	// ====================================================================== //
 	//					回収したおばけの数を取得する		
 	// ====================================================================== //
 
-	const uint32_t GetGhostCounter()const { return ghostCounter_; }
-	void AddGhostCounter() { ++ghostCounter_; }
-	void ResetGhostCounter() { ghostCounter_ = 0; }
+	const uint32_t GetGhostCounter()const{ return ghostCounter_; }
+	void AddGhostCount(){ ++ghostCounter_; }
+	void SubGhostCounter(){ if(ghostCounter_ > 0){ --ghostCounter_; } }
+	void ResetGhostCounter(){ ghostCounter_ = 0; }
 
 	// ====================================================================== //
 	//								ゲッター	
 	// ====================================================================== //
 
-	StageRegistry* GetStageRegi()const { return stageRegistry_; }
+	StageRegistry* GetStageRegi()const{ return stageRegistry_; }
 
-	const std::array<Vector2Int, 8>& GetNeighborOffsets()const { return neighborOffsets_; }
+	const std::array<Vector2Int,8>& GetNeighborOffsets()const{ return neighborOffsets_; }
 
-	const Vector2Int& GetPlayerIndex() { return playerIndex_; }
+	const Vector2Int& GetPlayerIndex(){ return playerIndex_; }
 
 	// ゴーストブロックのペアIndex
-	const std::vector<Vector2Int>& GetPairIndex()const { return ghostBlockCollision_->GetPairIndex(); }
-	void AddPairIndex(const Vector2Int index) { ghostBlockCollision_->AddPairIndex(index); }
-	void ClearPairIndex() { ghostBlockCollision_->ClearPairIndex(); }
+	const std::vector<Vector2Int>& GetPairIndex()const{ return ghostBlockCollision_->GetPairIndex(); }
+	void AddPairIndex(const Vector2Int index){ ghostBlockCollision_->AddPairIndex(index); }
+	void ClearPairIndex(){ ghostBlockCollision_->ClearPairIndex(); }
 
 private:
 
@@ -91,9 +90,9 @@ private:
 	StageRegistry* stageRegistry_ = nullptr;
 
 	// プレイヤーのIndex
-	Vector2Int playerIndex_ = { 0,0 };
+	Vector2Int playerIndex_ = {0,0};
 	// 中心から8方向へのoffset
-	std::array<Vector2Int, 8> neighborOffsets_;
+	std::array<Vector2Int,8> neighborOffsets_;
 
 	// 触れたおばけの数を保持
 	uint32_t ghostCounter_ = 0;

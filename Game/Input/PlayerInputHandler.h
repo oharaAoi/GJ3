@@ -5,7 +5,7 @@
 
 ///Player
 class Player;
-#include "Game/Actor/Player/Command/IPlayerCommand.h"
+#include "Game/Commands/Player/IPlayerCommand.h"
 
 /// math
 #include <stdint.h>

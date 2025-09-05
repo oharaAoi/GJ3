@@ -1,7 +1,7 @@
 #include "PlayerInputHandler.h"
 
 ///command
-#include "Game/Actor/Player/Command/PlayerMoveCommand.h"
+#include "Game/Commands/Player/PlayerMoveCommand.h"
 
 /// invoker
 #include "Game/Commands/ObjectCommandInvoker.h"

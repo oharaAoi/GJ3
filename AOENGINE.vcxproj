@@ -123,6 +123,8 @@ copy "$(ProjectDir)Externals\assimp\build\bin\Release\assimp-vc143-mt.dll" "$(Ta
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Game\Commands\Stage\PlayerGetGhostCommand.cpp" />
+    <ClCompile Include="Game\Commands\Stage\CreateGraveBlock.cpp" />
     <ClCompile Include="Game\UI\Menu\button\BackButtonUI.cpp" />
     <ClCompile Include="Engine\Module\PostEffect\ScreenGotRay.cpp" />
     <ClCompile Include="Game\Actor\Block\BlockLimit.cpp" />
@@ -357,7 +359,7 @@ copy "$(ProjectDir)Externals\assimp\build\bin\Release\assimp-vc143-mt.dll" "$(Ta
     <ClCompile Include="Engine\System\ParticleSystem\Tool\ParticleSystemEditor.cpp" />
     <ClCompile Include="Game\Actor\Player\Player.cpp" />
     <ClCompile Include="Game\Commands\ObjectCommandInvoker.cpp" />
-    <ClCompile Include="Game\Actor\Player\Command\PlayerMoveCommand.cpp" />
+    <ClCompile Include="Game\Commands\Player\PlayerMoveCommand.cpp" />
     <ClCompile Include="Game\Input\PlayerInputHandler.cpp" />
     <ClCompile Include="Game\Manager\Collision\Common\MapCollisionSystem.cpp" />
     <ClCompile Include="Game\UI\StageSelector.cpp" />
@@ -371,8 +373,11 @@ copy "$(ProjectDir)Externals\assimp\build\bin\Release\assimp-vc143-mt.dll" "$(Ta
     <ClCompile Include="Game\UI\Menu\button\SelectButtonUI.cpp" />
     <ClCompile Include="Game\UI\Menu\button\ResetButtonUI.cpp" />
     <ClCompile Include="Game\UI\Menu\button\OperationButtonUI.cpp" />
+    <ClCompile Include="Game\Commands\Stage\MoveBlockCommand.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Game\Commands\Stage\PlayerGetGhostCommand.h" />
+    <ClInclude Include="Game\Commands\Stage\CreateGraveBlock.h" />
     <ClInclude Include="Game\UI\Menu\button\BackButtonUI.h" />
     <ClInclude Include="Engine\Module\PostEffect\ScreenGotRay.h" />
     <ClInclude Include="Game\Actor\Block\BlockLimit.h" />
@@ -618,10 +623,10 @@ copy "$(ProjectDir)Externals\assimp\build\bin\Release\assimp-vc143-mt.dll" "$(Ta
     <ClInclude Include="Game\WorldObject\Skybox.h" />
     <ClInclude Include="Engine\Lib\Math\Vector2Int.h" />
     <ClInclude Include="Game\Actor\Player\Player.h" />
-    <ClInclude Include="Game\Actor\Player\Command\IPlayerCommand.h" />
+    <ClInclude Include="Game\Commands\Player\IPlayerCommand.h" />
     <ClInclude Include="Game\Commands\IObjectCommand.h" />
     <ClInclude Include="Game\Commands\ObjectCommandInvoker.h" />
-    <ClInclude Include="Game\Actor\Player\Command\PlayerMoveCommand.h" />
+    <ClInclude Include="Game\Commands\Player\PlayerMoveCommand.h" />
     <ClInclude Include="Game\Input\PlayerInputHandler.h" />
     <ClInclude Include="Game\Manager\Collision\Common\MapCollisionSystem.h" />
     <ClInclude Include="Game\WorldObject\WorldObjects.h" />
@@ -638,6 +643,7 @@ copy "$(ProjectDir)Externals\assimp\build\bin\Release\assimp-vc143-mt.dll" "$(Ta
     <ClInclude Include="Game\UI\Menu\button\SelectButtonUI.h" />
     <ClInclude Include="Game\UI\Menu\button\ResetButtonUI.h" />
     <ClInclude Include="Game\UI\Menu\button\OperationButtonUI.h" />
+    <ClInclude Include="Game\Commands\Stage\MoveBlockCommand.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Engine\Assets\HLSL\Particle\AccelerationField.CS.hlsl">
