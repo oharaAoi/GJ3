@@ -12,7 +12,7 @@ void TitleUIs::Init(){
 	///===========================================
 	// Sprites
 	///===========================================
-	backGround_ = Engine::GetCanvas2d()->AddSprite("backGround.png","Sprite_Normal.json",-10);
+	backGround_ = Engine::GetCanvas2d()->AddSprite("title_bg.png","Sprite_Normal.json",-10);
 	titleBar_ = Engine::GetCanvas2d()->AddSprite("title_bar.png","Sprite_Normal.json",1);
 
 	shelf_ = Engine::GetCanvas2d()->AddSprite("shelf.png","Sprite_Normal.json",2);
@@ -40,7 +40,6 @@ void TitleUIs::Init(){
 	backGround_->SetColor(defaultColor);
 	shelf_->SetColor(defaultColor);
 	ghost_->SetColor(defaultColor);
-
 
 	EditorWindows::AddObjectWindow(this,GetName());
 }

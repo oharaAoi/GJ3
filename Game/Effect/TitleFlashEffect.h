@@ -43,11 +43,15 @@ protected:
 private:
 	// 点滅時に画面を覆う用のSprite
 	Sprite* flashOverlaySprite_;
+	float alpha_ = 0.0f;
 
 	Parameter parameter_;
 public:
 	const Vector4& GetFlashColor() const{ return flashOverlaySprite_->GetColor(); }
 	void SetFlashColor(const Vector4& color){ flashOverlaySprite_->SetColor(color); }
+
+	float GetAlpha() const{ return alpha_; }
+	void SetAlpha(float alpha){ alpha_ = alpha; }
 
 };
 class LightFlash :
