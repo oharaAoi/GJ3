@@ -170,6 +170,7 @@ void Sprite::PostDraw(ID3D12GraphicsCommandList* commandList, const Pipeline* pi
 void Sprite::ReSetTexture(const std::string& fileName) {
 	textureName_ = fileName;
 	textureSize_ = TextureManager::GetInstance()->GetTextureSize(fileName);
+	spriteSize_ = textureSize_;
 
 	Vector3 pivotOffset = {
 		textureSize_.x * anchorPoint_.x,
@@ -201,6 +202,7 @@ void Sprite::ReSetTexture(const std::string& fileName) {
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
 void Sprite::ReSetTextureSize(const Vector2& size) {
+	spriteSize_ = size;
 	Vector3 pivotOffset = {
 		size.x * anchorPoint_.x,
 		size.y * anchorPoint_.y,

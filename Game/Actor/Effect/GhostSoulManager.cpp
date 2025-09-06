@@ -16,8 +16,14 @@ void GhostSoulManager::Init(Canvas2d* _canvas2d, Player* _player) {
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
 void GhostSoulManager::Update() {
-	for (auto& soul : souls_) {
-		soul->Update(pPlayer_->GetPosition());
+	for (uint32_t index = 0; index < souls_.size(); ++index) {
+		if (index == 0) {
+			souls_[index]->RotatePlayer(pPlayer_->GetPosition());
+			souls_[index]->Update(pPlayer_->GetPosition());
+
+		} else {
+			souls_[index]->Update(souls_[index - 1]->GetPosition());
+		}
 	}
 }
 
@@ -27,5 +33,6 @@ void GhostSoulManager::Update() {
 
 void GhostSoulManager::CreateSoul(const Vector2& tileSize) {
 	auto& newSoul = souls_.emplace_back(std::make_unique<GhostSoul>());
-	newSoul->Init(pCanvas2d_, tileSize);
+	newSoul->Init(pCanvas2d_, tileSize * 0.7f);
+	newSoul->SetPosition(pPlayer_->GetPosition());
 }
