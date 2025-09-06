@@ -135,6 +135,7 @@ public:
 	const Vector2 GetScale() const{ return transform_->GetScale(); }
 	const float GetRotate() const{ return transform_->GetRotate(); }
 	const Vector2 GetTextureSize() const{ return textureSize_; }
+	const Vector2 GetSpriteSize() const{ return spriteSize_; }
 	const bool GetIsFlipX() const{ return isFlipX_; }
 	const bool GetIsFlipY() const{ return isFlipY_; }
 
@@ -199,6 +200,8 @@ private:
 
 	// Textureのサイズ
 	Vector2 textureSize_;
+	// このspriteのサイズ
+	Vector2 spriteSize_;
 
 	SpriteData spriteData_;
 };
