@@ -379,6 +379,7 @@ copy "$(ProjectDir)Externals\assimp\build\bin\Release\assimp-vc143-mt.dll" "$(Ta
     <ClCompile Include="Game\UI\Menu\button\OperationButtonUI.cpp" />
     <ClCompile Include="Game\UI\Menu\OperationUI.cpp" />
     <ClCompile Include="Game\Commands\Stage\MoveBlockCommand.cpp" />
+    <ClCompile Include="Game\UI\StageResetUI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Scene\ClearScene.h" />
@@ -654,6 +655,7 @@ copy "$(ProjectDir)Externals\assimp\build\bin\Release\assimp-vc143-mt.dll" "$(Ta
     <ClInclude Include="Game\UI\Menu\button\OperationButtonUI.h" />
     <ClInclude Include="Game\UI\Menu\OperationUI.h" />
     <ClInclude Include="Game\Commands\Stage\MoveBlockCommand.h" />
+    <ClInclude Include="Game\UI\StageResetUI.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Engine\Assets\HLSL\Particle\AccelerationField.CS.hlsl">

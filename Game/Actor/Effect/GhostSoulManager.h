@@ -58,6 +58,7 @@ public:
 		}
 	};
 
+	size_t GetSoulesSize()const { return souls_.size(); }
 	void DeleteBackSoul(){
 		souls_.back()->Destroy();
 		souls_.pop_back();

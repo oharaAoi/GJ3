@@ -314,6 +314,7 @@
     <ClCompile Include="Game\Commands\Stage\PlayerGetGhostCommand.cpp" />
     <ClCompile Include="Game\Scene\ClearScene.cpp" />
     <ClCompile Include="Game\UI\GetGhostCountUI.cpp" />
+    <ClCompile Include="Game\UI\StageResetUI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Module\PostEffect\DistortionEffect.h" />
@@ -589,6 +590,7 @@
     <ClInclude Include="Game\Commands\Stage\PlayerGetGhostCommand.h" />
     <ClInclude Include="Game\Scene\ClearScene.h" />
     <ClInclude Include="Game\UI\GetGhostCountUI.h" />
+    <ClInclude Include="Game\UI\StageResetUI.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\Assets\HLSL\Light.hlsli" />
