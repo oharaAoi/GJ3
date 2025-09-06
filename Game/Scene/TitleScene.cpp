@@ -17,7 +17,7 @@ void TitleScene::Finalize(){
 
 void TitleScene::Init(){
 	JsonItems* adjust = JsonItems::GetInstance();
-	adjust->Init("GameScene");
+	adjust->Init("TitleScene");
 
 	sceneRenderer_ = SceneRenderer::GetInstance();
 	sceneRenderer_->Init();

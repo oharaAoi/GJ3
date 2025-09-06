@@ -33,15 +33,18 @@ public:
 
 private:
 	Sprite* backGround_;
-	Sprite* titleBar_;
+	std::array<Sprite*,5> titleWords_;
+	Sprite* spaceKey_;
 	Sprite* shelf_;
 	Sprite* ghost_;
 public:
 	Sprite* GetGhostSprite() const{ return ghost_; }
 	Sprite* GetGhostSpriteRef(){ return ghost_; }
 
-	Sprite* GetTitleBar() const{ return titleBar_; }
-	Sprite* GetTitleBarRef(){ return titleBar_; }
+	const std::array<Sprite*,5>& GetTitleWords() const{ return titleWords_; }
+	std::array<Sprite*,5>& GetTitleWordsRef(){ return titleWords_; }
+	Sprite* GetSpaceKey() const{ return spaceKey_; }
+	Sprite* GetSpaceKeyRef(){ return spaceKey_; }
 	Sprite* GetShelf() const{ return shelf_; }
 	Sprite* GetShelfRef(){ return shelf_; }
 	Sprite* GetBackGround() const{ return backGround_; }
