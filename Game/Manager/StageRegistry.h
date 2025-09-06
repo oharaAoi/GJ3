@@ -44,7 +44,6 @@ public:
 
 	void Debug_Gui() override;
 
-	Vector2 CalculateTilePos(size_t row,size_t col);
 public:
 
 	void SetPlayer(Player* _player){ pPlayer_ = _player; }
@@ -58,6 +57,8 @@ public:
 	const Vector2Int& GetGoalIndex() const{ return goalIndex_; }
 
 private:
+
+	Vector2 CalculateTilePos(size_t row,size_t col);
 
 	void ResetPlayer(); // playerの位置と情報をリセットする
 

@@ -309,8 +309,6 @@
     <ClCompile Include="Game\Commands\Stage\CreateGraveBlock.cpp" />
     <ClCompile Include="Game\Commands\Stage\MoveBlockCommand.cpp" />
     <ClCompile Include="Game\Commands\Stage\PlayerGetGhostCommand.cpp" />
-    <ClCompile Include="Game\Commands\Stage\ChangeBlockTypeSpecialToGhostBlock.cpp" />
-    <ClCompile Include="Game\Commands\Stage\ChangeBlockTypeGhostBlockToSpecial.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Module\PostEffect\DistortionEffect.h" />
@@ -581,8 +579,6 @@
     <ClInclude Include="Game\Commands\Stage\CreateGraveBlock.h" />
     <ClInclude Include="Game\Commands\Stage\MoveBlockCommand.h" />
     <ClInclude Include="Game\Commands\Stage\PlayerGetGhostCommand.h" />
-    <ClInclude Include="Game\Commands\Stage\ChangeBlockTypeSpecialToGhostBlock.h" />
-    <ClInclude Include="Game\Commands\Stage\ChangeBlockTypeGhostBlockToSpecial.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\Assets\HLSL\Light.hlsli" />
