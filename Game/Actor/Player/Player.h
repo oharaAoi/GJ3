@@ -16,6 +16,8 @@ class MapCollisionSystem;
 class Player
 	:public IBlock{
 public:
+	static constexpr std::array<const char*,2> kPlayerSideTextureName = {"player_left.png","player_right.png"};
+
 	Player();
 	~Player();
 

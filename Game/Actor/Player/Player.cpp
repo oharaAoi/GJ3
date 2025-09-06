@@ -19,7 +19,7 @@ void Player::Init(Canvas2d *_canvas2d)
 	type_ = BlockType::Player;
 
 	/// sprite
-	sprite_ = _canvas2d->AddSprite("player_left.png", "player", "Sprite_Normal.json", 100, true);
+	sprite_ = _canvas2d->AddSprite(kPlayerSideTextureName[0], "player", "Sprite_Normal.json", 100, true);
 	sprite_->SetIsFront(true);
 	transform_ = sprite_->GetTransform();
 
@@ -36,6 +36,7 @@ void Player::Update()
 		inputHandler_->HandleInput();
 	}
 
+	/// 移動処理
 	Vector2 currentTranslate = transform_->GetTranslate();
 	Vector2 targetPos = ConvertIndexToPosition(index_);
 	if (isAnimation_)
@@ -59,6 +60,9 @@ void Player::Update()
 	}
 
 	transform_->SetTranslate(currentTranslate);
+
+	/// Sprite 切り替え
+	this->GetSprite()->SetTextureName(kPlayerSideTextureName[static_cast<int>(spriteDirection_)]);
 }
 
 void Player::Debug_Gui()
