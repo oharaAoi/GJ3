@@ -30,6 +30,9 @@ void PlayerInputHandler::HandleInput(){
 
 	AudioPlayer::SinglShotPlay("panch.mp3",0.3f);
 
+	// animationする
+	player_->SetIsAnimation(true);
+
 	// 移動コマンドを生成
 	std::unique_ptr<IPlayerCommand> command = nullptr;
 	if(moveDirection.x == 1){
@@ -110,15 +113,16 @@ Vector2Int PlayerInputHandler::DecideMoveDirection(){
 		}
 	}
 
+	leftMoveEventTime_ -= GameTimer::DeltaTime();
+	leftMoveEventTime_ = std::max(0.f,leftMoveEventTime_);
+
 	if(currentMoveDirection == MoveDirection::NONE){
 		preMoveDirection = MoveDirection::NONE;
-		leftMoveEventTime_ = 0.f;
 		return Vector2Int(0,0);
 	}
 
 	bool isMoving = false;
 	if(preMoveDirection == currentMoveDirection){
-		leftMoveEventTime_ -= GameTimer::DeltaTime();
 		if(leftMoveEventTime_ <= 0.f){
 			isMoving = true;
 			leftMoveEventTime_ = autoMoveStepInterval;

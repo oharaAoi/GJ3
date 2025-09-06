@@ -4,6 +4,11 @@ float Vector2::Length() const {
 	return std::sqrt((x * x) + (y * y));
 }
 
+float Vector2::LengthSq() const{
+	return (x * x) + (y * y);
+}
+
+
 Vector2 Vector2::Normalize() const {
 	Vector2 result = { x, y };
 	float len = this->Length();
