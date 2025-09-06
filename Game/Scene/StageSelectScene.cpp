@@ -55,9 +55,12 @@ void StageSelectScene::Init(){
 	// -------------------------------------------------
 	// ↓ spriteの初期化
 	// -------------------------------------------------
-	stageSelector_ = std::make_unique<StageSelector>();
-	stageSelector_->SetStageRenderTarget(stageContents_->GetStageRenderTarget());
-	stageSelector_->Init();
+
+	// -------------------------------------------------
+	// ↓ behaviorの初期化
+	// -------------------------------------------------
+	behavior_ = std::make_unique<SelectingStageBehavior>(this);
+	behavior_->Init();
 
 	// -------------------------------------------------
 	// ↓ 演出の初期化
@@ -75,7 +78,7 @@ void StageSelectScene::Init(){
 
 	bgm_ = std::make_unique<AudioPlayer>();
 	bgm_->Init("kinmokusei.mp3");
-	bgm_->Play(true, 0.5f);
+	bgm_->Play(true,0.5f);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -90,12 +93,9 @@ void StageSelectScene::Update(){
 	// ↓ actorの更新
 	// -------------------------------------------------
 	worldObjects_->Update();
-	stageSelector_->Update();
-	if(stageSelector_->IsDecidedStage()){
-		// ステージが決定したら次のシーンへ
-		// StageSelector::GetCurrentStageIndex(); // 現在のステージ番号を取得
-		nextSceneType_ = SceneType::GAME;
-		AudioPlayer::SinglShotPlay("fanfare.wav", 0.3f);
+
+	if(behavior_){
+		behavior_->Update();
 	}
 
 	// -------------------------------------------------
@@ -136,3 +136,62 @@ void StageSelectScene::Draw() const{
 	// Sceneの描画
 	sceneRenderer_->Draw();
 }
+
+void StageSelectScene::ChangeBehavior(IStageSelectSceneBehavior* newBehavior){
+	behavior_.reset(newBehavior);
+	if(behavior_){
+		behavior_->Init();
+	}
+}
+
+#pragma region SelectingStageBehavior
+SelectingStageBehavior::SelectingStageBehavior(StageSelectScene* _host)
+	: IStageSelectSceneBehavior(_host){}
+SelectingStageBehavior::~SelectingStageBehavior(){}
+
+void SelectingStageBehavior::Init(){
+	stageSelector_ = std::make_unique<StageSelector>();
+	stageSelector_->SetStageRenderTarget(host_->stageContents_->GetStageRenderTarget());
+	stageSelector_->Init();
+
+	lightFlash_ = std::make_unique<LightFlash>();
+	lightFlash_->Init("LightFlash");
+}
+
+void SelectingStageBehavior::Update(){
+	/*if(lightFlash_->GetIsFinish()){
+	}*/
+	lightFlash_->Update();
+
+	stageSelector_->Update();
+
+	if(stageSelector_->IsDecidedStage()){
+		// ステージが決定したら次のシーンへ
+		// StageSelector::GetCurrentStageIndex(); // 現在のステージ番号を取得
+		//host_->SetNextSceneType(SceneType::GAME);
+		host_->ChangeBehavior(new TransitionToGameBehavior(host_));
+		AudioPlayer::SinglShotPlay("fanfare.wav",0.3f);
+	}
+}
+
+TransitionToGameBehavior::TransitionToGameBehavior(StageSelectScene* _host)
+	:IStageSelectSceneBehavior(_host){}
+
+TransitionToGameBehavior::~TransitionToGameBehavior(){}
+
+void TransitionToGameBehavior::Init(){
+	currentTime_ = 0.f;
+}
+
+void TransitionToGameBehavior::Update(){
+	currentTime_ += GameTimer::DeltaTime();
+	if(currentTime_ >= transitionTime_){
+		host_->SetNextSceneType(SceneType::GAME);
+		return;
+	}
+
+	// effect Update ↓
+
+}
+
+#pragma endregion // SelectingStageBehavior

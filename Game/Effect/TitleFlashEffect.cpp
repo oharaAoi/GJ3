@@ -42,9 +42,9 @@ void ThunderFlash::Init(){
 	SetName("ThunderFlash");
 
 	// 読み込み
-	parameter_.FromJson(JsonItems::GetData("TitleScene","ThunderFlash"));
+	parameter_.FromJson(JsonItems::GetData("Effect","ThunderFlash"));
 
-	flashOverlaySprite_ = Engine::GetCanvas2d()->AddSprite("white.png", GetName(), "Sprite_Add.json",3);
+	flashOverlaySprite_ = Engine::GetCanvas2d()->AddSprite("white.png",GetName(),"Sprite_Add.json",3);
 
 	flashOverlaySprite_->SetColor({0.9f,0.95f,1.f,1.f});
 
@@ -103,7 +103,7 @@ void ThunderFlash::Update(){
 
 void ThunderFlash::Debug_Gui(){
 	if(ImGui::Button("Save")){
-		JsonItems::Save("TitleScene",parameter_.ToJson("ThunderFlash"));
+		JsonItems::Save("Effect",parameter_.ToJson("ThunderFlash"));
 	}
 
 	float prevDuration = parameter_.flashDuration_;
@@ -152,15 +152,17 @@ void LightFlash::Parameter::FromJson(const json& jsonData){
 		flashCurve_.keyframes.push_back({time,value});
 	}
 }
-void LightFlash::Init(){
+void LightFlash::Init(const std::string& _parameterName){
 	SetName("LightFlash");
 
 	isFinish_ = false;
 
-	// 読み込み
-	parameter_.FromJson(JsonItems::GetData("TitleScene","LightFlash"));
+	parameterName_ = _parameterName;
 
-	flashOverlaySprite_ = Engine::GetCanvas2d()->AddSprite("white.png", GetName(), "Sprite_Normal.json",6);
+	// 読み込み
+	parameter_.FromJson(JsonItems::GetData("Effect",parameterName_));
+
+	flashOverlaySprite_ = Engine::GetCanvas2d()->AddSprite("white.png",GetName(),"Sprite_Normal.json",6);
 	flashOverlaySprite_->SetAnchorPoint({1.f,1.f});
 	flashOverlaySprite_->SetScale(Vector2(1920.f,1080.f));
 	flashOverlaySprite_->SetColor(Vector4(0.f,0.f,0.f,0.f));
@@ -212,7 +214,7 @@ void LightFlash::Update(){
 
 void LightFlash::Debug_Gui(){
 	if(ImGui::Button("Save")){
-		JsonItems::Save("TitleScene",parameter_.ToJson("LightFlash"));
+		JsonItems::Save("Effect",parameter_.ToJson("LightFlash"));
 	}
 	float prevDuration = parameter_.flashDuration_;
 	if(ImGui::DragFloat("Duration",&parameter_.flashDuration_,0.01f)){
