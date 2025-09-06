@@ -28,6 +28,8 @@ void PlayerInputHandler::HandleInput(){
 		return;
 	}
 
+	AudioPlayer::SinglShotPlay("panch.mp3",0.3f);
+
 	// 移動コマンドを生成
 	std::unique_ptr<IPlayerCommand> command = nullptr;
 	if(moveDirection.x == 1){
@@ -120,13 +122,11 @@ Vector2Int PlayerInputHandler::DecideMoveDirection(){
 		if(leftMoveEventTime_ <= 0.f){
 			isMoving = true;
 			leftMoveEventTime_ = autoMoveStepInterval;
-			AudioPlayer::SinglShotPlay("panch.mp3", 0.3f);
 		}
 	} else if(preMoveDirection != currentMoveDirection){
 		// 前回と違う方向
 		isMoving = true;
 		leftMoveEventTime_ = autoMoveStartDelay;
-		AudioPlayer::SinglShotPlay("panch.mp3", 0.3f);
 	}
 
 	preMoveDirection = currentMoveDirection;

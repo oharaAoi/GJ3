@@ -2,6 +2,10 @@
 /// engine
 #include "Engine/System/AUdio/AudioPlayer.h"
 
+/// commands
+#include "Game/Commands/ObjectCommandInvoker.h"
+#include "Game/Commands/Stage/MoveBlockCommand.h"
+
 void MapCollisionSystem::Init(StageRegistry *stageRegistry, GhostSoulManager *ghostSoulManager)
 {
 	stageRegistry_ = stageRegistry;
@@ -221,5 +225,14 @@ void MapCollisionSystem::AddGhostCounter()
 	if (pGhostSoulManager_)
 	{
 		pGhostSoulManager_->CreateSoul(stageRegistry_->GetTileSize());
+	}
+}
+
+void MapCollisionSystem::SubGhostCounter(){
+	--ghostCounter_;
+	AudioPlayer::SinglShotPlay("yaruja.mp3",0.6f); // ゴースト獲得時の音
+
+	if(pGhostSoulManager_){
+		pGhostSoulManager_->DeleteBackSoul();
 	}
 }

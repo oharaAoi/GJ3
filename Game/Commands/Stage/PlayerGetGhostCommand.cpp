@@ -9,7 +9,7 @@ PlayerGetGhostCommand::~PlayerGetGhostCommand(){}
 
 void PlayerGetGhostCommand::Execute(){
 	// おばけの数を増やす
-	mapCollision_->AddGhostCount();
+	mapCollision_->AddGhostCounter();
 }
 void PlayerGetGhostCommand::Undo(){
 	// おばけの数を減らす
