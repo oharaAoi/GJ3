@@ -33,8 +33,8 @@ public:
 	void CreatesStageByMapData();
 
 	const std::vector<std::vector<std::unique_ptr<IBlock>>>& GetStageData(){ return stageData_; }
+	std::vector<std::vector<std::unique_ptr<IBlock>>>& GetStageDataRef(){ return stageData_; }
 
-	void ChangeStageData(const Vector2Int& index,const Vector2Int& assignIndex);
 	void CreateStageData(const Vector2Int& index,BlockType type);
 	void ClearStageData(const Vector2Int& index);
 

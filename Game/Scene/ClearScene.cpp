@@ -47,7 +47,7 @@ void ClearScene::Init()
 	ghostSoulManager_ = std::make_unique<GhostSoulManager>();
 	ghostSoulManager_->InitClearScene(Engine::GetCanvas2d());
 	for (int i = 0; i < ghostCount_; ++i) {
-		ghostSoulManager_->CreateSoul(Vector2{ 64.0f,64.0f });
+		ghostSoulManager_->CreateSoul(Vector2{ 64.0f,64.0f }, true);
 	}
 	ghostSoulManager_->SetPosition(Vector2{ 640.0f,360.0f });
 

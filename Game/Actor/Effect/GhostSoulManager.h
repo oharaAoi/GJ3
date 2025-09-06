@@ -28,7 +28,7 @@ public:
 	/// <summary>
 	/// Soulの生成
 	/// </summary>
-	void CreateSoul(const Vector2& tileSize);
+	void CreateSoul(const Vector2& tileSize, bool isClear = false);
 	void SetPosition(const Vector2& position);
 
 	void Debug_Gui()override;
@@ -57,6 +57,11 @@ public:
 			fromJson(jsonData, "size", size);
 		}
 	};
+
+	void DeleteBackSoul(){
+		souls_.back()->Destroy();
+		souls_.pop_back();
+	}
 
 private:
 

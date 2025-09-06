@@ -116,12 +116,14 @@ void ThunderFlash::Debug_Gui(){
 	ImGui::SliderFloat("CurrentTime",&parameter_.currentFlashTime_,0.0f,parameter_.flashDuration_);
 
 	ImGui::Text("FlashCurve");
+#ifdef _DEBUG
 	ImGui::EditKeyFrame(
 		"FlashCurve",
 		parameter_.flashCurve_,
 		parameter_.flashDuration_,
 		0.0f,
 		nullptr);
+#endif // _DEBUG
 }
 
 #pragma endregion
@@ -221,12 +223,15 @@ void LightFlash::Debug_Gui(){
 	}
 	ImGui::SliderFloat("CurrentTime",&parameter_.currentFlashTime_,0.0f,parameter_.flashDuration_);
 	ImGui::Text("FlashCurve");
+
+#ifdef _DEBUG
 	ImGui::EditKeyFrame(
 		"FlashCurve",
 		parameter_.flashCurve_,
 		parameter_.flashDuration_,
 		0.0f,
 		nullptr);
+#endif // _DEBUG
 }
 
 #pragma endregion 

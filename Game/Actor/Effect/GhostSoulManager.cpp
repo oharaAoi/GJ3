@@ -31,8 +31,14 @@ void GhostSoulManager::InitClearScene(Canvas2d* _canvas2d)
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
 void GhostSoulManager::Update() {
-	for (auto& soul : souls_) {
-		soul->Update(pPlayer_->GetPosition());
+	for (uint32_t index = 0; index < souls_.size(); ++index) {
+		if (index == 0) {
+			souls_[index]->RotatePlayer(pPlayer_->GetPosition());
+			souls_[index]->Update(pPlayer_->GetPosition());
+
+		} else {
+			souls_[index]->Update(souls_[index - 1]->GetPosition());
+		}
 	}
 }
 
@@ -60,9 +66,11 @@ void GhostSoulManager::UpdateClearScene()
 // ↓ 作成処理
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-void GhostSoulManager::CreateSoul(const Vector2& tileSize) {
+void GhostSoulManager::CreateSoul(const Vector2& tileSize, bool isClear) {
 	auto& newSoul = souls_.emplace_back(std::make_unique<GhostSoul>());
-	newSoul->Init(pCanvas2d_, tileSize);
+	newSoul->Init(pCanvas2d_, tileSize * 0.7f);
+	if (isClear) { return; }
+	newSoul->SetPosition(pPlayer_->GetPosition());
 }
 
 void GhostSoulManager::SetPosition(const Vector2& position) {

@@ -17,6 +17,7 @@ public:
 	virtual void Undo() = 0;
 protected:
 	Player* host_ = nullptr;
+	Player::SpriteDirection preDirection_ = Player::SpriteDirection::RIGHT;
 public:
 	Player* GetHost()const{ return host_; }
 	void SetHost(Player* _host){ host_ = _host; }

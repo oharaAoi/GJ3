@@ -121,16 +121,6 @@ void StageRegistry::CreatesStageByMapData(){
 	}
 }
 
-void StageRegistry::ChangeStageData(const Vector2Int& index,const Vector2Int& assignIndex){
-	Vector2Int copyIndex = index;
-	if(stageData_[index.y][index.x] != nullptr){
-		stageData_[index.y][index.x]->Destroy();
-	}
-	stageData_[index.y][index.x] = std::move(stageData_[assignIndex.y][assignIndex.x]);
-	stageData_[index.y][index.x]->SetIndex(copyIndex);
-	stageData_[assignIndex.y][assignIndex.x] = nullptr;
-}
-
 void StageRegistry::CreateStageData(const Vector2Int& index,BlockType type){
 	bool copy = false;
 	if(stageData_[index.y][index.x] != nullptr){
