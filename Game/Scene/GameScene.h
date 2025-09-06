@@ -15,6 +15,7 @@
 #include "Game/Manager/Collision/Common/MapCollisionSystem.h"
 #include "Game/WorldObject/WorldObjects.h"
 #include "Game/UI/Menu/MenuSelector.h"
+#include "Game/UI/GetGhostCountUI.h"
 #include "Engine/System/Audio/AudioPlayer.h"
 
 class GameScene
@@ -61,6 +62,8 @@ private:
 	std::unique_ptr<GhostSoulManager> ghostSoulManager_;
 
 	std::unique_ptr<MenuSelector> menuSelector_;
+
+	std::unique_ptr<GetGhostCountUI> getGhostCountUI_;
 
 	// ------------------- effect ------------------- //
 	BaseParticles* orb_;

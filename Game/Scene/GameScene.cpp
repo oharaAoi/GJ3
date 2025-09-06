@@ -74,6 +74,9 @@ void GameScene::Init(){
 	menuSelector_ = std::make_unique<MenuSelector>();
 	menuSelector_->Init();
 
+	getGhostCountUI_ = std::make_unique<GetGhostCountUI>();
+	getGhostCountUI_->Init(Engine::GetCanvas2d());
+
 	// -------------------------------------------------
 	// ↓ managerの初期化
 	// -------------------------------------------------
@@ -157,6 +160,8 @@ void GameScene::Update(){
 		// 特殊操作がないなら
 		ObjectCommandInvoker::GetInstance().Update();
 	}
+
+	getGhostCountUI_->Update(mapCollision_->GetGhostCounter(), stageRegistry_->GetNeedGhostNum());
 
 	// クリア条件を満たしているかの判定
 	if (!isClearConditionMet_) {
