@@ -136,7 +136,7 @@ void MapCollisionSystem::ChengeStage(const Vector2Int& direction,const Vector2In
 	Vector2Int firstStepIndex = index + direction;
 	Vector2Int secondStepIndex = firstStepIndex + direction;
 
-	auto moveBlockCommand = std::make_unique<MoveBlockCommand>(stageRegistry_,ghostBlockCollision_.get(),firstStepIndex,secondStepIndex);
+	auto moveBlockCommand = std::make_unique<MoveBlockCommand>(stageRegistry_,this,firstStepIndex,secondStepIndex);
 	ObjectCommandInvoker::GetInstance().PushCommand(std::move(moveBlockCommand));
 }
 

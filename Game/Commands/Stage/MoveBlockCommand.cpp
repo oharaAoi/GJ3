@@ -2,10 +2,10 @@
 
 /// stage
 #include "Game/Manager/StageRegistry.h"
-#include "Game/Manager/Collision/Map/GhostBlockCollision.h"
+#include "Game/Manager/Collision/Common/MapCollisionSystem.h"
 
-MoveBlockCommand::MoveBlockCommand(StageRegistry* _stageRegistry,GhostBlockCollision* _ghostBlockCollision,const Vector2Int& _fromIndex,const Vector2Int& _toIndex)
-	:stageRegistry_(_stageRegistry),ghostBlockCollision_(_ghostBlockCollision),fromIndex_(_fromIndex),toIndex_(_toIndex){}
+MoveBlockCommand::MoveBlockCommand(StageRegistry* _stageRegistry,MapCollisionSystem* _mapCollisionSystem,const Vector2Int& _fromIndex,const Vector2Int& _toIndex)
+	:stageRegistry_(_stageRegistry),mapCollisionSystem_(_mapCollisionSystem),fromIndex_(_fromIndex),toIndex_(_toIndex){}
 MoveBlockCommand::~MoveBlockCommand(){}
 
 void MoveBlockCommand::Execute(){
@@ -18,8 +18,8 @@ void MoveBlockCommand::Execute(){
 	stageData_[toIndex_.y][toIndex_.x]->SetIndex(toIndex_);
 	stageData_[fromIndex_.y][fromIndex_.x] = nullptr;
 
-	ghostBlockCollision_->SetGhostUpdate(true);
-
+	mapCollisionSystem_->GetGhostBlockCollision()->SetGhostUpdate(true);
+	mapCollisionSystem_->Update();
 }
 void MoveBlockCommand::Undo(){
 	Vector2Int copyIndex = toIndex_;
@@ -32,5 +32,6 @@ void MoveBlockCommand::Undo(){
 	stageData_[fromIndex_.y][fromIndex_.x]->SetIndex(fromIndex_);
 	stageData_[toIndex_.y][toIndex_.x] = nullptr;
 
-	ghostBlockCollision_->SetGhostUpdate(true);
+	mapCollisionSystem_->GetGhostBlockCollision()->SetGhostUpdate(true);
+	mapCollisionSystem_->Update();
 }
