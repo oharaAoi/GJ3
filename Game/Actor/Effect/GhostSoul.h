@@ -14,7 +14,7 @@ public:
 
 	void Init(Canvas2d* _canvas2d, const Vector2& _tileSize) ;
 
-	void Update(const Vector2& _playerPos);
+	void Update(const Vector2& _preIndexPos);
 
 	void Debug_Gui() override;
 

@@ -16,6 +16,7 @@ void GhostSoulManager::Init(Canvas2d* _canvas2d, Player* _player) {
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
 void GhostSoulManager::Update() {
+
 	for (auto& soul : souls_) {
 		soul->Update(pPlayer_->GetPosition());
 	}
