@@ -10,13 +10,13 @@
 /// <summary>
 /// Ghostの魂を管理するクラス
 /// </summary>
-class GhostSoulManager {
+class GhostSoulManager{
 public:
 
 	GhostSoulManager() = default;
 	~GhostSoulManager() = default;
 
-	void Init(Canvas2d* _canvas2d, Player* _player);
+	void Init(Canvas2d* _canvas2d,Player* _player);
 
 	void Update();
 
@@ -24,6 +24,11 @@ public:
 	/// Soulの生成
 	/// </summary>
 	void CreateSoul(const Vector2& tileSize);
+
+	void DeleteBackSoul(){
+		souls_.back()->Destroy();
+		souls_.pop_back();
+	}
 
 private:
 

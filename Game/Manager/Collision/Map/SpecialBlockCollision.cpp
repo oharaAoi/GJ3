@@ -3,6 +3,11 @@
 #include "Game/Manager/Collision/Common/MapCollisionSystem.h"
 #include "Game/Manager/StageRegistry.h"
 
+/// command
+#include "Game/Commands/ObjectCommandInvoker.h"
+#include "Game/Commands/Stage/PlayerGetGhostCommand.h"
+#include "Game/Commands/Stage/CreateGraveBlock.h"
+
 void SpecialBlockCollision::Init(MapCollisionSystem* system)
 {
 	system_ = system;
@@ -75,8 +80,11 @@ void SpecialBlockCollision::RecursionBlockChecker(const Vector2Int& _index)
 				if (system_->CheckLimitBlock(ghostIndex)) {
 					const auto& playerIndex = system_->GetPlayerIndex();
 					if (ghostIndex.x == playerIndex.x && ghostIndex.y == playerIndex.y) {
-						system_->AddGhostCounter();
-						system_->GetStageRegi()->CreateStageData(ghostIndex, BlockType::GraveBlock);
+						auto PlayerGetGhostCommandCommand = std::make_unique<PlayerGetGhostCommand>(system_,playerIndex);
+						ObjectCommandInvoker::GetInstance().PushCommand(std::move(PlayerGetGhostCommandCommand));
+
+						auto createGraveCommand = std::make_unique<CreateGraveBlock>(system_->GetStageRegi(),ghostIndex);
+						ObjectCommandInvoker::GetInstance().PushCommand(std::move(createGraveCommand));
 					} else {
 						system_->GetStageRegi()->CreateStageData(ghostIndex, BlockType::Ghost);
 						RecursionBlockChecker(ghostIndex);
