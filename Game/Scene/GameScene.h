@@ -10,9 +10,10 @@
 // actor
 #include "Game/WorldObject/Skybox.h"
 #include "Game/Actor/Player/Player.h"
+#include "Game/Actor/Effect/GhostSoulManager.h"
 #include "Game/Manager/StageRegistry.h"
-#include "Game/WorldObject/WorldObjects.h"
 #include "Game/Manager/Collision/Common/MapCollisionSystem.h"
+#include "Game/WorldObject/WorldObjects.h"
 #include "Game/UI/Menu/MenuSelector.h"
 #include "Engine/System/Audio/AudioPlayer.h"
 
@@ -49,6 +50,8 @@ private:
 	std::unique_ptr<WorldObjects> worldObjects_;
 
 	std::unique_ptr<Player> player_;
+
+	std::unique_ptr<GhostSoulManager> ghostSoulManager_;
 
 	std::unique_ptr<MenuSelector> menuSelector_;
 

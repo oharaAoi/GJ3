@@ -21,13 +21,15 @@ void MenuSelector::OpenMenu()
 	// Inputを取得
 	Input* input = Input::GetInstance();
 
+	bool keyInput = input->IsTriggerKey(DIK_ESCAPE);
+	bool buttonInput = input->IsTriggerButton(XInputButtons::START);
+
 	// ボタンを押したら
-	if ((input->IsTriggerKey(DIK_ESCAPE) ||
-		input->IsTriggerButton(XInputButtons::START)) && !openMenu_) {
+	if ((keyInput || buttonInput) && !openMenu_) {
 		menuUIs_->FadeIn();
 		openMenu_ = true;
 		cursorIndex_ = -1;
-	} else if ((input->IsTriggerKey(DIK_ESCAPE) || input->IsTriggerButton(XInputButtons::START)) && openMenu_ &&
+	} else if ((keyInput || buttonInput) && openMenu_ &&
 		!chengeScene_ && !drawEffect_) {
 		menuUIs_->FadeOut();
 	}

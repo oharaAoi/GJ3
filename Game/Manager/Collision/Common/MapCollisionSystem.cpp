@@ -2,10 +2,10 @@
 /// engine
 #include "Engine/System/AUdio/AudioPlayer.h"
 
-void MapCollisionSystem::Init(StageRegistry* stageRegistry)
+void MapCollisionSystem::Init(StageRegistry* stageRegistry, GhostSoulManager* ghostSoulManager)
 {
 	stageRegistry_ = stageRegistry;
-
+	pGhostSoulManager_ = ghostSoulManager;
 
 	ghostBlockCollision_ = std::make_unique<GhostBlockCollision>();
 	ghostBlockCollision_->Init(this);
@@ -169,4 +169,8 @@ bool MapCollisionSystem::CheckLimitBlock(const Vector2Int& _index)
 void MapCollisionSystem::AddGhostCounter() {
 	++ghostCounter_;
 	AudioPlayer::SinglShotPlay("yaruja.mp3", 0.6f); // ゴースト獲得時の音
+
+	if (pGhostSoulManager_) {
+		pGhostSoulManager_->CreateSoul(stageRegistry_->GetTileSize());
+	}
 }

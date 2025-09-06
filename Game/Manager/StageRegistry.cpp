@@ -233,6 +233,7 @@ Vector2 StageRegistry::CalculateTilePos(size_t row,size_t col){
 }
 
 void StageRegistry::ResetPlayer(){
+	if (pPlayer_ == nullptr) { return; }
 	pPlayer_->SetTileSize(tileSize_);
 	pPlayer_->GetSprite()->ReSetTextureSize(tileSize_);
 	pPlayer_->SetIndex(startIndex_);

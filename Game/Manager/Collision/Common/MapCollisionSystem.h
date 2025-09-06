@@ -5,6 +5,7 @@
 
 #include "Engine/Lib/Math/Vector2Int.h"
 
+#include "Game/Actor/Effect/GhostSoulManager.h"
 #include "Game/Manager/StageRegistry.h"
 #include "Game/Manager/Collision/Map/SpecialBlockCollision.h"
 #include "Game/Manager/Collision/Map/GhostBlockCollision.h"
@@ -20,7 +21,7 @@ public:
 		}
 	{}
 
-	void Init(StageRegistry* stageRegistry);
+	void Init(StageRegistry* stageRegistry, GhostSoulManager* ghostSoulManager);
 
 	void Update(); 
 
@@ -91,6 +92,8 @@ private:
 	std::unique_ptr<SpecialBlockCollision> spBlockCollision_ = nullptr;
 	// ステージ管理
 	StageRegistry* stageRegistry_ = nullptr;
+	// soul管理クラス
+	GhostSoulManager* pGhostSoulManager_ = nullptr;
 
 	// プレイヤーのIndex
 	Vector2Int playerIndex_ = { 0,0 };

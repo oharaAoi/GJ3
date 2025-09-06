@@ -47,6 +47,9 @@ void GameScene::Init(){
 	player_ = std::make_unique<Player>();
 	player_->Init(Engine::GetCanvas2d());
 
+	ghostSoulManager_ = std::make_unique<GhostSoulManager>();
+	ghostSoulManager_->Init(Engine::GetCanvas2d(), player_.get());
+
 	stageRegistry_ = std::make_unique<StageRegistry>();
 	stageRegistry_->Init(Engine::GetCanvas2d());
 	stageRegistry_->SetPlayer(player_.get());
@@ -54,7 +57,7 @@ void GameScene::Init(){
 	stageRegistry_->Register("stage_0.json");
 
 	mapCollision_ = std::make_unique<MapCollisionSystem>();
-	mapCollision_->Init(stageRegistry_.get());
+	mapCollision_->Init(stageRegistry_.get(), ghostSoulManager_.get());
 
 	worldObjects_ = std::make_unique<WorldObjects>();
 	worldObjects_->Init();
@@ -122,6 +125,8 @@ void GameScene::Update(){
 
 	mapCollision_->Update();
 
+	ghostSoulManager_->Update();
+
 	if(StageInputHandler::UndoInput()){
 		ObjectCommandInvoker::GetInstance().UndoCommand();
 		resetTimer_ = 0.f;
@@ -158,8 +163,6 @@ void GameScene::Update(){
 		nextSceneType_ = SceneType::STAGE_SELECT;
 	}
 
-	menuSelector_->Update();
-
 	// -------------------------------------------------
 	// ↓ spriteの更新
 	// -------------------------------------------------
@@ -178,10 +181,6 @@ void GameScene::Update(){
 	// ↓ sceneの更新
 	// -------------------------------------------------
 	sceneRenderer_->Update();
-
-	// -------------------------------------------------
-	// ↓ あたり判定
-	// -------------------------------------------------
 
 	// -------------------------------------------------
 	// ↓ 最後に行いたい更新

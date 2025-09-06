@@ -307,6 +307,8 @@
     <ClCompile Include="Game\UI\Menu\button\OperationButtonUI.cpp" />
     <ClCompile Include="Game\UI\Menu\button\BackButtonUI.cpp" />
     <ClCompile Include="Game\UI\Menu\OperationUI.cpp" />
+    <ClCompile Include="Game\Actor\Effect\GhostSoul.cpp" />
+    <ClCompile Include="Game\Actor\Effect\GhostSoulManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Module\PostEffect\DistortionEffect.h" />
@@ -575,6 +577,8 @@
     <ClInclude Include="Game\UI\Menu\button\BackButtonUI.h" />
     <ClInclude Include="Game\UI\Menu\button\MenuButtonType.h" />
     <ClInclude Include="Game\UI\Menu\OperationUI.h" />
+    <ClInclude Include="Game\Actor\Effect\GhostSoul.h" />
+    <ClInclude Include="Game\Actor\Effect\GhostSoulManager.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\Assets\HLSL\Light.hlsli" />
