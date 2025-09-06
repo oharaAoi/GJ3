@@ -18,6 +18,9 @@ public:
 
 	void Debug_Gui() override;
 
+	void SetPosition(const Vector2& position) { sprite_->SetTranslate(position); }
+	void SetTextureSize(const Vector2& size) { sprite_->ReSetTextureSize(size); }
+
 private:
 
 	float easeT_ = 0.2f;

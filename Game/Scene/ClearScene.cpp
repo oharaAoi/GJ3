@@ -39,13 +39,22 @@ void ClearScene::Init()
 	// ↓ actorの初期化
 	// -------------------------------------------------
 
-	worldObjects_ = std::make_unique<WorldObjects>();
-	worldObjects_->Init();
-
 	// GameSceneからの値を取得
 	if (const auto& opt = GameScene::LastResult()) {
 		ghostCount_ = opt->ghostCount;
 	}
+
+	ghostSoulManager_ = std::make_unique<GhostSoulManager>();
+	ghostSoulManager_->InitClearScene(Engine::GetCanvas2d());
+	for (int i = 0; i < ghostCount_; ++i) {
+		ghostSoulManager_->CreateSoul(Vector2{ 64.0f,64.0f });
+	}
+	ghostSoulManager_->SetPosition(Vector2{ 640.0f,360.0f });
+
+	worldObjects_ = std::make_unique<WorldObjects>();
+	worldObjects_->Init();
+	worldObjects_->SetTexture("clear.png");
+
 }
 
 void ClearScene::Finalize()
@@ -66,6 +75,8 @@ void ClearScene::Update()
 	// -------------------------------------------------
 
 	worldObjects_->Update();
+
+	ghostSoulManager_->UpdateClearScene();;
 
 	// -------------------------------------------------
 	// ↓ cameraの更新

@@ -8,6 +8,7 @@
 #include "Game/Camera/DebugCamera.h"
 // actor
 #include "Game/WorldObject/WorldObjects.h"
+#include "Game/Actor/Effect/GhostSoulManager.h"
 
 class ClearScene : 
 	public BaseScene
@@ -34,6 +35,8 @@ private:
 	int ghostCount_ = 0;
 
 	std::unique_ptr<WorldObjects> worldObjects_;
+
+	std::unique_ptr<GhostSoulManager> ghostSoulManager_;
 
 	SceneRenderer* sceneRenderer_;
 

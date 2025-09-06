@@ -1,0 +1,14 @@
+{
+    "GhostSoulManager": {
+        "center": {
+            "x": 640.0,
+            "y": 396.0
+        },
+        "def_size": 152.0,
+        "radius": {
+            "x": 269.0,
+            "y": 45.0
+        },
+        "size": 59.0
+    }
+}

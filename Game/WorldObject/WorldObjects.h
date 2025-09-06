@@ -16,6 +16,8 @@ public:
 
 	void Debug_Gui() override;
 
+	void SetTexture(const std::string name) { backGround_->SetTexture(name); }
+
 private:
 
 	std::unique_ptr<BackGround> backGround_;
