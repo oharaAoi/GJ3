@@ -1,19 +1,25 @@
 #include "Player.h"
 
-/// hadler
+/// handler
 #include "Game/Input/PlayerInputHandler.h"
+
+/// info
 #include "Game/Information/StageInformation.h"
 
-Player::Player():IBlock(){}
-Player::~Player(){}
+/// math
+#include "Engine/Lib/Math/Easing.h"
 
-void Player::Init(Canvas2d* _canvas2d){
+Player::Player() : IBlock() {}
+Player::~Player() {}
+
+void Player::Init(Canvas2d *_canvas2d)
+{
 	/// Tag
 	SetName("Player");
 	type_ = BlockType::Player;
 
-	/// sprite 
-	sprite_ = _canvas2d->AddSprite("player_left.png", "player", "Sprite_Normal.json", 100, true);
+	/// sprite
+	sprite_ = _canvas2d->AddSprite(kPlayerSideTextureName[0], "player", "Sprite_Normal.json", 100, true);
 	sprite_->SetIsFront(true);
 	transform_ = sprite_->GetTransform();
 
@@ -22,20 +28,50 @@ void Player::Init(Canvas2d* _canvas2d){
 	inputHandler_->SetPlayer(this);
 }
 
-void Player::Update(){
+void Player::Update()
+{
 	/// 入力処理
-	if(inputHandler_){
+	if (inputHandler_)
+	{
 		inputHandler_->HandleInput();
 	}
-	/// 座標更新
-	transform_->SetTranslate(ConvertIndexToPosition(index_));
+
+	/// 移動処理
+	Vector2 currentTranslate = transform_->GetTranslate();
+	Vector2 targetPos = ConvertIndexToPosition(index_);
+	if (isAnimation_)
+	{
+		/// 補間処理
+		animationTimer_ += GameTimer::DeltaTime();
+
+		float t = animationTimer_ / animationTime_;
+		t = (std::min)(t, 1.f);
+
+		currentTranslate = Lerp(currentTranslate, targetPos, Ease::InOut::Cubic(t));
+		if (t >= 1.f)
+		{
+			animationTimer_ = 0.f;
+			isAnimation_ = false;
+		}
+	}
+	else
+	{
+		currentTranslate = targetPos;
+	}
+
+	transform_->SetTranslate(currentTranslate);
+
+	/// Sprite 切り替え
+	this->GetSprite()->SetTextureName(kPlayerSideTextureName[static_cast<int>(spriteDirection_)]);
 }
 
-void Player::Debug_Gui(){
-	ImGui::Text("X : %d\n Y : %d",index_.x,index_.y);
+void Player::Debug_Gui()
+{
+	ImGui::Text("X : %d\n Y : %d", index_.x, index_.y);
 }
 
-Vector2 Player::ConvertIndexToPosition(const Vector2Int& _index) {
+Vector2 Player::ConvertIndexToPosition(const Vector2Int &_index)
+{
 	return Vector2(offset_.x + _index.x * tileSize_.x + tileSize_.x / 2.0f,
 				   offset_.y + _index.y * tileSize_.y + tileSize_.y / 2.0f);
 }

@@ -46,7 +46,7 @@ private:
 	Player* player_ = nullptr;
 
 	MoveDirection preMoveDirection = MoveDirection::NONE; // 前回の移動方向
-	float autoMoveStartDelay   = 0.4f;  // 自動移動開始までの遅延
+	float autoMoveStartDelay   = 0.3f;  // 自動移動開始までの遅延
 	float autoMoveStepInterval = 0.1f; // 自動移動の間隔
 	float leftMoveEventTime_ = 0.0f; // 移動までの残り時間
 public:
