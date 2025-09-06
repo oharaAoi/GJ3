@@ -4,6 +4,15 @@
 #include "Game/Commands/ObjectCommandInvoker.h"
 #include "Game/Input/StageInputHandler.h"
 
+std::optional<GameScene::Result> GameScene::s_lastResult_ = std::nullopt;
+
+const std::optional<GameScene::Result>& GameScene::LastResult() {
+	return s_lastResult_;
+}
+void GameScene::ClearLastResult() {
+	s_lastResult_.reset();
+}
+
 GameScene::GameScene(){}
 GameScene::~GameScene(){ Finalize(); }
 
@@ -159,8 +168,11 @@ void GameScene::Update(){
 
 	// ステージをクリアしたかどうかの判定
 	if (mapCollision_->GetIsClear()) {
+		GameScene::Result r;
+		r.ghostCount = mapCollision_->GetGhostCounter();
+		GameScene::s_lastResult_ = r;
 		AudioPlayer::SinglShotPlay("fanfare.wav", 0.5f);
-		nextSceneType_ = SceneType::STAGE_SELECT;
+		nextSceneType_ = SceneType::CLEAR;
 	}
 
 	// -------------------------------------------------

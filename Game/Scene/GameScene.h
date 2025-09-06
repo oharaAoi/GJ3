@@ -20,6 +20,13 @@
 class GameScene
 	: public BaseScene{
 public:
+	// 獲得ゴースト数
+	struct Result { int ghostCount = 0; };
+
+	// 読み取り口（ClearScene から使う）
+	static const std::optional<Result>& LastResult();
+	static void ClearLastResult();
+
 	static constexpr float kResetTime_ = 0.6f; // リセットするまでの時間
 
 public:
@@ -66,4 +73,6 @@ private:
 	bool isClearConditionMet_ = false; // クリア条件を満たしたかどうか
 
 	SceneRenderer* sceneRenderer_;
+
+	static std::optional<Result> s_lastResult_;
 };

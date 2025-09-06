@@ -123,6 +123,7 @@ copy "$(ProjectDir)Externals\assimp\build\bin\Release\assimp-vc143-mt.dll" "$(Ta
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Game\Scene\ClearScene.cpp" />
     <ClCompile Include="Game\Actor\Effect\GhostSoul.cpp" />
     <ClCompile Include="Game\Actor\Effect\GhostSoulManager.cpp" />
     <ClCompile Include="Game\UI\Menu\button\BackButtonUI.cpp" />
@@ -376,6 +377,7 @@ copy "$(ProjectDir)Externals\assimp\build\bin\Release\assimp-vc143-mt.dll" "$(Ta
     <ClCompile Include="Game\UI\Menu\OperationUI.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Game\Scene\ClearScene.h" />
     <ClInclude Include="Game\Actor\Effect\GhostSoul.h" />
     <ClInclude Include="Game\Actor\Effect\GhostSoulManager.h" />
     <ClInclude Include="Game\UI\Menu\button\BackButtonUI.h" />

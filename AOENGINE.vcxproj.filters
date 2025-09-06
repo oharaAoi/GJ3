@@ -309,6 +309,7 @@
     <ClCompile Include="Game\UI\Menu\OperationUI.cpp" />
     <ClCompile Include="Game\Actor\Effect\GhostSoul.cpp" />
     <ClCompile Include="Game\Actor\Effect\GhostSoulManager.cpp" />
+    <ClCompile Include="Game\Scene\ClearScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Module\PostEffect\DistortionEffect.h" />
@@ -579,6 +580,7 @@
     <ClInclude Include="Game\UI\Menu\OperationUI.h" />
     <ClInclude Include="Game\Actor\Effect\GhostSoul.h" />
     <ClInclude Include="Game\Actor\Effect\GhostSoulManager.h" />
+    <ClInclude Include="Game\Scene\ClearScene.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\Assets\HLSL\Light.hlsli" />
