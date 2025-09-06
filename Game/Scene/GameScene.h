@@ -3,6 +3,7 @@
 #include "Game/Scene/BaseScene.h"
 #include "Engine/Render/SceneRenderer.h"
 #include "Engine/Module/Components/Effect/BaseParticles.h"
+#include "Engine/System/Audio/AudioPlayer.h"
 // camera
 #include "Game/Camera/Camera3d.h"
 #include "Game/Camera/Camera2d.h"
@@ -16,7 +17,7 @@
 #include "Game/WorldObject/WorldObjects.h"
 #include "Game/UI/Menu/MenuSelector.h"
 #include "Game/UI/GetGhostCountUI.h"
-#include "Engine/System/Audio/AudioPlayer.h"
+#include "Game/UI/StageResetUI.h"
 
 class GameScene
 	: public BaseScene{
@@ -64,6 +65,8 @@ private:
 	std::unique_ptr<MenuSelector> menuSelector_;
 
 	std::unique_ptr<GetGhostCountUI> getGhostCountUI_;
+
+	std::unique_ptr<StageResetUI> stageResetUI_;
 
 	// ------------------- effect ------------------- //
 	BaseParticles* orb_;

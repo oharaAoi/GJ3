@@ -1,0 +1,14 @@
+{
+    "StageResetUIParam": {
+        "backTexturePos": {
+            "x": 1000.0,
+            "y": 522.0
+        },
+        "def_size": 60.0,
+        "resetButtonPos": {
+            "x": 1000.0,
+            "y": 500.0
+        },
+        "resetTime": 1.0
+    }
+}

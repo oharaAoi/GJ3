@@ -77,6 +77,9 @@ void GameScene::Init(){
 	getGhostCountUI_ = std::make_unique<GetGhostCountUI>();
 	getGhostCountUI_->Init(Engine::GetCanvas2d());
 
+	stageResetUI_ = std::make_unique<StageResetUI>();
+	stageResetUI_->Init(Engine::GetCanvas2d());
+
 	// -------------------------------------------------
 	// ↓ managerの初期化
 	// -------------------------------------------------
@@ -139,6 +142,8 @@ void GameScene::Update(){
 
 	ghostSoulManager_->Update();
 
+	stageResetUI_->Update();
+
 	if(StageInputHandler::UndoInput()){
 		ObjectCommandInvoker::GetInstance().UndoCommand();
 		resetTimer_ = 0.f;
@@ -147,16 +152,17 @@ void GameScene::Update(){
 		resetTimer_ = 0.f;
 		ObjectCommandInvoker::GetInstance().RedoCommand();
 		AudioPlayer::SinglShotPlay("osii.mp3", 0.5f);
-	} else if(StageInputHandler::ResetInput()){
-		resetTimer_ += GameTimer::DeltaTime();
-		if(resetTimer_ >= kResetTime_){
-			stageRegistry_->ResetStage();
-			mapCollision_->ResetGhostCounter();
-			ObjectCommandInvoker::GetInstance().ClearHistory();
-			AudioPlayer::SinglShotPlay("osii.mp3", 0.5f);
+	} else if(stageResetUI_->GetStageReset()){
+		stageRegistry_->ResetStage();
+		mapCollision_->ResetGhostCounter();
+		ObjectCommandInvoker::GetInstance().ClearHistory();
+		AudioPlayer::SinglShotPlay("osii.mp3", 0.5f);
+		stageResetUI_->Reset();
+		size_t size = ghostSoulManager_->GetSoulesSize();
+		for (size_t i = 0; i < size; ++i) {
+			ghostSoulManager_->DeleteBackSoul();
 		}
 	} else{
-		resetTimer_ = 0.f;
 		// 特殊操作がないなら
 		ObjectCommandInvoker::GetInstance().Update();
 	}
