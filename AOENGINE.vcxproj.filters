@@ -306,6 +306,9 @@
     <ClCompile Include="Game\UI\Menu\button\ResetButtonUI.cpp" />
     <ClCompile Include="Game\UI\Menu\button\OperationButtonUI.cpp" />
     <ClCompile Include="Game\UI\Menu\button\BackButtonUI.cpp" />
+    <ClCompile Include="Game\UI\Menu\OperationUI.cpp" />
+    <ClCompile Include="Game\Actor\Effect\GhostSoul.cpp" />
+    <ClCompile Include="Game\Actor\Effect\GhostSoulManager.cpp" />
     <ClCompile Include="Game\Commands\Stage\CreateGraveBlock.cpp" />
     <ClCompile Include="Game\Commands\Stage\MoveBlockCommand.cpp" />
     <ClCompile Include="Game\Commands\Stage\PlayerGetGhostCommand.cpp" />
@@ -576,6 +579,9 @@
     <ClInclude Include="Game\UI\Menu\button\OperationButtonUI.h" />
     <ClInclude Include="Game\UI\Menu\button\BackButtonUI.h" />
     <ClInclude Include="Game\UI\Menu\button\MenuButtonType.h" />
+    <ClInclude Include="Game\UI\Menu\OperationUI.h" />
+    <ClInclude Include="Game\Actor\Effect\GhostSoul.h" />
+    <ClInclude Include="Game\Actor\Effect\GhostSoulManager.h" />
     <ClInclude Include="Game\Commands\Stage\CreateGraveBlock.h" />
     <ClInclude Include="Game\Commands\Stage\MoveBlockCommand.h" />
     <ClInclude Include="Game\Commands\Stage\PlayerGetGhostCommand.h" />

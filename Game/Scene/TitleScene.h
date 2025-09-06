@@ -3,6 +3,8 @@
 #include "Game/Scene/BaseScene.h"
 #include <array>
 #include <memory>
+// engine
+#include "Engine/System/Audio/AudioPlayer.h"
 // camera
 #include "Game/Camera/DebugCamera.h"
 #include "Game/Camera/Camera2d.h"
@@ -45,6 +47,9 @@ private:
 	// ------------------- transition ------------------- //
 	bool isTransition_ = false;
 	std::unique_ptr<LightFlash> lightFlash_;     // 遷移エフェクト
+
+	// ------------------- audio ------------------- //
+	std::unique_ptr<AudioPlayer> bgm_;
 
 	SceneRenderer* sceneRenderer_;
 };

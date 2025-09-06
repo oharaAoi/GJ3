@@ -1,4 +1,6 @@
 #include "TokenGhost.h"
+/// engine
+#include "Engine/System/AUdio/AudioPlayer.h"
 
 void TokenGhost::Init(Canvas2d* _canvas2d)
 {
@@ -6,6 +8,8 @@ void TokenGhost::Init(Canvas2d* _canvas2d)
 	sprite_ = _canvas2d->AddSprite("ghost.png", "ghost", "Sprite_Normal.json");
 	transform_ = sprite_->GetTransform();
 	type_ = BlockType::Ghost;
+
+	AudioPlayer::SinglShotPlay("attackAlertSE.mp3", 0.6f);
 }
 
 void TokenGhost::Update()

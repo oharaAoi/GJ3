@@ -123,6 +123,8 @@ copy "$(ProjectDir)Externals\assimp\build\bin\Release\assimp-vc143-mt.dll" "$(Ta
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Game\Actor\Effect\GhostSoul.cpp" />
+    <ClCompile Include="Game\Actor\Effect\GhostSoulManager.cpp" />
     <ClCompile Include="Game\Commands\Stage\PlayerGetGhostCommand.cpp" />
     <ClCompile Include="Game\Commands\Stage\CreateGraveBlock.cpp" />
     <ClCompile Include="Game\UI\Menu\button\BackButtonUI.cpp" />
@@ -373,11 +375,14 @@ copy "$(ProjectDir)Externals\assimp\build\bin\Release\assimp-vc143-mt.dll" "$(Ta
     <ClCompile Include="Game\UI\Menu\button\SelectButtonUI.cpp" />
     <ClCompile Include="Game\UI\Menu\button\ResetButtonUI.cpp" />
     <ClCompile Include="Game\UI\Menu\button\OperationButtonUI.cpp" />
+    <ClCompile Include="Game\UI\Menu\OperationUI.cpp" />
     <ClCompile Include="Game\Commands\Stage\MoveBlockCommand.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Commands\Stage\PlayerGetGhostCommand.h" />
     <ClInclude Include="Game\Commands\Stage\CreateGraveBlock.h" />
+    <ClInclude Include="Game\Actor\Effect\GhostSoul.h" />
+    <ClInclude Include="Game\Actor\Effect\GhostSoulManager.h" />
     <ClInclude Include="Game\UI\Menu\button\BackButtonUI.h" />
     <ClInclude Include="Engine\Module\PostEffect\ScreenGotRay.h" />
     <ClInclude Include="Game\Actor\Block\BlockLimit.h" />
@@ -643,6 +648,7 @@ copy "$(ProjectDir)Externals\assimp\build\bin\Release\assimp-vc143-mt.dll" "$(Ta
     <ClInclude Include="Game\UI\Menu\button\SelectButtonUI.h" />
     <ClInclude Include="Game\UI\Menu\button\ResetButtonUI.h" />
     <ClInclude Include="Game\UI\Menu\button\OperationButtonUI.h" />
+    <ClInclude Include="Game\UI\Menu\OperationUI.h" />
     <ClInclude Include="Game\Commands\Stage\MoveBlockCommand.h" />
   </ItemGroup>
   <ItemGroup>

@@ -59,11 +59,23 @@ void StageSelectScene::Init(){
 	stageSelector_->SetStageRenderTarget(stageContents_->GetStageRenderTarget());
 	stageSelector_->Init();
 
+	// -------------------------------------------------
+	// ↓ 演出の初期化
+	// ------------------------------------------------
+
 	particle_ = ParticleManager::GetInstance()->CrateParticle("dust");
 	particle_->Reset();
 
 	gotRay_ = Engine::GetPostProcess()->GetEffect(PostEffectType::GOTRAY);
 	gotRay_->ApplySaveData();
+
+	// -------------------------------------------------
+	// ↓ audioの初期化
+	// ------------------------------------------------
+
+	bgm_ = std::make_unique<AudioPlayer>();
+	bgm_->Init("kinmokusei.mp3");
+	bgm_->Play(true, 0.5f);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -83,6 +95,7 @@ void StageSelectScene::Update(){
 		// ステージが決定したら次のシーンへ
 		// StageSelector::GetCurrentStageIndex(); // 現在のステージ番号を取得
 		nextSceneType_ = SceneType::GAME;
+		AudioPlayer::SinglShotPlay("fanfare.wav", 0.3f);
 	}
 
 	// -------------------------------------------------

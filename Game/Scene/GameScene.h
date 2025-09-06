@@ -10,10 +10,12 @@
 // actor
 #include "Game/WorldObject/Skybox.h"
 #include "Game/Actor/Player/Player.h"
+#include "Game/Actor/Effect/GhostSoulManager.h"
 #include "Game/Manager/StageRegistry.h"
-#include "Game/WorldObject/WorldObjects.h"
 #include "Game/Manager/Collision/Common/MapCollisionSystem.h"
+#include "Game/WorldObject/WorldObjects.h"
 #include "Game/UI/Menu/MenuSelector.h"
+#include "Engine/System/Audio/AudioPlayer.h"
 
 class GameScene
 	: public BaseScene{
@@ -28,6 +30,10 @@ public:
 	void Init() override;
 	void Update() override;
 	void Draw() const override;
+
+private:
+
+	void ChengeScene();
 
 private:
 	// ------------------- camera ------------------- //
@@ -45,12 +51,19 @@ private:
 
 	std::unique_ptr<Player> player_;
 
+	std::unique_ptr<GhostSoulManager> ghostSoulManager_;
+
 	std::unique_ptr<MenuSelector> menuSelector_;
 
+	// ------------------- effect ------------------- //
 	BaseParticles* orb_;
 	BaseParticles* dust_;
 
+	// ------------------- sound ------------------- //
+	std::unique_ptr<AudioPlayer> bgm_;
+
 	float resetTimer_ = 0.0f; // 現在のリセットまでの時間
+	bool isClearConditionMet_ = false; // クリア条件を満たしたかどうか
 
 	SceneRenderer* sceneRenderer_;
 };
