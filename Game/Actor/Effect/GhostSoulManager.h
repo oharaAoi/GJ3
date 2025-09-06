@@ -25,7 +25,10 @@ public:
 	/// </summary>
 	void CreateSoul(const Vector2& tileSize);
 
-	void DeleteBackSoul(){ souls_.pop_back(); }
+	void DeleteBackSoul(){
+		souls_.back()->Destroy();
+		souls_.pop_back();
+	}
 
 private:
 

@@ -230,7 +230,6 @@ void MapCollisionSystem::AddGhostCounter()
 
 void MapCollisionSystem::SubGhostCounter(){
 	--ghostCounter_;
-	AudioPlayer::SinglShotPlay("yaruja.mp3",0.6f); // ゴースト獲得時の音
 
 	if(pGhostSoulManager_){
 		pGhostSoulManager_->DeleteBackSoul();
