@@ -155,3 +155,31 @@ void StageSelector::ConvertIndexToScreen(){
 	stagePreviews_[1]->SetPosition(centerPos_ + Vector2(offsetX,0.0f)); // 中央
 	stagePreviews_[2]->SetPosition(centerPos_ + Vector2(+theSpaceBetweenButtons_ + offsetX,0.0f)); // 右
 }
+
+StageSelector::RotateAnimationParam::RotateAnimationParam(){}
+
+StageSelector::RotateAnimationParam::~RotateAnimationParam(){}
+
+json StageSelector::RotateAnimationParam::ToJson(const std::string& id) const{
+	JsonBuilder j(id);
+	j.Add("duration",duration);
+	j.Add("curveSize",static_cast<int>(rotationCurve_.keyframes.size()));
+	for(size_t i = 0; i < rotationCurve_.keyframes.size(); ++i){
+		j.Add("time" + std::to_string(i),rotationCurve_.keyframes[i].time);
+		j.Add("value" + std::to_string(i),rotationCurve_.keyframes[i].value);
+	}
+	return j.Build();
+}
+void StageSelector::RotateAnimationParam::FromJson(const json& jsonData){
+	fromJson(jsonData,"flashDuration",duration);
+	int curveSize = 0;
+	fromJson(jsonData,"curveSize",curveSize);
+	rotationCurve_.keyframes.clear();
+	for(int i = 0; i < curveSize; ++i){
+		float time = 0.f;
+		float value = 0.f;
+		fromJson(jsonData,"time" + std::to_string(i),time);
+		fromJson(jsonData,"value" + std::to_string(i),value);
+		rotationCurve_.keyframes.push_back({time,value});
+	}
+}

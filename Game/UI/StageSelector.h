@@ -41,6 +41,24 @@ public:
 	void InputHandle();
 	void Scroll();
 private:
+	struct RotateAnimationParam
+		:public IJsonConverter{
+	public:
+		RotateAnimationParam();
+		~RotateAnimationParam()override;
+
+		json ToJson(const std::string& id) const override;
+		void FromJson(const json& jsonData) override;
+
+		float duration = 0.0f;
+		float elapsedTime = 0.0f;
+
+		// 不規則に 動かす用
+		AnimationCurve<float> rotationCurve_;
+	};
+
+
+private:
 	std::array<std::unique_ptr<BlockWall>,3> stagePreviews_;
 
 	/// 押しっぱなし検出する時間
@@ -63,6 +81,7 @@ private:
 	float theSpaceBetweenButtons_ = 600.f;    // 描画用のオフセット（-1.0 ~ 1.0）
 	float currentOffset_ = 0.0f;   // 現在のオフセット位置
 
+
 	StageRenderTarget* pStageRenderTarget_;
 
 public:
@@ -72,5 +91,5 @@ public:
 	int32_t GetTotalStageNum() const{ return totalStageNum_; }
 	void SetTotalStageNum(int32_t num){ totalStageNum_ = num; }
 
-	void SetStageRenderTarget(StageRenderTarget* _stageRenderTarget) { pStageRenderTarget_ = _stageRenderTarget; }
+	void SetStageRenderTarget(StageRenderTarget* _stageRenderTarget){ pStageRenderTarget_ = _stageRenderTarget; }
 };
