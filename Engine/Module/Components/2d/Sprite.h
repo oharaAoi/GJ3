@@ -131,6 +131,8 @@ public:
 
 	void FillAmount(float amount,int type);
 
+	void SetTextureName(const std::string& _textureName) { textureName_ = _textureName; };
+
 	const Vector2 GetTranslate() const{ return transform_->GetTranslate(); }
 	const Vector2 GetScale() const{ return transform_->GetScale(); }
 	const float GetRotate() const{ return transform_->GetRotate(); }
