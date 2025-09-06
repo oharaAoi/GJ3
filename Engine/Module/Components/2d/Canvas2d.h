@@ -33,9 +33,11 @@ public:
 
 	Sprite* AddSprite(const std::string& _textureName, const std::string& _attributeName, const std::string& _psoName, int _renderQueue = 0, bool _isPreDraw = false);
 
+	ObjectPair* GetObjectPair(Sprite* _sprite);
+
 private:
 
-	std::list<ObjectPair> spriteList_;
+	std::list<std::unique_ptr<ObjectPair>> spriteList_;
 
 };
 
