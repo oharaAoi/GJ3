@@ -7,7 +7,6 @@ void BlockSpecial::Init(Canvas2d* _canvas2d)
 	transform_ = sprite_->GetTransform();
 	type_ = BlockType::SpecialBlock;
 	isSpecialBlock_ = true;
-	sprite_->SetColor({ 1.0f,0.0f,0.0f,1.0f });
 }
 
 void BlockSpecial::Update()

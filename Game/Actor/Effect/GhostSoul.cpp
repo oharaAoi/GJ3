@@ -7,6 +7,8 @@ void GhostSoul::Init(Canvas2d* _canvas2d, const Vector2& _tileSize) {
 	sprite_->SetIsFront(true);
 	sprite_->ReSetTextureSize(_tileSize);
 	transform_ = sprite_->GetTransform();
+
+	easeType_ = 0;
 }
 
 void GhostSoul::Update(const Vector2& _preIndexPos) {
