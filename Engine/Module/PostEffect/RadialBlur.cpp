@@ -82,11 +82,11 @@ void RadialBlur::Debug_Gui() {
 
 		param_.blurCenter.Clamp(CVector2::ZERO, CVector2::UNIT);
 
-		if (ImGui::Button("Save")) {
+		if (ImGui::Button("Save##radialBlur_save")) {
 			param_.isEnable = isEnable_;
 			JsonItems::Save("PostEffect", param_.ToJson(param_.GetName()));
 		}
-		if (ImGui::Button("Apply")) {
+		if (ImGui::Button("Apply##radialBlur_apply")) {
 			param_.FromJson(JsonItems::GetData("PostEffect", param_.GetName()));
 		}
 	}

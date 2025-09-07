@@ -19,6 +19,7 @@ void BrightnessThreshold::Init() {
 }
 
 void BrightnessThreshold::SetCommand(ID3D12GraphicsCommandList* commandList, DxResource* pingResource) {
+	CopyData();
 	Engine::SetPipeline(PSOType::ProcessedScene, "PostProcess_BrightnessThreshold.json");
 	Pipeline* pso = Engine::GetLastUsedPipeline();
 	UINT index = pso->GetRootSignatureIndex("gTexture");
@@ -29,8 +30,26 @@ void BrightnessThreshold::SetCommand(ID3D12GraphicsCommandList* commandList, DxR
 }
 
 void BrightnessThreshold::CheckBox() {
+	ImGui::DragFloat("threshold##BrightnessThreshold", &bloomSetting_->threshold, 0.01f, 0.0f, 1.0f);
 }
 
 void BrightnessThreshold::Debug_Gui() {
-	ImGui::DragFloat("threshold##BrightnessThreshold", &bloomSetting_->threshold, 0.01f, 0.0f, 1.0f);
+	ImGui::DragFloat("threshold", &param_.threshold, 0.01f);
+	if (ImGui::Button("Save##BrightnessThreshold_save")) {
+		param_.isEnable = isEnable_;
+		JsonItems::Save("PostEffect", param_.ToJson(param_.GetName()));
+	}
+	if (ImGui::Button("Apply##BrightnessThreshold_apply")) {
+		param_.FromJson(JsonItems::GetData("PostEffect", param_.GetName()));
+	}
+}
+
+void BrightnessThreshold::ApplySaveData() {
+	param_.FromJson(JsonItems::GetData("PostEffect", param_.GetName()));
+	isEnable_ = param_.isEnable;
+	CopyData();
+}
+
+void BrightnessThreshold::CopyData() {
+	bloomSetting_->threshold = param_.threshold;
 }

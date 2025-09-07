@@ -14,8 +14,8 @@ public:	// 構造体
 	};
 
 	struct BloomParam : public IJsonConverter{
-		float bloomIntensity;
-		bool isEnable;
+		float bloomIntensity = 0.5f;
+		bool isEnable = false;
 
 		BloomParam(){ SetName("GaussianFilter"); }
 

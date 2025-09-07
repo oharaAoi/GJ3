@@ -36,11 +36,11 @@ void GaussianFilter::Debug_Gui() {
 		ImGui::DragFloat("deviation", &param_.deviation);
 		ImGui::DragScalar("size", ImGuiDataType_U32, &param_.size, 1.0f);
 
-		if (ImGui::Button("Save")) {
+		if (ImGui::Button("Save##GaussianFilter_save")) {
 			param_.isEnable = isEnable_;
 			JsonItems::Save("PostEffect", param_.ToJson(param_.GetName()));
 		}
-		if (ImGui::Button("Apply")) {
+		if (ImGui::Button("Apply##GaussianFilter_apply")) {
 			param_.FromJson(JsonItems::GetData("PostEffect", param_.GetName()));
 		}
 	}

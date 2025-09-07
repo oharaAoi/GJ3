@@ -8,7 +8,7 @@ public:
 
 	struct Setting {
 		Matrix4x4 projectionInverse;
-		float edgeGain;
+		float edgeGain = 1.0f;
 	};
 
 public:
@@ -27,6 +27,11 @@ public:
 	void ApplySaveData() override {};
 
 	void CopyData() override {};
+
+public:
+
+	void SetEdgeGrain(float _value) { setting_->edgeGain = _value; }
+	float GetEdgeGrain() const { return setting_->edgeGain; }
 
 private:
 

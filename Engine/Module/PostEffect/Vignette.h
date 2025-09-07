@@ -13,10 +13,10 @@ public:	// 構造体
 	};
 
 	struct VignetteParam : public IJsonConverter {
-		Vector4 color;
+		Vector4 color = { 0,0,0,1 };
 		float scale = 16.0f;
 		float power = 0.8f;
-		bool isEnable;
+		bool isEnable = false;
 
 		VignetteParam() { SetName("Vignette"); }
 
@@ -54,7 +54,16 @@ public:
 
 	void CopyData() override;
 
-	void SetPower(float _power) { setting_->power = _power; }
+public:
+
+	void SetColor(const Vector4& _color) { param_.color = _color; }
+	const Vector4& GetColor() const { return param_.color; }
+
+	void SetScale(float _value) { param_.scale = _value; }
+	float GetScale() const { return param_.scale; }
+
+	void SetPower(float _power) { param_.power = _power; }
+	float GetPower() const { return param_.power; }
 
 private:
 

@@ -11,7 +11,7 @@ public:	// 構造体
 	};
 
 	struct GaussianBlurHeightParam : public IJsonConverter {
-		Vector2 texelSize;
+		Vector2 texelSize = {1,1};
 
 		GaussianBlurHeightParam() { SetName("GaussianBlurHeight"); }
 

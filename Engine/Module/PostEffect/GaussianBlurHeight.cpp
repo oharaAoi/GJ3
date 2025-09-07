@@ -31,7 +31,7 @@ void GaussianBlurHeight::SetCommand(ID3D12GraphicsCommandList* commandList, DxRe
 }
 
 void GaussianBlurHeight::CheckBox() {
-	ImGui::Checkbox("GaussianBlurHeight", &isEnable_);
+	ImGui::Checkbox("GaussianBlurHeight##Gausianfiler_checkbox", &isEnable_);
 }
 
 void GaussianBlurHeight::Debug_Gui() {
@@ -39,10 +39,10 @@ void GaussianBlurHeight::Debug_Gui() {
 	ImGui::DragFloat("sampleHeight", &sample, 0.1f, 0.0f, 10.0f);
 	param_.texelSize = { sample / (float)kWindowWidth_, sample / (float)kWindowHeight_ };
 
-	if (ImGui::Button("Save")) {
+	if (ImGui::Button("Save##Gaussian_save")) {
 		JsonItems::Save("PostEffect", param_.ToJson(param_.GetName()));
 	}
-	if (ImGui::Button("Apply")) {
+	if (ImGui::Button("Apply##Gaussian_apply")) {
 		param_.FromJson(JsonItems::GetData("PostEffect", param_.GetName()));
 	}
 }

@@ -11,8 +11,8 @@ public:
 	};
 	
 	struct GrayScaleParam : public IJsonConverter {
-		Vector4 color;
-		bool isEnable;
+		Vector4 color = {1,1,1,1};
+		bool isEnable = false;
 
 		GrayScaleParam() { SetName("GrayScale"); }
 
@@ -48,7 +48,8 @@ public:
 
 public:
 
-	void SetColor(const Vector4& _color) { setting_->color = _color; }
+	void SetColor(const Vector4& _color) { param_.color = _color; }
+	const Vector4& GetColor() const { return param_.color; }
 
 private:
 

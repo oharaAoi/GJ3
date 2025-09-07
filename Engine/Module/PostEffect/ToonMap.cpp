@@ -13,5 +13,5 @@ void ToonMap::SetCommand(ID3D12GraphicsCommandList* commandList, DxResource* pin
 }
 
 void ToonMap::CheckBox() {
-	ImGui::Checkbox("ToonMap#ToonMap_checkbox", &isEnable_);
+	ImGui::Checkbox("ToonMap##ToonMap_checkbox", &isEnable_);
 }

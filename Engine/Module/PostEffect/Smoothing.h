@@ -10,8 +10,8 @@ public:
 	};
 
 	struct SmoothingParam : public IJsonConverter {
-		uint32_t size;
-		bool isEnable;
+		uint32_t size = 1;
+		bool isEnable = false; 
 
 		SmoothingParam() { SetName("Smoothing"); }
 
@@ -44,6 +44,11 @@ public:
 	void ApplySaveData() override;
 
 	void CopyData() override;
+
+public:
+
+	void SetSize(uint32_t _size) { param_.size = _size; }
+	uint32_t GetSize() const { return param_.size; }
 
 private:
 

@@ -17,9 +17,9 @@ public:
 	};
 
 	struct GlitchNoiseParam : public IJsonConverter {
-		Vector2 texelSize;	// texelのサイズ
-		float strength;
-		bool isEnable;
+		Vector2 texelSize = { 1,1 };	// texelのサイズ
+		float strength = 1.f;
+		bool isEnable = false;
 
 		GlitchNoiseParam() { SetName("GlitchNoise"); }
 
@@ -41,7 +41,7 @@ public:
 public:
 
 	GlitchNoise() = default;
-	~GlitchNoise() override ;
+	~GlitchNoise() override;
 
 	void Init() override;
 
@@ -56,6 +56,14 @@ public:
 	void ApplySaveData() override;
 
 	void CopyData() override;
+
+public:
+
+	void SetTexelSize(const Vector2& _size) { param_.texelSize = _size; }
+	const Vector2& GetTexelSize() const { return param_.texelSize; }
+
+	void SetStrength(float _strength) { param_.strength = _strength; }
+	float GetStrength() const { return param_.strength; }
 
 private:
 

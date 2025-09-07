@@ -41,7 +41,7 @@ void DistortionEffect::CheckBox() {
 }
 
 void DistortionEffect::Debug_Gui() {
-	if (ImGui::CollapsingHeader("Distortion##Distortion_checkBox")) {
+	if (ImGui::CollapsingHeader("Distortion##Distortion_Header")) {
 		ImGui::DragFloat3("scale", &param_.uvTransform.scale.x, 0.1f);
 		ImGui::DragFloat3("rotate", &param_.uvTransform.rotate.x, 0.1f);
 		ImGui::DragFloat3("translate", &param_.uvTransform.translate.x, 0.1f);
@@ -50,11 +50,11 @@ void DistortionEffect::Debug_Gui() {
 		TextureManager* textureManager = TextureManager::GetInstance();
 		noiseTextureName_ = textureManager->SelectTexture(noiseTextureName_);
 
-		if (ImGui::Button("Save")) {
+		if (ImGui::Button("Save##Distortion_save")) {
 			param_.isEnable = isEnable_;
 			JsonItems::Save("PostEffect", param_.ToJson(param_.GetName()));
 		}
-		if (ImGui::Button("Apply")) {
+		if (ImGui::Button("Apply##Distortion_applay")) {
 			param_.FromJson(JsonItems::GetData("PostEffect", param_.GetName()));
 		}
 	}

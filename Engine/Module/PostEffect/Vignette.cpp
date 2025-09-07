@@ -43,11 +43,11 @@ void Vignette::Debug_Gui() {
 		param_.scale = std::clamp(param_.scale, 0.0f, 20.0f);
 		param_.power = std::clamp(param_.power, 0.0f, 1.0f);
 
-		if (ImGui::Button("Save")) {
+		if (ImGui::Button("Save##vignette_save")) {
 			param_.isEnable = isEnable_;
 			JsonItems::Save("PostEffect", param_.ToJson(param_.GetName()));
 		}
-		if (ImGui::Button("Apply")) {
+		if (ImGui::Button("Apply##vignette_apply")) {
 			param_.FromJson(JsonItems::GetData("PostEffect", param_.GetName()));
 		}
 	}

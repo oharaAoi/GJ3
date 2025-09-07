@@ -76,11 +76,11 @@ void GlitchNoise::Debug_Gui() {
 			setting_->frameIndex = 0;
 		}
 
-		if (ImGui::Button("Save")) {
+		if (ImGui::Button("Save##glitchNoise_save")) {
 			param_.isEnable = isEnable_;
 			JsonItems::Save("PostEffect", param_.ToJson(param_.GetName()));
 		}
-		if (ImGui::Button("Apply")) {
+		if (ImGui::Button("Apply##glitchNoise_apply")) {
 			param_.FromJson(JsonItems::GetData("PostEffect", param_.GetName()));
 		}
 	}

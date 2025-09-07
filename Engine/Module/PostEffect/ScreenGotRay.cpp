@@ -76,11 +76,11 @@ void ScreenGotRay::Debug_Gui() {
 		// 時間（デバッグ用）
 		ImGui::DragFloat("Time", &param_.time, 0.01f, 0.0f, 100.0f);
 
-		if (ImGui::Button("Save")) {
+		if (ImGui::Button("Save##gotRay_save")) {
 			param_.isEnable = isEnable_;
 			JsonItems::Save("PostEffect", param_.ToJson(param_.GetName()));
 		}
-		if (ImGui::Button("Apply")) {
+		if (ImGui::Button("Apply##gotRay_apply")) {
 			param_.FromJson(JsonItems::GetData("PostEffect", param_.GetName()));
 		}
 	}
@@ -106,4 +106,24 @@ void ScreenGotRay::CopyData() {
 	setting_->ray3Density = param_.ray3Density;
 	setting_->seed = param_.seed;
 	setting_->time = param_.time;
+}
+
+void ScreenGotRay::SetRayDensity(float _value, uint16_t index) {
+	if (index == 1) {
+		param_.ray1Density = _value;
+	} else if (index == 2) {
+		param_.ray2Density = _value;
+	} else {
+		param_.ray3Density = _value;
+	}
+}
+
+float ScreenGotRay::GetRayDensity(uint16_t index) {
+	if (index == 1) {
+		return param_.ray1Density;
+	} else if (index == 2) {
+		return param_.ray2Density;
+	} else {
+		return param_.ray3Density;
+	}
 }

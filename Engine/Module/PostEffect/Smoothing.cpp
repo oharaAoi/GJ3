@@ -35,11 +35,11 @@ void Smoothing::Debug_Gui() {
 	if (ImGui::CollapsingHeader("Smoothing")) {
 		ImGui::DragScalar("size", ImGuiDataType_U32, &param_.size);
 
-		if (ImGui::Button("Save")) {
+		if (ImGui::Button("Save##smoothing_save")) {
 			param_.isEnable = isEnable_;
 			JsonItems::Save("PostEffect", param_.ToJson(param_.GetName()));
 		}
-		if (ImGui::Button("Apply")) {
+		if (ImGui::Button("Apply##smoothing_apply")) {
 			param_.FromJson(JsonItems::GetData("PostEffect", param_.GetName()));
 		}
 	}

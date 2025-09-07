@@ -36,11 +36,11 @@ void Grayscale::Debug_Gui() {
 	if (ImGui::CollapsingHeader("GrayScale##Grayscale_Header")) {
 		ImGui::ColorEdit4("color", &param_.color.x);
 
-		if (ImGui::Button("Save")) {
+		if (ImGui::Button("Save##grayscale_save")) {
 			param_.isEnable = isEnable_;
 			JsonItems::Save("PostEffect", param_.ToJson(param_.GetName()));
 		}
-		if (ImGui::Button("Apply")) {
+		if (ImGui::Button("Apply##grayscale_apply")) {
 			param_.FromJson(JsonItems::GetData("PostEffect", param_.GetName()));
 		}
 	}

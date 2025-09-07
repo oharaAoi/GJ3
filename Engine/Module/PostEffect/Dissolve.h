@@ -16,10 +16,10 @@ public:
 
 	struct DissolveParam : public IJsonConverter {
 		SRT uvTransform;
-		Vector4 color;
-		Vector4 edgeColor;
+		Vector4 color = {1,1,1,1};
+		Vector4 edgeColor = {1,1,1,1};
 		float threshold = 0.5f;
-		bool isEnable;
+		bool isEnable = false;
 
 		DissolveParam() { SetName("Dissolve"); }
 
@@ -62,6 +62,26 @@ public:
 	void ApplySaveData() override;
 
 	void CopyData() override;
+
+public:
+
+	void SetUvScale(const Vector3& _scale) { uvTransform_.scale = _scale; }
+	const Vector3& GetUvScale() const { return uvTransform_.scale; }
+
+	void SetUvRotate(const Vector3& _rotate) { uvTransform_.rotate = _rotate; }
+	const Vector3& GetUvRotate() const { return uvTransform_.rotate; }
+
+	void SetUvTranslate(const Vector3& _translate) { uvTransform_.translate = _translate; }
+	const Vector3& GetUvTranslate() const { return uvTransform_.translate; }
+
+	void SetColor(const Vector4& _color) { param_.color = _color; }
+	const Vector4& GetColor() const { return param_.color; }
+
+	void SetEdgeColor(const Vector4& _color) { param_.edgeColor = _color; }
+	const Vector4& GetEdgeColor() const { return param_.edgeColor; }
+
+	void SetThreshold(float _threshold) { param_.threshold = _threshold; }
+	float GetThreshold() const { return param_.threshold; }
 
 private:
 

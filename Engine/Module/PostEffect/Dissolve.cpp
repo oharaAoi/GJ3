@@ -42,11 +42,11 @@ void Dissolve::Debug_Gui() {
 		ImGui::DragFloat("threshold", &param_.threshold, 0.01f);
 		param_.threshold = std::clamp(param_.threshold, 0.0f, 1.0f);
 
-		if (ImGui::Button("Save")) {
+		if (ImGui::Button("Save##Dissolve_save")) {
 			param_.isEnable = isEnable_;
 			JsonItems::Save("PostEffect", param_.ToJson(param_.GetName()));
 		}
-		if (ImGui::Button("Apply")) {
+		if (ImGui::Button("Apply##Dissolve_apply")) {
 			param_.FromJson(JsonItems::GetData("PostEffect", param_.GetName()));
 		}
 	}

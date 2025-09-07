@@ -21,7 +21,7 @@ public:
 		float blurStrength = 0.00f;	
 		float blurStart = 0.2f;	
 		int sampleCount = 16;
-		bool isEnable;
+		bool isEnable = false;
 
 		RadialBlurParam() { SetName("RadialBlur"); }
 
@@ -63,11 +63,21 @@ public:
 
 public:
 
-	void SetStrength(float strength) { setting_->blurStrength = strength; }
-
 	void Start(float strength, float startTime);
 
 	void Stop(float stopTime);
+
+	void SetCenter(const Vector2& _center) { param_.blurCenter = _center; }
+	const Vector2& GetCenter() const { return param_.blurCenter; }
+
+	void SetStrength(float strength) { param_.blurStrength = strength; }
+	float GetStrength() const { return param_.blurStrength; }
+
+	void SetBlurStart(float _start) { param_.blurStart = _start; }
+	float GetBlurStart() const { return param_.blurStart; }
+
+	void SetSampleCount(int _count) { param_.sampleCount = _count; }
+	int GetSampleCount() const { return param_.sampleCount; }
 
 private:
 

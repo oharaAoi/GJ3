@@ -11,9 +11,9 @@ public:
 	};
 
 	struct GaussianFilterParam : public IJsonConverter {
-		float deviation;
-		uint32_t size;
-		bool isEnable;
+		float deviation = 1.f;
+		uint32_t size = 1;
+		bool isEnable = false;
 
 		GaussianFilterParam() { SetName("GaussianFilter"); }
 
@@ -48,6 +48,14 @@ public:
 	void ApplySaveData() override;
 
 	void CopyData() override;
+
+public:
+
+	void SetDeviation(float _deviation) { param_.deviation = _deviation; }
+	float GetDeviation() const { return param_.deviation; }
+
+	void SetSize(uint32_t _size) { param_.size = _size; }
+	uint32_t GetSize() const { return param_.size; }
 
 private:
 

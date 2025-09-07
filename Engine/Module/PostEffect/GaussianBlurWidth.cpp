@@ -32,7 +32,7 @@ void GaussianBlurWidth::SetCommand(ID3D12GraphicsCommandList* commandList, DxRes
 }
 
 void GaussianBlurWidth::CheckBox() {
-	ImGui::Checkbox("GaussianBlurWidth", &isEnable_);
+	ImGui::Checkbox("GaussianBlurWidth##Gaussian_checkbox", &isEnable_);
 }
 
 void GaussianBlurWidth::Debug_Gui() {
@@ -40,10 +40,10 @@ void GaussianBlurWidth::Debug_Gui() {
 	ImGui::DragFloat("sampleWide", &sample, 0.1f, 0.0f, 10.0f);
 	param_.texelSize = { sample / (float)kWindowWidth_, sample / (float)kWindowHeight_ };
 
-	if (ImGui::Button("Save##GaussianBlurWidth")) {
+	if (ImGui::Button("Save##GaussianBlurWidth_save")) {
 		JsonItems::Save("PostEffect", param_.ToJson(param_.GetName()));
 	}
-	if (ImGui::Button("Apply##GaussianBlurWidth")) {
+	if (ImGui::Button("Apply##GaussianBlurWidth_apply")) {
 		param_.FromJson(JsonItems::GetData("PostEffect", param_.GetName()));
 	}
 }

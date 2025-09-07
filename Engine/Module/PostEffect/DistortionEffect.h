@@ -16,10 +16,10 @@ public:
 
 	struct DistortionEffectParam : public IJsonConverter {
 		SRT uvTransform;
-		float bias;
-		float strength;
+		float bias = 0.5f;
+		float strength = 1.0f;
 		std::string noiseTextureName;
-		bool isEnable;
+		bool isEnable = false;
 
 		DistortionEffectParam() { SetName("DistortionEffect"); }
 
@@ -62,6 +62,26 @@ public:
 	void ApplySaveData() override;
 
 	void CopyData() override;
+
+public:
+
+	void SetUvScale(const Vector3& _scale) { uvTransform_.scale = _scale; }
+	const Vector3& GetUvScale() const { return uvTransform_.scale; }
+
+	void SetUvRotate(const Vector3& _rotate) { uvTransform_.rotate = _rotate; }
+	const Vector3& GetUvRotate() const { return uvTransform_.rotate; }
+
+	void SetUvTranslate(const Vector3& _translate) { uvTransform_.translate = _translate; }
+	const Vector3& GetUvTranslate() const { return uvTransform_.translate; }
+
+	void SetBias(float _bias) { param_.bias = _bias; }
+	float GetBias() const { return param_.bias; }
+
+	void SetStrength(float _strength) { param_.strength = _strength; }
+	float GetStrength() const { return param_.strength; }
+
+	void SetNoiseTexture(const std::string& _name) { param_.noiseTextureName = _name; }
+	const std::string& GetNoiseTexture() const { return param_.noiseTextureName; }
 
 private:
 
