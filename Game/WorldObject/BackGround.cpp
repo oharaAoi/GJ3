@@ -4,9 +4,9 @@
 
 void BackGround::Init() {
 	SetName("backGround");
-	sprite_ = Engine::GetCanvas2d()->AddSprite("backGround.png", "backGround", "Sprite_Normal.json", -10, true);
+	sprite_ = Engine::GetCanvas2d()->AddSprite("Game_bg.png", "backGround", "Sprite_Normal.json", -10, true);
 	sprite_->SetIsBackGround(true);
-	sprite_->ApplySaveData();
+	//sprite_->ApplySaveData();
 
 	sprite_->SetTranslate(Vector2(640.0f, 360.0f));
 }
