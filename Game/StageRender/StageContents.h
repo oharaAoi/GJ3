@@ -1,5 +1,6 @@
 #pragma once
 #include <memory>
+#include <vector>
 #include "Engine/Module/Components/2d/Canvas2d.h"
 #include "Game/Manager/StageRegistry.h"
 #include "Game/Camera/StageContentCamera.h"
@@ -12,7 +13,7 @@ public:
 	StageContents() = default;
 	~StageContents();
 
-	void Init();
+	void Init(uint32_t maxStageNum);
 
 	void Update();
 
@@ -22,11 +23,12 @@ public:
 
 private:
 
-	std::unique_ptr<Canvas2d> canvas2ds_[3];
-	std::unique_ptr<Player> player_[3];
-	std::unique_ptr<StageRegistry> stageRegistries_[3];
+	std::vector<std::unique_ptr<Canvas2d>> canvas2ds_;
+	std::vector<std::unique_ptr<StageRegistry>> stageRegistries_;
 
 	std::unique_ptr<StageContentCamera> camera_;
 	std::unique_ptr<StageRenderTarget> stageRenderTarget_;
+
+	uint32_t maxStageNum_;
 };
 

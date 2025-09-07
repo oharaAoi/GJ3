@@ -14,12 +14,15 @@ void StageLoader::Init() {
 
 	// フォルダ内のファイル名を配列に格納
 	filePaths_.clear();
+	maxStageNum_ = 0;
 	for (const auto& entry : fs::recursive_directory_iterator(kStageDirectoryPath_)) {
 		if (entry.is_regular_file()) {
 			std::string ext = entry.path().extension().string();
 			if (ext == ".json") {
 				std::string fileName = entry.path().filename().string();
 				filePaths_.push_back(fileName);
+
+				maxStageNum_++;
 			}
 		}
 	}

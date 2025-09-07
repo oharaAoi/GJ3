@@ -45,9 +45,6 @@ void StageSelectScene::Init(){
 	worldObjects_ = std::make_unique<WorldObjects>();
 	worldObjects_->Init();
 
-	stageContents_ = std::make_unique<StageContents>();
-	stageContents_->Init();
-
 	// -------------------------------------------------
 	// ↓ managerの初期化
 	// -------------------------------------------------
@@ -55,6 +52,17 @@ void StageSelectScene::Init(){
 	// -------------------------------------------------
 	// ↓ spriteの初期化
 	// -------------------------------------------------
+
+	stageLoader_ = std::make_unique<StageLoader>();
+	stageLoader_->Init();
+
+	stageContents_ = std::make_unique<StageContents>();
+	stageContents_->Init(stageLoader_->GetMaxStageNum());
+
+	stageSelector_ = std::make_unique<StageSelector>();
+	stageSelector_->SetStageRenderTarget(stageContents_->GetStageRenderTarget());
+	stageSelector_->Init();
+	stageSelector_->SetTotalStageNum(stageLoader_->GetMaxStageNum());
 
 	// -------------------------------------------------
 	// ↓ behaviorの初期化

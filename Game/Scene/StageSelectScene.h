@@ -15,6 +15,7 @@
 // ui
 #include "Game/UI/StageSelector.h"
 #include "Game/StageRender/StageContents.h"
+#include "Game/Tool/StageLoader.h"
 #include "Engine/Module/PostEffect/IPostEffect.h"
 // effect
 #include "Game/Effect/TitleFlashEffect.h"
@@ -50,6 +51,8 @@ private:
 	std::unique_ptr<IStageSelectSceneBehavior> behavior_;
 
 	// ------------------- ui ------------------- //
+	std::unique_ptr<StageSelector> stageSelector_;
+	std::unique_ptr<StageLoader> stageLoader_;
 
 
 	std::unique_ptr<StageContents> stageContents_;
@@ -79,7 +82,7 @@ protected:
 };
 
 /// <summary>
-/// 選択中の挙動シーン
+/// �I�𒆂̋����V�[��
 /// </summary>
 class SelectingStageBehavior
 	: public IStageSelectSceneBehavior{

@@ -154,7 +154,7 @@ void StageSelector::InputHandle(){
 			isPressing  = true;
 			scrollDirection_ = -1;
 		}
-
+		 
 		if(input->IsPressButton(kStageIndexSubButtons_)){
 			isPressing  = true;
 			scrollDirection_ = -1;
