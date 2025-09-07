@@ -21,5 +21,7 @@ private:
 	StageRegistry* stageRegistry_;
 	Vector2Int index_;
 	bool isSpecialBlock_;
+
+	bool isExecute_ = false;
 };
 

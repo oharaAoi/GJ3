@@ -45,7 +45,6 @@ private:
 
 	Parameter parameter_;
 public:
-	
 	float GetAlpha() const{ return alpha_; }
 	void SetAlpha(float alpha){ alpha_ = alpha; }
 

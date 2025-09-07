@@ -20,5 +20,7 @@ private:
 	MapCollisionSystem* mapCollisionSystem_;
 	Vector2Int fromIndex_;
 	Vector2Int toIndex_;
+
+	bool isExecute_ = false;
 };
 

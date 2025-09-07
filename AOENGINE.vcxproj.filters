@@ -323,6 +323,7 @@
     <ClCompile Include="Game\UI\Clear\ClearUIs.cpp" />
     <ClCompile Include="Game\UI\Button\NextStageButtonUI.cpp" />
     <ClCompile Include="Game\UI\Clear\ClearSelector.cpp" />
+    <ClCompile Include="Game\Commands\Stage\CreateGhostCommand.cpp" />
     <ClCompile Include="Engine\Module\PostEffect\SwirlEffect.cpp" />
     <ClCompile Include="Engine\Module\PostEffect\SwirlMask.cpp" />
     <ClCompile Include="Game\UI\TitleUIs.cpp" />
@@ -609,6 +610,7 @@
     <ClInclude Include="Game\UI\Clear\ClearUIs.h" />
     <ClInclude Include="Game\UI\Button\NextStageButtonUI.h" />
     <ClInclude Include="Game\UI\Clear\ClearSelector.h" />
+    <ClInclude Include="Game\Commands\Stage\CreateGhostCommand.h" />
     <ClInclude Include="Engine\Module\PostEffect\SwirlEffect.h" />
     <ClInclude Include="Engine\Module\PostEffect\SwirlMask.h" />
     <ClInclude Include="Game\UI\TitleUIs.h" />
