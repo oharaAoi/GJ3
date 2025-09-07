@@ -72,6 +72,7 @@ public:
 	bool GetIsClear() const { return isClear_; }
 
 	GhostBlockCollision *GetGhostBlockCollision() const { return ghostBlockCollision_.get(); }
+	SpecialBlockCollision* GetSpecialBlockCollision()const { return spBlockCollision_.get(); }
 
 	const std::array<Vector2Int, 8> &GetNeighborOffsets() const { return neighborOffsets_; }
 

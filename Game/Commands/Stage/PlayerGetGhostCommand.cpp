@@ -10,11 +10,15 @@ PlayerGetGhostCommand::~PlayerGetGhostCommand(){}
 void PlayerGetGhostCommand::Execute(){
 	// おばけの数を増やす
 	mapCollision_->AddGhostCounter();
+	// 出来たおばけを判定する
+	mapCollision_->GetSpecialBlockCollision()->RecursionBlockChecker(index_);
 }
 void PlayerGetGhostCommand::Undo(){
 	// おばけの数を減らす
 	mapCollision_->SubGhostCounter();
 	// お化けを復活させる
 	mapCollision_->GetStageRegi()->CreateStageData(index_,BlockType::Ghost);
+	// 出来たおばけを判定する
+	mapCollision_->GetSpecialBlockCollision()->RecursionBlockChecker(index_);
 
 }
