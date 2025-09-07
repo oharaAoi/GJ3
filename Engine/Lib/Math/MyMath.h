@@ -254,6 +254,19 @@ Vector3 Bezier(const std::vector<Vector3>& controlPoint, const float& t);
 ///// <returns></returns>
 //Vector3 Bezier(const Vector3& v1, const Vector3& v2, const Vector3& v3, const float& t);
 
+/// <summary>
+///	振り子の更新
+/// </summary>
+/// <param name="_anchor">固定された先の部分</param>
+/// <param name="_length">紐の長さ</param>
+/// <param name="_outputAngle">現在の角度 返り値</param>
+/// <param name="_angularAccel">角加速度</param>
+/// <param name="_outputAngularVelo">現在の角速度 返り値</param>
+/// <param name="_gravity">重力定数</param>
+/// <param name="deltaTime"></param>
+/// <returns>振り子の座標</returns>
+Vector3 PendulumUpdate(const Vector3& _anchor,float _length,float& _outputAngle,float& _outputAngularVelo,float _gravity = kGravity,float deltaTime = GameTimer::DeltaTime());
+
 ////////////////////////////////////////////////////////////////////////////////////
 // 変換
 ////////////////////////////////////////////////////////////////////////////////////
