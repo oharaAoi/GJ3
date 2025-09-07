@@ -2,13 +2,14 @@
     "GhostSoulManager": {
         "center": {
             "x": 640.0,
-            "y": 396.0
+            "y": 375.0
         },
-        "def_size": 128.0,
+        "def_size": 165.0,
         "radius": {
-            "x": 269.0,
-            "y": 45.0
+            "x": 330.0,
+            "y": 60.0
         },
-        "size": 32.0
+        "size": 50.0,
+        "speed": 1.0
     }
 }

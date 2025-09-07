@@ -46,6 +46,8 @@ public:
 	void Update();
 
 	void Debug_Gui() override;
+	
+	void SetTextureSize(const Vector2& size) { textureSize_ = size; }
 
 	bool GetStageReset()const { return isStageReset_; }
 	void Reset() {
@@ -60,6 +62,7 @@ private:
 	Sprite* backTextureUI_ = nullptr;
 	Sprite* whiteTextureUI_ = nullptr;
 
+	Vector2 textureSize_ = {};
 	bool isStageReset_ = false;
 	float resetTimer_ = 0.0f;
 	float kResetTime_ = 1.0f;
