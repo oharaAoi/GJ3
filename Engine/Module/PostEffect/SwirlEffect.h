@@ -14,7 +14,14 @@ class SwirlEffect :
 public:
 
 	struct SwirlSetting {
-		Matrix4x4 uv;
+		Vector2 screenSize;	// windowのサイズ
+		float time;			// 時間
+		float radiusKernel;	// 半径方向の支配
+
+		float angleStrength;// 角度方向のねじれの強さ
+		float speed;		// 速度
+		float frontWidth;	// フロント幅(にじみ)
+		float pad;
 	};
 
 	struct SwirlParameter {
@@ -49,6 +56,8 @@ public:
 private:
 
 	std::unique_ptr<SwirlMask> swirlMask_;
+
+	std::unique_ptr<DxResource> sceneBuffer_;
 
 	std::unique_ptr<DxResource> settingBuffer_;
 	SwirlSetting* setting_;

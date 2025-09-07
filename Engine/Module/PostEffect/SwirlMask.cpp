@@ -2,26 +2,26 @@
 #include "Engine.h"
 #include "Engine/Core/GraphicsContext.h"
 
-SwirlMask::~SwirlMask() {
-}
-
 void SwirlMask::Init() {
-	sprite_ = std::make_unique<Sprite>();
-	sprite_->Init("white.png");
+	mask_ = std::make_unique<Sprite>();
+	mask_->Init("white.png");
+	mask_->ReSetTextureSize({640, 360});
+	mask_->SetTranslate({ 640, 360 });
+
+	pattern_ = std::make_unique<Sprite>();
+	pattern_->Init("soul_bg.png");
+	pattern_->SetTranslate({ 640, 360 });
 }
 
-void SwirlMask::SetCommand(ID3D12GraphicsCommandList* commandList, DxResource* pingResource) {
-	Pipeline* pso = Engine::SetPipeline(PSOType::ProcessedScene, "PostProcess_Normal_16.json");
-	UINT index = pso->GetRootSignatureIndex("gTexture");
-	commandList->SetGraphicsRootDescriptorTable(index, pingResource->GetSRV().handleGPU);
-	commandList->DrawIndexedInstanced(3, 1, 0, 0, 0);
+void SwirlMask::SetCommand() {
+	mask_->ReSetTextureSize({ 640, 360 });
+	pattern_->ReSetTextureSize({ kWindowWidth_, kWindowHeight_ });
 
-	//pso = Engine::SetPipeline(PSOType::Sprite, "Sprite_Normal_16.json");
-	//sprite_->Draw(pso);
-}
-
-void SwirlMask::CheckBox() {
+	Pipeline* pso = Engine::SetPipeline(PSOType::Sprite, "Sprite_Normal_16.json");
+	pattern_->Draw(pso);
+	mask_->Draw(pso);
 }
 
 void SwirlMask::Debug_Gui() {
+	mask_->Debug_Gui();
 }

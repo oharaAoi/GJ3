@@ -1,34 +1,27 @@
 #pragma once
 #include <string>
 #include <memory>
-#include "Engine/Module/PostEffect/IPostEffect.h"
 #include "Engine/Module/Components/2d/Sprite.h"
 
 /// <summary>
 /// 渦巻きTextureの透明部分をマスクするクラス
 /// </summary>
-class SwirlMask :
-	public IPostEffect {
+class SwirlMask {
 public:
 
 	SwirlMask() = default;
-	~SwirlMask() override;
+	~SwirlMask() = default;
 
-	void Init() override;
+	void Init() ;
 
-	void SetCommand(ID3D12GraphicsCommandList* commandList, DxResource* pingResource) override;
+	void SetCommand();
 
-	void CheckBox() override;
-
-	void Debug_Gui() override;
-
-	void ApplySaveData() override {};
-
-	void CopyData() override {};
+	void Debug_Gui();
 
 private:
 
-	std::unique_ptr<Sprite> sprite_;
+	std::unique_ptr<Sprite> mask_;
+	std::unique_ptr<Sprite> pattern_;
 
 };
 
