@@ -48,7 +48,7 @@ PixelShaderOutput main(VertexShaderOutput input) {
 	float progress = gSetting.time * gSetting.speed;
 	
 	float cover = SmoothStep(progress - gSetting.frontWidth, progress, arrival);
-	
+	 
 	float time01 = frac(gSetting.time / 4.0f);
 	float pat = Zigzag(0.22f * lenSq + (-1.0f) * thetaN + 1.0f * time01) * COLWID
               + 0.05f * lenSq
