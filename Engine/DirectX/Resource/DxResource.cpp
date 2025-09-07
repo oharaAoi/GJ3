@@ -16,6 +16,9 @@ void DxResource::Finalize() {
 	if (rtvAddress_ != std::nullopt) {
 		DescriptorHeap::AddFreeRtvList(rtvAddress_.value().assignIndex_);
 	}
+	if (dsvAddress_ != std::nullopt) {
+		DescriptorHeap::AddFreeRtvList(dsvAddress_.value().assignIndex_);
+	}
 }
 
 void DxResource::Init(ID3D12Device* device, DescriptorHeap* dxHeap, ResourceType type) {
