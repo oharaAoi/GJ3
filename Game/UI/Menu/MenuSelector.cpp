@@ -28,7 +28,7 @@ void MenuSelector::OpenMenu()
 		openMenu_ = true;
 		cursorIndex_ = -1;
 	} else if ((keyInput || buttonInput) && openMenu_ &&
-		!chengeScene_ && !drawEffect_) {
+		!chengeScene_ && !drawEffect_ && !openOperation_) {
 		menuUIs_->FadeOut();
 	}
 }
