@@ -78,6 +78,7 @@ bool MapCollisionSystem::IsMovable(const Vector2Int& direction,const Vector2Int&
 	if(firstStepIndex->GetType() == BlockType::NormalBlock || firstStepIndex->GetType() == BlockType::GhostBlock ||
 	   firstStepIndex->GetType() == BlockType::SpecialBlock || firstStepIndex->GetType() == BlockType::LimitBlock){
 		if(secondStepIndex == nullptr || secondStepIndex->GetType() == BlockType::Ghost){
+			
 			playerIndex_ = playerIndex + direction;
 			ChengeStage(direction,playerIndex);
 			return true;

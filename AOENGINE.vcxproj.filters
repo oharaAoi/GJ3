@@ -63,9 +63,7 @@
     <ClCompile Include="Game\Actor\Effect\GhostSoul.cpp" />
     <ClCompile Include="Game\Actor\Effect\GhostSoulManager.cpp" />
     <ClCompile Include="Game\Commands\Stage\PlayerGetGhostCommand.cpp" />
-    <ClCompile Include="Game\Commands\Stage\CreateGraveBlock.cpp" />
     <ClCompile Include="Game\UI\GetGhostCountUI.cpp" />
-    <ClCompile Include="Game\UI\Menu\button\BackButtonUI.cpp" />
     <ClCompile Include="Engine\Module\PostEffect\ScreenGotRay.cpp" />
     <ClCompile Include="Game\Actor\Block\BlockLimit.cpp" />
     <ClCompile Include="Game\Actor\Block\BlockSpecial.cpp" />
@@ -292,7 +290,6 @@
     <ClCompile Include="Game\WorldObject\Skybox.cpp" />
     <ClCompile Include="Game\WorldObject\WorldObjects.cpp" />
     <ClCompile Include="Game\Manager\Collision\Map\GhostBlockCollision.cpp" />
-    <ClCompile Include="Game\UI\Menu\button\IMenuButtonUI.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Engine\Module\Geometry\Structs\Vertices.cpp" />
     <ClCompile Include="Engine\System\ParticleSystem\Tool\ParticleSystemEditor.cpp" />
@@ -323,19 +320,17 @@
     <ClCompile Include="Game\UI\Clear\ClearUIs.cpp" />
     <ClCompile Include="Game\UI\Button\NextStageButtonUI.cpp" />
     <ClCompile Include="Game\UI\Clear\ClearSelector.cpp" />
-    <ClCompile Include="Game\Commands\Stage\CreateGhostCommand.cpp" />
     <ClCompile Include="Engine\Module\PostEffect\SwirlEffect.cpp" />
     <ClCompile Include="Engine\Module\PostEffect\SwirlMask.cpp" />
     <ClCompile Include="Game\UI\TitleUIs.cpp" />
+    <ClCompile Include="Game\Commands\Stage\CreateGraveBlock.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Scene\ClearScene.h" />
     <ClInclude Include="Game\Commands\Stage\PlayerGetGhostCommand.h" />
-    <ClInclude Include="Game\Commands\Stage\CreateGraveBlock.h" />
     <ClInclude Include="Game\Actor\Effect\GhostSoul.h" />
     <ClInclude Include="Game\Actor\Effect\GhostSoulManager.h" />
     <ClInclude Include="Game\UI\GetGhostCountUI.h" />
-    <ClInclude Include="Game\UI\Menu\button\BackButtonUI.h" />
     <ClInclude Include="Engine\Module\PostEffect\ScreenGotRay.h" />
     <ClInclude Include="Game\Actor\Block\BlockLimit.h" />
     <ClInclude Include="Game\Actor\Block\BlockSpecial.h" />
@@ -574,7 +569,6 @@
     <ClInclude Include="Game\Tool\MapChipLoader.h" />
     <ClInclude Include="Game\Tool\StageEditor.h" />
     <ClInclude Include="Game\Tool\StageLoader.h" />
-    <ClInclude Include="Game\UI\Menu\button\MenuButtonType.h" />
     <ClInclude Include="Game\WorldObject\BackGround.h" />
     <ClInclude Include="Game\WorldObject\Skybox.h" />
     <ClInclude Include="Engine\Lib\Math\Vector2Int.h" />
@@ -610,10 +604,10 @@
     <ClInclude Include="Game\UI\Clear\ClearUIs.h" />
     <ClInclude Include="Game\UI\Button\NextStageButtonUI.h" />
     <ClInclude Include="Game\UI\Clear\ClearSelector.h" />
-    <ClInclude Include="Game\Commands\Stage\CreateGhostCommand.h" />
     <ClInclude Include="Engine\Module\PostEffect\SwirlEffect.h" />
     <ClInclude Include="Engine\Module\PostEffect\SwirlMask.h" />
     <ClInclude Include="Game\UI\TitleUIs.h" />
+    <ClInclude Include="Game\Commands\Stage\CreateGraveBlock.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\Assets\HLSL\Light.hlsli" />

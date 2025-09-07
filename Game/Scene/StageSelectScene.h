@@ -51,7 +51,6 @@ private:
 	std::unique_ptr<IStageSelectSceneBehavior> behavior_;
 
 	// ------------------- ui ------------------- //
-	std::unique_ptr<StageSelector> stageSelector_;
 	std::unique_ptr<StageLoader> stageLoader_;
 
 
