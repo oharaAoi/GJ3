@@ -94,6 +94,12 @@ void SceneManager::SetChange(const SceneType& type) {
 		scene_->Finalize();
 	}
 	nextScene_ = sceneFactory_->CreateScene(sceneFactory_->SceneTypeToString(type));
+	
+	if (nextScene_ == nullptr) {
+		Logger::AssertLog("nextSceneがnullです");
+		return;
+	}
+	
 	scene_ = std::move(nextScene_);
 
 #ifdef _DEBUG

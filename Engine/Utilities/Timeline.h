@@ -10,6 +10,7 @@
 
 #include <string>
 
+#ifdef _DEBUG
 namespace ImGui {
 /// <summary>
 /// タイムラインボタン
@@ -50,3 +51,4 @@ bool EditKeyFrame(
     float _defaultValue                   = 0.0f,
     std::function<void(int)> _howEditItem = nullptr);
 } // namespace ImGui
+#endif

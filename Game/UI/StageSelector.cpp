@@ -102,7 +102,9 @@ void StageSelector::Debug_Gui(){
 	if(ImGui::TreeNode("LeftArrow_AngleEvent")){
 		ImGui::DragFloat("Duration##LeftArrow_AngleEvent",&leftArrowRotateParam_->duration,0.01f);
 		ImGui::SliderFloat("ElapsedTime##LeftArrow_AngleEvent",&leftArrowRotateParam_->elapsedTime,0.0f,leftArrowRotateParam_->duration);
-		ImGui::EditKeyFrame("LeftArrow_AngleEvent",leftArrowRotateParam_->angleEvent_,leftArrowRotateParam_->duration,0.0f);
+#ifdef _DEBUG
+		ImGui::EditKeyFrame("LeftArrow_AngleEvent", leftArrowRotateParam_->angleEvent_, leftArrowRotateParam_->duration, 0.0f);
+#endif // _DEBUG
 
 		ImGui::Spacing();
 
@@ -115,8 +117,9 @@ void StageSelector::Debug_Gui(){
 	if(ImGui::TreeNode("RightArrow_AngleEvent")){
 		ImGui::DragFloat("Duration##RightArrow_AngleEvent",&rightArrowRotateParam_->duration,0.01f);
 		ImGui::SliderFloat("ElapsedTime##RightArrow_AngleEvent",&rightArrowRotateParam_->elapsedTime,0.0f,rightArrowRotateParam_->duration);
+#ifdef _DEBUG
 		ImGui::EditKeyFrame("RightArrow_AngleEvent",rightArrowRotateParam_->angleEvent_,rightArrowRotateParam_->duration,0.0f);
-
+#endif // _DEBUG
 		ImGui::Spacing();
 
 		ImGui::DragFloat2("Anchor##RightArrow_AngleEvent",&rightArrowRotateParam_->anchor.x,0.1f);
