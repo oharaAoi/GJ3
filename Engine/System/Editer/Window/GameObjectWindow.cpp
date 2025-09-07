@@ -1,5 +1,6 @@
 #include "GameObjectWindow.h"
 #include <sstream>
+#include "Engine/Utilities/ImGuiHelperFunc.h"
 
 GameObjectWindow::GameObjectWindow() {}
 GameObjectWindow::~GameObjectWindow() {}
@@ -70,6 +71,7 @@ void GameObjectWindow::Edit() {
 				if (firstOpenRoot) {
 					firstOpenRoot = false;
 					selectAttribute_ = ptr;
+					selectAttributeName_ = label;
 					openNode = "";  // 他のノードを閉じる
 				}
 
@@ -81,6 +83,7 @@ void GameObjectWindow::Edit() {
 								openNode = label;  // 現在の親ノードを記録
 							}
 							selectAttribute_ = child;
+							selectAttributeName_ = label;
 						}
 					}
 				}
@@ -95,6 +98,7 @@ void GameObjectWindow::Edit() {
 			// 子供を持たないノードの場合
 			if (ImGui::Selectable(label.c_str(), selectAttribute_ == ptr)) {
 				selectAttribute_ = it.second;
+				selectAttributeName_ = label;
 				openNode = "";  // 他のノードを閉じる
 			}
 		}
@@ -112,7 +116,16 @@ void GameObjectWindow::Edit() {
 		ImGui::SameLine();
 		ImGui::Text("Name : ");
 		ImGui::SameLine();
+
 		ImGui::Text(selectAttribute_->GetName().c_str());
+		/*if (InputTextWithString("NameInput", "input", selectAttributeName_)) {
+			for (auto& [name, attr] : attributeArray_) {
+				if (attr == selectAttribute_) {
+					selectAttribute_->SetName(selectAttributeName_); 
+				}
+			}
+		}*/
+
 		ImGui::Separator();
 		selectAttribute_->Debug_Gui();
 		selectAttribute_->SetIsActive(isActive);

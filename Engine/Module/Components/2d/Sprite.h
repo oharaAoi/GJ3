@@ -3,26 +3,58 @@
 #include "Engine/DirectX/Utilities/DirectXUtils.h"
 #include "Engine/Lib/Math/Vector2.h"
 #include "Engine/Lib/Math/MathStructures.h"
+#include "Engine/Lib/Json/IJsonConverter.h"
 #include "Engine/Module/Components/ScreenTransform.h"
 #include "Engine/Module/Components/Attribute/AttributeGui.h"
 
 class Render;
 
 class Sprite :
-	public AttributeGui {
+	public AttributeGui{
 public:
 
-	struct TextureMesh {
+	struct TextureMesh{
 		Vector4 pos;
 		Vector2 texcoord;
 		float padding[2];
 	};
 
-	struct TextureMaterial {
+	struct TextureMaterial{
 		Vector4 color;
 		Matrix4x4 uvTransform;
 		Vector2 uvMinSize;		// 0~1の範囲で指定
 		Vector2 uvMaxSize;		// 0~1の範囲で指定
+	};
+
+	struct SpriteData : public IJsonConverter {
+		// material関連
+		Vector4 color = {1,1,1,1};
+		Vector3 uvScale = CVector3::UNIT;
+		Vector3 uvRotate = CVector3::ZERO;
+		Vector3 uvTranslate = CVector3::ZERO;
+		Vector2 uvMinSize = {0,0};		// 0~1の範囲で指定
+		Vector2 uvMaxSize = {1,1};		// 0~1の範囲で指定
+
+		// baseParam
+		Vector2 scale = {1,1};
+		Vector3 rotate = CVector3::ZERO;
+		Vector3 centerPos = CVector3::ZERO;
+		Vector2 textureSize = { 1,1 };
+		Vector2 drawRange = { 1,1 };
+		Vector2 leftTop = { 0,0 };
+		Vector2 anchorPoint = { 0.5f, 0.5f };
+
+		bool isFlipX = false;	// 左右フリップ
+		bool isFlipY = false;	// 上下フリップ
+
+		bool isBackGround = false;
+		bool isFront = false;
+
+		std::string textureName = "white.png";
+
+		json ToJson(const std::string& id) const override;
+
+		void FromJson(const json& jsonData) override;
 	};
 
 public:
@@ -48,9 +80,11 @@ public:
 	/// 描画
 	/// </summary>
 	/// <param name="commandList"></param>
-	void PostDraw(ID3D12GraphicsCommandList* commandList, const Pipeline* pipeline) const;
+	void PostDraw(ID3D12GraphicsCommandList* commandList,const Pipeline* pipeline) const;
 
 	void Debug_Gui() override;
+
+	void ApplySaveData();
 
 public:
 
@@ -64,7 +98,7 @@ public:
 	/// Textureの中心位置を変える(Screen座標系)
 	/// </summary>
 	/// <param name="centerPos">: position</param>
-	void SetTranslate(const Vector2& centerPos) { transform_->SetTranslate(centerPos); };
+	void SetTranslate(const Vector2& centerPos){ transform_->SetTranslate(centerPos); };
 
 	/// <summary>
 	/// Textureのサイズを再設計する
@@ -73,58 +107,73 @@ public:
 	void ReSetTextureSize(const Vector2& size);
 
 	// 描画する範囲の設定
-	void SetDrawRange(const Vector2& rectRange) { drawRange_ = rectRange; };
+	void SetDrawRange(const Vector2& rectRange){ drawRange_ = rectRange; };
 	// 描画する範囲の設定
-	void SetLeftTop(const Vector2& leftTop) { leftTop_ = leftTop; }
+	void SetLeftTop(const Vector2& leftTop){ leftTop_ = leftTop; }
 	// Pivotの位置を変更する
-	void SetAnchorPoint(const Vector2& point) { anchorPoint_ = point; }
+	void SetAnchorPoint(const Vector2& point){ anchorPoint_ = point; }
 
-	void SetScale(const Vector2 scale) { transform_->SetScale(scale); }
-	void SetRotate(float rotate) { transform_->SetRotate(rotate); }
+	void SetScale(const Vector2 scale){ transform_->SetScale(scale); }
+	void SetRotate(float rotate){ transform_->SetRotate(rotate); }
 
-	void SetColor(const Vector4& color) { materialData_->color = color; };
-	void SetIsFlipX(bool isFlipX) { isFlipX_ = isFlipX; }
-	void SetIsFlipY(bool isFlipY) { isFlipY_ = isFlipY; }
+	const Vector4& GetColor() const{ return materialData_->color; }
+	void SetColor(const Vector4& color){ materialData_->color = color; };
+	void SetIsFlipX(bool isFlipX){ isFlipX_ = isFlipX; }
+	void SetIsFlipY(bool isFlipY){ isFlipY_ = isFlipY; }
 
 	/// <summary>
 	/// UVを直接する
 	/// </summary>
 	/// <param name="range"></param>
-	void SetUvMinSize(const Vector2& range) { materialData_->uvMinSize = range; }
+	void SetUvMinSize(const Vector2& range){ materialData_->uvMinSize = range; }
 
-	void SetUvMaxSize(const Vector2& range) { materialData_->uvMaxSize = range; }
+	void SetUvMaxSize(const Vector2& range){ materialData_->uvMaxSize = range; }
 
-	void FillAmount(float amount, int type);
+	void FillAmount(float amount,int type);
 
-	const Vector2 GetTranslate() const { return transform_->GetTranslate(); }
-	const Vector2 GetScale() const { return transform_->GetScale(); }
-	const float GetRotate() const { return transform_->GetRotate(); }
-	const Vector2 GetTextureSize() const { return textureSize_; }
-	const bool GetIsFlipX() const { return isFlipX_; }
-	const bool GetIsFlipY() const { return isFlipY_; }
+	void SetTextureName(const std::string& _textureName) { textureName_ = _textureName; };
 
-	const bool GetEnable() const { return isEnable_; }
-	void SetEnable(bool _isEnable) { isEnable_ = _isEnable; }
+	const Vector2 GetTranslate() const{ return transform_->GetTranslate(); }
+	const Vector2 GetScale() const{ return transform_->GetScale(); }
+	const float GetRotate() const{ return transform_->GetRotate(); }
+	const Vector2 GetTextureSize() const{ return textureSize_; }
+	const Vector2 GetSpriteSize() const{ return spriteSize_; }
+	const bool GetIsFlipX() const{ return isFlipX_; }
+	const bool GetIsFlipY() const{ return isFlipY_; }
 
-	void SetIsDestroy(bool isDestroy) { isDestroy_ = isDestroy; }
-	bool GetIsDestroy() const { return isDestroy_; }
+	const bool GetEnable() const{ return isEnable_; }
+	void SetEnable(bool _isEnable){ isEnable_ = _isEnable; }
 
-	void SetIsBackGround(bool _isBackGround) { isBackGround_ = _isBackGround; }
-	bool GetIsBackGround() const { return isBackGround_; }
+	void SetIsDestroy(bool isDestroy){ isDestroy_ = isDestroy; }
+	bool GetIsDestroy() const{ return isDestroy_; }
 
-	ScreenTransform* GetTransform() { return transform_.get(); }
-	
+	void SetIsBackGround(bool _isBackGround){ isBackGround_ = _isBackGround; }
+	bool GetIsBackGround() const{ return isBackGround_; }
+
+	void SetIsFront(bool _isFront){ isFront_ = _isFront; }
+
+	ScreenTransform* GetTransform(){ return transform_.get(); }
+
+	void SetTextureResource(DxResource* _resource){ textureResource_ = _resource; }
+
+private:
+
+	void SaveData();
+
 private:
 
 	bool isEnable_;
 	bool isDestroy_;
 	bool isBackGround_;
+	bool isFront_;
+
+	DxResource* textureResource_;
 
 	// 定数バッファ
 	ComPtr<ID3D12Resource> vertexBuffer_;
 	ComPtr<ID3D12Resource> indexBuffer_;
 	ComPtr<ID3D12Resource> materialBuffer_;
-	
+
 	// view
 	D3D12_VERTEX_BUFFER_VIEW vertexBufferView_ = {};
 	D3D12_INDEX_BUFFER_VIEW indexBufferView_ = {};
@@ -133,7 +182,7 @@ private:
 	TextureMesh* vertexData_;
 	uint32_t* indexData_;
 	TextureMaterial* materialData_;
-	
+
 	// Transform情報
 	std::unique_ptr<ScreenTransform> transform_;
 	SRT uvTransform_;
@@ -141,11 +190,11 @@ private:
 	std::string textureName_;
 
 	// 描画する範囲
-	Vector2 drawRange_ = { 0.0f, 0.0f };
+	Vector2 drawRange_ = {0.0f,0.0f};
 	// 左上座標
-	Vector2 leftTop_ = { 0.0f, 0.0f };
-	Vector2 centerPos_; 
-	
+	Vector2 leftTop_ = {0.0f,0.0f};
+	Vector2 centerPos_;
+
 	Vector2 anchorPoint_;
 
 	bool isFlipX_ = false;	// 左右フリップ
@@ -153,4 +202,8 @@ private:
 
 	// Textureのサイズ
 	Vector2 textureSize_;
+	// このspriteのサイズ
+	Vector2 spriteSize_;
+
+	SpriteData spriteData_;
 };

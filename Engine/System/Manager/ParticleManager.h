@@ -50,8 +50,8 @@ public:
 	/// </summary>
 	/// <param name="view">: viewMatrix</param>
 	/// <param name="bill">: billBordMatrix</param>
-	void SetView(const Matrix4x4& view, const Matrix4x4& bill) {
-		particleRenderer_->SetView(view, bill);
+	void SetView(const Matrix4x4& view, const Matrix4x4& viewProj2d, const Matrix4x4& bill) {
+		particleRenderer_->SetView(view, viewProj2d, bill);
 	}
 
 	//void AddParticleList(BaseParticles* particles);

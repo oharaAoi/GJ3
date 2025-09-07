@@ -9,15 +9,15 @@
 /// <summary>
 /// Blockの基底クラス
 /// </summary>
-class IBlock : 
+class IBlock :
 	public BaseEntity2d {
 public:
 
 	IBlock() = default;
 	virtual ~IBlock() = default;
 
-	virtual void Init() = 0;
-	
+	virtual void Init(Canvas2d* _canvas2d) = 0;
+
 	virtual void Update() = 0;
 
 	virtual void Debug_Gui() override = 0;
@@ -28,11 +28,31 @@ public:
 	const Vector2Int& GetIndex()const { return index_; }
 	void SetIndex(const Vector2Int& index) { index_ = index; }
 
+	const Vector2& GetTileSize() const { return tileSize_; }
+	void SetTileSize(const Vector2& size) { tileSize_ = size; }
+
+	const Vector2& GetOffset() const { return offset_; }
+	void SetOffset(const Vector2& offset) { offset_ = offset; }
+
+	const bool GetIsSpecialBlock() const { return isSpecialBlock_; }
+	void SetIsSpecialBlock(const bool flag) { isSpecialBlock_ = flag; }
+
+	const bool GetIsChengeBlock() const { return isChengeBlock_; }
+	void SetIsChengeBlock(const bool flag) { isChengeBlock_ = flag; }
+
 protected:
 
 	BlockType type_ = BlockType::None;
 
 	Vector2Int index_ = { 0,0 };
+
+	Vector2 tileSize_ = { 32.f, 32.f };
+
+	Vector2 offset_ = { 0.f, 0.f };
+
+	bool isSpecialBlock_ = false;
+
+	bool isChengeBlock_ = false;
 
 };
 

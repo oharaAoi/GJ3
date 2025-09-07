@@ -15,9 +15,11 @@ void GaussianBlurWidth::Init() {
 	blurBuffer_->GetResource()->Map(0, nullptr, reinterpret_cast<void**>(&blurSetting_));
 
 	blurSetting_->texelSize = { 1.0f / (float)kWindowWidth_, 1.0f / (float)kWindowHeight_ };
+
 }
 
 void GaussianBlurWidth::SetCommand(ID3D12GraphicsCommandList* commandList, DxResource* pingResource) {
+	CopyData();
 	// blur
 	Engine::SetPipeline(PSOType::ProcessedScene, "PostProcess_GaussianBlurWidth.json");
 	Pipeline* pso = Engine::GetLastUsedPipeline();
@@ -36,5 +38,21 @@ void GaussianBlurWidth::CheckBox() {
 void GaussianBlurWidth::Debug_Gui() {
 	static float sample = 1;
 	ImGui::DragFloat("sampleWide", &sample, 0.1f, 0.0f, 10.0f);
-	blurSetting_->texelSize = { sample / (float)kWindowWidth_, sample / (float)kWindowHeight_ };
+	param_.texelSize = { sample / (float)kWindowWidth_, sample / (float)kWindowHeight_ };
+
+	if (ImGui::Button("Save")) {
+		JsonItems::Save("PostEffect", param_.ToJson(param_.GetName()));
+	}
+	if (ImGui::Button("Apply")) {
+		param_.FromJson(JsonItems::GetData("PostEffect", param_.GetName()));
+	}
+}
+
+void GaussianBlurWidth::ApplySaveData() {
+	param_.FromJson(JsonItems::GetData("PostEffect", param_.GetName()));
+	CopyData();
+}
+
+void GaussianBlurWidth::CopyData() {
+	blurSetting_->texelSize = param_.texelSize;
 }

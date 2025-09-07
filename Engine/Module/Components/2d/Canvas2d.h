@@ -11,6 +11,7 @@ public:
 		std::unique_ptr<Sprite> sprite;
 		std::string psoName;
 		int renderQueue = 0;
+		bool isPreDraw = false;
 	};
 
 public:
@@ -22,17 +23,21 @@ public:
 
 	void Update();
 
+	void PreDraw() const;
+
 	void Draw() const;
 
 	void EditObject(const ImVec2& windowSize, const ImVec2& imagePos);
 
 public:
 
-	Sprite* AddSprite(const std::string& textureName, const std::string& psoName, int renderQueue = 0);
+	Sprite* AddSprite(const std::string& _textureName, const std::string& _attributeName, const std::string& _psoName, int _renderQueue = 0, bool _isPreDraw = false);
+
+	ObjectPair* GetObjectPair(Sprite* _sprite);
 
 private:
 
-	std::list<ObjectPair> spriteList_;
+	std::list<std::unique_ptr<ObjectPair>> spriteList_;
 
 };
 

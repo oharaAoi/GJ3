@@ -60,6 +60,8 @@ public:
 	/// </summary>
 	/// <param name="index"></param>
 	static void AddFreeSrvList(int index);
+	static void AddFreeRtvList(int index);
+	static void AddFreeDsvList(int index);
 
 public:
 
@@ -115,4 +117,6 @@ private:
 	int32_t useRtvIndex_;
 
 	static std::list<int> freeSrvList_;
+	static std::list<int> freeDsvList_;
+	static std::list<int> freeRtvList_;
 };

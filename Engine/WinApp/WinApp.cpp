@@ -67,7 +67,7 @@ void WinApp::CreateGameWindow(){
 	// windowの生成 ---------------------------------------------
 	hwnd_ = CreateWindow(
 		wc.lpszClassName,		// 利用するクラス名
-		ConvertWString(kTitleBar.c_str()).c_str(),// タイトルバーの文字
+		kTitleBar.c_str(),// タイトルバーの文字
 		WS_OVERLAPPEDWINDOW,	// よく見るウィンドウスタイル
 		CW_USEDEFAULT,			// 表示x座標
 		CW_USEDEFAULT,			// 表示y座標

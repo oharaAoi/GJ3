@@ -17,6 +17,8 @@ public:
 
 	void Update();
 
+	void DrawShape();
+
 	void Emit(const Vector3& pos);
 
 	void EmitUpdate();

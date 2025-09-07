@@ -68,7 +68,6 @@ void Input::Update() {
 	std::memcpy(preKey_, key_, sizeof(key_));
 	preMouse_ = currentMouse_;
 
-	ZeroMemory(key_, sizeof(key_));
 	// 全キーの入力状況を取得
 	HRESULT hr = keyboard_->GetDeviceState(sizeof(key_), key_);
 	if (FAILED(hr)) {

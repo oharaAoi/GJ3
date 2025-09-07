@@ -17,6 +17,8 @@ void Grayscale::Init() {
 }
 
 void Grayscale::SetCommand(ID3D12GraphicsCommandList* commandList, DxResource* pingResource) {
+	CopyData();
+
 	Engine::SetPipeline(PSOType::ProcessedScene, "PostProcess_Grayscale.json");
 	Pipeline* pso = Engine::GetLastUsedPipeline();
 	UINT index = pso->GetRootSignatureIndex("gTexture");
@@ -32,6 +34,24 @@ void Grayscale::CheckBox() {
 
 void Grayscale::Debug_Gui() {
 	if (ImGui::CollapsingHeader("GrayScale##Grayscale_Header")) {
-		ImGui::ColorEdit4("color", &setting_->color.x);
+		ImGui::ColorEdit4("color", &param_.color.x);
+
+		if (ImGui::Button("Save")) {
+			param_.isEnable = isEnable_;
+			JsonItems::Save("PostEffect", param_.ToJson(param_.GetName()));
+		}
+		if (ImGui::Button("Apply")) {
+			param_.FromJson(JsonItems::GetData("PostEffect", param_.GetName()));
+		}
 	}
+}
+
+void Grayscale::ApplySaveData() {
+	param_.FromJson(JsonItems::GetData("PostEffect", param_.GetName()));
+	isEnable_ = param_.isEnable;
+	CopyData();
+}
+
+void Grayscale::CopyData() {
+	setting_->color = param_.color;
 }

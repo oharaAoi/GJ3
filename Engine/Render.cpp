@@ -226,6 +226,10 @@ Matrix4x4 Render::GetViewProjectionMat() {
 	return viewProjection_->GetViewMatrix() * viewProjection_->GetProjectionMatrix();
 }
 
+Matrix4x4 Render::GetViewProjectionMat2D() {
+	return viewProjection2D_->GetViewMatrix() * viewProjection2D_->GetViewProjection();
+}
+
 float Render::GetNearClip() {
 	return nearClip_;
 }

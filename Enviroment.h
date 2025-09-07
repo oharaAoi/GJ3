@@ -4,4 +4,4 @@
 static const int kWindowWidth_ = 1280;
 static const int kWindowHeight_ = 720;
 
-static const std::string kTitleBar = "LE3A_06_オオハラ_アオイ";
+static const std::wstring kTitleBar = L"LE3A_06_オオハラ_アオイ";

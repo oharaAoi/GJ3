@@ -82,3 +82,4 @@ std::vector<std::unique_ptr<SkinCluster>> LoadSkinCluster(const std::string& dir
 
 const char* GetFileExtension(const char* filename);
 std::string RemoveExtension(const std::string& filename);
+std::string GetBaseName(const std::string& filename);

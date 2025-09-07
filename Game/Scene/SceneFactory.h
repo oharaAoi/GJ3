@@ -38,6 +38,8 @@ private:
 	{SceneType::TITLE, "TITLE"},
 	{SceneType::GAME, "GAME"},
 	{SceneType::TEST, "TEST"},
+	{SceneType::STAGE_SELECT, "STAGE_SELECT"},
+	{SceneType::CLEAR, "CLEAR"},
 	};
 
 };

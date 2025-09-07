@@ -4,7 +4,8 @@
 /// <summary>
 /// 背景
 /// </summary>
-class BackGround {
+class BackGround :
+	public AttributeGui {
 public:
 
 	BackGround() = default;
@@ -13,6 +14,10 @@ public:
 	void Init();
 
 	void Update();
+
+	void Debug_Gui() override;
+
+	void SetTexture(const std::string name) { sprite_->ReSetTexture(name); }
 
 private:
 

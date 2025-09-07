@@ -3,6 +3,7 @@
 #include "Engine/Core/GraphicsContext.h"
 
 ShadowMap::~ShadowMap() {
+	depthStencilResource_->Finalize();
 }
 
 void ShadowMap::Init() {
@@ -10,17 +11,14 @@ void ShadowMap::Init() {
 	ID3D12Device* device = ctx->GetDevice();
 	DescriptorHeap* descriptorHeap = ctx->GetDxHeap();
 
-	depthStencilResource_ = std::make_unique<DxResource>();
-	depthStencilResource_->Init(device, descriptorHeap, ResourceType::DEPTH);
-	depthStencilResource_->CreateDepthResource(kWindowWidth_, kWindowHeight_);
-
 	// heap上にDSCを構築
 	D3D12_DEPTH_STENCIL_VIEW_DESC desc{};
 	desc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
 	desc.ViewDimension = D3D12_DSV_DIMENSION_TEXTURE2D;
 
-	depthDsvHandle_ = descriptorHeap->AllocateDSV();
-	device->CreateDepthStencilView(depthStencilResource_->GetResource(), &desc, depthDsvHandle_.handleCPU);
+	depthStencilResource_ = std::make_unique<DxResource>();
+	depthStencilResource_->Init(device, descriptorHeap, ResourceType::DEPTH);
+	depthStencilResource_->CreateDepthResource(kWindowWidth_, kWindowHeight_, desc);
 
 	depthSrvHandle_ = descriptorHeap->AllocateSRV();
 	D3D12_SHADER_RESOURCE_VIEW_DESC depthSrvDesc{};
@@ -34,7 +32,7 @@ void ShadowMap::Init() {
 void ShadowMap::SetCommand() {
 	std::vector<RenderTargetType> types;
 	types.push_back(RenderTargetType::ShadowMap_RenderTarget);
-	Render::SetRenderTarget(types, depthDsvHandle_);
+	Render::SetRenderTarget(types, depthStencilResource_->GetDSV());
 }
 
 void ShadowMap::ChangeResource(ID3D12GraphicsCommandList* commandList) {

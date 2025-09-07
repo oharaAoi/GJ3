@@ -13,6 +13,8 @@
 #include "Engine/Module/PostEffect/LuminanceBasedOutline.h"
 #include "Engine/Module/PostEffect/DepthBasedOutline.h"
 #include "Engine/Module/PostEffect/MotionBlur.h"
+#include "Engine/Module/PostEffect/DistortionEffect.h"
+#include "Engine/Module/PostEffect/ScreenGotRay.h"
 
 #include "Engine/Module/PostEffect/PingPongBuffer.h"
 #include "Engine/Module/Components/Attribute/AttributeGui.h"
@@ -32,6 +34,8 @@ enum class PostEffectType {
 	LUMINANCE_OUTLINE,
 	DEPTH_OUTLINE,
 	MOTIONBLUR,
+	DISTORTION,
+	GOTRAY,
 };
 
 /// <summary>
@@ -81,6 +85,15 @@ public:
 	std::shared_ptr<GlitchNoise> GetGlitchNoise() { return glitchNoise_; }
 	std::shared_ptr<Vignette> GetVignette() { return vignette_; }
 	std::shared_ptr<Dissolve> GetDissolve() { return dissolve_; }
+	std::shared_ptr<ToonMap> GetToonMap() { return toonMap_; }
+	std::shared_ptr<Bloom> GetBloom() { return bloom_; }
+	std::shared_ptr<Smoothing> GetSmoothing() { return smoothing_; }
+	std::shared_ptr<GaussianFilter> GetGaussianFilter() { return gaussianFilter_; }
+	std::shared_ptr<LuminanceBasedOutline> GetLuminance() { return luminanceOutline_; }
+	std::shared_ptr<DepthBasedOutline> GetDepthOutline() { return depthOutline_; }
+	std::shared_ptr<MotionBlur> GetMotionBlur() { return motionBlur_; }
+	std::shared_ptr<DistortionEffect> GetDistortionEffect() { return distortion_; }
+	std::shared_ptr<ScreenGotRay> GetGotRay() { return gotRay_; }
 
 private:
 
@@ -101,6 +114,8 @@ private:
 	std::shared_ptr<LuminanceBasedOutline> luminanceOutline_;
 	std::shared_ptr<DepthBasedOutline> depthOutline_;
 	std::shared_ptr<MotionBlur> motionBlur_;
+	std::shared_ptr<DistortionEffect> distortion_;
+	std::shared_ptr<ScreenGotRay> gotRay_;
 
 	std::list<std::shared_ptr<IPostEffect>> effectList_;
 	std::list<PostEffectType> addEffectList_;

@@ -14,7 +14,7 @@ void DxResource::Finalize() {
 		DescriptorHeap::AddFreeSrvList(uavAddress_.value().assignIndex_);
 	}
 	if (rtvAddress_ != std::nullopt) {
-		DescriptorHeap::AddFreeSrvList(rtvAddress_.value().assignIndex_);
+		DescriptorHeap::AddFreeRtvList(rtvAddress_.value().assignIndex_);
 	}
 }
 
@@ -53,8 +53,10 @@ void DxResource::CreateResource(D3D12_RESOURCE_DESC* resourceDesc, D3D12_HEAP_PR
 	bufferState_ = resourceState;
 }
 
-void DxResource::CreateDepthResource(uint32_t width, uint32_t height) {
+void DxResource::CreateDepthResource(uint32_t width, uint32_t height, const D3D12_DEPTH_STENCIL_VIEW_DESC& desc) {
 	cBuffer_ = CreateDepthStencilTextureResource(pDevice_, width, height);
+	dsvAddress_ = pDxHeap_->AllocateDSV();
+	pDevice_->CreateDepthStencilView(cBuffer_.Get(), &desc, dsvAddress_.value().handleCPU);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -80,7 +82,7 @@ void DxResource::CreateUAV(const D3D12_UNORDERED_ACCESS_VIEW_DESC& desc) {
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
 void DxResource::CreateRTV(const D3D12_RENDER_TARGET_VIEW_DESC& desc) {
-	rtvAddress_ = pDxHeap_->GetDescriptorHandle(TYPE_RTV);
+	rtvAddress_ = pDxHeap_->AllocateRTV();
 	pDevice_->CreateRenderTargetView(cBuffer_.Get(), &desc, rtvAddress_.value().handleCPU);
 }
 
@@ -103,7 +105,8 @@ void DxResource::Transition(ID3D12GraphicsCommandList* commandList, const D3D12_
 		Logger::Log("now : " + ResourceStateToString(bufferState_) + "\n");
 		Logger::Log("target : " + ResourceStateToString(befor) + "\n");
 		Logger::Log("ResourceState MissMatch\n");
-		assert("ResourceState MissMatch");
+		//assert("ResourceState MissMatch");
+		return;
 	}
 	TransitionResourceState(commandList, cBuffer_.Get(), befor, after);
 	bufferState_ = after;
@@ -139,4 +142,11 @@ const DescriptorHandles& DxResource::GetRTV() const {
 		assert("not Setting RTV");
 	}
 	return rtvAddress_.value();
+}
+
+const DescriptorHandles& DxResource::GetDSV() const {
+	if (dsvAddress_ == std::nullopt) {
+		assert("not Setting DSV");
+	}
+	return dsvAddress_.value();
 }

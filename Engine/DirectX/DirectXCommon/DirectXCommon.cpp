@@ -56,7 +56,7 @@ void DirectXCommon::Begin() {
 void DirectXCommon::SetSwapChain() {
 	UINT backBufferIndex = swapChain_->GetCurrentBackBufferIndex();
 	ID3D12GraphicsCommandList* commandList = dxCommands_->GetCommandList();
-	commandList->OMSetRenderTargets(1, &renderTarget_->GetSwapChainHandle(backBufferIndex).handleCPU, false, &depthHandle_.handleCPU);
+	commandList->OMSetRenderTargets(1, &renderTarget_->GetSwapChainHandle(backBufferIndex).handleCPU, false, &depthStencilResource_->GetDSV().handleCPU);
 	float clearColor[] = { 0.1f, 0.25f, 0.5f, 1.0f };
 	// RenderTargetはoffScreen用のRenderTargetを指定しておく
 	commandList->ClearRenderTargetView(renderTarget_->GetSwapChainHandle(backBufferIndex).handleCPU, clearColor, 0, nullptr);
@@ -245,17 +245,14 @@ void DirectXCommon::SetViewport() {
 }
 
 void DirectXCommon::CreateDSV() {
-	depthStencilResource_ = std::make_unique<DxResource>();
-	depthStencilResource_->Init(device_, descriptorHeaps_, ResourceType::DEPTH); 
-	depthStencilResource_->CreateDepthResource(kClientWidth_, kClientHeight_);
-
 	// heap上にDSCを構築
 	D3D12_DEPTH_STENCIL_VIEW_DESC desc{};
 	desc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
 	desc.ViewDimension = D3D12_DSV_DIMENSION_TEXTURE2D;
 
-	depthHandle_ = descriptorHeaps_->AllocateDSV();
-	device_->CreateDepthStencilView(depthStencilResource_->GetResource(), &desc, depthHandle_.handleCPU);
+	depthStencilResource_ = std::make_unique<DxResource>();
+	depthStencilResource_->Init(device_, descriptorHeaps_, ResourceType::DEPTH); 
+	depthStencilResource_->CreateDepthResource(kClientWidth_, kClientHeight_, desc);
 }
 
 D3D12_GPU_DESCRIPTOR_HANDLE DirectXCommon::GetBackBufferGpuHandle() {

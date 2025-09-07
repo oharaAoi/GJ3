@@ -5,6 +5,7 @@
 #include "Engine/System/Manager/ParticleManager.h"
 #include "Engine/System/Manager/GpuParticleManager.h"
 #include "Engine/Module/Components/GameObject/ISceneObject.h"
+#include "Engine/Module/Components/2d/Canvas2d.h"
 #include "Engine/System/Scene/SceneLoader.h"
 #include "Engine/Utilities/Logger.h"
 
@@ -160,6 +161,8 @@ private:
 	std::list<std::unique_ptr<IObjectPair>> objectList_;
 	std::list<IObjectPair*> postDrawObjectList_;
 	std::list<std::unique_ptr<IObjectPair>> spriteObjectList_;
+
+	std::unique_ptr<Canvas2d> canvas2d_;
 
 	ParticleManager* particleManager_;
 	GpuParticleManager* gpuParticleManager_;

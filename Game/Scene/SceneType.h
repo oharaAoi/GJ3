@@ -5,6 +5,8 @@ enum class SceneType {
 	GAME,
 	GAMEOVER,
 	TEST,
+	STAGE_SELECT,
+	CLEAR
 };
 
-static const char* kSceneTypeNames[] = { "TITLE", "GAME", "GAMEOVER", "TEST" };
+static const char* kSceneTypeNames[] = { "TITLE", "GAME", "GAMEOVER", "TEST","STAGE_SELECT","CLEAR"};

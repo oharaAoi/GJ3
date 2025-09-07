@@ -19,6 +19,8 @@ void Vignette::Init() {
 }
 
 void Vignette::SetCommand(ID3D12GraphicsCommandList* commandList, DxResource* pingResource) {
+	CopyData();
+
 	Engine::SetPipeline(PSOType::ProcessedScene, "PostProcess_Vignette.json");
 	Pipeline* pso = Engine::GetLastUsedPipeline();
 	UINT index = pso->GetRootSignatureIndex("gTexture");
@@ -34,11 +36,31 @@ void Vignette::CheckBox() {
 
 void Vignette::Debug_Gui() {
 	if (ImGui::CollapsingHeader("Vignette")) {
-		ImGui::ColorEdit4("color", &setting_->color.x);
-		ImGui::DragFloat("scale", &setting_->scale, 0.1f);
-		ImGui::DragFloat("power", &setting_->power, 0.01f);
+		ImGui::ColorEdit4("color", &param_.color.x);
+		ImGui::DragFloat("scale", &param_.scale, 0.1f);
+		ImGui::DragFloat("power", &param_.power, 0.01f);
 
-		setting_->scale = std::clamp(setting_->scale, 0.0f, 20.0f);
-		setting_->power = std::clamp(setting_->power, 0.0f, 1.0f);
+		param_.scale = std::clamp(param_.scale, 0.0f, 20.0f);
+		param_.power = std::clamp(param_.power, 0.0f, 1.0f);
+
+		if (ImGui::Button("Save")) {
+			param_.isEnable = isEnable_;
+			JsonItems::Save("PostEffect", param_.ToJson(param_.GetName()));
+		}
+		if (ImGui::Button("Apply")) {
+			param_.FromJson(JsonItems::GetData("PostEffect", param_.GetName()));
+		}
 	}
+}
+
+void Vignette::ApplySaveData() {
+	param_.FromJson(JsonItems::GetData("PostEffect", param_.GetName()));
+	isEnable_ = param_.isEnable;
+	CopyData();
+}
+
+void Vignette::CopyData() {
+	setting_->color = param_.color;
+	setting_->scale = param_.scale;
+	setting_->power = param_.power;
 }

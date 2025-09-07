@@ -2,24 +2,34 @@
 #include "Engine.h"
 #include "Engine/Lib/Json/JsonItems.h"
 #include "Game/Commands/ObjectCommandInvoker.h"
+#include "Game/Input/StageInputHandler.h"
 
-GameScene::GameScene() {}
-GameScene::~GameScene() { Finalize(); }
+#include "Game/UI/StageSelector.h"
 
-void GameScene::Finalize()
-{
+std::optional<GameScene::Result> GameScene::s_lastResult_ = std::nullopt;
+
+const std::optional<GameScene::Result>& GameScene::LastResult() {
+	return s_lastResult_;
+}
+void GameScene::ClearLastResult() {
+	s_lastResult_.reset();
+}
+
+GameScene::GameScene(){}
+GameScene::~GameScene(){ Finalize(); }
+
+void GameScene::Finalize(){
 	sceneRenderer_->Finalize();
+	ParticleManager::GetInstance()->Finalize();
+	GpuParticleManager::GetInstance()->Finalize();
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 // ↓　初期化
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
-void GameScene::Init()
-{
-	Engine::GetCanvas2d()->Init();
-
-	JsonItems *adjust = JsonItems::GetInstance();
+void GameScene::Init(){
+	JsonItems* adjust = JsonItems::GetInstance();
 	adjust->Init("GameScene");
 
 	// -------------------------------------------------
@@ -29,9 +39,6 @@ void GameScene::Init()
 	sceneRenderer_ = SceneRenderer::GetInstance();
 	sceneRenderer_->Init();
 	EditorWindows::GetInstance()->SetSceneRenderer(sceneRenderer_);
-
-	skybox_ = SceneRenderer::GetInstance()->AddObject<Skybox>("Skybox", "Object_Skybox.json", -999);
-	Render::SetSkyboxTexture(skybox_->GetTexture());
 
 	// -------------------------------------------------
 	// ↓ cameraの初期化
@@ -48,15 +55,33 @@ void GameScene::Init()
 	// ↓ actorの初期化
 	// -------------------------------------------------
 
-	stageRegistry_ = std::make_unique<StageRegistry>();
-	stageRegistry_->Init();
-	stageRegistry_->Register("stage_0.json");
-
 	player_ = std::make_unique<Player>();
-	player_->Init();
+	player_->Init(Engine::GetCanvas2d());
+
+	ghostSoulManager_ = std::make_unique<GhostSoulManager>();
+	ghostSoulManager_->Init(Engine::GetCanvas2d(), player_.get());
+
+	stageRegistry_ = std::make_unique<StageRegistry>();
+	stageRegistry_->Init(Engine::GetCanvas2d());
+	stageRegistry_->SetPlayer(player_.get());
+	stageRegistry_->SetWindowSize({kWindowWidth_,kWindowHeight_});
+	std::string loadName = "stage_" + std::to_string(StageSelector::GetCurrentStageIndex()) + ".json";
+	stageRegistry_->Register(loadName);
+
+	mapCollision_ = std::make_unique<MapCollisionSystem>();
+	mapCollision_->Init(stageRegistry_.get(), ghostSoulManager_.get());
 
 	worldObjects_ = std::make_unique<WorldObjects>();
 	worldObjects_->Init();
+
+	menuSelector_ = std::make_unique<MenuSelector>();
+	menuSelector_->Init();
+
+	getGhostCountUI_ = std::make_unique<GetGhostCountUI>();
+	getGhostCountUI_->Init(Engine::GetCanvas2d());
+
+	stageResetUI_ = std::make_unique<StageResetUI>();
+	stageResetUI_->Init(Engine::GetCanvas2d());
 
 	// -------------------------------------------------
 	// ↓ managerの初期化
@@ -65,29 +90,105 @@ void GameScene::Init()
 
 	// -------------------------------------------------
 	// ↓ spriteの初期化
+	// ------------------------------------------------
+
+	orb_ = ParticleManager::GetInstance()->CrateParticle("orb");
+	orb_->Reset();
+
+	dust_ = ParticleManager::GetInstance()->CrateParticle("dust");
+	dust_->Reset();
+
 	// -------------------------------------------------
+	// ↓ audioの初期化
+	// ------------------------------------------------
+
+	bgm_ = std::make_unique<AudioPlayer>();
+	bgm_->Init("kinmokusei.mp3");
+	bgm_->Play(true, 0.5f);
 
 	// -------------------------------------------------
 	// ↓ その他設定
 	// -------------------------------------------------
+	player_->SetTileSize(stageRegistry_->GetTileSize());
+	player_->GetSprite()->ReSetTextureSize(stageRegistry_->GetTileSize());
+	player_->SetIndex(stageRegistry_->GetStartIndex());
+	player_->SetPosition(stageRegistry_->GetStartPos());
+	player_->SetOffset(stageRegistry_->GetMapOffset());
+	player_->SetMapCollision(mapCollision_.get());
+
+	resetTimer_ = 0.f;
+	isClearConditionMet_ = false;
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 // ↓　更新
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
-void GameScene::Update()
-{
+void GameScene::Update(){
 
 	// -------------------------------------------------
 	// ↓ actorの更新
 	// -------------------------------------------------
-	player_->Update();
-	ObjectCommandInvoker::GetInstance().Update();
+
+	menuSelector_->Update();
+	ChengeScene();
+	// メニューを開いていなければ更新
+	if (!menuSelector_->GetOpenMenu()) {
+		player_->Update();
+	}
+
 	worldObjects_->Update();
 
 	stageRegistry_->Update();
-	
+
+	mapCollision_->Update();
+
+	ghostSoulManager_->Update();
+
+	stageResetUI_->Update();
+
+	if(StageInputHandler::UndoInput()){
+		ObjectCommandInvoker::GetInstance().UndoCommand();
+		resetTimer_ = 0.f;
+		AudioPlayer::SinglShotPlay("osii.mp3", 0.5f);
+	} else if(StageInputHandler::RedoInput()){
+		resetTimer_ = 0.f;
+		ObjectCommandInvoker::GetInstance().RedoCommand();
+		AudioPlayer::SinglShotPlay("osii.mp3", 0.5f);
+	} else if(stageResetUI_->GetStageReset()){
+		stageRegistry_->ResetStage();
+		mapCollision_->ResetGhostCounter();
+		ObjectCommandInvoker::GetInstance().ClearHistory();
+		AudioPlayer::SinglShotPlay("osii.mp3", 0.5f);
+		stageResetUI_->Reset();
+		size_t size = ghostSoulManager_->GetSoulesSize();
+		for (size_t i = 0; i < size; ++i) {
+			ghostSoulManager_->DeleteBackSoul();
+		}
+	} else{
+		// 特殊操作がないなら
+		ObjectCommandInvoker::GetInstance().Update();
+	}
+
+	getGhostCountUI_->Update(mapCollision_->GetGhostCounter(), stageRegistry_->GetNeedGhostNum());
+
+	// クリア条件を満たしているかの判定
+	if (!isClearConditionMet_) {
+		if (stageRegistry_->GetNeedGhostNum() == mapCollision_->GetGhostCounter()) {
+			AudioPlayer::SinglShotPlay("doragon.mp3", 0.5f);
+			isClearConditionMet_ = true;
+		}
+	}
+
+	// ステージをクリアしたかどうかの判定
+	if (mapCollision_->GetIsClear()) {
+		GameScene::Result r;
+		r.ghostCount = mapCollision_->GetGhostCounter();
+		GameScene::s_lastResult_ = r;
+		AudioPlayer::SinglShotPlay("fanfare.wav", 0.5f);
+		nextSceneType_ = SceneType::CLEAR;
+	}
+
 	// -------------------------------------------------
 	// ↓ spriteの更新
 	// -------------------------------------------------
@@ -95,12 +196,9 @@ void GameScene::Update()
 	// -------------------------------------------------
 	// ↓ cameraの更新
 	// -------------------------------------------------
-	if (debugCamera_->GetIsActive())
-	{
+	if(debugCamera_->GetIsActive()){
 		debugCamera_->Update();
-	}
-	else
-	{
+	} else{
 		camera3d_->Update();
 	}
 	camera2d_->Update();
@@ -109,10 +207,6 @@ void GameScene::Update()
 	// ↓ sceneの更新
 	// -------------------------------------------------
 	sceneRenderer_->Update();
-
-	// -------------------------------------------------
-	// ↓ あたり判定
-	// -------------------------------------------------
 
 	// -------------------------------------------------
 	// ↓ 最後に行いたい更新
@@ -125,8 +219,29 @@ void GameScene::Update()
 // ↓　描画
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
-void GameScene::Draw() const
-{
+void GameScene::Draw() const{
 	// Sceneの描画
 	sceneRenderer_->Draw();
+}
+
+void GameScene::ChengeScene()
+{
+	if (menuSelector_->GetChengeScene()) {
+		const auto type = menuSelector_->GetButtonType();
+		switch (type)
+		{
+		case ButtonType::Select:
+			// セレクトに戻る
+			nextSceneType_ = SceneType::STAGE_SELECT;
+			menuSelector_->SetChengeScene(false);
+			break;
+		case ButtonType::Reset :
+			// ステージをリセットする
+			stageRegistry_->ResetStage();
+			menuSelector_->SetChengeScene(false);
+			break;
+		default:
+			break;
+		}
+	}
 }

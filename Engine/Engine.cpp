@@ -68,13 +68,9 @@ void Engine::Initialize(uint32_t backBufferWidth, int32_t backBufferHeight) {
 	GeometryFactory& geometryFactory = GeometryFactory::GetInstance();
 	geometryFactory.Init();
 
-	canvas2d_ = std::make_unique<Canvas2d>();
-	canvas2d_->Init();
-
 #ifdef _DEBUG
 	editorWindows_->Init(dxDevice_, dxCmdList_, renderTarget_, dxHeap_);
 	editorWindows_->SetProcessedSceneFrame(processedSceneFrame_.get());
-	editorWindows_->SetCanvas2d(canvas2d_.get());
 	editorWindows_->SetRenderTarget(renderTarget_);
 
 	imguiManager_ = ImGuiManager::GetInstacne();
@@ -110,7 +106,6 @@ void Engine::Initialize(uint32_t backBufferWidth, int32_t backBufferHeight) {
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
 void Engine::Finalize() {
-	canvas2d_.reset();
 	blendTexture_.reset();
 	postProcess_->Finalize();
 	audio_->Finalize();
@@ -183,6 +178,7 @@ void Engine::EndFrame() {
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
 void Engine::RenderFrame() {
+
 	// -------------------------------------------------
 	// ↓ 線の描画
 	// -------------------------------------------------
@@ -213,6 +209,7 @@ void Engine::RenderFrame() {
 	std::vector<RenderTargetType> postRenderTypes;
 	postRenderTypes.push_back(RenderTargetType::Object3D_RenderTarget);
 	Render::SetRenderTarget(postRenderTypes, dxCommon_->GetDepthHandle());
+	Engine::SetPipeline(PSOType::ProcessedScene, "PostProcess_Normal_16.json");
 	processedSceneFrame_->Draw(dxCmdList_);
 	SceneRenderer::GetInstance()->PostDraw();
 	BlendFinalTexture(Object3D_RenderTarget);
@@ -220,14 +217,13 @@ void Engine::RenderFrame() {
 	// -------------------------------------------------
 	// ↓ Sprite描画
 	// -------------------------------------------------
-	canvas2d_->Update();
 
 	std::vector<RenderTargetType> types;
 	types.push_back(RenderTargetType::Sprite2d_RenderTarget);
 	Render::SetRenderTarget(types, dxCommon_->GetDepthHandle());
 	Engine::SetPipeline(PSOType::ProcessedScene, "PostProcess_Normal.json");
 	processedSceneFrame_->Draw(dxCmdList_);
-	canvas2d_->Draw();
+	pCanvas2d_->Draw();
 
 	BlendFinalTexture(Sprite2d_RenderTarget);
 
@@ -364,7 +360,12 @@ void Engine::SetPipelineCS(const std::string& jsonFile) {
 }
 
 Canvas2d* Engine::GetCanvas2d() {
-	return canvas2d_.get();
+	return pCanvas2d_;
+}
+
+void Engine::SetCanvas2d(Canvas2d* _canvas) {
+	pCanvas2d_ = _canvas;
+	editorWindows_->SetCanvas2d(pCanvas2d_);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////

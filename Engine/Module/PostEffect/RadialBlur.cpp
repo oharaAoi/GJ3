@@ -42,6 +42,8 @@ void RadialBlur::SetCommand(ID3D12GraphicsCommandList* commandList, DxResource* 
 		}
 	}
 
+	CopyData();
+
 	Engine::SetPipeline(PSOType::ProcessedScene, "PostProcess_RadialBlur.json");
 	Pipeline* pso = Engine::GetLastUsedPipeline();
 	UINT index = pso->GetRootSignatureIndex("gTexture");
@@ -78,6 +80,27 @@ void RadialBlur::Debug_Gui() {
 		ImGui::DragFloat("blurStart", &setting_->blurStart, 0.1f, 0.0f, 1.0f);
 		ImGui::DragInt("sampleCount", &setting_->sampleCount, 1, 1, 20);
 
-		setting_->blurCenter.Clamp(CVector2::ZERO, CVector2::UNIT);
+		param_.blurCenter.Clamp(CVector2::ZERO, CVector2::UNIT);
+
+		if (ImGui::Button("Save")) {
+			param_.isEnable = isEnable_;
+			JsonItems::Save("PostEffect", param_.ToJson(param_.GetName()));
+		}
+		if (ImGui::Button("Apply")) {
+			param_.FromJson(JsonItems::GetData("PostEffect", param_.GetName()));
+		}
 	}
+}
+
+void RadialBlur::ApplySaveData() {
+	param_.FromJson(JsonItems::GetData("PostEffect", param_.GetName()));
+	isEnable_ = param_.isEnable;
+	CopyData();
+}
+
+void RadialBlur::CopyData() {
+	setting_->blurCenter = param_.blurCenter;
+	setting_->blurStrength = param_.blurStrength;
+	setting_->blurStart = param_.blurStart;
+	setting_->sampleCount = param_.sampleCount;
 }

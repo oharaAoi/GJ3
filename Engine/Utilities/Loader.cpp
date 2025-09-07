@@ -49,7 +49,7 @@ std::vector<std::shared_ptr<Mesh>> LoadMesh(const std::string& directoryPath, co
 		for (uint32_t vertexIndex = 0; vertexIndex < mesh->mNumVertices; ++vertexIndex) {
 			aiVector3D& position = mesh->mVertices[vertexIndex];
 			vertices[vertexIndex].pos = { position.x, position.y, position.z, 1.0f };
-			
+
 			// normal
 			if (mesh->mNormals) {
 				aiVector3D& normal = mesh->mNormals[vertexIndex];
@@ -123,7 +123,7 @@ std::vector<std::shared_ptr<Mesh>> LoadMesh(const std::string& directoryPath, co
 	}
 
 	std::vector<std::shared_ptr<Mesh>> result;
-	
+
 	result = MeshManager::GetInstance()->GetMeshes(fileName);
 	uint32_t index = 0;
 	if (!useMaterial.empty()) {
@@ -211,7 +211,7 @@ std::unordered_map<std::string, ModelMaterialData> LoadMaterialData(const std::s
 		materialData[materialName.C_Str()] = ModelMaterialData();
 		if (material->GetTextureCount(aiTextureType_DIFFUSE) != 0) {
 			aiString textureFilePath;
-			material->GetTexture(aiTextureType_DIFFUSE, 0, &textureFilePath);			
+			material->GetTexture(aiTextureType_DIFFUSE, 0, &textureFilePath);
 			std::string objTexture = textureFilePath.C_Str();
 			materialData[materialName.C_Str()].textureFilePath = objTexture;
 			TextureManager::GetInstance()->StackTexture(directoryPath, objTexture);
@@ -254,7 +254,7 @@ void LoadMtl(const std::string& directoryPath, const std::string& fileName, Vect
 			materials.push_back(materialName);
 
 		} else if (materialIdentifier == "map_Kd") {
-			
+
 			// テクスチャのスケーリングオプションを処理
 			std::string scalingOption;
 			if (s >> scalingOption && scalingOption == "-s") {
@@ -269,29 +269,29 @@ void LoadMtl(const std::string& directoryPath, const std::string& fileName, Vect
 			// アルベド色を読み取る(環境反射率)
 			Vector4 color;
 			s >> color.x >> color.y >> color.z;
-			
+
 		} else if (materialIdentifier == "Kd") {
 			// ディフューズ色を読み取る(拡散反射率)
 			Vector4 color;
 			s >> color.x >> color.y >> color.z;
-			
+
 		} else if (materialIdentifier == "Ks") {
 			// スペキュラ色(鏡面反射率)
 			Vector4 color;
 			s >> color.x >> color.y >> color.z;
-			
+
 
 		} else if (materialIdentifier == "Ke") {
 			// 自己発光
 			Vector4 color;
 			s >> color.x >> color.y >> color.z;
-			
+
 
 		} else if (materialIdentifier == "Ni") {
 			// 屈折率
 			float refraction;
 			s >> refraction;
-			
+
 
 		} else if (materialIdentifier == "Ns") {
 			// shininess(鏡面反射の鋭さ)
@@ -307,7 +307,7 @@ Model::Node LoadNode(const std::string& directoryPath, const std::string& fileNa
 	Assimp::Importer importer;
 	std::string filePath = directoryPath + fileName;
 	const aiScene* scene = importer.ReadFile(filePath.c_str(), aiProcess_FlipWindingOrder | aiProcess_FlipUVs | aiProcess_Triangulate | aiProcess_CalcTangentSpace);
-	
+
 	Model::Node result;
 	result = ReadNode(scene->mRootNode, scene);
 
@@ -367,7 +367,7 @@ std::unordered_map<std::string, Animation> LoadAnimation(const std::string direc
 		animationData.duration = float(animationAssimp->mDuration / animationAssimp->mTicksPerSecond);	// 時間の単位を秒に変換
 		animationData.animationName = animationName;													// animatonの名前を取得
 
-		
+
 		// -------------------------------------------------
 		// ↓ アニメーションの解析
 		// -------------------------------------------------
@@ -379,7 +379,7 @@ std::unordered_map<std::string, Animation> LoadAnimation(const std::string direc
 			// -------------------------------------------------
 			// ↓ Vector3の読み込み
 			// -------------------------------------------------
-			
+
 			for (uint32_t keyIndex = 0; keyIndex < nodeAnimationAssimp->mNumPositionKeys; ++keyIndex) {
 				aiVectorKey& keyAssimp = nodeAnimationAssimp->mPositionKeys[keyIndex];
 				KeyframeVector3 keyframe{};
@@ -402,7 +402,7 @@ std::unordered_map<std::string, Animation> LoadAnimation(const std::string direc
 			// -------------------------------------------------
 			// ↓ Quaternionの読み込み
 			// -------------------------------------------------
-			
+
 			for (uint32_t keyIndex = 0; keyIndex < nodeAnimationAssimp->mNumRotationKeys; ++keyIndex) {
 
 				aiQuatKey& keyAssimp = nodeAnimationAssimp->mRotationKeys[keyIndex];
@@ -423,7 +423,7 @@ std::unordered_map<std::string, Animation> LoadAnimation(const std::string direc
 			// -------------------------------------------------
 			// ↓ Scaleの読み込み
 			// -------------------------------------------------
-			
+
 			for (uint32_t keyIndex = 0; keyIndex < nodeAnimationAssimp->mNumScalingKeys; ++keyIndex) {
 				aiVectorKey& keyAssimp = nodeAnimationAssimp->mScalingKeys[keyIndex];
 				KeyframeVector3 keyframe{};
@@ -460,7 +460,7 @@ std::vector<std::unique_ptr<SkinCluster>> LoadSkinCluster(const std::string& dir
 	assert(scene->HasMeshes()); // meshがないのは対応しない
 
 	std::vector<std::unique_ptr<SkinCluster>> result;
-	
+
 	for (uint32_t meshIndex = 0; meshIndex < scene->mNumMeshes; ++meshIndex) {
 		aiMesh* mesh = scene->mMeshes[meshIndex];
 
@@ -491,7 +491,7 @@ std::vector<std::unique_ptr<SkinCluster>> LoadSkinCluster(const std::string& dir
 				jointWeightData.vertexWeight.push_back({ bone->mWeights[weightIndex].mWeight, bone->mWeights[weightIndex].mVertexId });
 			}
 		}
-		
+
 		auto& newData = result.emplace_back(std::make_unique<SkinCluster>());
 		newData->AddData(newMap);
 	}
@@ -519,4 +519,12 @@ std::string RemoveExtension(const std::string& filename) {
 		return filename.substr(0, dotPos); // ドットより前の部分を返す
 	}
 	return filename; // ドットがない場合はそのまま返す
+}
+
+std::string GetBaseName(const std::string& filename) {
+	size_t dotPos = filename.find_last_of('.');
+	if (dotPos == std::string::npos) {
+		return filename; // '.' がなければそのまま返す
+	}
+	return filename.substr(0, dotPos); // 先頭から '.' の直前まで
 }

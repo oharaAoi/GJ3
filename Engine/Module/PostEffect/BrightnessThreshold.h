@@ -22,6 +22,9 @@ public:
 
 	void Debug_Gui() override;
 
+	void ApplySaveData() override {};
+	void CopyData() override {};
+
 private:
 
 	std::unique_ptr<DxResource> bloomBuffer_;

@@ -1,6 +1,6 @@
 {
     "StageInformation": {
         "csvName": "stage100.csv",
-        "needGhostNum": 0
+        "needGhostNum": 2
     }
 }

@@ -70,7 +70,7 @@ namespace {
 
 	std::unique_ptr<PostProcess> postProcess_;
 
-	std::unique_ptr<Canvas2d> canvas2d_;
+	Canvas2d* pCanvas2d_;
 
 	// オフスクリーンレンダリングで生成したTextureを描画するクラス
 	std::unique_ptr<ProcessedSceneFrame> processedSceneFrame_ = nullptr;
@@ -159,6 +159,8 @@ public:
 	static void ClearDepth();
 
 	static Canvas2d* GetCanvas2d();
+
+	static void SetCanvas2d(Canvas2d* _canvas);
 
 	/////////////////////////////////////////////////////////////////////////////////////////////
 	// sound系
