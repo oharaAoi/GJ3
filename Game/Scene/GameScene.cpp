@@ -227,12 +227,12 @@ void GameScene::ChengeScene()
 		const auto type = menuSelector_->GetButtonType();
 		switch (type)
 		{
-		case MenuButtonType::Select:
+		case ButtonType::Select:
 			// セレクトに戻る
 			nextSceneType_ = SceneType::STAGE_SELECT;
 			menuSelector_->SetChengeScene(false);
 			break;
-		case MenuButtonType::Reset :
+		case ButtonType::Reset :
 			// ステージをリセットする
 			stageRegistry_->ResetStage();
 			menuSelector_->SetChengeScene(false);

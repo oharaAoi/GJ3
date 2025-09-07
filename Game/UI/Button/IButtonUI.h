@@ -3,15 +3,15 @@
 #include "Engine/Module/Components/2d/Sprite.h"
 #include "Engine/Module/Components/Attribute/AttributeGui.h"
 
-#include "Game/UI/Menu/button/MenuButtonType.h"
+#include "Game/UI/Button/ButtonType.h"
 
-class IMenuButtonUI : 
+class IButtonUI : 
 	public AttributeGui
 {
 public:
 
-	IMenuButtonUI() = default;
-	virtual ~IMenuButtonUI() = default;
+	IButtonUI() = default;
+	virtual ~IButtonUI() = default;
 
 	virtual void Init() = 0;
 
@@ -25,13 +25,13 @@ public:
 	void Reset();
 	// Sprite
 	Sprite* GetSprite()const { return buttonUI_; }
-	MenuButtonType GetButtonType()const { return type_; }
+	ButtonType GetButtonType()const { return type_; }
 
 protected:
 
 	// buttonSprite
 	Sprite* buttonUI_ = nullptr;
-	MenuButtonType type_ = MenuButtonType::Back;
+	ButtonType type_ = ButtonType::Back;
 
 	// 点滅時間と点滅間隔
 	float blinkingTime_ = 2.0f;

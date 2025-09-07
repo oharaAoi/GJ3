@@ -3,7 +3,7 @@
 void BlockGhost::Init(Canvas2d* _canvas2d)
 {
 	SetName("BlockGhost");
-	sprite_ = _canvas2d->AddSprite("ghostBlock.png", "ghostBlock", "Sprite_Normal.json");
+	sprite_ = _canvas2d->AddSprite("ghostBlock.png", "ghostBlock", "Sprite_Normal.json", 0, true);
 	transform_ = sprite_->GetTransform();
 	type_ = BlockType::GhostBlock;
 }

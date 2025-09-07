@@ -5,7 +5,7 @@
 void TokenGhost::Init(Canvas2d* _canvas2d)
 {
 	SetName("TokenGhost");
-	sprite_ = _canvas2d->AddSprite("ghost.png", "ghost", "Sprite_Normal.json");
+	sprite_ = _canvas2d->AddSprite("ghost.png", "ghost", "Sprite_Normal.json", 0, true);
 	transform_ = sprite_->GetTransform();
 	type_ = BlockType::Ghost;
 
