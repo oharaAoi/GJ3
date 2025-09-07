@@ -44,9 +44,9 @@ void ThunderFlash::Init(){
 	// 読み込み
 	parameter_.FromJson(JsonItems::GetData("TitleScene","ThunderFlash"));
 
-	flashOverlaySprite_ = Engine::GetCanvas2d()->AddSprite("white.png", GetName(), "Sprite_Add.json",3);
+	flashOverlaySprite_ = Engine::GetCanvas2d()->AddSprite("white.png", GetName(), "Sprite_Normal.json",3);
 
-	flashOverlaySprite_->SetColor({0.9f,0.95f,1.f,1.f});
+	flashOverlaySprite_->SetColor({0.84f,0.83f,89.f,1.f});
 
 	flashOverlaySprite_->SetScale(Vector2(1920.f,1080.f));
 
@@ -95,10 +95,10 @@ void ThunderFlash::Update(){
 	// alpha値を取得
 	Vector4 color = flashOverlaySprite_->GetColor();
 	alpha_ = CalculateCurrentFlushAlpha();
-	color.w = (std::min)(alpha_ * 0.4f,1.f);
+	/*color.w = (std::min)(alpha_ * 0.4f,1.f);
 	flashOverlaySprite_->SetColor(color);
 
-	flashOverlaySprite_->Update();
+	flashOverlaySprite_->Update();*/
 }
 
 void ThunderFlash::Debug_Gui(){
