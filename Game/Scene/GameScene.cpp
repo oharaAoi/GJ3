@@ -158,16 +158,16 @@ void GameScene::Update(){
 	if(StageInputHandler::UndoInput()){
 		ObjectCommandInvoker::GetInstance().UndoCommand();
 		resetTimer_ = 0.f;
-		AudioPlayer::SinglShotPlay("osii.mp3", 0.5f);
+		AudioPlayer::SinglShotPlay("button.mp3", 0.5f);
 	} else if(StageInputHandler::RedoInput()){
 		resetTimer_ = 0.f;
 		ObjectCommandInvoker::GetInstance().RedoCommand();
-		AudioPlayer::SinglShotPlay("osii.mp3", 0.5f);
+		AudioPlayer::SinglShotPlay("button.mp3", 0.5f);
 	} else if(stageResetUI_->GetStageReset()){
 		stageRegistry_->ResetStage();
 		mapCollision_->ResetGhostCounter();
 		ObjectCommandInvoker::GetInstance().ClearHistory();
-		AudioPlayer::SinglShotPlay("osii.mp3", 0.5f);
+		AudioPlayer::SinglShotPlay("button.mp3", 0.5f);
 		stageResetUI_->Reset();
 		size_t size = ghostSoulManager_->GetSoulesSize();
 		for (size_t i = 0; i < size; ++i) {
@@ -183,7 +183,7 @@ void GameScene::Update(){
 	// クリア条件を満たしているかの判定
 	if (!isClearConditionMet_) {
 		if (stageRegistry_->GetNeedGhostNum() == mapCollision_->GetGhostCounter()) {
-			AudioPlayer::SinglShotPlay("doragon.mp3", 0.5f);
+			AudioPlayer::SinglShotPlay("ghost_full.mp3", 0.5f);
 			isClearConditionMet_ = true;
 		}
 	}

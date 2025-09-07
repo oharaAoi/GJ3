@@ -9,7 +9,7 @@ void TokenGhost::Init(Canvas2d* _canvas2d)
 	transform_ = sprite_->GetTransform();
 	type_ = BlockType::Ghost;
 
-	AudioPlayer::SinglShotPlay("attackAlertSE.mp3", 0.6f);
+	AudioPlayer::SinglShotPlay("ghost.mp3", 0.6f);
 }
 
 void TokenGhost::Update()

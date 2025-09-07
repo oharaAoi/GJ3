@@ -86,7 +86,7 @@ void MenuSelector::Update()
 	// 決定ボタンが押されたら
 	if (decisionPressed) {
 		ChengeScene();
-		AudioPlayer::SinglShotPlay("mata.mp3", 0.3f);
+		AudioPlayer::SinglShotPlay("button.mp3", 0.3f);
 		return;
 	}
 	// 上方向の処理
@@ -94,14 +94,14 @@ void MenuSelector::Update()
 		Reset();
 		--cursorIndex_;
 		cursorIndex_ = std::clamp(cursorIndex_, 0, 3);
-		AudioPlayer::SinglShotPlay("sentaku.mp3", 0.3f);
+		AudioPlayer::SinglShotPlay("button.mp3", 0.3f);
 	}
 	// 下方向の処理
 	if (ProcessRepeat(downPressed, downWasPressed_, downHoldTime_, dt)) {
 		Reset();
 		++cursorIndex_;
 		cursorIndex_ = std::clamp(cursorIndex_, 0, 3);
-		AudioPlayer::SinglShotPlay("sentaku.mp3", 0.3f);
+		AudioPlayer::SinglShotPlay("button.mp3", 0.3f);
 	}
 	// 0より大きければ
 	if (cursorIndex_ > -1) {

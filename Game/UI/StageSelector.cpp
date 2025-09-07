@@ -187,7 +187,7 @@ void StageSelector::InputHandle(){
 		if(leftPressTime_){
 			targetStageIndex_ = (currentStageIndex_ + scrollDirection_ + totalStageNum_) % totalStageNum_;
 			if(!isScrolling_){
-				AudioPlayer::SinglShotPlay("asobi.mp3",0.5f);
+				AudioPlayer::SinglShotPlay("button.mp3",0.5f);
 				scrollTime_ = 0.0f;
 				scrollStartIndex_ = currentStageIndex_;
 

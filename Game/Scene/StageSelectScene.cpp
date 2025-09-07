@@ -173,7 +173,7 @@ void SelectingStageBehavior::Update(){
 		// StageSelector::GetCurrentStageIndex(); // 現在のステージ番号を取得
 		//host_->SetNextSceneType(SceneType::GAME);
 		host_->ChangeBehavior(new TransitionToGameBehavior(host_));
-		AudioPlayer::SinglShotPlay("fanfare.wav",0.3f);
+		AudioPlayer::SinglShotPlay("start.mp3",0.3f);
 	}
 }
 

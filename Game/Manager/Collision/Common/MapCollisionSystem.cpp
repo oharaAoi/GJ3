@@ -64,14 +64,14 @@ bool MapCollisionSystem::IsMovable(const Vector2Int& direction,const Vector2Int&
 	if(firstStepIndex->GetType() == BlockType::Wall ||
 	   firstStepIndex->GetType() == BlockType::GraveBlock ||
 	   firstStepIndex->GetType() == BlockType::Goal){
-		AudioPlayer::SinglShotPlay("don.mp3",0.6f); // 壁にあたったときの音
+		AudioPlayer::SinglShotPlay("stop.mp3",0.6f); // 壁にあたったときの音
 		return false;
 	}
 
 	// 進む方向2マス目ブロック
 	index += direction;
 	if(!OutOfRangeReference(index)){
-		AudioPlayer::SinglShotPlay("don.mp3",0.6f);
+		AudioPlayer::SinglShotPlay("stop.mp3",0.6f);
 		return false;
 	}
 	IBlock* secondStepIndex = data[index.y][index.x].get();
@@ -85,7 +85,7 @@ bool MapCollisionSystem::IsMovable(const Vector2Int& direction,const Vector2Int&
 			return true;
 		}
 	}
-	AudioPlayer::SinglShotPlay("don.mp3",0.6f); // 壁にあたったときの音
+	AudioPlayer::SinglShotPlay("stop.mp3",0.6f); // 壁にあたったときの音
 	return false;
 }
 
@@ -197,7 +197,7 @@ bool MapCollisionSystem::CheckLimitBlock(const Vector2Int& _index){
 
 void MapCollisionSystem::AddGhostCounter(){
 	++ghostCounter_;
-	AudioPlayer::SinglShotPlay("yaruja.mp3",0.6f); // ゴースト獲得時の音
+	AudioPlayer::SinglShotPlay("ghost_get.mp3",0.6f); // ゴースト獲得時の音
 
 	if(pGhostSoulManager_){
 		pGhostSoulManager_->CreateSoul(stageRegistry_->GetTileSize());
