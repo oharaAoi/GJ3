@@ -288,7 +288,6 @@
     <ClCompile Include="Game\Tool\MapChipLoader.cpp" />
     <ClCompile Include="Game\Tool\StageEditor.cpp" />
     <ClCompile Include="Game\Tool\StageLoader.cpp" />
-    <ClCompile Include="Game\UI\TitleUIs.cpp" />
     <ClCompile Include="Game\WorldObject\BackGround.cpp" />
     <ClCompile Include="Game\WorldObject\Skybox.cpp" />
     <ClCompile Include="Game\WorldObject\WorldObjects.cpp" />
@@ -326,6 +325,7 @@
     <ClCompile Include="Game\UI\Clear\ClearSelector.cpp" />
     <ClCompile Include="Engine\Module\PostEffect\SwirlEffect.cpp" />
     <ClCompile Include="Engine\Module\PostEffect\SwirlMask.cpp" />
+    <ClCompile Include="Game\UI\TitleUIs.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Scene\ClearScene.h" />
@@ -574,7 +574,6 @@
     <ClInclude Include="Game\Tool\StageEditor.h" />
     <ClInclude Include="Game\Tool\StageLoader.h" />
     <ClInclude Include="Game\UI\Menu\button\MenuButtonType.h" />
-    <ClInclude Include="Game\UI\TitleUIs.h" />
     <ClInclude Include="Game\WorldObject\BackGround.h" />
     <ClInclude Include="Game\WorldObject\Skybox.h" />
     <ClInclude Include="Engine\Lib\Math\Vector2Int.h" />
@@ -612,6 +611,7 @@
     <ClInclude Include="Game\UI\Clear\ClearSelector.h" />
     <ClInclude Include="Engine\Module\PostEffect\SwirlEffect.h" />
     <ClInclude Include="Engine\Module\PostEffect\SwirlMask.h" />
+    <ClInclude Include="Game\UI\TitleUIs.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\Assets\HLSL\Light.hlsli" />

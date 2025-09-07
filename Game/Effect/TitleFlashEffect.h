@@ -53,7 +53,7 @@ public:
 class LightFlash :
 	public AttributeGui{
 public:
-	void Init();
+	void Init(const std::string& _parameterName);
 	void Finalize();
 	void Update();
 
@@ -80,10 +80,14 @@ private:
 	// 点滅時に画面を覆う用のSprite
 	Sprite* flashOverlaySprite_;
 
+	std::string parameterName_;
+
 	Parameter parameter_;
 public:
 	const Vector4& GetFlashColor() const{ return flashOverlaySprite_->GetColor(); }
 	void SetFlashColor(const Vector4& color){ flashOverlaySprite_->SetColor(color); }
+
+	void setCurrentFlashTime(float time){ parameter_.currentFlashTime_ = time; }
 
 	bool GetIsFinish() const{ return isFinish_; }
 };

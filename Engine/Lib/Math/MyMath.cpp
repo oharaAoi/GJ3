@@ -294,6 +294,18 @@ Vector3 Bezier(const std::vector<Vector3>& controlPoint, const float& t) {
 	return Bezier(lerpVec, t);
 }
 
+Vector3 PendulumUpdate(const Vector3& _anchor,float _length,float& _outputAngle,float& _outputAngularVelo,float _gravity,float deltaTime){
+	float angularAccel = -(_gravity/ _length) * std::sinf(_outputAngle);
+
+	_outputAngularVelo += angularAccel * deltaTime;
+	_outputAngle += _outputAngularVelo * deltaTime;
+
+	// 角度から位置を求める
+	Vector3 ballPos = _anchor + Vector3(std::sinf(_outputAngularVelo) * _length,-std::cosf(_outputAngularVelo) * _length,0.0f);
+
+	return ballPos;
+}
+
 
 /// <summary>
 /// スクリーン座標からワールド座標に変換する関数

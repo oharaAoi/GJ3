@@ -14,62 +14,73 @@
 
 #pragma region ThunderFlash
 
-json ThunderFlash::Parameter::ToJson(const std::string& id) const{
+json ThunderFlash::Parameter::ToJson(const std::string &id) const
+{
 	JsonBuilder j(id);
-	j.Add("flashDuration",flashDuration_);
-	j.Add("curveSize",static_cast<int>(flashCurve_.keyframes.size()));
-	for(size_t i = 0; i < flashCurve_.keyframes.size(); ++i){
-		j.Add("time" + std::to_string(i),flashCurve_.keyframes[i].time);
-		j.Add("value" + std::to_string(i),flashCurve_.keyframes[i].value);
+	j.Add("flashDuration", flashDuration_);
+	j.Add("curveSize", static_cast<int>(flashCurve_.keyframes.size()));
+	for (size_t i = 0; i < flashCurve_.keyframes.size(); ++i)
+	{
+		j.Add("time" + std::to_string(i), flashCurve_.keyframes[i].time);
+		j.Add("value" + std::to_string(i), flashCurve_.keyframes[i].value);
 	}
 	return j.Build();
 }
-void ThunderFlash::Parameter::FromJson(const json& jsonData){
-	fromJson(jsonData,"flashDuration",flashDuration_);
+void ThunderFlash::Parameter::FromJson(const json &jsonData)
+{
+	fromJson(jsonData, "flashDuration", flashDuration_);
 	int curveSize = 0;
-	fromJson(jsonData,"curveSize",curveSize);
+	fromJson(jsonData, "curveSize", curveSize);
 	flashCurve_.keyframes.clear();
-	for(int i = 0; i < curveSize; ++i){
+	for (int i = 0; i < curveSize; ++i)
+	{
 		float time = 0.f;
 		float value = 0.f;
-		fromJson(jsonData,"time" + std::to_string(i),time);
-		fromJson(jsonData,"value" + std::to_string(i),value);
-		flashCurve_.keyframes.push_back({time,value});
+		fromJson(jsonData, "time" + std::to_string(i), time);
+		fromJson(jsonData, "value" + std::to_string(i), value);
+		flashCurve_.keyframes.push_back({time, value});
 	}
 }
 
-void ThunderFlash::Init(){
+void ThunderFlash::Init()
+{
 	SetName("ThunderFlash");
 
 	// 読み込み
-	parameter_.FromJson(JsonItems::GetData("TitleScene","ThunderFlash"));
+	parameter_.FromJson(JsonItems::GetData("Effect", "ThunderFlash"));
 
-	EditorWindows::AddObjectWindow(this,GetName());
+	EditorWindows::AddObjectWindow(this, GetName());
 }
 
-void ThunderFlash::Finalize(){
+void ThunderFlash::Finalize()
+{
 	parameter_.flashCurve_.keyframes.clear();
 }
 
-float ThunderFlash::CalculateCurrentFlushAlpha()const{
+float ThunderFlash::CalculateCurrentFlushAlpha() const
+{
 	///===========================================
 	/// 例外処理
 	///===========================================
-	if(parameter_.flashCurve_.keyframes.empty()){
+	if (parameter_.flashCurve_.keyframes.empty())
+	{
 		return 0.f;
 	}
-	if(parameter_.flashCurve_.keyframes.size() == 1 || parameter_.currentFlashTime_ <= parameter_.flashCurve_.keyframes[0].time){
+	if (parameter_.flashCurve_.keyframes.size() == 1 || parameter_.currentFlashTime_ <= parameter_.flashCurve_.keyframes[0].time)
+	{
 		return parameter_.flashCurve_.keyframes[0].value;
 	}
 
-	for(size_t index = 0; index < parameter_.flashCurve_.keyframes.size() - 1; ++index){
+	for (size_t index = 0; index < parameter_.flashCurve_.keyframes.size() - 1; ++index)
+	{
 		size_t nextIndex = index + 1;
 		// index と nextIndex の 2つを
 		// 取得して 現時刻が 範囲内か
-		if(parameter_.flashCurve_.keyframes[index].time <= parameter_.currentFlashTime_ && parameter_.currentFlashTime_ <= parameter_.flashCurve_.keyframes[nextIndex].time){
+		if (parameter_.flashCurve_.keyframes[index].time <= parameter_.currentFlashTime_ && parameter_.currentFlashTime_ <= parameter_.flashCurve_.keyframes[nextIndex].time)
+		{
 			// 範囲内 で 保管
 			float t = (parameter_.currentFlashTime_ - parameter_.flashCurve_.keyframes[index].time) / (parameter_.flashCurve_.keyframes[nextIndex].time - parameter_.flashCurve_.keyframes[index].time);
-			return std::lerp(parameter_.flashCurve_.keyframes[index].value,parameter_.flashCurve_.keyframes[nextIndex].value,t);
+			return std::lerp(parameter_.flashCurve_.keyframes[index].value, parameter_.flashCurve_.keyframes[nextIndex].value, t);
 		}
 	}
 	// 登録されている時間より 後ろ
@@ -77,10 +88,12 @@ float ThunderFlash::CalculateCurrentFlushAlpha()const{
 	return (*parameter_.flashCurve_.keyframes.rbegin()).value;
 }
 
-void ThunderFlash::Update(){
+void ThunderFlash::Update()
+{
 	parameter_.currentFlashTime_ += GameTimer::DeltaTime();
 	// ループする
-	if(parameter_.currentFlashTime_ >= parameter_.flashDuration_){
+	if (parameter_.currentFlashTime_ >= parameter_.flashDuration_)
+	{
 		parameter_.currentFlashTime_ = 0.0f;
 	}
 
@@ -88,19 +101,23 @@ void ThunderFlash::Update(){
 	alpha_ = CalculateCurrentFlushAlpha();
 }
 
-void ThunderFlash::Debug_Gui(){
-	if(ImGui::Button("Save")){
-		JsonItems::Save("TitleScene",parameter_.ToJson("ThunderFlash"));
+void ThunderFlash::Debug_Gui()
+{
+	if (ImGui::Button("Save"))
+	{
+		JsonItems::Save("Effect", parameter_.ToJson("ThunderFlash"));
 	}
 
 	float prevDuration = parameter_.flashDuration_;
-	if(ImGui::DragFloat("Duration",&parameter_.flashDuration_,0.01f)){
+	if (ImGui::DragFloat("Duration", &parameter_.flashDuration_, 0.01f))
+	{
 		// 比率を維持する
-		for(auto& keyframe : parameter_.flashCurve_.keyframes){
+		for (auto &keyframe : parameter_.flashCurve_.keyframes)
+		{
 			keyframe.time = (keyframe.time / prevDuration) * parameter_.flashDuration_;
 		}
 	}
-	ImGui::SliderFloat("CurrentTime",&parameter_.currentFlashTime_,0.0f,parameter_.flashDuration_);
+	ImGui::SliderFloat("CurrentTime", &parameter_.currentFlashTime_, 0.0f, parameter_.flashDuration_);
 
 	ImGui::Text("FlashCurve");
 #ifdef _DEBUG
@@ -116,67 +133,80 @@ void ThunderFlash::Debug_Gui(){
 #pragma endregion
 
 #pragma region LightFlash
-json LightFlash::Parameter::ToJson(const std::string& id) const{
+json LightFlash::Parameter::ToJson(const std::string &id) const
+{
 	JsonBuilder j(id);
-	j.Add("flashDuration",flashDuration_);
-	j.Add("curveSize",static_cast<int>(flashCurve_.keyframes.size()));
-	for(size_t i = 0; i < flashCurve_.keyframes.size(); ++i){
-		j.Add("time" + std::to_string(i),flashCurve_.keyframes[i].time);
-		j.Add("value" + std::to_string(i),flashCurve_.keyframes[i].value);
+	j.Add("flashDuration", flashDuration_);
+	j.Add("curveSize", static_cast<int>(flashCurve_.keyframes.size()));
+	for (size_t i = 0; i < flashCurve_.keyframes.size(); ++i)
+	{
+		j.Add("time" + std::to_string(i), flashCurve_.keyframes[i].time);
+		j.Add("value" + std::to_string(i), flashCurve_.keyframes[i].value);
 	}
 	return j.Build();
 }
-void LightFlash::Parameter::FromJson(const json& jsonData){
-	fromJson(jsonData,"flashDuration",flashDuration_);
+void LightFlash::Parameter::FromJson(const json &jsonData)
+{
+	fromJson(jsonData, "flashDuration", flashDuration_);
 	int curveSize = 0;
-	fromJson(jsonData,"curveSize",curveSize);
+	fromJson(jsonData, "curveSize", curveSize);
 	flashCurve_.keyframes.clear();
-	for(int i = 0; i < curveSize; ++i){
+	for (int i = 0; i < curveSize; ++i)
+	{
 		float time = 0.f;
 		float value = 0.f;
-		fromJson(jsonData,"time" + std::to_string(i),time);
-		fromJson(jsonData,"value" + std::to_string(i),value);
-		flashCurve_.keyframes.push_back({time,value});
+		fromJson(jsonData, "time" + std::to_string(i), time);
+		fromJson(jsonData, "value" + std::to_string(i), value);
+		flashCurve_.keyframes.push_back({time, value});
 	}
 }
-void LightFlash::Init(){
+void LightFlash::Init(const std::string &_parameterName)
+{
 	SetName("LightFlash");
 
 	isFinish_ = false;
 
-	// 読み込み
-	parameter_.FromJson(JsonItems::GetData("TitleScene","LightFlash"));
+	parameterName_ = _parameterName;
 
-	flashOverlaySprite_ = Engine::GetCanvas2d()->AddSprite("white.png", GetName(), "Sprite_Normal.json",6);
-	flashOverlaySprite_->SetAnchorPoint({1.f,1.f});
-	flashOverlaySprite_->SetScale(Vector2(1920.f,1080.f));
-	flashOverlaySprite_->SetColor(Vector4(0.f,0.f,0.f,0.f));
+	// 読み込み
+	parameter_.FromJson(JsonItems::GetData("Effect", parameterName_));
+
+	flashOverlaySprite_ = Engine::GetCanvas2d()->AddSprite("white.png", GetName(), "Sprite_Normal.json", 6);
+	flashOverlaySprite_->SetAnchorPoint({1.f, 1.f});
+	flashOverlaySprite_->SetScale(Vector2(1920.f, 1080.f));
+	flashOverlaySprite_->SetColor(Vector4(0.f, 0.f, 0.f, 0.f));
 
 	AddChild(flashOverlaySprite_);
-	EditorWindows::AddObjectWindow(this,GetName());
+	EditorWindows::AddObjectWindow(this, GetName());
 }
-void LightFlash::Finalize(){
+void LightFlash::Finalize()
+{
 	flashOverlaySprite_ = nullptr;
 	parameter_.flashCurve_.keyframes.clear();
 }
-float LightFlash::CalculateCurrentFlushAlpha()const{
+float LightFlash::CalculateCurrentFlushAlpha() const
+{
 	///===========================================
 	/// 例外処理
 	///===========================================
-	if(parameter_.flashCurve_.keyframes.empty()){
+	if (parameter_.flashCurve_.keyframes.empty())
+	{
 		return 0.f;
 	}
-	if(parameter_.flashCurve_.keyframes.size() == 1 || parameter_.currentFlashTime_ <= parameter_.flashCurve_.keyframes[0].time){
+	if (parameter_.flashCurve_.keyframes.size() == 1 || parameter_.currentFlashTime_ <= parameter_.flashCurve_.keyframes[0].time)
+	{
 		return parameter_.flashCurve_.keyframes[0].value;
 	}
-	for(size_t index = 0; index < parameter_.flashCurve_.keyframes.size() - 1; ++index){
+	for (size_t index = 0; index < parameter_.flashCurve_.keyframes.size() - 1; ++index)
+	{
 		size_t nextIndex = index + 1;
 		// index と nextIndex の 2つを
 		// 取得して 現時刻が 範囲内か
-		if(parameter_.flashCurve_.keyframes[index].time <= parameter_.currentFlashTime_ && parameter_.currentFlashTime_ <= parameter_.flashCurve_.keyframes[nextIndex].time){
+		if (parameter_.flashCurve_.keyframes[index].time <= parameter_.currentFlashTime_ && parameter_.currentFlashTime_ <= parameter_.flashCurve_.keyframes[nextIndex].time)
+		{
 			// 範囲内 で 保管
 			float t = (parameter_.currentFlashTime_ - parameter_.flashCurve_.keyframes[index].time) / (parameter_.flashCurve_.keyframes[nextIndex].time - parameter_.flashCurve_.keyframes[index].time);
-			return std::lerp(parameter_.flashCurve_.keyframes[index].value,parameter_.flashCurve_.keyframes[nextIndex].value,t);
+			return std::lerp(parameter_.flashCurve_.keyframes[index].value, parameter_.flashCurve_.keyframes[nextIndex].value, t);
 		}
 	}
 	// 登録されている時間より 後ろ
@@ -184,31 +214,37 @@ float LightFlash::CalculateCurrentFlushAlpha()const{
 	return (*parameter_.flashCurve_.keyframes.rbegin()).value;
 }
 
-void LightFlash::Update(){
+void LightFlash::Update()
+{
 	parameter_.currentFlashTime_ += GameTimer::DeltaTime();
 	// ループしない
-	if(parameter_.currentFlashTime_ >= parameter_.flashDuration_){
+	if (parameter_.currentFlashTime_ >= parameter_.flashDuration_)
+	{
 		parameter_.currentFlashTime_ = parameter_.flashDuration_;
 		isFinish_ = true;
 	}
 	// alpha値を取得
 	float alpha = CalculateCurrentFlushAlpha();
-	flashOverlaySprite_->SetColor(Vector4(0.f,0.f,0.f,alpha));
+	flashOverlaySprite_->SetColor(Vector4(0.f, 0.f, 0.f, alpha));
 	flashOverlaySprite_->Update();
 }
 
-void LightFlash::Debug_Gui(){
-	if(ImGui::Button("Save")){
-		JsonItems::Save("TitleScene",parameter_.ToJson("LightFlash"));
+void LightFlash::Debug_Gui()
+{
+	if (ImGui::Button("Save"))
+	{
+		JsonItems::Save("Effect", parameter_.ToJson("LightFlash"));
 	}
 	float prevDuration = parameter_.flashDuration_;
-	if(ImGui::DragFloat("Duration",&parameter_.flashDuration_,0.01f)){
+	if (ImGui::DragFloat("Duration", &parameter_.flashDuration_, 0.01f))
+	{
 		// 比率を維持する
-		for(auto& keyframe : parameter_.flashCurve_.keyframes){
+		for (auto &keyframe : parameter_.flashCurve_.keyframes)
+		{
 			keyframe.time = (keyframe.time / prevDuration) * parameter_.flashDuration_;
 		}
 	}
-	ImGui::SliderFloat("CurrentTime",&parameter_.currentFlashTime_,0.0f,parameter_.flashDuration_);
+	ImGui::SliderFloat("CurrentTime", &parameter_.currentFlashTime_, 0.0f, parameter_.flashDuration_);
 	ImGui::Text("FlashCurve");
 
 #ifdef _DEBUG
@@ -221,4 +257,4 @@ void LightFlash::Debug_Gui(){
 #endif // _DEBUG
 }
 
-#pragma endregion 
+#pragma endregion

@@ -16,9 +16,14 @@
 #include "Game/UI/StageSelector.h"
 #include "Game/StageRender/StageContents.h"
 #include "Engine/Module/PostEffect/IPostEffect.h"
+// effect
+#include "Game/Effect/TitleFlashEffect.h"
+
+class IStageSelectSceneBehavior;
 
 class StageSelectScene
 	: public BaseScene{
+	friend class SelectingStageBehavior;
 public:
 	StageSelectScene();
 	~StageSelectScene();
@@ -29,17 +34,23 @@ public:
 	void Draw() const override;
 
 private:
+	void ChangeBehavior(IStageSelectSceneBehavior* newBehavior);
+
+private:
 	// ------------------- camera ------------------- //
 	std::unique_ptr<DebugCamera> debugCamera_;
 	std::unique_ptr<Camera3d> camera3d_;
 	std::unique_ptr<Camera2d> camera2d_;
 
 	// ------------------- actor ------------------- //
-	
+
 	std::unique_ptr<WorldObjects> worldObjects_;
 
+	// ------------------- behavior ------------------- //
+	std::unique_ptr<IStageSelectSceneBehavior> behavior_;
+
 	// ------------------- ui ------------------- //
-	std::unique_ptr<StageSelector> stageSelector_;
+
 
 	std::unique_ptr<StageContents> stageContents_;
 
@@ -53,3 +64,48 @@ private:
 
 	std::shared_ptr<IPostEffect> gotRay_;
 };
+
+#pragma region Behavior
+
+class IStageSelectSceneBehavior{
+public:
+	IStageSelectSceneBehavior(StageSelectScene* _host):host_(_host){}
+	virtual ~IStageSelectSceneBehavior() = default;
+
+	virtual void Init() = 0;
+	virtual void Update() = 0;
+protected:
+	StageSelectScene* host_;
+};
+
+/// <summary>
+/// 選択中の挙動シーン
+/// </summary>
+class SelectingStageBehavior
+	: public IStageSelectSceneBehavior{
+public:
+	SelectingStageBehavior(StageSelectScene* _host);
+	~SelectingStageBehavior() override;
+	void Init() override;
+	void Update() override;
+private:
+	std::unique_ptr<StageSelector> stageSelector_;
+	std::unique_ptr<LightFlash> lightFlash_;
+
+};
+
+class TransitionToGameBehavior
+	: public IStageSelectSceneBehavior{
+public:
+	TransitionToGameBehavior(StageSelectScene* _host);
+	~TransitionToGameBehavior() override;
+
+	void Init() override;
+	void Update() override;
+private:
+	float transitionTime_ = 1.0f;
+	float currentTime_ = 0.0f;
+};
+
+
+#pragma endregion

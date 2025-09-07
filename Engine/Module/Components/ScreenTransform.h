@@ -40,6 +40,10 @@ public:
 	const Vector2 GetScale() const { return Vector2(transform_.scale.x, transform_.scale.y); }
 	const float GetRotate() const { return transform_.rotate.z; }
 
+	const SRT& GetTransform() const{ return transform_; }
+	void SetTransform(const SRT& transform){ transform_ = transform; }
+
+
 private:
 
 	ComPtr<ID3D12Resource> transformBuffer_;
