@@ -17,6 +17,7 @@
 #include "Game/StageRender/StageContents.h"
 #include "Game/Tool/StageLoader.h"
 #include "Engine/Module/PostEffect/IPostEffect.h"
+#include "Game/Effect/SwirlTransition.h"
 // effect
 #include "Game/Effect/TitleFlashEffect.h"
 
@@ -107,6 +108,9 @@ public:
 private:
 	float transitionTime_ = 1.0f;
 	float currentTime_ = 0.0f;
+
+	std::unique_ptr<SwirlTransition> swirlTransition_;
+
 };
 
 

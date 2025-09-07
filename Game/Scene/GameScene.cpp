@@ -99,6 +99,10 @@ void GameScene::Init(){
 	dust_ = ParticleManager::GetInstance()->CrateParticle("dust");
 	dust_->Reset();
 
+	swirlTransition_ = std::make_unique<SwirlTransition>();
+	swirlTransition_->Init();
+	swirlTransition_->Open();
+
 	// -------------------------------------------------
 	// ↓ audioの初期化
 	// ------------------------------------------------
@@ -137,6 +141,8 @@ void GameScene::Update(){
 	if (!menuSelector_->GetOpenMenu()) {
 		player_->Update();
 	}
+
+	swirlTransition_->Update();
 
 	worldObjects_->Update();
 

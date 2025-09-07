@@ -124,6 +124,7 @@ copy "$(ProjectDir)Externals\assimp\build\bin\Release\assimp-vc143-mt.dll" "$(Ta
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Game\Commands\Stage\CreateGraveBlock.cpp" />
+    <ClCompile Include="Game\Effect\SwirlTransition.cpp" />
     <ClCompile Include="Game\UI\Clear\ClearSelector.cpp" />
     <ClCompile Include="Game\UI\Clear\ClearUIs.cpp" />
     <ClCompile Include="Engine\Module\PostEffect\SwirlEffect.cpp" />
@@ -388,6 +389,7 @@ copy "$(ProjectDir)Externals\assimp\build\bin\Release\assimp-vc143-mt.dll" "$(Ta
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Commands\Stage\CreateGraveBlock.h" />
+    <ClInclude Include="Game\Effect\SwirlTransition.h" />
     <ClInclude Include="Game\UI\Clear\ClearSelector.h" />
     <ClInclude Include="Game\UI\Clear\ClearUIs.h" />
     <ClInclude Include="Engine\Module\PostEffect\SwirlEffect.h" />

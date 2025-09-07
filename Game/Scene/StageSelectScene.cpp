@@ -184,17 +184,22 @@ TransitionToGameBehavior::~TransitionToGameBehavior(){}
 
 void TransitionToGameBehavior::Init(){
 	currentTime_ = 0.f;
+
+
+	swirlTransition_ = std::make_unique<SwirlTransition>();
+	swirlTransition_->Init();
+	swirlTransition_->Close();
 }
 
 void TransitionToGameBehavior::Update(){
 	currentTime_ += GameTimer::DeltaTime();
-	if(currentTime_ >= transitionTime_){
+	if(swirlTransition_->GetIsFinish()){
 		host_->SetNextSceneType(SceneType::GAME);
 		return;
 	}
 
 	// effect Update ↓
-
+	swirlTransition_->Update();
 }
 
 #pragma endregion // SelectingStageBehavior

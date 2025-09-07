@@ -324,6 +324,7 @@
     <ClCompile Include="Engine\Module\PostEffect\SwirlMask.cpp" />
     <ClCompile Include="Game\UI\TitleUIs.cpp" />
     <ClCompile Include="Game\Commands\Stage\CreateGraveBlock.cpp" />
+    <ClCompile Include="Game\Effect\SwirlTransition.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Scene\ClearScene.h" />
@@ -608,6 +609,7 @@
     <ClInclude Include="Engine\Module\PostEffect\SwirlMask.h" />
     <ClInclude Include="Game\UI\TitleUIs.h" />
     <ClInclude Include="Game\Commands\Stage\CreateGraveBlock.h" />
+    <ClInclude Include="Game\Effect\SwirlTransition.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\Assets\HLSL\Light.hlsli" />

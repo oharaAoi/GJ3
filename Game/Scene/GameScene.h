@@ -18,6 +18,7 @@
 #include "Game/UI/Menu/MenuSelector.h"
 #include "Game/UI/GetGhostCountUI.h"
 #include "Game/UI/StageResetUI.h"
+#include "Game/Effect/SwirlTransition.h"
 
 class GameScene
 	: public BaseScene{
@@ -71,6 +72,8 @@ private:
 	// ------------------- effect ------------------- //
 	BaseParticles* orb_;
 	BaseParticles* dust_;
+
+	std::unique_ptr<SwirlTransition> swirlTransition_;
 
 	// ------------------- sound ------------------- //
 	std::unique_ptr<AudioPlayer> bgm_;

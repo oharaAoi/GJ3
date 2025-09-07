@@ -17,15 +17,15 @@ void StageSelector::Init(){
 	/// ==============================
 	// stagePreviews
 	/// ==============================
-	stagePreviews_[0] = Engine::GetCanvas2d()->AddSprite("white.png","StagePreview_Left","Sprite_Normal.json",2);
+	stagePreviews_[0] = Engine::GetCanvas2d()->AddSprite("white.png","StagePreview_Left","Sprite_Normal.json",2, true);
 	stagePreviews_[0]->SetTextureResource(pStageRenderTarget_->GetResource(0));
 	stagePreviews_[0]->ReSetTextureSize({kWindowWidth_ * 0.3f,kWindowHeight_ * 0.3f});
 
-	stagePreviews_[1] = Engine::GetCanvas2d()->AddSprite("white.png","StagePreview_Center","Sprite_Normal.json",2);
+	stagePreviews_[1] = Engine::GetCanvas2d()->AddSprite("white.png","StagePreview_Center","Sprite_Normal.json",2, true);
 	stagePreviews_[1]->SetTextureResource(pStageRenderTarget_->GetResource(0));
 	stagePreviews_[1]->ReSetTextureSize({kWindowWidth_ * 0.3f,kWindowHeight_ * 0.3f});
 
-	stagePreviews_[2] = Engine::GetCanvas2d()->AddSprite("white.png","StagePreview_Right","Sprite_Normal.json",2);
+	stagePreviews_[2] = Engine::GetCanvas2d()->AddSprite("white.png","StagePreview_Right","Sprite_Normal.json",2, true);
 	stagePreviews_[2]->SetTextureResource(pStageRenderTarget_->GetResource(0));
 	stagePreviews_[2]->ReSetTextureSize({kWindowWidth_ * 0.3f,kWindowHeight_ * 0.3f});
 
@@ -36,9 +36,9 @@ void StageSelector::Init(){
 	/// ==============================
 	// stagePreviewFrame
 	/// ==============================
-	stagePreviewFrame_[0] = Engine::GetCanvas2d()->AddSprite("Select_stage_frame.png","Frame_Left","Sprite_Normal.json",1);
-	stagePreviewFrame_[1] = Engine::GetCanvas2d()->AddSprite("Select_stage_frame.png","Frame_Center","Sprite_Normal.json",1);
-	stagePreviewFrame_[2] = Engine::GetCanvas2d()->AddSprite("Select_stage_frame.png","Frame_Right","Sprite_Normal.json",1);
+	stagePreviewFrame_[0] = Engine::GetCanvas2d()->AddSprite("Select_stage_frame.png","Frame_Left","Sprite_Normal.json",1, true);
+	stagePreviewFrame_[1] = Engine::GetCanvas2d()->AddSprite("Select_stage_frame.png","Frame_Center","Sprite_Normal.json",1, true);
+	stagePreviewFrame_[2] = Engine::GetCanvas2d()->AddSprite("Select_stage_frame.png","Frame_Right","Sprite_Normal.json",1, true);
 
 	AddChild(stagePreviewFrame_[0]);
 	AddChild(stagePreviewFrame_[1]);
@@ -47,8 +47,8 @@ void StageSelector::Init(){
 	/// ==============================
 	// arrows
 	/// ==============================
-	arrows_[0] = Engine::GetCanvas2d()->AddSprite("Select_arrow_left.png","Arrow_Left","Sprite_Normal.json",5);
-	arrows_[1] = Engine::GetCanvas2d()->AddSprite("Select_arrow_right.png","Arrow_Right","Sprite_Normal.json",5);
+	arrows_[0] = Engine::GetCanvas2d()->AddSprite("Select_arrow_left.png","Arrow_Left","Sprite_Normal.json",5, true);
+	arrows_[1] = Engine::GetCanvas2d()->AddSprite("Select_arrow_right.png","Arrow_Right","Sprite_Normal.json",5, true);
 	arrows_[0]->SetTranslate({84.f,268.7f});
 	arrows_[1]->SetTranslate({1196.f,268.7f});
 
@@ -66,7 +66,7 @@ void StageSelector::Init(){
 	/// ==============================
 	// background
 	/// ==============================
-	background_ = Engine::GetCanvas2d()->AddSprite("Select_bg.png","Background","Sprite_Normal.json",-1);
+	background_ = Engine::GetCanvas2d()->AddSprite("Select_bg.png","Background","Sprite_Normal.json",-1, true);
 	background_->SetAnchorPoint({1.f,1.f});
 
 	AddChild(background_);

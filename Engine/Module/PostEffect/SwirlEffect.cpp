@@ -41,15 +41,12 @@ void SwirlEffect::Init() {
 
 	setting_->screenSize = { kWindowWidth_, kWindowHeight_ };
 	setting_->time = 0;
-
-	param_.uvTransform.scale = CVector3::UNIT;
-	param_.uvTransform.rotate = CVector3::ZERO;
-	param_.uvTransform.translate = CVector3::ZERO;
+	setting_->frontWidth = 1;
+	param_.frontWidth = 1;
 
 	swirlMask_ = std::make_unique<SwirlMask>();
 	swirlMask_->Init();
 
-	param_.patternTextureName = "soul_bg.png";
 	isEnable_ = true;
 }
 
@@ -68,7 +65,7 @@ void SwirlEffect::SetCommand(ID3D12GraphicsCommandList* commandList, DxResource*
 	
 	CopyData();
 	//setting_->uv = param_.uvTransform.MakeAffine()
-	setting_->time += GameTimer::DeltaTime();
+	setting_->time += GameTimer::DeltaTime() * param_.rotateSpeed;
 
 	Pipeline* pso = Engine::SetPipeline(PSOType::ProcessedScene, "PostProcess_Swirl.json");
 	UINT index = pso->GetRootSignatureIndex("gSceneTexture");
@@ -87,10 +84,12 @@ void SwirlEffect::CheckBox() {
 void SwirlEffect::Debug_Gui() {
 	if (ImGui::CollapsingHeader("SwirlEffect##SwirlEffect")) {
 		ImGui::DragFloat("time", &setting_->time, 0.1f);
-		ImGui::DragFloat("radiusKernel", &setting_->radiusKernel, 0.01f);
-		ImGui::DragFloat("angleStrength", &setting_->angleStrength, 0.01f);
-		ImGui::DragFloat("speed", &setting_->speed, 0.01f);
-		ImGui::DragFloat("frontWidth", &setting_->frontWidth, 0.01f);
+		ImGui::DragFloat("radiusKernel", &param_.radiusKernel, 0.1f);
+		ImGui::DragFloat("angleStrength", &param_.angleStrength, 0.1f);
+		ImGui::DragFloat("speed", &param_.speed, 0.01f);
+		ImGui::DragFloat("frontWidth", &param_.frontWidth, 0.1f);
+
+		ImGui::DragFloat("rotateSpeed", &param_.rotateSpeed, 0.01f);
 
 		swirlMask_->Debug_Gui();
 
@@ -108,4 +107,12 @@ void SwirlEffect::ApplySaveData() {
 }
 
 void SwirlEffect::CopyData() {
+	setting_->radiusKernel = param_.radiusKernel;
+	setting_->angleStrength = param_.angleStrength;
+	setting_->speed = param_.speed;
+	setting_->frontWidth = param_.frontWidth;
+}
+
+void SwirlEffect::Reset() {
+	setting_->time = 0;
 }

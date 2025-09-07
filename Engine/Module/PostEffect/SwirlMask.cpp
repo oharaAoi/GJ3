@@ -19,7 +19,7 @@ void SwirlMask::SetCommand() {
 
 	Pipeline* pso = Engine::SetPipeline(PSOType::Sprite, "Sprite_Normal_16.json");
 	pattern_->Draw(pso);
-	mask_->Draw(pso);
+	//mask_->Draw(pso);
 }
 
 void SwirlMask::Debug_Gui() {

@@ -102,7 +102,7 @@ void PostProcess::Init(ID3D12Device* device, DescriptorHeap* descriptorHeap, Ren
 
 	swirlEffect_ = std::make_shared<SwirlEffect>();
 	swirlEffect_->Init();
-	swirlEffect_->SetIsEnable(true);
+	swirlEffect_->SetIsEnable(false);
 	swirlEffect_->SetPongResource(pingPongBuff_.get());
 	swirlEffect_->SetDepthHandle(depthHandle_);
 
