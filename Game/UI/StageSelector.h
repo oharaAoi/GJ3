@@ -41,7 +41,44 @@ public:
 	void InputHandle();
 	void Scroll();
 private:
-	std::array<std::unique_ptr<BlockWall>,3> stagePreviews_;
+	struct RotateAnimationParam
+		:public IJsonConverter{
+	public:
+		RotateAnimationParam();
+		~RotateAnimationParam()override;
+
+		void Init();
+		void Update(Sprite* _sprite);
+
+		int32_t CalculateEventIndex()const;
+
+		json ToJson(const std::string& id) const override;
+		void FromJson(const json& jsonData) override;
+
+		float duration = 0.0f;
+		float elapsedTime = 0.0f;
+
+		/// pendulum
+		Vector3 anchor = Vector3(0.f,0.f,0.f);
+		float angle_ = 0.f;
+		float angleVelo_ = 0.f;
+		float gravity = 9.8f;
+		float length = 32.f;
+
+		int32_t currentAngleEventIndex_ = 0;
+		int32_t preAngleEventIndex_ = -1;
+
+		// 不規則に 動かす用
+		AnimationCurve<float> angleEvent_;
+	};
+
+
+private:
+	std::array<Sprite*,3> stagePreviews_;
+	std::array<Sprite*,3> stagePreviewFrame_; // プレビューの 枠
+
+	Sprite* background_ = nullptr;
+	std::array< Sprite*,2> arrows_; // 矢印 0:L 1:R
 
 	/// 押しっぱなし検出する時間
 	float firstPressInterval_ = 0.4f;
@@ -52,7 +89,7 @@ private:
 	int32_t totalStageNum_ = 5; // 仮
 	int32_t targetStageIndex_ = 0; // スクロール先のインデックス
 	int32_t scrollStartIndex_ = 0; // スクロール開始時のインデックス
-	int32_t scrollDirection_ = 0;       // -1:左 / +1:右
+	int32_t scrollDirection_ = 0; // -1:左 / +1:右
 
 	bool decidedStage_ = false;
 	bool isScrolling_ = false;
@@ -60,10 +97,14 @@ private:
 	float scrollTime_ = 0.0f;       // 現在のスクロール時間
 	float scrollDuration_ = 0.6f;   // スクロールにかける秒数
 	Vector2 centerPos_ = Vector2(640.f,360.0f);
-	float theSpaceBetweenButtons_ = 600.f;    // 描画用のオフセット（-1.0 ~ 1.0）
-	float currentOffset_ = 0.0f;   // 現在のオフセット位置
+	float theSpaceBetweenButtons_ = 600.f;    // ボタン同士の間隔
+	float currentOffsetX_ = 0.0f;   // 現在のオフセット位置
+	float offsetY_ = -87.f; // Y オフセット Xは移動するが, Yは固定
 
 	StageRenderTarget* pStageRenderTarget_;
+
+	std::unique_ptr<RotateAnimationParam> leftArrowRotateParam_;
+	std::unique_ptr<RotateAnimationParam> rightArrowRotateParam_;
 
 public:
 	bool IsDecidedStage() const{ return decidedStage_; }
@@ -72,5 +113,5 @@ public:
 	int32_t GetTotalStageNum() const{ return totalStageNum_; }
 	void SetTotalStageNum(int32_t num){ totalStageNum_ = num; }
 
-	void SetStageRenderTarget(StageRenderTarget* _stageRenderTarget) { pStageRenderTarget_ = _stageRenderTarget; }
+	void SetStageRenderTarget(StageRenderTarget* _stageRenderTarget){ pStageRenderTarget_ = _stageRenderTarget; }
 };

@@ -23,6 +23,7 @@ void PostProcess::Finalize() {
 	motionBlur_.reset();
 	distortion_.reset();
 	gotRay_.reset();
+	swirlEffect_.reset();
 	effectList_.clear();
 	depthStencilResource_.Reset();
 }
@@ -99,6 +100,12 @@ void PostProcess::Init(ID3D12Device* device, DescriptorHeap* descriptorHeap, Ren
 	gotRay_->Init();
 	gotRay_->SetIsEnable(true);
 
+	swirlEffect_ = std::make_shared<SwirlEffect>();
+	swirlEffect_->Init();
+	swirlEffect_->SetIsEnable(true);
+	swirlEffect_->SetPongResource(pingPongBuff_.get());
+	swirlEffect_->SetDepthHandle(depthHandle_);
+
 	AddEffect(PostEffectType::RADIALBLUR);
 	AddEffect(PostEffectType::GLITCHNOISE);
 	AddEffect(PostEffectType::VIGNETTE);
@@ -112,6 +119,7 @@ void PostProcess::Init(ID3D12Device* device, DescriptorHeap* descriptorHeap, Ren
 	AddEffect(PostEffectType::GRAYSCALE);
 	AddEffect(PostEffectType::DISTORTION);
 	AddEffect(PostEffectType::GOTRAY);
+	AddEffect(PostEffectType::SWIRL);
 	AddEffect(PostEffectType::TOONMAP);
 
 	EditorWindows::AddObjectWindow(this, "Post Process");
@@ -215,6 +223,9 @@ void PostProcess::AddEffect(PostEffectType type) {
 		case PostEffectType::GOTRAY:
 			effectList_.push_back(gotRay_);
 			break;
+		case PostEffectType::SWIRL:
+			effectList_.push_back(swirlEffect_);
+			break;
 		default:
 			break;
 		}
@@ -260,6 +271,8 @@ std::shared_ptr<IPostEffect> PostProcess::GetEffect(PostEffectType type) {
 		return distortion_;
 	case PostEffectType::GOTRAY:
 		return gotRay_;
+	case PostEffectType::SWIRL:
+		return swirlEffect_;
 	default:
 		return nullptr;
 		break;

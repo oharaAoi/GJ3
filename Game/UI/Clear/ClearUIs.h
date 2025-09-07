@@ -50,9 +50,17 @@ public:
 
 private:
 
+	// Clear_text
+	Sprite* text_ = nullptr;
+	// Clear_pot
+	Sprite* pot_ = nullptr;
+	// Clear_curtain
+	Sprite* curtain_ = nullptr;
+	// Clear_bg
+	Sprite* backGround_ = nullptr;
+
 	// ボタン
 	std::array<std::unique_ptr<IButtonUI>, 2> buttonUIs_;
-
 
 	Parameter param_;
 

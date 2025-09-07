@@ -1,0 +1,12 @@
+{
+    "Pipeline": {
+        "vs": "./Engine/Assets/HLSL/PostEffect/ProcessedScene.VS.hlsl",
+        "ps": "./Game/Assets/HLSL/Swirl.PS.hlsl",
+        "blendMode": "None",
+        "culling" : true,
+        "depth" : false,
+        "rtvFormat" : [
+            "16_RGB"
+        ]
+    }
+}

@@ -15,6 +15,7 @@
 #include "Engine/Module/PostEffect/MotionBlur.h"
 #include "Engine/Module/PostEffect/DistortionEffect.h"
 #include "Engine/Module/PostEffect/ScreenGotRay.h"
+#include "Engine/Module/PostEffect/SwirlEffect.h"
 
 #include "Engine/Module/PostEffect/PingPongBuffer.h"
 #include "Engine/Module/Components/Attribute/AttributeGui.h"
@@ -36,6 +37,7 @@ enum class PostEffectType {
 	MOTIONBLUR,
 	DISTORTION,
 	GOTRAY,
+	SWIRL,
 };
 
 /// <summary>
@@ -94,6 +96,7 @@ public:
 	std::shared_ptr<MotionBlur> GetMotionBlur() { return motionBlur_; }
 	std::shared_ptr<DistortionEffect> GetDistortionEffect() { return distortion_; }
 	std::shared_ptr<ScreenGotRay> GetGotRay() { return gotRay_; }
+	std::shared_ptr<SwirlEffect> GetSwirlEffect() { return swirlEffect_; }
 
 private:
 
@@ -116,6 +119,7 @@ private:
 	std::shared_ptr<MotionBlur> motionBlur_;
 	std::shared_ptr<DistortionEffect> distortion_;
 	std::shared_ptr<ScreenGotRay> gotRay_;
+	std::shared_ptr<SwirlEffect> swirlEffect_;
 
 	std::list<std::shared_ptr<IPostEffect>> effectList_;
 	std::list<PostEffectType> addEffectList_;

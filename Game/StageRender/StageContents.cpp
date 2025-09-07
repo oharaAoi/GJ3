@@ -4,26 +4,27 @@
 StageContents::~StageContents() {
 }
 
-void StageContents::Init() {
+void StageContents::Init(uint32_t maxStageNum) {
+	maxStageNum_ = maxStageNum;
+
 	stageRenderTarget_ = std::make_unique<StageRenderTarget>();
 	stageRenderTarget_->Init();
 
 	camera_ = std::make_unique<StageContentCamera>();
 	camera_->Init();
 
-	for (uint32_t i = 0; i < 3; ++i) {
+	canvas2ds_.resize(maxStageNum_);
+	stageRegistries_.resize(maxStageNum_);
+	for (uint32_t i = 0; i < maxStageNum_; ++i) {
 		canvas2ds_[i] = std::make_unique<Canvas2d>();
 		canvas2ds_[i]->Init();
 
-		player_[i] = std::make_unique<Player>();
-		player_[i]->Init(canvas2ds_[i].get());
-
 		stageRegistries_[i] = std::make_unique<StageRegistry>();
 		stageRegistries_[i]->Init(canvas2ds_[i].get());
-		stageRegistries_[i]->SetPlayer(player_[i].get());
 		stageRegistries_[i]->SetWindowSize({ kWindowWidth_ * 0.3f, kWindowHeight_ * 0.3f });
 		stageRegistries_[i]->SetTileRatio(0.9f);
-		stageRegistries_[i]->Register("stage_0.json");
+		std::string stageName = "stage_" + std::to_string(i + 1) + ".json";
+		stageRegistries_[i]->Register(stageName);
 	}
 }
 

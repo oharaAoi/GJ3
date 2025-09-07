@@ -9,31 +9,29 @@
 void StageResetUI::Init(Canvas2d* _canvas2d)
 {
 	pCanvas2d_ = _canvas2d;
-	resetButtonUI_ = pCanvas2d_->AddSprite("resetButton_R.png", GetName(), "Sprite_Normal.json", 12);
-	resetButtonUI_->SetTranslate(Vector2{ 1000.0f,560.0f });
-	resetButtonUI_->ReSetTextureSize(Vector2{ 64.0f,64.0f });
+	resetButtonUI_ = pCanvas2d_->AddSprite("resetButton_R.png", GetName(), "Sprite_Normal.json", 6);
+	//resetButtonUI_->SetAnchorPoint(Vector2{ 1.0f,1.0f });
 
-	backTextureUI_ = pCanvas2d_->AddSprite("white.png", GetName(), "Sprite_Normal.json", 11);
-	backTextureUI_->SetTranslate(Vector2{ 1000.0f,592.0f });
-	backTextureUI_->ReSetTextureSize(Vector2{ 64.0f,0.0f });
-	backTextureUI_->SetAnchorPoint(Vector2{ 0.5f,1.0f });
+	backTextureUI_ = pCanvas2d_->AddSprite("white.png", GetName(), "Sprite_Normal.json", 5);
+	//backTextureUI_->SetAnchorPoint(Vector2{ 0.5f,1.0f });
 	backTextureUI_->SetColor(Vector4{ 1.0f,0.0f,0.0f,1.0f });
 
-	whiteTextureUI_ = pCanvas2d_->AddSprite("white.png", GetName(), "Sprite_Normal.json", 10);
-	whiteTextureUI_->SetTranslate(Vector2{ 1000.0f,592.0f });
-	whiteTextureUI_->ReSetTextureSize(Vector2{ 64.0f,64.0f });
-	whiteTextureUI_->SetAnchorPoint(Vector2{ 0.5f,1.0f });
+	whiteTextureUI_ = pCanvas2d_->AddSprite("white.png", GetName(), "Sprite_Normal.json", 4);
+	//whiteTextureUI_->SetAnchorPoint(Vector2{ 1.0f,1.0f });
 
 	SetName("StageResetButtonUI");
 	AddChild(this);
 	EditorWindows::AddObjectWindow(this, GetName());
 	param_.FromJson(JsonItems::GetData(GetName(), param_.GetName()));
 
-	float size_y = (resetTimer_ / param_.resetTime) * param_.def_size;
-	backTextureUI_->ReSetTextureSize(Vector2{ 64.0f,size_y });
-	backTextureUI_->SetTranslate(param_.backTexturePos);
-	whiteTextureUI_->SetTranslate(param_.backTexturePos);
-	resetButtonUI_->SetTranslate(param_.resetButtonPos);
+	backTextureUI_->ReSetTextureSize(textureSize_);
+	whiteTextureUI_->ReSetTextureSize(textureSize_);
+	resetButtonUI_->ReSetTextureSize(textureSize_);
+
+	Vector2 windowSize = { kWindowWidth_, kWindowHeight_ };
+	backTextureUI_->SetTranslate(Vector2{ windowSize - textureSize_ });
+	resetButtonUI_->SetTranslate(Vector2{ windowSize - textureSize_ });
+	whiteTextureUI_->SetTranslate(Vector2{ windowSize - textureSize_ });
 }
 
 void StageResetUI::Update()
@@ -57,14 +55,7 @@ void StageResetUI::Update()
 		resetButtonUI_->SetTextureName("resetButton_X.png");
 	}
 	resetTimer_ = std::clamp(resetTimer_, 0.0f, 1.0f);
-	Vector2 textureSize = { param_.def_size ,param_.def_size };
-	backTextureUI_->ReSetTextureSize({ textureSize.x,textureSize.y * resetTimer_ });
-	whiteTextureUI_->ReSetTextureSize(textureSize);
-	resetButtonUI_->ReSetTextureSize(textureSize);
-
-	whiteTextureUI_->SetTranslate(param_.backTexturePos);
-	backTextureUI_->SetTranslate(param_.backTexturePos);
-	resetButtonUI_->SetTranslate(param_.resetButtonPos);
+	backTextureUI_->SetUvMinSize({ 0.0f,1.0f - resetTimer_ });
 
 }
 
