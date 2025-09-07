@@ -3,6 +3,8 @@
 #include "Engine/System/Input/Input.h"
 #include "Engine/Lib/Json/JsonItems.h"
 
+#include "Engine.h"
+
 TitleScene::TitleScene(){}
 
 TitleScene::~TitleScene(){
@@ -13,11 +15,28 @@ void TitleScene::Finalize(){
 	sceneRenderer_->Finalize();
 	ParticleManager::GetInstance()->Finalize();
 	GpuParticleManager::GetInstance()->Finalize();
+
+	// -------------------------------------------------
+	// ↓ PostProcess の初期化
+	// -------------------------------------------------
+	auto postProcess = Engine::GetPostProcess();
+	postProcess->GetBloom()->SetIsEnable(false);
+	postProcess->GetVignette()->SetIsEnable(false);
 }
 
 void TitleScene::Init(){
 	JsonItems* adjust = JsonItems::GetInstance();
 	adjust->Init("TitleScene");
+
+	// -------------------------------------------------
+	// ↓ PostProcess の初期化
+	// -------------------------------------------------
+	auto postProcess = Engine::GetPostProcess();
+	postProcess->SetIsActive(true);
+	postProcess->GetBloom()->SetIsEnable(true);
+
+	postProcess->GetVignette()->SetIsEnable(true);
+
 
 	sceneRenderer_ = SceneRenderer::GetInstance();
 	sceneRenderer_->Init();
