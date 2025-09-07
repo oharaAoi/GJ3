@@ -47,14 +47,29 @@ private:
 		RotateAnimationParam();
 		~RotateAnimationParam()override;
 
+		void Init();
+		void Update(Sprite* _sprite);
+
+		int32_t CalculateEventIndex()const;
+
 		json ToJson(const std::string& id) const override;
 		void FromJson(const json& jsonData) override;
 
 		float duration = 0.0f;
 		float elapsedTime = 0.0f;
 
+		/// pendulum
+		Vector3 anchor = Vector3(0.f,0.f,0.f);
+		float angle_ = 0.f;
+		float angleVelo_ = 0.f;
+		float gravity = 9.8f;
+		float length = 32.f;
+
+		int32_t currentAngleEventIndex_ = 0;
+		int32_t preAngleEventIndex_ = -1;
+
 		// 不規則に 動かす用
-		AnimationCurve<float> rotationCurve_;
+		AnimationCurve<float> angleEvent_;
 	};
 
 
@@ -87,6 +102,9 @@ private:
 	float offsetY_ = -87.f; // Y オフセット Xは移動するが, Yは固定
 
 	StageRenderTarget* pStageRenderTarget_;
+
+	std::unique_ptr<RotateAnimationParam> leftArrowRotateParam_;
+	std::unique_ptr<RotateAnimationParam> rightArrowRotateParam_;
 
 public:
 	bool IsDecidedStage() const{ return decidedStage_; }

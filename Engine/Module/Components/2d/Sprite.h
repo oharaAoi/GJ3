@@ -185,6 +185,7 @@ private:
 
 	// Transform情報
 	std::unique_ptr<ScreenTransform> transform_;
+	SRT* parentTransform_ = nullptr;
 	SRT uvTransform_;
 
 	std::string textureName_;

@@ -4,8 +4,11 @@
 #include "Engine/System/Input/Input.h"
 #include "Engine/System/AUdio/AudioPlayer.h"
 
-/// cmath
+#include "Engine/Utilities/Timeline.h"
+
+/// math
 #include <cmath>
+#include "Engine/Lib/Math/MyMath.h"
 
 int32_t StageSelector::currentStageIndex_ = 0;
 
@@ -46,8 +49,16 @@ void StageSelector::Init(){
 	/// ==============================
 	arrows_[0] = Engine::GetCanvas2d()->AddSprite("Select_arrow_left.png","Arrow_Left","Sprite_Normal.json",5);
 	arrows_[1] = Engine::GetCanvas2d()->AddSprite("Select_arrow_right.png","Arrow_Right","Sprite_Normal.json",5);
-	arrows_[0]->SetAnchorPoint({1.f,1.f});
-	arrows_[1]->SetAnchorPoint({1.f,1.f});
+	arrows_[0]->SetTranslate({84.f,268.7f});
+	arrows_[1]->SetTranslate({1196.f,268.7f});
+
+	leftArrowRotateParam_ = std::make_unique<RotateAnimationParam>();
+	rightArrowRotateParam_ = std::make_unique<RotateAnimationParam>();
+	leftArrowRotateParam_->Init();
+	rightArrowRotateParam_->Init();
+
+	leftArrowRotateParam_->FromJson(JsonItems::GetData("RotateAnimation","Left_Arrow"));
+	rightArrowRotateParam_->FromJson(JsonItems::GetData("RotateAnimation","Right_Arrow"));
 
 	AddChild(arrows_[0]);
 	AddChild(arrows_[1]);
@@ -88,13 +99,41 @@ void StageSelector::Debug_Gui(){
 
 	ImGui::Spacing();
 
+	if(ImGui::TreeNode("LeftArrow_AngleEvent")){
+		ImGui::DragFloat("Duration##LeftArrow_AngleEvent",&leftArrowRotateParam_->duration,0.01f);
+		ImGui::SliderFloat("ElapsedTime##LeftArrow_AngleEvent",&leftArrowRotateParam_->elapsedTime,0.0f,leftArrowRotateParam_->duration);
+		ImGui::EditKeyFrame("LeftArrow_AngleEvent",leftArrowRotateParam_->angleEvent_,leftArrowRotateParam_->duration,0.0f);
 
+		ImGui::Spacing();
+
+		ImGui::DragFloat2("Anchor##LeftArrow_AngleEvent",&leftArrowRotateParam_->anchor.x,0.1f);
+		ImGui::DragFloat("Gravity##LeftArrow_AngleEvent",&leftArrowRotateParam_->gravity,0.1f);
+		ImGui::DragFloat("Length##LeftArrow_AngleEvent",&leftArrowRotateParam_->length,0.1f);
+
+		ImGui::TreePop();
+	}
+	if(ImGui::TreeNode("RightArrow_AngleEvent")){
+		ImGui::DragFloat("Duration##RightArrow_AngleEvent",&rightArrowRotateParam_->duration,0.01f);
+		ImGui::SliderFloat("ElapsedTime##RightArrow_AngleEvent",&rightArrowRotateParam_->elapsedTime,0.0f,rightArrowRotateParam_->duration);
+		ImGui::EditKeyFrame("RightArrow_AngleEvent",rightArrowRotateParam_->angleEvent_,rightArrowRotateParam_->duration,0.0f);
+
+		ImGui::Spacing();
+
+		ImGui::DragFloat2("Anchor##RightArrow_AngleEvent",&rightArrowRotateParam_->anchor.x,0.1f);
+		ImGui::DragFloat("Gravity##RightArrow_AngleEvent",&rightArrowRotateParam_->gravity,0.1f);
+		ImGui::DragFloat("Length##RightArrow_AngleEvent",&rightArrowRotateParam_->length,0.1f);
+
+		ImGui::TreePop();
+	}
 }
 
 void StageSelector::Update(){
 	InputHandle();
 	Scroll();
 	ConvertIndexToScreen();
+
+	leftArrowRotateParam_->Update(arrows_[0]);
+	rightArrowRotateParam_->Update(arrows_[1]);
 }
 
 void StageSelector::InputHandle(){
@@ -223,30 +262,107 @@ void StageSelector::ConvertIndexToScreen(){
 	stagePreviewFrame_[2]->SetTranslate(centerPos_ + Vector2(theSpaceBetweenButtons_ + currentOffsetX_,0.f)); // 右
 }
 
+#pragma region Pendulum
+
 StageSelector::RotateAnimationParam::RotateAnimationParam(){}
 
 StageSelector::RotateAnimationParam::~RotateAnimationParam(){}
 
+void StageSelector::RotateAnimationParam::Init(){
+	elapsedTime = 0.f;
+}
+void StageSelector::RotateAnimationParam::Update(Sprite* _sprite){
+	elapsedTime += GameTimer::DeltaTime();
+
+	preAngleEventIndex_ = currentAngleEventIndex_;
+
+	// ループする
+	if(elapsedTime >= duration){
+		elapsedTime = 0.f;
+		preAngleEventIndex_ = -1;
+	}
+
+	currentAngleEventIndex_ = CalculateEventIndex();
+
+	if(currentAngleEventIndex_ == -1){
+		return;
+	}
+
+	if(currentAngleEventIndex_ != preAngleEventIndex_){
+		// 変化したとき
+		angle_ = angleEvent_.keyframes[currentAngleEventIndex_].value;
+	}
+
+	Vector3 spritePos = PendulumUpdate(anchor,length,angle_,angleVelo_,gravity);
+	_sprite->GetTransform()->SetTranslate({spritePos.x,spritePos.y});
+
+	if(std::isnan(angle_)){
+		angle_ = 0.f;
+	}
+
+	_sprite->GetTransform()->SetRotate(angle_);
+
+	_sprite->GetTransform()->GetTransform();
+}
+
+int32_t StageSelector::RotateAnimationParam::CalculateEventIndex()const{
+	///===========================================
+	/// 例外処理
+	///===========================================
+	if(angleEvent_.keyframes.empty()){
+		return -1;
+	}
+	if(angleEvent_.keyframes.size() == 1){
+		if(elapsedTime <= angleEvent_.keyframes[0].time){
+			return -1;
+		}
+		return 0;
+	}
+
+	for(int32_t index = 0; index < angleEvent_.keyframes.size() - 1; ++index){
+		int32_t nextIndex = index + 1;
+		// index と nextIndex の 2つを
+		// 取得して 現時刻が 範囲内か
+		if(angleEvent_.keyframes[index].time <= elapsedTime && elapsedTime <= angleEvent_.keyframes[nextIndex].time){
+			return index;
+		}
+	}
+	// 登録されている時間より 後ろ
+	// 最後の 値を返す
+	return static_cast<int32_t>(angleEvent_.keyframes.size() - 1);
+}
+
 json StageSelector::RotateAnimationParam::ToJson(const std::string& id) const{
 	JsonBuilder j(id);
 	j.Add("duration",duration);
-	j.Add("curveSize",static_cast<int>(rotationCurve_.keyframes.size()));
-	for(size_t i = 0; i < rotationCurve_.keyframes.size(); ++i){
-		j.Add("time" + std::to_string(i),rotationCurve_.keyframes[i].time);
-		j.Add("value" + std::to_string(i),rotationCurve_.keyframes[i].value);
+	j.Add("curveSize",static_cast<int>(this->angleEvent_.keyframes.size()));
+	for(size_t i = 0; i < angleEvent_.keyframes.size(); ++i){
+		j.Add("time" + std::to_string(i),angleEvent_.keyframes[i].time);
+		j.Add("value" + std::to_string(i),angleEvent_.keyframes[i].value);
 	}
+	j.Add("anchor",anchor);
+	j.Add("gravity",gravity);
+	j.Add("length",length);
+
 	return j.Build();
 }
 void StageSelector::RotateAnimationParam::FromJson(const json& jsonData){
 	fromJson(jsonData,"flashDuration",duration);
 	int curveSize = 0;
 	fromJson(jsonData,"curveSize",curveSize);
-	rotationCurve_.keyframes.clear();
+	angleEvent_.keyframes.clear();
 	for(int i = 0; i < curveSize; ++i){
 		float time = 0.f;
 		float value = 0.f;
 		fromJson(jsonData,"time" + std::to_string(i),time);
 		fromJson(jsonData,"value" + std::to_string(i),value);
-		rotationCurve_.keyframes.push_back({time,value});
+		angleEvent_.keyframes.push_back({time,value});
 	}
+
+	fromJson(jsonData,"anchor",anchor);
+	fromJson(jsonData,"gravity",gravity);
+	fromJson(jsonData,"length",length);
+
 }
+
+#pragma endregion
