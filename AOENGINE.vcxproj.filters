@@ -274,7 +274,6 @@
     <ClCompile Include="Game\Tool\MapChipLoader.cpp" />
     <ClCompile Include="Game\Tool\StageEditor.cpp" />
     <ClCompile Include="Game\Tool\StageLoader.cpp" />
-    <ClCompile Include="Game\UI\TitleUIs.cpp" />
     <ClCompile Include="Game\WorldObject\BackGround.cpp" />
     <ClCompile Include="Game\WorldObject\Skybox.cpp" />
     <ClCompile Include="Game\WorldObject\WorldObjects.cpp" />
@@ -312,6 +311,7 @@
     <ClCompile Include="Game\Commands\Stage\CreateGraveBlock.cpp" />
     <ClCompile Include="Game\Commands\Stage\MoveBlockCommand.cpp" />
     <ClCompile Include="Game\Commands\Stage\PlayerGetGhostCommand.cpp" />
+    <ClCompile Include="Game\UI\TitleUIs.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Module\PostEffect\DistortionEffect.h" />
@@ -546,7 +546,6 @@
     <ClInclude Include="Game\Tool\MapChipLoader.h" />
     <ClInclude Include="Game\Tool\StageEditor.h" />
     <ClInclude Include="Game\Tool\StageLoader.h" />
-    <ClInclude Include="Game\UI\TitleUIs.h" />
     <ClInclude Include="Game\WorldObject\BackGround.h" />
     <ClInclude Include="Game\WorldObject\Skybox.h" />
     <ClInclude Include="Engine\Lib\Math\Vector2Int.h" />
@@ -585,6 +584,7 @@
     <ClInclude Include="Game\Commands\Stage\CreateGraveBlock.h" />
     <ClInclude Include="Game\Commands\Stage\MoveBlockCommand.h" />
     <ClInclude Include="Game\Commands\Stage\PlayerGetGhostCommand.h" />
+    <ClInclude Include="Game\UI\TitleUIs.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\Assets\HLSL\Light.hlsli" />
