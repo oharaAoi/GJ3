@@ -41,8 +41,6 @@ protected:
 	};
 
 private:
-	// 点滅時に画面を覆う用のSprite
-	Sprite* flashOverlaySprite_;
 	float alpha_ = 0.0f;
 
 	Parameter parameter_;
