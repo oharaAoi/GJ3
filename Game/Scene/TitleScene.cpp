@@ -47,7 +47,7 @@ void TitleScene::Init(){
 	thunderFlash_->Init();
 
 	lightFlash_ = std::make_unique<LightFlash>();
-	lightFlash_->Init();
+	lightFlash_->Init("LightFlash");
 
 	DirectionalLight* light = Render::GetLightGroup()->GetDirectionalLight();
 	light->SetIntensity(0.3f);
@@ -58,7 +58,7 @@ void TitleScene::Init(){
 
 	bgm_ = std::make_unique<AudioPlayer>();
 	bgm_->Init("kinmokusei.mp3");
-	bgm_->Play(true, 0.5f);
+	bgm_->Play(true,0.5f);
 }
 
 void TitleScene::Update(){
@@ -116,9 +116,8 @@ void TitleScene::InputHandle(){
 
 	if(doTransition){
 		isTransition_ = true;
-		thunderFlash_->SetFlashColor(Vector4(0.f,0.f,0.f,0.f));
 		lightFlash_->SetFlashColor(Vector4(0.f,0.f,0.f,0.f));
-		AudioPlayer::SinglShotPlay("fanfare.wav", 0.3f);
+		AudioPlayer::SinglShotPlay("fanfare.wav",0.3f);
 	}
 }
 

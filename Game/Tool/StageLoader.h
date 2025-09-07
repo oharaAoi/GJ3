@@ -23,6 +23,8 @@ public:
 
 	const std::string GetStageName() const { return currentFileName_; }
 
+	uint32_t GetMaxStageNum() const { return maxStageNum_; }
+
 private:
 
 	const std::string kStageDirectoryPath_ = "./Game/Assets/GameData/Map/Stage/";
@@ -30,6 +32,8 @@ private:
 
 	std::string currentFileName_;
 	int currentIndex_;
+
+	uint32_t maxStageNum_;	// ステージの最大数
 
 };
 

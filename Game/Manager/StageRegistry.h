@@ -16,7 +16,7 @@
 /// Stageの情報を所有しているクラス
 /// </summary>
 class StageRegistry :
-	public AttributeGui{
+	public AttributeGui {
 public:
 
 	StageRegistry() = default;
@@ -32,10 +32,10 @@ public:
 
 	void CreatesStageByMapData();
 
-	const std::vector<std::vector<std::unique_ptr<IBlock>>>& GetStageData(){ return stageData_; }
-	std::vector<std::vector<std::unique_ptr<IBlock>>>& GetStageDataRef(){ return stageData_; }
+	const std::vector<std::vector<std::unique_ptr<IBlock>>>& GetStageData() { return stageData_; }
+	std::vector<std::vector<std::unique_ptr<IBlock>>>& GetStageDataRef() { return stageData_; }
 
-	void CreateStageData(const Vector2Int& index,BlockType type);
+	void CreateStageData(const Vector2Int& index, BlockType type);
 	void ClearStageData(const Vector2Int& index);
 
 	void DestroyStageData();
@@ -46,17 +46,19 @@ public:
 
 public:
 
-	void SetPlayer(Player* _player){ pPlayer_ = _player; }
-	void SetWindowSize(const Vector2& _size){ windowSize_ = _size; }
-	void SetTileRatio(float _ratio){ tileRatio_ = _ratio; }
+	void SetPlayer(Player* _player) { pPlayer_ = _player; }
+	void SetWindowSize(const Vector2& _size) { windowSize_ = _size; }
+	void SetTileRatio(float _ratio) { tileRatio_ = _ratio; }
 
-	const Vector2& GetTileSize() const{ return tileSize_; }
-	const Vector2& GetStartPos() const{ return startPos_; }
-	const Vector2& GetMapOffset() const{ return mapOffset_; }
-	const Vector2Int& GetStartIndex() const{ return startIndex_; }
-	const Vector2Int& GetGoalIndex() const{ return goalIndex_; }
+	const Vector2& GetTileSize() const { return tileSize_; }
+	const Vector2& GetStartPos() const { return startPos_; }
+	const Vector2& GetMapOffset() const { return mapOffset_; }
+	const Vector2Int& GetStartIndex() const { return startIndex_; }
+	const Vector2Int& GetGoalIndex() const { return goalIndex_; }
 
 	uint32_t GetNeedGhostNum() const { return needGhostNum_; }
+
+	uint32_t GetMaxStageNum() const { return stageLoader_->GetMaxStageNum(); }
 
 private:
 

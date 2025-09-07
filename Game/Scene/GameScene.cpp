@@ -65,7 +65,7 @@ void GameScene::Init(){
 	stageRegistry_->Init(Engine::GetCanvas2d());
 	stageRegistry_->SetPlayer(player_.get());
 	stageRegistry_->SetWindowSize({kWindowWidth_,kWindowHeight_});
-	std::string loadName = "stage_" + std::to_string(StageSelector::GetCurrentStageIndex()) + ".json";
+	std::string loadName = "stage_" + std::to_string(StageSelector::GetCurrentStageIndex() + 1) + ".json";
 	stageRegistry_->Register(loadName);
 
 	mapCollision_ = std::make_unique<MapCollisionSystem>();
