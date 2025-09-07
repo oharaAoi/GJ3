@@ -81,6 +81,7 @@ void GameScene::Init(){
 	getGhostCountUI_->Init(Engine::GetCanvas2d());
 
 	stageResetUI_ = std::make_unique<StageResetUI>();
+	stageResetUI_->SetTextureSize(stageRegistry_->GetTileSize());
 	stageResetUI_->Init(Engine::GetCanvas2d());
 
 	// -------------------------------------------------

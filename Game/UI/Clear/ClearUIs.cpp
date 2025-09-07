@@ -25,6 +25,20 @@ void ClearUIs::Init()
 		if (i == 1) { position = param_.nextStageButtonPos; }
 		buttonUIs_[i]->GetSprite()->SetTranslate(position);
 	}
+
+	// Clear_text
+	text_ = Engine::GetCanvas2d()->AddSprite("Clear_text.png", GetName(), "Sprite_Normal.json", 1);
+	// Clear_pot
+	pot_ = Engine::GetCanvas2d()->AddSprite("Clear_pot.png", GetName(), "Sprite_Normal.json", 1);
+	// Clear_curtain
+	curtain_ = Engine::GetCanvas2d()->AddSprite("Clear_curtain.png", GetName(), "Sprite_Normal.json", 1);
+	// Clear_bg
+	backGround_ = Engine::GetCanvas2d()->AddSprite("Clear_bg.png", GetName(), "Sprite_Normal.json");
+
+	text_->SetTranslate(Vector2{ 640.0f,360.0f });
+	pot_->SetTranslate(Vector2{ 640.0f,360.0f });
+	curtain_->SetTranslate(Vector2{ 640.0f,360.0f });
+	backGround_->SetTranslate(Vector2{ 640.0f,360.0f });
 }
 
 void ClearUIs::Update()

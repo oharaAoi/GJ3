@@ -38,6 +38,7 @@ public:
 		Vector2 radius;
 		float def_size;
 		float size;
+		float speed;
 
 		ClearSoulParam() { SetName("GhostSoulManager"); }
 
@@ -47,6 +48,7 @@ public:
 				.Add("radius", radius)
 				.Add("def_size", def_size)
 				.Add("size", size)
+				.Add("speed", speed)
 				.Build();
 		}
 
@@ -55,6 +57,7 @@ public:
 			fromJson(jsonData, "radius", radius);
 			fromJson(jsonData, "def_size", def_size);
 			fromJson(jsonData, "size", size);
+			fromJson(jsonData, "speed", speed);
 		}
 	};
 

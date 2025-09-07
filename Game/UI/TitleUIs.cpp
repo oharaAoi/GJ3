@@ -12,7 +12,7 @@ void TitleUIs::Init(){
 	///===========================================
 	// Sprites
 	///===========================================
-	backGround_ = Engine::GetCanvas2d()->AddSprite("Title_bg.png","BackGround","Sprite_Normal.json",-10,true);
+	backGround_ = Engine::GetCanvas2d()->AddSprite("title_bg.png","BackGround","Sprite_Normal.json",-10,true);
 	backGround_->SetColor({0.15f,0.15f,0.15f,1.f});
 
 	titleWords_[0] = Engine::GetCanvas2d()->AddSprite("Title_su.png","su","Sprite_Normal.json",-1,true);   // す
@@ -30,7 +30,7 @@ void TitleUIs::Init(){
 	shelf_ = Engine::GetCanvas2d()->AddSprite("Title_shelf.png","Shelf","Sprite_Normal.json",-1,true);
 	shelf_->SetColor({0.15f,0.15f,0.15f,1.f});
 
-	ghost_ = Engine::GetCanvas2d()->AddSprite("Title_ghost.png","Ghost","Sprite_Normal.json",5,true);
+	ghost_ = Engine::GetCanvas2d()->AddSprite("title_ghost.png","Ghost","Sprite_Normal.json",5,true);
 
 	///===========================================
 	// AttributeGui に登録

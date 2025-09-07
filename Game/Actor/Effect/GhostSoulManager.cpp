@@ -44,7 +44,7 @@ void GhostSoulManager::Update() {
 
 void GhostSoulManager::UpdateClearScene()
 {
-	angleRad_ += GameTimer::DeltaTime();
+	angleRad_ += GameTimer::DeltaTime() * param_.speed;
 	if (kPI2 < angleRad_) { angleRad_ = 0.0f; }
 	for (size_t i = 0; i < souls_.size(); ++i) {
 		float nextAngle = kPI2 / static_cast<float>(souls_.size()) * static_cast<float>(i);
@@ -58,7 +58,8 @@ void GhostSoulManager::UpdateClearScene()
 		Vector2 pos = {};
 		pos.x = param_.center.x + param_.radius.x * std::cos(nextAngle);
 		pos.y = param_.center.y + param_.radius.y * std::sin(nextAngle);
-		souls_[i]->Update(pos);
+		float posY = souls_[i]->SwayMoveY();
+		souls_[i]->Update(Vector2{ pos.x,pos.y + posY });
 	}
 }
 
@@ -83,6 +84,7 @@ void GhostSoulManager::Debug_Gui()
 	ImGui::DragFloat2("radius", &param_.radius.x);
 	ImGui::DragFloat("def_size", &param_.def_size);
 	ImGui::DragFloat("size", &param_.size);
+	ImGui::DragFloat("speed", &param_.speed);
 
 	if (ImGui::Button("Save")) {
 		JsonItems::Save("ClearSoul", param_.ToJson(param_.GetName()));
