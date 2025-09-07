@@ -51,7 +51,8 @@ bool MapCollisionSystem::IsMovable(const Vector2Int &direction, const Vector2Int
 	}
 
 	// ゴールと当たった時
-	if (firstStepIndex->GetType() == BlockType::Goal)
+	if (firstStepIndex->GetType() == BlockType::Goal &&
+		stageRegistry_->GetNeedGhostNum() <= ghostCounter_)
 	{
 		isClear_ = true;
 		return true;
@@ -67,7 +68,8 @@ bool MapCollisionSystem::IsMovable(const Vector2Int &direction, const Vector2Int
 	}
 	// 壁だから進めない
 	if (firstStepIndex->GetType() == BlockType::Wall ||
-		firstStepIndex->GetType() == BlockType::GraveBlock)
+		firstStepIndex->GetType() == BlockType::GraveBlock ||
+		firstStepIndex->GetType() == BlockType::Goal)
 	{
 		AudioPlayer::SinglShotPlay("don.mp3", 0.6f); // 壁にあたったときの音
 		return false;
@@ -88,6 +90,7 @@ bool MapCollisionSystem::IsMovable(const Vector2Int &direction, const Vector2Int
 			return true;
 		}
 	}
+	AudioPlayer::SinglShotPlay("don.mp3", 0.6f); // 壁にあたったときの音
 	return false;
 }
 

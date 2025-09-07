@@ -2,11 +2,11 @@
     "ClearUIs": {
         "nextStageButtonPos": {
             "x": 1050.0,
-            "y": 650.0
+            "y": 665.0
         },
         "selectButtonPos": {
             "x": 1050.0,
-            "y": 560.0
+            "y": 575.0
         }
     }
 }

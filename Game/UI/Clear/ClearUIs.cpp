@@ -13,13 +13,17 @@ void ClearUIs::Init()
 	AddChild(this);
 	EditorWindows::AddObjectWindow(this, GetName());
 
+	param_.FromJson(JsonItems::GetData(GetName(), param_.GetName()));
 	// ボタン生成、初期化
 	buttonUIs_[0] = std::make_unique<SelectButtonUI>();
 	buttonUIs_[1] = std::make_unique<NextStageButtonUI>();
 
 	// 初期化
-	for (auto& buttonUI : buttonUIs_) {
-		buttonUI->Init();
+	for (size_t i = 0; i < buttonUIs_.size(); ++i) {
+		buttonUIs_[i]->Init();
+		Vector2 position = param_.selectButtonPos;
+		if (i == 1) { position = param_.nextStageButtonPos; }
+		buttonUIs_[i]->GetSprite()->SetTranslate(position);
 	}
 }
 
