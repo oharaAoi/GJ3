@@ -80,7 +80,7 @@ void StageSelectScene::Init(){
 	// ------------------------------------------------
 
 	bgm_ = std::make_unique<AudioPlayer>();
-	bgm_->Init("kinmokusei.mp3");
+	bgm_->Init("Select.mp3");
 	bgm_->Play(true,0.5f);
 }
 

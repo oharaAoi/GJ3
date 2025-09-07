@@ -59,6 +59,10 @@ void ClearScene::Init()
 	clearSelector_ = std::make_unique<ClearSelector>();
 	clearSelector_->Init();
 
+	bgm_ = std::make_unique<AudioPlayer>();
+	bgm_->Init("Clear.mp3");
+	bgm_->Play(true, 0.5f);
+
 }
 
 void ClearScene::Finalize()

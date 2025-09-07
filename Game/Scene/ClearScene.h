@@ -10,6 +10,7 @@
 #include "Game/WorldObject/WorldObjects.h"
 #include "Game/Actor/Effect/GhostSoulManager.h"
 #include "Game/UI/Clear/ClearSelector.h"
+#include "Engine/System/Audio/AudioPlayer.h"
 
 class ClearScene : 
 	public BaseScene
@@ -44,6 +45,8 @@ private:
 	std::unique_ptr<GhostSoulManager> ghostSoulManager_;
 
 	std::unique_ptr<ClearSelector> clearSelector_;
+
+	std::unique_ptr<AudioPlayer> bgm_;
 
 	SceneRenderer* sceneRenderer_;
 
