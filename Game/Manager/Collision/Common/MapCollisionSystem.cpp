@@ -56,7 +56,8 @@ bool MapCollisionSystem::IsMovable(const Vector2Int& direction,const Vector2Int&
 	if(firstStepIndex->GetType() == BlockType::Ghost){
 		ghostBlockCollision_->ChangeGrave(index);
 		// おばけが変わったなら更新を入れる
-		spBlockCollision_->ChangeBlock();
+		//spBlockCollision_->ChangeBlock();
+		ghostBlockCollision_->SetGhostUpdate(true);
 		return true;
 	}
 	// 壁だから進めない
