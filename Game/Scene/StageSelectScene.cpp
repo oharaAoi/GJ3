@@ -59,11 +59,6 @@ void StageSelectScene::Init(){
 	stageContents_ = std::make_unique<StageContents>();
 	stageContents_->Init(stageLoader_->GetMaxStageNum());
 
-	stageSelector_ = std::make_unique<StageSelector>();
-	stageSelector_->SetStageRenderTarget(stageContents_->GetStageRenderTarget());
-	stageSelector_->Init();
-	stageSelector_->SetTotalStageNum(stageLoader_->GetMaxStageNum());
-
 	// -------------------------------------------------
 	// ↓ behaviorの初期化
 	// -------------------------------------------------
