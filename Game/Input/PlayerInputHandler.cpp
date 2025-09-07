@@ -36,13 +36,13 @@ void PlayerInputHandler::HandleInput(){
 	// 移動コマンドを生成
 	std::unique_ptr<IPlayerCommand> command = nullptr;
 	if(moveDirection.x == 1){
-		command = std::make_unique<PlayerRightMoveCommand>(player_);
+		command = std::make_unique<PlayerRightMoveCommand>(player_,player_->GetIndex());
 	} else if(moveDirection.x == -1){
-		command = std::make_unique<PlayerLeftMoveCommand>(player_);
+		command = std::make_unique<PlayerLeftMoveCommand>(player_,player_->GetIndex());
 	} else if(moveDirection.y == 1){
-		command = std::make_unique<PlayerDownMoveCommand>(player_);
+		command = std::make_unique<PlayerDownMoveCommand>(player_,player_->GetIndex());
 	} else if(moveDirection.y == -1){
-		command = std::make_unique<PlayerUpMoveCommand>(player_);
+		command = std::make_unique<PlayerUpMoveCommand>(player_,player_->GetIndex());
 	}
 	if(!command){
 		return;

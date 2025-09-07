@@ -7,6 +7,7 @@
 #include "Game/Commands/ObjectCommandInvoker.h"
 #include "Game/Commands/Stage/PlayerGetGhostCommand.h"
 #include "Game/Commands/Stage/CreateGraveBlock.h"
+#include "Game/Commands/Stage/CreateGhostCommand.h"
 
 void GhostBlockCollision::Init(MapCollisionSystem* system){
 	system_ = system;
@@ -53,9 +54,12 @@ void GhostBlockCollision::CreateTokenGhost(){
 					ObjectCommandInvoker::GetInstance().PushCommand(std::move(PlayerGetGhostCommandCommand));
 
 					auto createGraveCommand = std::make_unique<CreateGraveBlock>(system_->GetStageRegi(),ghostIndex);
+					createGraveCommand->Execute();
 					ObjectCommandInvoker::GetInstance().PushCommand(std::move(createGraveCommand));
 				} else{
-					system_->GetStageRegi()->CreateStageData(ghostIndex,BlockType::Ghost);
+					auto createGhostCommand = std::make_unique<CreateGhostCommand>(system_->GetStageRegi(),ghostIndex);
+					createGhostCommand->Execute();
+					ObjectCommandInvoker::GetInstance().PushCommand(std::move(createGhostCommand));
 				}
 			}
 		}
@@ -105,7 +109,9 @@ void GhostBlockCollision::ChangeGrave(const Vector2Int& index){
 	if(data[index.y][index.x] == nullptr){ return; }
 	if(data[index.y][index.x]->GetType() == BlockType::Ghost){
 		auto createGraveCommand = std::make_unique<CreateGraveBlock>(system_->GetStageRegi(),index);
+		createGraveCommand->Execute();
 		ObjectCommandInvoker::GetInstance().PushCommand(std::move(createGraveCommand));
+
 		auto PlayerGetGhostCommandCommand = std::make_unique<PlayerGetGhostCommand>(system_,index);
 		ObjectCommandInvoker::GetInstance().PushCommand(std::move(PlayerGetGhostCommandCommand));
 	}

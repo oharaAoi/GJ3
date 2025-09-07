@@ -318,6 +318,7 @@
     <ClCompile Include="Game\UI\Clear\ClearUIs.cpp" />
     <ClCompile Include="Game\UI\Button\NextStageButtonUI.cpp" />
     <ClCompile Include="Game\UI\Clear\ClearSelector.cpp" />
+    <ClCompile Include="Game\Commands\Stage\CreateGhostCommand.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Module\PostEffect\DistortionEffect.h" />
@@ -597,6 +598,7 @@
     <ClInclude Include="Game\UI\Clear\ClearUIs.h" />
     <ClInclude Include="Game\UI\Button\NextStageButtonUI.h" />
     <ClInclude Include="Game\UI\Clear\ClearSelector.h" />
+    <ClInclude Include="Game\Commands\Stage\CreateGhostCommand.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\Assets\HLSL\Light.hlsli" />

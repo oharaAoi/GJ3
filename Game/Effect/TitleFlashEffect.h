@@ -45,9 +45,6 @@ private:
 
 	Parameter parameter_;
 public:
-	const Vector4& GetFlashColor() const{ return flashOverlaySprite_->GetColor(); }
-	void SetFlashColor(const Vector4& color){ flashOverlaySprite_->SetColor(color); }
-
 	float GetAlpha() const{ return alpha_; }
 	void SetAlpha(float alpha){ alpha_ = alpha; }
 

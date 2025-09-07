@@ -9,6 +9,9 @@ MoveBlockCommand::MoveBlockCommand(StageRegistry* _stageRegistry,MapCollisionSys
 MoveBlockCommand::~MoveBlockCommand(){}
 
 void MoveBlockCommand::Execute(){
+	if(isExecute_){
+		return;
+	}
 	auto& stageData_ = stageRegistry_->GetStageDataRef();
 
 	if(stageData_[toIndex_.y][toIndex_.x] != nullptr){
@@ -18,8 +21,7 @@ void MoveBlockCommand::Execute(){
 	stageData_[toIndex_.y][toIndex_.x]->SetIndex(toIndex_);
 	stageData_[fromIndex_.y][fromIndex_.x] = nullptr;
 
-	mapCollisionSystem_->GetGhostBlockCollision()->SetGhostUpdate(true);
-	mapCollisionSystem_->Update();
+	isExecute_ = true;
 }
 void MoveBlockCommand::Undo(){
 	Vector2Int copyIndex = toIndex_;
@@ -32,6 +34,5 @@ void MoveBlockCommand::Undo(){
 	stageData_[fromIndex_.y][fromIndex_.x]->SetIndex(fromIndex_);
 	stageData_[toIndex_.y][toIndex_.x] = nullptr;
 
-	mapCollisionSystem_->GetGhostBlockCollision()->SetGhostUpdate(true);
-	mapCollisionSystem_->Update();
+	isExecute_ = false;
 }

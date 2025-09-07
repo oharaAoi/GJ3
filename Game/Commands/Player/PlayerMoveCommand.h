@@ -7,11 +7,13 @@
 class PlayerLeftMoveCommand :
 	public IPlayerCommand{
 public:
-	PlayerLeftMoveCommand(Player* _host)
-		:IPlayerCommand(_host){}
+	PlayerLeftMoveCommand(Player* _host,const Vector2Int& _preIndex)
+		:IPlayerCommand(_host),preIndex_(_preIndex){}
 	virtual ~PlayerLeftMoveCommand() = default;
 	void Execute() override;
 	void Undo() override;
+private:
+	Vector2Int preIndex_;
 };
 
 /// <summary>
@@ -20,11 +22,15 @@ public:
 class PlayerRightMoveCommand :
 	public IPlayerCommand{
 public:
-	PlayerRightMoveCommand(Player* _host)
-		:IPlayerCommand(_host){}
+	PlayerRightMoveCommand(Player* _host,const Vector2Int& _preIndex)
+		:IPlayerCommand(_host),preIndex_(_preIndex){}
 	virtual ~PlayerRightMoveCommand() = default;
 	void Execute() override;
 	void Undo() override;
+
+private:
+	Vector2Int preIndex_;
+
 };
 
 /// <summary>
@@ -33,11 +39,13 @@ public:
 class PlayerUpMoveCommand :
 	public IPlayerCommand{
 public:
-	PlayerUpMoveCommand(Player* _host)
-		:IPlayerCommand(_host){}
+	PlayerUpMoveCommand(Player* _host,const Vector2Int& _preIndex)
+		:IPlayerCommand(_host),preIndex_(_preIndex){}
 	virtual ~PlayerUpMoveCommand() = default;
 	void Execute() override;
 	void Undo() override;
+private:
+	Vector2Int preIndex_;
 };
 
 /// <summary>
@@ -46,10 +54,12 @@ public:
 class PlayerDownMoveCommand :
 	public IPlayerCommand{
 public:
-	PlayerDownMoveCommand(Player* _host)
-		:IPlayerCommand(_host){}
+	PlayerDownMoveCommand(Player* _host,const Vector2Int& _preIndex)
+		:IPlayerCommand(_host),preIndex_(_preIndex){}
 	virtual ~PlayerDownMoveCommand() = default;
 	void Execute() override;
 	void Undo() override;
+private:
+	Vector2Int preIndex_;
 };
 

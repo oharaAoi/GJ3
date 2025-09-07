@@ -123,6 +123,7 @@ copy "$(ProjectDir)Externals\assimp\build\bin\Release\assimp-vc143-mt.dll" "$(Ta
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Game\Commands\Stage\CreateGhostCommand.cpp" />
     <ClCompile Include="Game\UI\Clear\ClearSelector.cpp" />
     <ClCompile Include="Game\UI\Clear\ClearUIs.cpp" />
     <ClCompile Include="Game\Scene\ClearScene.cpp" />
@@ -385,6 +386,7 @@ copy "$(ProjectDir)Externals\assimp\build\bin\Release\assimp-vc143-mt.dll" "$(Ta
     <ClCompile Include="Game\UI\Button\NextStageButtonUI.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Game\Commands\Stage\CreateGhostCommand.h" />
     <ClInclude Include="Game\UI\Clear\ClearSelector.h" />
     <ClInclude Include="Game\UI\Clear\ClearUIs.h" />
     <ClInclude Include="Game\Scene\ClearScene.h" />
