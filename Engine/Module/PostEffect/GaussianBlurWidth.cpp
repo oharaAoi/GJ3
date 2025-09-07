@@ -40,10 +40,10 @@ void GaussianBlurWidth::Debug_Gui() {
 	ImGui::DragFloat("sampleWide", &sample, 0.1f, 0.0f, 10.0f);
 	param_.texelSize = { sample / (float)kWindowWidth_, sample / (float)kWindowHeight_ };
 
-	if (ImGui::Button("Save")) {
+	if (ImGui::Button("Save##GaussianBlurWidth")) {
 		JsonItems::Save("PostEffect", param_.ToJson(param_.GetName()));
 	}
-	if (ImGui::Button("Apply")) {
+	if (ImGui::Button("Apply##GaussianBlurWidth")) {
 		param_.FromJson(JsonItems::GetData("PostEffect", param_.GetName()));
 	}
 }

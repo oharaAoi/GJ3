@@ -32,5 +32,5 @@ void BrightnessThreshold::CheckBox() {
 }
 
 void BrightnessThreshold::Debug_Gui() {
-	ImGui::DragFloat("threshold", &bloomSetting_->threshold, 0.01f, 0.0f, 1.0f);
+	ImGui::DragFloat("threshold##BrightnessThreshold", &bloomSetting_->threshold, 0.01f, 0.0f, 1.0f);
 }

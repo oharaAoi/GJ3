@@ -110,11 +110,11 @@ void Bloom::Debug_Gui() {
 		blurHeightBuffer_->Debug_Gui();
 		ImGui::DragFloat("bloomIntensity", &setting_->bloomIntensity, 0.1f);
 
-		if (ImGui::Button("Save")) {
+		if (ImGui::Button("Save##Bloom")) {
 			param_.isEnable = isEnable_;
 			JsonItems::Save("PostEffect", param_.ToJson(param_.GetName()));
 		}
-		if (ImGui::Button("Apply")) {
+		if (ImGui::Button("Apply##Bloom")) {
 			param_.FromJson(JsonItems::GetData("PostEffect", param_.GetName()));
 		}
 	}

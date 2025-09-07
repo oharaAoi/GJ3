@@ -30,5 +30,8 @@ private:
 	std::unique_ptr<DxResource> bloomBuffer_;
 	BloomSettings* bloomSetting_;
 
+public:
+	float GetThreshold() const{ return bloomSetting_->threshold; }
+	void SetThreshold(float _threshold){ *bloomSetting_ = BloomSettings(_threshold); }
 };
 

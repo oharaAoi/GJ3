@@ -15,13 +15,6 @@ void TitleScene::Finalize(){
 	sceneRenderer_->Finalize();
 	ParticleManager::GetInstance()->Finalize();
 	GpuParticleManager::GetInstance()->Finalize();
-
-	// -------------------------------------------------
-	// ↓ PostProcess の初期化
-	// -------------------------------------------------
-	auto postProcess = Engine::GetPostProcess();
-	postProcess->GetBloom()->SetIsEnable(false);
-	postProcess->GetVignette()->SetIsEnable(false);
 }
 
 void TitleScene::Init(){
@@ -34,7 +27,6 @@ void TitleScene::Init(){
 	auto postProcess = Engine::GetPostProcess();
 	postProcess->SetIsActive(true);
 	postProcess->GetBloom()->SetIsEnable(true);
-
 	postProcess->GetVignette()->SetIsEnable(true);
 
 

@@ -49,5 +49,8 @@ private:
 	BlurSettings* blurSetting_;
 
 	GaussianBlurHeightParam param_;
+public:
+	Vector2 GetTexelSize() const{ return param_.texelSize; }
+	void SetTexelSize(const Vector2& size){ param_.texelSize = size; }
 };
 
