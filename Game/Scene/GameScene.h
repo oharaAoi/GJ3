@@ -3,6 +3,7 @@
 #include "Game/Scene/BaseScene.h"
 #include "Engine/Render/SceneRenderer.h"
 #include "Engine/Module/Components/Effect/BaseParticles.h"
+#include "Engine/System/Audio/AudioPlayer.h"
 // camera
 #include "Game/Camera/Camera3d.h"
 #include "Game/Camera/Camera2d.h"
@@ -15,11 +16,19 @@
 #include "Game/Manager/Collision/Common/MapCollisionSystem.h"
 #include "Game/WorldObject/WorldObjects.h"
 #include "Game/UI/Menu/MenuSelector.h"
-#include "Engine/System/Audio/AudioPlayer.h"
+#include "Game/UI/GetGhostCountUI.h"
+#include "Game/UI/StageResetUI.h"
 
 class GameScene
 	: public BaseScene{
 public:
+	// 獲得ゴースト数
+	struct Result { int ghostCount = 0; };
+
+	// 読み取り口（ClearScene から使う）
+	static const std::optional<Result>& LastResult();
+	static void ClearLastResult();
+
 	static constexpr float kResetTime_ = 0.6f; // リセットするまでの時間
 
 public:
@@ -55,6 +64,10 @@ private:
 
 	std::unique_ptr<MenuSelector> menuSelector_;
 
+	std::unique_ptr<GetGhostCountUI> getGhostCountUI_;
+
+	std::unique_ptr<StageResetUI> stageResetUI_;
+
 	// ------------------- effect ------------------- //
 	BaseParticles* orb_;
 	BaseParticles* dust_;
@@ -66,4 +79,6 @@ private:
 	bool isClearConditionMet_ = false; // クリア条件を満たしたかどうか
 
 	SceneRenderer* sceneRenderer_;
+
+	static std::optional<Result> s_lastResult_;
 };

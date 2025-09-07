@@ -4,13 +4,38 @@
 
 #include "Engine/Module/Components/2d/Sprite.h"
 #include "Engine/Module/Components/Attribute/AttributeGui.h"
+#include "Engine/Lib/Json/IJsonConverter.h"
 
-#include "Game/UI/Menu/button/IMenuButtonUI.h"
+#include "Game/UI/Button/IButtonUI.h"
 #include "Game/UI/Menu/OperationUI.h"
 
 class MenuUIs : 
 	public AttributeGui
 {
+public:
+
+	struct Parameter : public IJsonConverter {
+		Vector2 centerPos;
+		float interval;
+		Vector2 backButtonPos;
+
+		Parameter() { SetName("MenuUIs"); }
+
+		json ToJson(const std::string& id) const override {
+			return JsonBuilder(id)
+				.Add("centerPos", centerPos)
+				.Add("interval", interval)
+				.Add("backButtonPos", backButtonPos)
+				.Build();
+		}
+
+		void FromJson(const json& jsonData) override {
+			fromJson(jsonData, "centerPos", centerPos);
+			fromJson(jsonData, "interval", interval);
+			fromJson(jsonData, "backButtonPos", backButtonPos);
+		}
+	};
+
 public:
 
 	MenuUIs() = default;
@@ -28,7 +53,7 @@ public:
 	bool GetEndFade()const { return endFade_; }
 	bool GetIsFade()const { return isFade_; }
 
-	MenuButtonType GetTypeIndex(int index)const { return buttonUIs_[index]->GetButtonType(); }
+	ButtonType GetTypeIndex(int index)const { return buttonUIs_[index]->GetButtonType(); }
 	void BlinkingIndex(int index) { buttonUIs_[index]->Blinking(); }
 	void ResetIndex(int index) { buttonUIs_[index]->Reset(); }
 	void OperationUpdate(bool openOperation) { operationUI_->Update(openOperation); }
@@ -45,7 +70,9 @@ private:
 	std::unique_ptr<OperationUI> operationUI_ = nullptr;
 
 	// ボタン
-	std::array<std::unique_ptr<IMenuButtonUI>, 4> buttonUIs_;
+	std::array<std::unique_ptr<IButtonUI>, 4> buttonUIs_;
+
+	Parameter param_;
 
 	// trueがin、falseがout
 	bool isFade_ = false;

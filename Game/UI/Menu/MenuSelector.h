@@ -6,7 +6,7 @@
 
 #include "Game/Scene/SceneType.h"
 #include "Game/UI/Menu/MenuUIs.h"
-#include "Game/UI/Menu/button/MenuButtonType.h"
+#include "Game/UI/Button/ButtonType.h"
 
 class MenuSelector :
 	public AttributeGui
@@ -26,7 +26,7 @@ public:
 
 public:
 
-	const MenuButtonType GetButtonType() const{ return menuUIs_->GetTypeIndex(cursorIndex_); }
+	const ButtonType GetButtonType() const{ return menuUIs_->GetTypeIndex(cursorIndex_); }
 	const bool GetOpenMenu()const { return openMenu_; }
 	const bool GetChengeScene()const { return chengeScene_; }
 	void SetChengeScene(bool flag) { chengeScene_ = flag; }

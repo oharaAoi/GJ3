@@ -51,7 +51,8 @@ bool MapCollisionSystem::IsMovable(const Vector2Int &direction, const Vector2Int
 	}
 
 	// ゴールと当たった時
-	if (firstStepIndex->GetType() == BlockType::Goal)
+	if (firstStepIndex->GetType() == BlockType::Goal &&
+		stageRegistry_->GetNeedGhostNum() <= ghostCounter_)
 	{
 		isClear_ = true;
 		return true;
@@ -67,7 +68,8 @@ bool MapCollisionSystem::IsMovable(const Vector2Int &direction, const Vector2Int
 	}
 	// 壁だから進めない
 	if (firstStepIndex->GetType() == BlockType::Wall ||
-		firstStepIndex->GetType() == BlockType::GraveBlock)
+		firstStepIndex->GetType() == BlockType::GraveBlock ||
+		firstStepIndex->GetType() == BlockType::Goal)
 	{
 		AudioPlayer::SinglShotPlay("don.mp3", 0.6f); // 壁にあたったときの音
 		return false;
@@ -75,6 +77,10 @@ bool MapCollisionSystem::IsMovable(const Vector2Int &direction, const Vector2Int
 
 	// 進む方向2マス目ブロック
 	index += direction;
+	if (!OutOfRangeReference(index)) {
+		AudioPlayer::SinglShotPlay("don.mp3", 0.6f);
+		return false;
+	}
 	IBlock *secondStepIndex = data[index.y][index.x].get();
 	// 1マス目が動かせるブロックで2マス目がないなら早期return
 	if (firstStepIndex->GetType() == BlockType::NormalBlock || firstStepIndex->GetType() == BlockType::GhostBlock ||
@@ -83,11 +89,11 @@ bool MapCollisionSystem::IsMovable(const Vector2Int &direction, const Vector2Int
 		if (secondStepIndex == nullptr || secondStepIndex->GetType() == BlockType::Ghost)
 		{
 			playerIndex_ = playerIndex + direction;
-			;
 			ChengeStage(direction, playerIndex);
 			return true;
 		}
 	}
+	AudioPlayer::SinglShotPlay("don.mp3", 0.6f); // 壁にあたったときの音
 	return false;
 }
 

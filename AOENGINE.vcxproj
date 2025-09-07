@@ -123,11 +123,17 @@ copy "$(ProjectDir)Externals\assimp\build\bin\Release\assimp-vc143-mt.dll" "$(Ta
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Game\UI\Clear\ClearSelector.cpp" />
+    <ClCompile Include="Game\UI\Clear\ClearUIs.cpp" />
+    <ClCompile Include="Engine\Module\PostEffect\SwirlEffect.cpp" />
+    <ClCompile Include="Engine\Module\PostEffect\SwirlMask.cpp" />
+    <ClCompile Include="Game\Scene\ClearScene.cpp" />
     <ClCompile Include="Game\Actor\Effect\GhostSoul.cpp" />
     <ClCompile Include="Game\Actor\Effect\GhostSoulManager.cpp" />
     <ClCompile Include="Game\Commands\Stage\PlayerGetGhostCommand.cpp" />
     <ClCompile Include="Game\Commands\Stage\CreateGraveBlock.cpp" />
-    <ClCompile Include="Game\UI\Menu\button\BackButtonUI.cpp" />
+    <ClCompile Include="Game\UI\GetGhostCountUI.cpp" />
+    <ClCompile Include="Game\UI\Button\BackButtonUI.cpp" />
     <ClCompile Include="Engine\Module\PostEffect\ScreenGotRay.cpp" />
     <ClCompile Include="Game\Actor\Block\BlockLimit.cpp" />
     <ClCompile Include="Game\Actor\Block\BlockSpecial.cpp" />
@@ -355,7 +361,7 @@ copy "$(ProjectDir)Externals\assimp\build\bin\Release\assimp-vc143-mt.dll" "$(Ta
     <ClCompile Include="Game\WorldObject\Skybox.cpp" />
     <ClCompile Include="Game\WorldObject\WorldObjects.cpp" />
     <ClCompile Include="Game\Manager\Collision\Map\GhostBlockCollision.cpp" />
-    <ClCompile Include="Game\UI\Menu\button\IMenuButtonUI.cpp" />
+    <ClCompile Include="Game\UI\Button\IButtonUI.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Engine\Module\Geometry\Structs\Vertices.cpp" />
     <ClCompile Include="Engine\System\ParticleSystem\Tool\ParticleSystemEditor.cpp" />
@@ -372,18 +378,26 @@ copy "$(ProjectDir)Externals\assimp\build\bin\Release\assimp-vc143-mt.dll" "$(Ta
     <ClCompile Include="Game\Input\StageInputHandler.cpp" />
     <ClCompile Include="Game\UI\Menu\MenuUIs.cpp" />
     <ClCompile Include="Game\UI\Menu\MenuSelector.cpp" />
-    <ClCompile Include="Game\UI\Menu\button\SelectButtonUI.cpp" />
-    <ClCompile Include="Game\UI\Menu\button\ResetButtonUI.cpp" />
-    <ClCompile Include="Game\UI\Menu\button\OperationButtonUI.cpp" />
+    <ClCompile Include="Game\UI\Button\SelectButtonUI.cpp" />
+    <ClCompile Include="Game\UI\Button\ResetButtonUI.cpp" />
+    <ClCompile Include="Game\UI\Button\OperationButtonUI.cpp" />
     <ClCompile Include="Game\UI\Menu\OperationUI.cpp" />
     <ClCompile Include="Game\Commands\Stage\MoveBlockCommand.cpp" />
+    <ClCompile Include="Game\UI\StageResetUI.cpp" />
+    <ClCompile Include="Game\UI\Button\NextStageButtonUI.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Game\UI\Clear\ClearSelector.h" />
+    <ClInclude Include="Game\UI\Clear\ClearUIs.h" />
+    <ClInclude Include="Engine\Module\PostEffect\SwirlEffect.h" />
+    <ClInclude Include="Engine\Module\PostEffect\SwirlMask.h" />
+    <ClInclude Include="Game\Scene\ClearScene.h" />
     <ClInclude Include="Game\Commands\Stage\PlayerGetGhostCommand.h" />
     <ClInclude Include="Game\Commands\Stage\CreateGraveBlock.h" />
     <ClInclude Include="Game\Actor\Effect\GhostSoul.h" />
     <ClInclude Include="Game\Actor\Effect\GhostSoulManager.h" />
-    <ClInclude Include="Game\UI\Menu\button\BackButtonUI.h" />
+    <ClInclude Include="Game\UI\GetGhostCountUI.h" />
+    <ClInclude Include="Game\UI\Button\BackButtonUI.h" />
     <ClInclude Include="Engine\Module\PostEffect\ScreenGotRay.h" />
     <ClInclude Include="Game\Actor\Block\BlockLimit.h" />
     <ClInclude Include="Game\Actor\Block\BlockSpecial.h" />
@@ -622,7 +636,7 @@ copy "$(ProjectDir)Externals\assimp\build\bin\Release\assimp-vc143-mt.dll" "$(Ta
     <ClInclude Include="Game\Tool\MapChipLoader.h" />
     <ClInclude Include="Game\Tool\StageEditor.h" />
     <ClInclude Include="Game\Tool\StageLoader.h" />
-    <ClInclude Include="Game\UI\Menu\button\MenuButtonType.h" />
+    <ClInclude Include="Game\UI\Button\ButtonType.h" />
     <ClInclude Include="Game\UI\TitleUIs.h" />
     <ClInclude Include="Game\WorldObject\BackGround.h" />
     <ClInclude Include="Game\WorldObject\Skybox.h" />
@@ -644,12 +658,14 @@ copy "$(ProjectDir)Externals\assimp\build\bin\Release\assimp-vc143-mt.dll" "$(Ta
     <ClInclude Include="Game\Input\StageInputHandler.h" />
     <ClInclude Include="Game\UI\Menu\MenuUIs.h" />
     <ClInclude Include="Game\UI\Menu\MenuSelector.h" />
-    <ClInclude Include="Game\UI\Menu\button\IMenuButtonUI.h" />
-    <ClInclude Include="Game\UI\Menu\button\SelectButtonUI.h" />
-    <ClInclude Include="Game\UI\Menu\button\ResetButtonUI.h" />
-    <ClInclude Include="Game\UI\Menu\button\OperationButtonUI.h" />
+    <ClInclude Include="Game\UI\Button\IButtonUI.h" />
+    <ClInclude Include="Game\UI\Button\SelectButtonUI.h" />
+    <ClInclude Include="Game\UI\Button\ResetButtonUI.h" />
+    <ClInclude Include="Game\UI\Button\OperationButtonUI.h" />
     <ClInclude Include="Game\UI\Menu\OperationUI.h" />
     <ClInclude Include="Game\Commands\Stage\MoveBlockCommand.h" />
+    <ClInclude Include="Game\UI\StageResetUI.h" />
+    <ClInclude Include="Game\UI\Button\NextStageButtonUI.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Engine\Assets\HLSL\Particle\AccelerationField.CS.hlsl">
@@ -959,6 +975,12 @@ copy "$(ProjectDir)Externals\assimp\build\bin\Release\assimp-vc143-mt.dll" "$(Ta
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </FxCompile>
     <FxCompile Include="Game\Assets\HLSL\Distortion.PS.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Game\Assets\HLSL\Swirl.PS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </FxCompile>

@@ -12,34 +12,42 @@ void TitleUIs::Init(){
 	///===========================================
 	// Sprites
 	///===========================================
-	backGround_ = Engine::GetCanvas2d()->AddSprite("title_bg.png", "title_bg.png", "Sprite_Normal.json",-10);
-	titleBar_ = Engine::GetCanvas2d()->AddSprite("title_bar.png", "title_bar.png", "Sprite_Normal.json",1);
+	backGround_ = Engine::GetCanvas2d()->AddSprite("Title_bg.png","BackGround","Sprite_Normal.json",-10,true);
+	backGround_->SetColor({0.15f,0.15f,0.15f,1.f});
 
-	shelf_ = Engine::GetCanvas2d()->AddSprite("shelf.png", "shelf.png", "Sprite_Normal.json",2);
+	titleWords_[0] = Engine::GetCanvas2d()->AddSprite("Title_su.png","su","Sprite_Normal.json",-1,true);   // す
+	titleWords_[1] = Engine::GetCanvas2d()->AddSprite("Title_ki.png","ki","Sprite_Normal.json",-1,true);   // き
+	titleWords_[2] = Engine::GetCanvas2d()->AddSprite("Title_da.png","da","Sprite_Normal.json",-1,true);   // だ
+	titleWords_[3] = Engine::GetCanvas2d()->AddSprite("Title_ma.png","ma","Sprite_Normal.json",-1,true);   // ま
+	titleWords_[4] = Engine::GetCanvas2d()->AddSprite("Title_ri.png","ri","Sprite_Normal.json",-1,true);   // り
 
-	ghost_ = Engine::GetCanvas2d()->AddSprite("title_ghost.png", "title_ghost.png", "Sprite_Normal.json",5);
+	for(auto word : titleWords_){
+		word->SetColor({0.65f,0.65f,0.65f,0.65f});
+	}
 
+	spaceKey_ = Engine::GetCanvas2d()->AddSprite("Title_space.png","SpaceKey","Sprite_Normal.json",10,true);
+
+	shelf_ = Engine::GetCanvas2d()->AddSprite("Title_shelf.png","Shelf","Sprite_Normal.json",-1,true);
+	shelf_->SetColor({0.15f,0.15f,0.15f,1.f});
+
+	ghost_ = Engine::GetCanvas2d()->AddSprite("Title_ghost.png","Ghost","Sprite_Normal.json",5,true);
 
 	///===========================================
 	// AttributeGui に登録
 	///===========================================
-	AddChild(titleBar_);
+	for(auto& wordSprite : titleWords_){
+		AddChild(wordSprite);
+		wordSprite->SetAnchorPoint({1.f,1.f});
+	}
+	AddChild(spaceKey_);
 	AddChild(shelf_);
 	AddChild(ghost_);
 	AddChild(backGround_);
 
-	titleBar_->SetScale({0.8f,0.8f});
-	titleBar_->SetTranslate({640.f,242.f});
-
+	spaceKey_->SetAnchorPoint({1.f,1.f});
 	shelf_->SetAnchorPoint({1.f,1.f});
 	ghost_->SetAnchorPoint({1.f,1.f});
-	titleBar_->SetAnchorPoint({0.5f,0.5f});
 	backGround_->SetAnchorPoint({1.f,1.f});
-
-	Vector4 defaultColor = {1.f,1.f,1.f,1.f};
-	backGround_->SetColor(defaultColor);
-	shelf_->SetColor(defaultColor);
-	ghost_->SetColor(defaultColor);
 
 	EditorWindows::AddObjectWindow(this,GetName());
 }

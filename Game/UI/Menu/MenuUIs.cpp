@@ -5,23 +5,20 @@
 #include "Engine/System/Editer/Window/EditorWindows.h"
 #include "Engine/Lib/GameTimer.h"
 
-#include "Game/UI/Menu/button/SelectButtonUI.h"
-#include "Game/UI/Menu/button/ResetButtonUI.h"
-#include "Game/UI/Menu/button/OperationButtonUI.h"
-#include "Game/UI/Menu/button/BackButtonUI.h"
+#include "Game/UI/Button/SelectButtonUI.h"
+#include "Game/UI/Button/ResetButtonUI.h"
+#include "Game/UI/Button/OperationButtonUI.h"
+#include "Game/UI/Button/BackButtonUI.h"
 
 void MenuUIs::Init()
 {
 	SetName("MenuUIs");
-	menu_ = Engine::GetCanvas2d()->AddSprite("menu.png", GetName(), "Sprite_Normal.json", 10);
-	AddChild(menu_);
+	AddChild(this);
 	EditorWindows::AddObjectWindow(this, GetName());
-	menu_->SetTranslate(Vector2{ 640.0f,360.0f });
-
-	operationUI_ = std::make_unique<OperationUI>();
-	operationUI_->Init();
 
 	// ボタン生成、初期化
+	menu_ = Engine::GetCanvas2d()->AddSprite("menu.png", GetName(), "Sprite_Normal.json", 10);
+	menu_->SetTranslate(Vector2{ 640.0f,360.0f });
 	buttonUIs_[0] = std::make_unique<SelectButtonUI>();
 	buttonUIs_[1] = std::make_unique<ResetButtonUI>();
 	buttonUIs_[2] = std::make_unique<OperationButtonUI>();
@@ -29,6 +26,19 @@ void MenuUIs::Init()
 	// 初期化
 	for (auto& buttonUI : buttonUIs_) {
 		buttonUI->Init();
+	}
+
+	operationUI_ = std::make_unique<OperationUI>();
+	operationUI_->Init();
+
+	param_.FromJson(JsonItems::GetData(GetName(), param_.GetName()));
+	for (size_t i = 0; i < buttonUIs_.size(); ++i) {
+		Vector2 position = {
+			param_.centerPos.x,
+			param_.centerPos.y + param_.interval * static_cast<float>(i)
+		};
+		if (i == 3) { position = param_.centerPos + param_.backButtonPos; }
+		buttonUIs_[i]->GetSprite()->SetTranslate(position);
 	}
 }
 
@@ -44,13 +54,29 @@ void MenuUIs::Update()
 	if (fadeFrame_ == 0.0f || fadeFrame_ == 1.0f) { endFade_ = true; }
 	// alphaをセットする
 	menu_->SetColor(Vector4{ 1.0f,1.0f,1.0f,alpha });
-	for (auto& buttonUI : buttonUIs_) {
-		buttonUI->GetSprite()->SetColor(Vector4{ 1.0f,1.0f,1.0f,alpha });
+	for (size_t i = 0; i < buttonUIs_.size(); ++i) {
+		Vector2 position = {
+			param_.centerPos.x,
+			param_.centerPos.y + param_.interval * static_cast<float>(i)
+		};
+		if (i == 3) { position = param_.centerPos + param_.backButtonPos; }
+		buttonUIs_[i]->GetSprite()->SetTranslate(position);
+		buttonUIs_[i]->GetSprite()->SetColor(Vector4{1.0f,1.0f,1.0f,alpha});
 	}
 }
 
 void MenuUIs::Debug_Gui()
 {
+	ImGui::DragFloat2("centerPos", &param_.centerPos.x, 0.1f);
+	ImGui::DragFloat("interval", &param_.interval, 0.1f);
+	ImGui::DragFloat2("backButtonPos", &param_.backButtonPos.x, 0.1f);
+
+	if (ImGui::Button("Save")) {
+		JsonItems::Save(GetName(), param_.ToJson(param_.GetName()));
+	}
+	if (ImGui::Button("Apply")) {
+		param_.FromJson(JsonItems::GetData(GetName(), param_.GetName()));
+	}
 }
 
 void MenuUIs::ResetUIs()

@@ -4,6 +4,7 @@
 
 void GhostSoul::Init(Canvas2d* _canvas2d, const Vector2& _tileSize) {
 	SetName("Soul");
+	pCanvas2d_ = _canvas2d;
 	sprite_ = _canvas2d->AddSprite("soul.png", "soul", "Sprite_Normal.json", 100, true);
 	sprite_->SetIsFront(true);
 	sprite_->ReSetTextureSize(_tileSize);

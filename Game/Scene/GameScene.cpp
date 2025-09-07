@@ -4,6 +4,17 @@
 #include "Game/Commands/ObjectCommandInvoker.h"
 #include "Game/Input/StageInputHandler.h"
 
+#include "Game/UI/StageSelector.h"
+
+std::optional<GameScene::Result> GameScene::s_lastResult_ = std::nullopt;
+
+const std::optional<GameScene::Result>& GameScene::LastResult() {
+	return s_lastResult_;
+}
+void GameScene::ClearLastResult() {
+	s_lastResult_.reset();
+}
+
 GameScene::GameScene(){}
 GameScene::~GameScene(){ Finalize(); }
 
@@ -54,7 +65,8 @@ void GameScene::Init(){
 	stageRegistry_->Init(Engine::GetCanvas2d());
 	stageRegistry_->SetPlayer(player_.get());
 	stageRegistry_->SetWindowSize({kWindowWidth_,kWindowHeight_});
-	stageRegistry_->Register("stage_0.json");
+	std::string loadName = "stage_" + std::to_string(StageSelector::GetCurrentStageIndex()) + ".json";
+	stageRegistry_->Register(loadName);
 
 	mapCollision_ = std::make_unique<MapCollisionSystem>();
 	mapCollision_->Init(stageRegistry_.get(), ghostSoulManager_.get());
@@ -64,6 +76,12 @@ void GameScene::Init(){
 
 	menuSelector_ = std::make_unique<MenuSelector>();
 	menuSelector_->Init();
+
+	getGhostCountUI_ = std::make_unique<GetGhostCountUI>();
+	getGhostCountUI_->Init(Engine::GetCanvas2d());
+
+	stageResetUI_ = std::make_unique<StageResetUI>();
+	stageResetUI_->Init(Engine::GetCanvas2d());
 
 	// -------------------------------------------------
 	// ↓ managerの初期化
@@ -127,6 +145,8 @@ void GameScene::Update(){
 
 	ghostSoulManager_->Update();
 
+	stageResetUI_->Update();
+
 	if(StageInputHandler::UndoInput()){
 		ObjectCommandInvoker::GetInstance().UndoCommand();
 		resetTimer_ = 0.f;
@@ -135,19 +155,22 @@ void GameScene::Update(){
 		resetTimer_ = 0.f;
 		ObjectCommandInvoker::GetInstance().RedoCommand();
 		AudioPlayer::SinglShotPlay("osii.mp3", 0.5f);
-	} else if(StageInputHandler::ResetInput()){
-		resetTimer_ += GameTimer::DeltaTime();
-		if(resetTimer_ >= kResetTime_){
-			stageRegistry_->ResetStage();
-			mapCollision_->ResetGhostCounter();
-			ObjectCommandInvoker::GetInstance().ClearHistory();
-			AudioPlayer::SinglShotPlay("osii.mp3", 0.5f);
+	} else if(stageResetUI_->GetStageReset()){
+		stageRegistry_->ResetStage();
+		mapCollision_->ResetGhostCounter();
+		ObjectCommandInvoker::GetInstance().ClearHistory();
+		AudioPlayer::SinglShotPlay("osii.mp3", 0.5f);
+		stageResetUI_->Reset();
+		size_t size = ghostSoulManager_->GetSoulesSize();
+		for (size_t i = 0; i < size; ++i) {
+			ghostSoulManager_->DeleteBackSoul();
 		}
 	} else{
-		resetTimer_ = 0.f;
 		// 特殊操作がないなら
 		ObjectCommandInvoker::GetInstance().Update();
 	}
+
+	getGhostCountUI_->Update(mapCollision_->GetGhostCounter(), stageRegistry_->GetNeedGhostNum());
 
 	// クリア条件を満たしているかの判定
 	if (!isClearConditionMet_) {
@@ -159,8 +182,11 @@ void GameScene::Update(){
 
 	// ステージをクリアしたかどうかの判定
 	if (mapCollision_->GetIsClear()) {
+		GameScene::Result r;
+		r.ghostCount = mapCollision_->GetGhostCounter();
+		GameScene::s_lastResult_ = r;
 		AudioPlayer::SinglShotPlay("fanfare.wav", 0.5f);
-		nextSceneType_ = SceneType::STAGE_SELECT;
+		nextSceneType_ = SceneType::CLEAR;
 	}
 
 	// -------------------------------------------------
@@ -204,12 +230,12 @@ void GameScene::ChengeScene()
 		const auto type = menuSelector_->GetButtonType();
 		switch (type)
 		{
-		case MenuButtonType::Select:
+		case ButtonType::Select:
 			// セレクトに戻る
 			nextSceneType_ = SceneType::STAGE_SELECT;
 			menuSelector_->SetChengeScene(false);
 			break;
-		case MenuButtonType::Reset :
+		case ButtonType::Reset :
 			// ステージをリセットする
 			stageRegistry_->ResetStage();
 			menuSelector_->SetChengeScene(false);

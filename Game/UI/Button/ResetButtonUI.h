@@ -1,9 +1,9 @@
 #pragma once
 
-#include "Game/UI/Menu/button/IMenuButtonUI.h"
+#include "Game/UI/Button/IButtonUI.h"
 
 class ResetButtonUI :
-	public IMenuButtonUI
+	public IButtonUI
 {
 public:
 

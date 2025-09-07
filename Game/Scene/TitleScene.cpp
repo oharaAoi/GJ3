@@ -116,7 +116,6 @@ void TitleScene::InputHandle(){
 
 	if(doTransition){
 		isTransition_ = true;
-		thunderFlash_->SetFlashColor(Vector4(0.f,0.f,0.f,0.f));
 		lightFlash_->SetFlashColor(Vector4(0.f,0.f,0.f,0.f));
 		AudioPlayer::SinglShotPlay("fanfare.wav",0.3f);
 	}

@@ -22,6 +22,14 @@ public:
 	// Playerの周りを回転させる
 	void RotatePlayer(const Vector2& _playerPos);
 
+	void SetPosition(const Vector2& position) { sprite_->SetTranslate(position); }
+	void SetTextureSize(const Vector2& size) { 
+		sprite_->ReSetTextureSize(size); 
+		Canvas2d::ObjectPair* pair = pCanvas2d_->GetObjectPair(sprite_);
+		pair->renderQueue = static_cast<int>(size.x);
+	}
+
+
 private:
 
 	float easeT_ = 0.3f;
@@ -30,5 +38,7 @@ private:
 	// 回転処理
 	float angleRad_ = 0;
 	float angleSpeed_ = 120.f * kToRadian;
+
+	Canvas2d* pCanvas2d_ = nullptr;
 
 };

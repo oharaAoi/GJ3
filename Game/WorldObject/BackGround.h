@@ -17,6 +17,8 @@ public:
 
 	void Debug_Gui() override;
 
+	void SetTexture(const std::string name) { sprite_->ReSetTexture(name); }
+
 private:
 
 	Sprite* sprite_;
