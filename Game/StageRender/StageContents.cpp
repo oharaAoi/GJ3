@@ -7,8 +7,8 @@ StageContents::~StageContents() {
 void StageContents::Init(uint32_t maxStageNum) {
 	maxStageNum_ = maxStageNum;
 
-	stageRenderTarget_ = std::make_unique<StageRenderTarget>();
-	stageRenderTarget_->Init();
+	/*stageRenderTarget_ = std::make_unique<StageRenderTarget>();
+	stageRenderTarget_->Init();*/
 
 	camera_ = std::make_unique<StageContentCamera>();
 	camera_->Init();
@@ -30,15 +30,26 @@ void StageContents::Init(uint32_t maxStageNum) {
 
 void StageContents::Update() {
 	camera_->Update();
+	GraphicsContext* ctx = GraphicsContext::GetInstance();
 
 	for (uint32_t i = 0; i < 3; ++i) {
-		stageRenderTarget_->Transition(GraphicsContext::GetInstance()->GetCommandList(), i, D3D12_RESOURCE_STATE_NON_PIXEL_SHADER_RESOURCE, D3D12_RESOURCE_STATE_RENDER_TARGET);
+		std::vector<RenderTargetType> postRenderTypes;
+		RenderTargetType type;
+		if (i == 0) {
+			type = RenderTargetType::Stage_RenderTarget1;
+		} else if (i == 1) {
+			type = RenderTargetType::Stage_RenderTarget2;
+		} else {
+			type = RenderTargetType::Stage_RenderTarget3;
+		}
+		postRenderTypes.push_back(type);
 
+		ctx->GetRenderTarget()->TransitionResource(ctx->GetCommandList(), type, D3D12_RESOURCE_STATE_NON_PIXEL_SHADER_RESOURCE, D3D12_RESOURCE_STATE_RENDER_TARGET);
 		stageRegistries_[i]->Update();
 		canvas2ds_[i]->Update();
-
-		stageRenderTarget_->SetRenderTarget(GraphicsContext::GetInstance()->GetCommandList(), i);
+		
+		Render::SetRenderTarget(postRenderTypes, ctx->GetDxCommon()->GetDepthHandle());
 		canvas2ds_[i]->Draw();
-		stageRenderTarget_->Transition(GraphicsContext::GetInstance()->GetCommandList(), i, D3D12_RESOURCE_STATE_RENDER_TARGET, D3D12_RESOURCE_STATE_NON_PIXEL_SHADER_RESOURCE);
+		ctx->GetRenderTarget()->TransitionResource(ctx->GetCommandList(), type, D3D12_RESOURCE_STATE_RENDER_TARGET, D3D12_RESOURCE_STATE_NON_PIXEL_SHADER_RESOURCE);
 	}
 }

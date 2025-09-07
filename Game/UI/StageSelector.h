@@ -101,8 +101,6 @@ private:
 	float currentOffsetX_ = 0.0f;   // 現在のオフセット位置
 	float offsetY_ = -87.f; // Y オフセット Xは移動するが, Yは固定
 
-	StageRenderTarget* pStageRenderTarget_;
-
 	std::unique_ptr<RotateAnimationParam> leftArrowRotateParam_;
 	std::unique_ptr<RotateAnimationParam> rightArrowRotateParam_;
 
@@ -112,6 +110,4 @@ public:
 
 	int32_t GetTotalStageNum() const{ return totalStageNum_; }
 	void SetTotalStageNum(int32_t num){ totalStageNum_ = num; }
-
-	void SetStageRenderTarget(StageRenderTarget* _stageRenderTarget){ pStageRenderTarget_ = _stageRenderTarget; }
 };

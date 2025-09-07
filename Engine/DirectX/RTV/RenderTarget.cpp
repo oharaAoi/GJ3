@@ -1,4 +1,5 @@
 #include "RenderTarget.h"
+#include "Engine/Utilities/Logger.h"
 
 RenderTarget::RenderTarget() {
 }
@@ -40,6 +41,10 @@ void RenderTarget::SetRenderTarget(ID3D12GraphicsCommandList* commandList, const
 	std::vector<D3D12_CPU_DESCRIPTOR_HANDLE> rtvHandles;
 	rtvHandles.reserve(renderTypes.size());
 	for (size_t index = 0; index < renderTypes.size(); ++index) {
+		if (renderTargetResource_[renderTypes[index]]->GetState() != D3D12_RESOURCE_STATE_RENDER_TARGET) {
+			Logger::AssertLog("Dont Resource Stage : RenderTarget");
+		}
+
 		rtvHandles.push_back(renderTargetResource_[renderTypes[index]]->GetRTV().handleCPU);
 	}
 
@@ -142,7 +147,8 @@ void RenderTarget::CreateRenderTarget() {
 
 	// 実際の初期化
 	for (uint32_t oi = 0; oi < renderTargetNum_; ++oi) {
-		if (oi == RenderTargetType::Sprite2d_RenderTarget) {
+		if (oi == RenderTargetType::Sprite2d_RenderTarget || oi == RenderTargetType::Stage_RenderTarget1 ||
+			oi == RenderTargetType::Stage_RenderTarget2 || oi == RenderTargetType::Stage_RenderTarget1 || oi == RenderTargetType::Stage_RenderTarget3) {
 			rtvDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
 			srvDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
 			desc.Format = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
@@ -167,5 +173,11 @@ void RenderTarget::CreateRenderTarget() {
 
 void RenderTarget::TransitionResource(ID3D12GraphicsCommandList* commandList, const RenderTargetType& renderType, const D3D12_RESOURCE_STATES& beforState, const D3D12_RESOURCE_STATES& afterState) {
 	renderTargetResource_[renderType]->Transition(commandList, beforState, afterState);
+}
+
+void RenderTarget::AllResourceTransitionRT(ID3D12GraphicsCommandList* commandList) {
+	for (auto& resource : renderTargetResource_) {
+		resource->Transition(commandList, D3D12_RESOURCE_STATE_RENDER_TARGET);
+	}
 }
 

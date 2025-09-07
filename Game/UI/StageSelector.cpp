@@ -17,16 +17,17 @@ void StageSelector::Init(){
 	/// ==============================
 	// stagePreviews
 	/// ==============================
+	GraphicsContext* ctx = GraphicsContext::GetInstance();
 	stagePreviews_[0] = Engine::GetCanvas2d()->AddSprite("white.png","StagePreview_Left","Sprite_Normal.json",2, true);
-	stagePreviews_[0]->SetTextureResource(pStageRenderTarget_->GetResource(0));
+	stagePreviews_[0]->SetTextureResource(ctx->GetRenderTarget()->GetRenderTargetResource(RenderTargetType::Stage_RenderTarget1));
 	stagePreviews_[0]->ReSetTextureSize({kWindowWidth_ * 0.3f,kWindowHeight_ * 0.3f});
 
 	stagePreviews_[1] = Engine::GetCanvas2d()->AddSprite("white.png","StagePreview_Center","Sprite_Normal.json",2, true);
-	stagePreviews_[1]->SetTextureResource(pStageRenderTarget_->GetResource(0));
+	stagePreviews_[1]->SetTextureResource(ctx->GetRenderTarget()->GetRenderTargetResource(RenderTargetType::Stage_RenderTarget2));
 	stagePreviews_[1]->ReSetTextureSize({kWindowWidth_ * 0.3f,kWindowHeight_ * 0.3f});
 
 	stagePreviews_[2] = Engine::GetCanvas2d()->AddSprite("white.png","StagePreview_Right","Sprite_Normal.json",2, true);
-	stagePreviews_[2]->SetTextureResource(pStageRenderTarget_->GetResource(0));
+	stagePreviews_[2]->SetTextureResource(ctx->GetRenderTarget()->GetRenderTargetResource(RenderTargetType::Stage_RenderTarget3));
 	stagePreviews_[2]->ReSetTextureSize({kWindowWidth_ * 0.3f,kWindowHeight_ * 0.3f});
 
 	AddChild(stagePreviews_[0]);
@@ -233,11 +234,11 @@ void StageSelector::Scroll(){
 	if(indexF < 0){
 		indexF += totalStageNum_;
 	}
-	if(indexF >= totalStageNum_){
+	if(indexF > totalStageNum_){
 		indexF -= totalStageNum_;
 	}
 
-	currentStageIndex_ = static_cast<int>(std::floor(indexF + 0.5f)); // 四捨五入で更新
+	currentStageIndex_ = static_cast<int>(std::floor(indexF)); // 四捨五入で更新
 
 	// 描画用オフセット（-1.0 ~ +1.0）
 	currentOffsetX_ = scrollDirection_ * (t * theSpaceBetweenButtons_);

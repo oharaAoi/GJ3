@@ -154,7 +154,6 @@ SelectingStageBehavior::~SelectingStageBehavior(){}
 
 void SelectingStageBehavior::Init(){
 	stageSelector_ = std::make_unique<StageSelector>();
-	stageSelector_->SetStageRenderTarget(host_->stageContents_->GetStageRenderTarget());
 	stageSelector_->Init();
 
 	lightFlash_ = std::make_unique<LightFlash>();

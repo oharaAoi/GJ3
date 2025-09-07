@@ -141,6 +141,8 @@ void Engine::BeginFrame() {
 		WinApp::GetInstance()->SetFullScreen(isFullScreen_);
 	}
 
+	//Render::AllRenderTargetReset();
+
 	std::vector<RenderTargetType> types;
 	types.push_back(RenderTargetType::Object3D_RenderTarget);
 	types.push_back(RenderTargetType::MotionVector_RenderTarget);

@@ -19,15 +19,12 @@ public:
 
 public:
 
-	StageRenderTarget* GetStageRenderTarget() { return stageRenderTarget_.get(); }
-
 private:
 
 	std::vector<std::unique_ptr<Canvas2d>> canvas2ds_;
 	std::vector<std::unique_ptr<StageRegistry>> stageRegistries_;
 
 	std::unique_ptr<StageContentCamera> camera_;
-	std::unique_ptr<StageRenderTarget> stageRenderTarget_;
 
 	uint32_t maxStageNum_;
 };

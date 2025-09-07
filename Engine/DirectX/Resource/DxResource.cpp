@@ -108,6 +108,7 @@ void DxResource::Transition(ID3D12GraphicsCommandList* commandList, const D3D12_
 		Logger::Log("now : " + ResourceStateToString(bufferState_) + "\n");
 		Logger::Log("target : " + ResourceStateToString(befor) + "\n");
 		Logger::Log("ResourceState MissMatch\n");
+		assert("ResourceState MissMatch");
 		//assert("ResourceState MissMatch");
 		return;
 	}

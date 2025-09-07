@@ -71,6 +71,10 @@ void Render::SetRenderTarget(const std::vector<RenderTargetType>& renderTypes, c
 	GetInstance()->renderTarget_->SetRenderTarget(commandList_, renderTypes, depthHandle);
 }
 
+void Render::AllRenderTargetReset() {
+	GetInstance()->renderTarget_->AllResourceTransitionRT(commandList_);
+}
+
 void Render::SetShadowMap() {
 	shadowMap_->SetCommand();
 }

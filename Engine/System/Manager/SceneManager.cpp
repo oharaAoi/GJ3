@@ -93,14 +93,16 @@ void SceneManager::SetChange(const SceneType& type) {
 	if (scene_ != nullptr) {
 		scene_->Finalize();
 	}
+	scene_ = nullptr;
 	nextScene_ = sceneFactory_->CreateScene(sceneFactory_->SceneTypeToString(type));
 	
-	if (nextScene_ == nullptr) {
-		Logger::AssertLog("nextSceneがnullです");
+	if (!nextScene_ ) {
+		Logger::AssertLog("nextScene ==  null");
 		return;
 	}
 	
 	scene_ = std::move(nextScene_);
+	nextScene_ = nullptr;
 
 #ifdef _DEBUG
 	EditorWindows::GetInstance()->Reset();

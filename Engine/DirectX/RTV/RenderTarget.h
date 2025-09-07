@@ -17,6 +17,9 @@ enum RenderTargetType {
 	EffectSystem_RenderTarget,
 	PreEffectSystem_RenderTarget,
 	ShadowMap_RenderTarget,
+	Stage_RenderTarget1,
+	Stage_RenderTarget2,
+	Stage_RenderTarget3,
 	kMAX
 };
 
@@ -47,6 +50,8 @@ public:
 	void CreateRenderTarget();
 
 	void TransitionResource(ID3D12GraphicsCommandList* commandList, const RenderTargetType& renderType, const D3D12_RESOURCE_STATES& beforState, const D3D12_RESOURCE_STATES& afterState);
+
+	void AllResourceTransitionRT(ID3D12GraphicsCommandList* commandList);
 
 public:
 

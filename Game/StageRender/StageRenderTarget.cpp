@@ -29,6 +29,10 @@ void StageRenderTarget::Init() {
 }
 
 void StageRenderTarget::SetRenderTarget(ID3D12GraphicsCommandList* commandList, uint32_t index) {
+	if (renderTargetResource_[index]->GetState() != D3D12_RESOURCE_STATE_RENDER_TARGET) {
+		Logger::AssertLog("Dont Resource Stage : RenderTarget");
+	}
+	
 	// MRT用に複数のRTVハンドルを用意
 	commandList->OMSetRenderTargets(1, &renderTargetResource_[index]->GetRTV().handleCPU, FALSE, &depthResource_->GetDSV().handleCPU);
 	float clearColor[] = { 0.0f, 0.0f, 0.0f, 1.0f };

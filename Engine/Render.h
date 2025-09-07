@@ -34,6 +34,8 @@ public:
 	static void PrimitiveDrawCall();
 	static void SetRenderTarget(const std::vector<RenderTargetType>& renderTypes, const DescriptorHandles& depthHandle);
 
+	static void AllRenderTargetReset();
+
 	static void SetShadowMap();
 	static void ChangeShadowMap();
 	static void ResetShadowMap();
