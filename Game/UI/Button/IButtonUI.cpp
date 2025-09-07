@@ -1,8 +1,8 @@
-#include "IMenuButtonUI.h"
+#include "IButtonUI.h"
 
 #include "Engine/Lib/GameTimer.h"
 
-void IMenuButtonUI::Blinking()
+void IButtonUI::Blinking()
 {
 	// フレームを進める
 	blinkingFrame_ += GameTimer::DeltaTime();
@@ -14,7 +14,7 @@ void IMenuButtonUI::Blinking()
 	buttonUI_->SetColor(Vector4{ 1.0f,1.0f,1.0f,a });
 }
 
-void IMenuButtonUI::Reset()
+void IButtonUI::Reset()
 {
 	blinkingFrame_ = 0.0f;
 	buttonUI_->SetColor(Vector4{ 1.0f,1.0f,1.0f,1.0f });

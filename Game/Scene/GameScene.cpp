@@ -4,6 +4,8 @@
 #include "Game/Commands/ObjectCommandInvoker.h"
 #include "Game/Input/StageInputHandler.h"
 
+#include "Game/UI/StageSelector.h"
+
 std::optional<GameScene::Result> GameScene::s_lastResult_ = std::nullopt;
 
 const std::optional<GameScene::Result>& GameScene::LastResult() {
@@ -63,7 +65,8 @@ void GameScene::Init(){
 	stageRegistry_->Init(Engine::GetCanvas2d());
 	stageRegistry_->SetPlayer(player_.get());
 	stageRegistry_->SetWindowSize({kWindowWidth_,kWindowHeight_});
-	stageRegistry_->Register("stage_0.json");
+	std::string loadName = "stage_" + std::to_string(StageSelector::GetCurrentStageIndex()) + ".json";
+	stageRegistry_->Register(loadName);
 
 	mapCollision_ = std::make_unique<MapCollisionSystem>();
 	mapCollision_->Init(stageRegistry_.get(), ghostSoulManager_.get());
@@ -227,12 +230,12 @@ void GameScene::ChengeScene()
 		const auto type = menuSelector_->GetButtonType();
 		switch (type)
 		{
-		case MenuButtonType::Select:
+		case ButtonType::Select:
 			// セレクトに戻る
 			nextSceneType_ = SceneType::STAGE_SELECT;
 			menuSelector_->SetChengeScene(false);
 			break;
-		case MenuButtonType::Reset :
+		case ButtonType::Reset :
 			// ステージをリセットする
 			stageRegistry_->ResetStage();
 			menuSelector_->SetChengeScene(false);

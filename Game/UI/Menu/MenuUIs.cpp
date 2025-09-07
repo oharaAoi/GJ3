@@ -5,16 +5,16 @@
 #include "Engine/System/Editer/Window/EditorWindows.h"
 #include "Engine/Lib/GameTimer.h"
 
-#include "Game/UI/Menu/button/SelectButtonUI.h"
-#include "Game/UI/Menu/button/ResetButtonUI.h"
-#include "Game/UI/Menu/button/OperationButtonUI.h"
-#include "Game/UI/Menu/button/BackButtonUI.h"
+#include "Game/UI/Button/SelectButtonUI.h"
+#include "Game/UI/Button/ResetButtonUI.h"
+#include "Game/UI/Button/OperationButtonUI.h"
+#include "Game/UI/Button/BackButtonUI.h"
 
 void MenuUIs::Init()
 {
 	SetName("MenuUIs");
 	menu_ = Engine::GetCanvas2d()->AddSprite("menu.png", GetName(), "Sprite_Normal.json", 10);
-	AddChild(menu_);
+	AddChild(this);
 	EditorWindows::AddObjectWindow(this, GetName());
 	menu_->SetTranslate(Vector2{ 640.0f,360.0f });
 

@@ -9,6 +9,7 @@
 // actor
 #include "Game/WorldObject/WorldObjects.h"
 #include "Game/Actor/Effect/GhostSoulManager.h"
+#include "Game/UI/Clear/ClearSelector.h"
 
 class ClearScene : 
 	public BaseScene
@@ -25,6 +26,10 @@ public:
 
 private:
 
+	void ChengeScene();
+
+private:
+
 	// ------------------- camera ------------------- //
 	std::unique_ptr<DebugCamera> debugCamera_;
 	std::unique_ptr<Camera3d> camera3d_;
@@ -37,6 +42,8 @@ private:
 	std::unique_ptr<WorldObjects> worldObjects_;
 
 	std::unique_ptr<GhostSoulManager> ghostSoulManager_;
+
+	std::unique_ptr<ClearSelector> clearSelector_;
 
 	SceneRenderer* sceneRenderer_;
 

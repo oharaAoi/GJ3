@@ -4,8 +4,6 @@
 #include "Engine/System/Audio/AudioPlayer.h"
 #include "Engine/Lib/GameTimer.h"
 
-#include "Game/UI/Menu/button/MenuButtonType.h"
-
 void MenuSelector::Init()
 {
 	// メニューSpritesの初期化
@@ -64,7 +62,7 @@ void MenuSelector::Update()
 	// ======================================================================
 	
 	const float dt = GameTimer::DeltaTime();
-	const auto lsY = input->GetLeftJoyStick(0.2f).y; // DEAD 0.2
+	const auto lsY = input->GetLeftJoyStick(0.2f).y;
 
 	// 決定が押されているか
 	const bool decisionPressed = input->IsTriggerKey(DIK_SPACE) || input->IsTriggerKey(DIK_RETURN) ||
@@ -120,20 +118,20 @@ void MenuSelector::ChengeScene()
 
 	switch (type)
 	{
-	case MenuButtonType::Select:
+	case ButtonType::Select:
 		chengeScene_ = false;
 		drawEffect_ = true;
 		effectFrame_ = 1.0f;
 		break;
-	case MenuButtonType::Reset:
+	case ButtonType::Reset:
 		chengeScene_ = false;
 		drawEffect_ = true;
 		effectFrame_ = 1.0f;
 		break;
-	case MenuButtonType::Operation:
+	case ButtonType::Operation:
 		openOperation_ = true;
 		break;
-	case MenuButtonType::Back:
+	case ButtonType::Back:
 		menuUIs_->FadeOut();
 		chengeScene_ = true;
 		break;

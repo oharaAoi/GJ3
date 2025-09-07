@@ -2,6 +2,7 @@
 #include "Engine.h"
 #include "Engine/Lib/Json/JsonItems.h"
 #include "Game/Scene/GameScene.h"
+#include "Game/UI/StageSelector.h"
 
 ClearScene::ClearScene(){}
 
@@ -53,7 +54,10 @@ void ClearScene::Init()
 
 	worldObjects_ = std::make_unique<WorldObjects>();
 	worldObjects_->Init();
-	worldObjects_->SetTexture("clear.png");
+	//worldObjects_->SetTexture("clear.png");
+
+	clearSelector_ = std::make_unique<ClearSelector>();
+	clearSelector_->Init();
 
 }
 
@@ -76,7 +80,10 @@ void ClearScene::Update()
 
 	worldObjects_->Update();
 
-	ghostSoulManager_->UpdateClearScene();;
+	ghostSoulManager_->UpdateClearScene();
+
+	clearSelector_->Update();
+	ChengeScene();
 
 	// -------------------------------------------------
 	// ↓ cameraの更新
@@ -108,4 +115,24 @@ void ClearScene::Draw() const
 {
 	// Sceneの描画
 	sceneRenderer_->Draw();
+}
+
+void ClearScene::ChengeScene()
+{
+	// ステージ選択されているか
+	if (clearSelector_->GetChangeScene() || clearSelector_->GetChangeStage()) {
+		// 遷移の実行が可能か
+		if (clearSelector_->GetIsExecute()) {
+			// セレクトシーンに遷移
+			if (clearSelector_->GetChangeScene()) {
+				nextSceneType_ = SceneType::STAGE_SELECT;
+			}
+			// 次のステージに遷移
+			if (clearSelector_->GetChangeStage()) {
+				nextSceneType_ = SceneType::GAME;
+				int32_t index = StageSelector::GetCurrentStageIndex() + 1;
+				StageSelector::SetCurrentStageIndex(index);
+			}
+		}
+	}
 }
