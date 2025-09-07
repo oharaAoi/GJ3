@@ -7,7 +7,6 @@
 #include "Game/Commands/ObjectCommandInvoker.h"
 #include "Game/Commands/Stage/PlayerGetGhostCommand.h"
 #include "Game/Commands/Stage/CreateGraveBlock.h"
-#include "Game/Commands/Stage/CreateGhostCommand.h"
 
 void GhostBlockCollision::Init(MapCollisionSystem* system){
 	system_ = system;
@@ -57,9 +56,7 @@ void GhostBlockCollision::CreateTokenGhost(){
 					createGraveCommand->Execute();
 					ObjectCommandInvoker::GetInstance().PushCommand(std::move(createGraveCommand));
 				} else{
-					auto createGhostCommand = std::make_unique<CreateGhostCommand>(system_->GetStageRegi(),ghostIndex);
-					createGhostCommand->Execute();
-					ObjectCommandInvoker::GetInstance().PushCommand(std::move(createGhostCommand));
+					system_->GetStageRegi()->CreateStageData(ghostIndex,BlockType::Ghost);
 				}
 			}
 		}

@@ -148,6 +148,7 @@ void GameScene::Update(){
 
 	stageResetUI_->Update();
 
+	// Todo : Invoker を使う
 	if(StageInputHandler::UndoInput()){
 		ObjectCommandInvoker::GetInstance().UndoCommand();
 		resetTimer_ = 0.f;
