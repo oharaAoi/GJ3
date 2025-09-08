@@ -357,6 +357,8 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Game\Tool\MapChipLoader.cpp" />
     <ClCompile Include="Game\Tool\StageEditor.cpp" />
     <ClCompile Include="Game\Tool\StageLoader.cpp" />
+    <ClCompile Include="Game\UI\StageSelectCollection.cpp" />
+    <ClCompile Include="Game\UI\StageSelectSegment.cpp" />
     <ClCompile Include="Game\UI\TitleUIs.cpp" />
     <ClCompile Include="Game\WorldObject\BackGround.cpp" />
     <ClCompile Include="Game\WorldObject\Skybox.cpp" />
@@ -639,6 +641,8 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Game\Tool\StageEditor.h" />
     <ClInclude Include="Game\Tool\StageLoader.h" />
     <ClInclude Include="Game\UI\Button\ButtonType.h" />
+    <ClInclude Include="Game\UI\StageSelectCollection.h" />
+    <ClInclude Include="Game\UI\StageSelectSegment.h" />
     <ClInclude Include="Game\UI\TitleUIs.h" />
     <ClInclude Include="Game\WorldObject\BackGround.h" />
     <ClInclude Include="Game\WorldObject\Skybox.h" />

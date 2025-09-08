@@ -9,7 +9,7 @@ void SwirlMask::Init() {
 	mask_->SetTranslate({ 640, 360 });
 
 	pattern_ = std::make_unique<Sprite>();
-	pattern_->Init("soul_bg.png");
+	pattern_->Init("swirl_bg.png");
 	pattern_->SetTranslate({ 640, 360 });
 }
 

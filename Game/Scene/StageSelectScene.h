@@ -14,6 +14,7 @@
 #include "Game/WorldObject/WorldObjects.h"
 // ui
 #include "Game/UI/StageSelector.h"
+#include "Game/UI/StageSelectCollection.h"
 #include "Game/StageRender/StageContents.h"
 #include "Game/Tool/StageLoader.h"
 #include "Engine/Module/PostEffect/IPostEffect.h"
@@ -92,7 +93,7 @@ public:
 	void Init() override;
 	void Update() override;
 private:
-	std::unique_ptr<StageSelector> stageSelector_;
+	std::unique_ptr<StageSelectCollection> stageCollection;
 	std::unique_ptr<LightFlash> lightFlash_;
 
 };

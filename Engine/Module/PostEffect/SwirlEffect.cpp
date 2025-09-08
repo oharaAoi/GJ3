@@ -88,6 +88,7 @@ void SwirlEffect::Debug_Gui() {
 		ImGui::DragFloat("angleStrength", &param_.angleStrength, 0.1f);
 		ImGui::DragFloat("speed", &param_.speed, 0.01f);
 		ImGui::DragFloat("frontWidth", &param_.frontWidth, 0.1f);
+		ImGui::DragFloat("swirlStrength", &param_.swirlStrength, 0.1f);
 
 		ImGui::DragFloat("rotateSpeed", &param_.rotateSpeed, 0.01f);
 
@@ -111,6 +112,7 @@ void SwirlEffect::CopyData() {
 	setting_->angleStrength = param_.angleStrength;
 	setting_->speed = param_.speed;
 	setting_->frontWidth = param_.frontWidth;
+	setting_->swirlStrength = param_.swirlStrength;
 }
 
 void SwirlEffect::Reset() {
