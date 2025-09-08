@@ -57,6 +57,9 @@ private:
 	// ------------------- ui ------------------- //
 	std::unique_ptr<StageLoader> stageLoader_;
 
+	std::unique_ptr<StageContents> stageContents_;
+	std::unique_ptr<StageSelectCollection> stageCollection;
+
 	// ------------------- effect ------------------- //
 	BaseParticles* particle_;
 
@@ -66,6 +69,17 @@ private:
 	SceneRenderer* sceneRenderer_;
 
 	std::shared_ptr<IPostEffect> gotRay_;
+
+	// ------------------- other ------------------- //
+
+	float scrollT_;
+	int32_t scrollDirection_;
+
+public:
+
+	void SetScrollT(float _value) { scrollT_ = _value; }
+	void SetScrollDirection(int32_t _direction) { scrollDirection_ = _direction; }
+
 };
 
 #pragma region Behavior
@@ -93,8 +107,6 @@ public:
 	void Update() override;
 private:
 	std::unique_ptr<StageSelector> stageSelector_;
-	std::unique_ptr<StageSelectCollection> stageCollection;
-	std::unique_ptr<StageContents> stageContents_;
 	std::unique_ptr<LightFlash> lightFlash_;
 
 };
