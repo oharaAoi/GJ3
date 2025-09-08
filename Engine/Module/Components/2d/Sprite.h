@@ -118,6 +118,9 @@ public:
 
 	const Vector4& GetColor() const{ return materialData_->color; }
 	void SetColor(const Vector4& color){ materialData_->color = color; };
+
+	void SetAlpha(float _alpha) { materialData_->color.w = _alpha; }
+
 	void SetIsFlipX(bool isFlipX){ isFlipX_ = isFlipX; }
 	void SetIsFlipY(bool isFlipY){ isFlipY_ = isFlipY; }
 

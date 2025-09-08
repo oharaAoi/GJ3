@@ -83,12 +83,14 @@ void SwirlEffect::CheckBox() {
 
 void SwirlEffect::Debug_Gui() {
 	if (ImGui::CollapsingHeader("SwirlEffect##SwirlEffect")) {
-		ImGui::DragFloat("time", &setting_->time, 0.1f);
-		ImGui::DragFloat("radiusKernel", &param_.radiusKernel, 0.1f);
-		ImGui::DragFloat("angleStrength", &param_.angleStrength, 0.1f);
+		ImGui::DragFloat("time", &setting_->time, 0.01f);
+		ImGui::DragFloat("radiusKernel", &param_.radiusKernel, 0.01f);
+		ImGui::DragFloat("angleStrength", &param_.angleStrength, 0.01f);
 		ImGui::DragFloat("speed", &param_.speed, 0.01f);
-		ImGui::DragFloat("frontWidth", &param_.frontWidth, 0.1f);
-		ImGui::DragFloat("swirlStrength", &param_.swirlStrength, 0.1f);
+		ImGui::DragFloat("frontWidth", &param_.frontWidth, 0.01f);
+		ImGui::DragFloat("swirlStrength", &param_.swirlStrength, 0.01f);
+		ImGui::DragFloat("fineness", &param_.fineness, 0.01f);
+		ImGui::DragFloat("thickness", &param_.thickness, 0.01f);
 
 		ImGui::DragFloat("rotateSpeed", &param_.rotateSpeed, 0.01f);
 
@@ -113,6 +115,8 @@ void SwirlEffect::CopyData() {
 	setting_->speed = param_.speed;
 	setting_->frontWidth = param_.frontWidth;
 	setting_->swirlStrength = param_.swirlStrength;
+	setting_->fineness = param_.fineness;
+	setting_->thickness = param_.thickness;
 }
 
 void SwirlEffect::Reset() {

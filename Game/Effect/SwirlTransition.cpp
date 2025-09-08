@@ -23,16 +23,20 @@ void SwirlTransition::Update() {
 		float t = time_ / startData_.transitionTime;
 		float kr = 0;
 		float speed = 0;
+		float patternAlpha = 0;
 		if (!isOpen_) {
 			kr = std::lerp(startData_.radiusKernel, endData_.radiusKernel, t);
 			speed = std::lerp(startData_.rotateSpeed, endData_.rotateSpeed, t);
+			patternAlpha = std::lerp(0.0f, 1.0f, t);
 		} else {
 			kr = std::lerp(endData_.radiusKernel, startData_.radiusKernel, t);
 			speed = std::lerp(endData_.rotateSpeed, startData_.rotateSpeed, t);
+			patternAlpha = std::lerp(1.0f, 0.0f, t);
 		}
 
 		swirl_->SetRadiusKernel(kr);
 		swirl_->SetRotateSpeed(speed);
+		swirl_->SetPatternAlpha(patternAlpha);
 
 		if (time_ >= startData_.transitionTime) {
 			isFinish_ = true;

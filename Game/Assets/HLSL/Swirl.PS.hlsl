@@ -1,7 +1,6 @@
 #include "ProcessedScene.hlsli"
 
 static const float pi2 = 6.28318530718f;
-static const float COLWID = 0.4f;
 
 struct Setting {
 	float2 screenSize;	// windowのサイズ
@@ -12,6 +11,8 @@ struct Setting {
 	float frontWidth;	// フロント幅(にじみ)
 	
 	float swirlStrength;
+	float fineness;
+	float thickness;
 };
 ConstantBuffer<Setting> gSetting : register(b0);
 Texture2D<float4> gSceneTexture : register(t0);
@@ -52,7 +53,7 @@ PixelShaderOutput main(VertexShaderOutput input) {
 	float cover = SmoothStep(progress - gSetting.frontWidth, progress, arrival);
 	 
 	float time01 = frac(gSetting.time / 4.0f);
-	float pat = Zigzag(0.5f * lenSq + (gSetting.swirlStrength) * thetaN + 1.0f * time01) * COLWID
+	float pat = Zigzag(gSetting.fineness * lenSq + (gSetting.swirlStrength) * thetaN + 1.0f * time01) * gSetting.thickness
               + 0.05f * lenSq
               + 2.0f * time01;
 	

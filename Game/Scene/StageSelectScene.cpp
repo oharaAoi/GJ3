@@ -185,8 +185,6 @@ void SelectingStageBehavior::Update(){
 
 	if(stageSelector_->IsDecidedStage()){
 		// ステージが決定したら次のシーンへ
-		// StageSelector::GetCurrentStageIndex(); // 現在のステージ番号を取得
-		host_->SetNextSceneType(SceneType::GAME);
 		host_->ChangeBehavior(new TransitionToGameBehavior(host_));
 		AudioPlayer::SinglShotPlay("start.mp3",0.3f);
 	}

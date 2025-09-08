@@ -21,8 +21,11 @@ public:
 		float angleStrength = 0;// 角度方向のねじれの強さ
 		float speed = 0;		// 速度
 		float frontWidth = 1;	// フロント幅(にじみ)
-
 		float swirlStrength;
+
+		float fineness;
+		float thickness;
+		float pad[2];
 	};
 
 	struct SwirlParameter {
@@ -32,6 +35,8 @@ public:
 		float frontWidth;	// フロント幅(にじみ)
 		float rotateSpeed = 0.5f;
 		float swirlStrength = 1.0f;
+		float fineness = 0.3f;
+		float thickness = 0.4f;
 		bool isEnable;
 	};
 
@@ -59,6 +64,8 @@ public:
 	void SetPongResource(PingPongBuffer* _resource) { postProcessResource_ = _resource; }
 
 	void SetDepthHandle(const DescriptorHandles& _handle) { depthHandle_ = _handle; };
+
+	void SetPatternAlpha(float _alpha) { swirlMask_->SetPatternAlpha(_alpha); }
 
 	void SetRadiusKernel(float _value) { param_.radiusKernel = _value; }
 	void SetAngleStrength(float _value) { param_.angleStrength = _value; }

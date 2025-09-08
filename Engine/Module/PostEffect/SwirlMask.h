@@ -18,6 +18,10 @@ public:
 
 	void Debug_Gui();
 
+public:
+
+	void SetPatternAlpha(float _alpha) { pattern_->SetAlpha(_alpha); }
+
 private:
 
 	std::unique_ptr<Sprite> mask_;
