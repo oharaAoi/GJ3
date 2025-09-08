@@ -35,7 +35,7 @@ void GaussianBlurHeight::CheckBox() {
 }
 
 void GaussianBlurHeight::Debug_Gui() {
-	ImGui::DragFloat2("sampleHeight", &param_.texelSize.x, 0.1f, 0.0f, 100.0f);
+	ImGui::DragFloat2("sampleHeight", &param_.texelSize.x,0.01f,0.0f,0.0f,"%.4f");
 	
 	if (ImGui::Button("Save##Gaussian_save")) {
 		JsonItems::Save("PostEffect", param_.ToJson(param_.GetName()));

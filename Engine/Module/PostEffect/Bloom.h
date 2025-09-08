@@ -84,11 +84,14 @@ public:
 	void SetIntensity(const float& intensity){ param_.bloomIntensity = intensity; }
 
 	float GetThreshold() const{ return brightnessBuffer_->GetThreshold(); }
+	void SetThreshold(float _threshold) const{ return brightnessBuffer_->SetThreshold(_threshold); }
 
 	const Vector2& GetGaussianWidthTexelSize() const{ return blurWidthBuffer_->GetTexelSize(); }
 	void SetGaussianWidthTexelSize(const Vector2& size){ blurWidthBuffer_->SetTexelSize(size); }
+	void SetGaussianWidthTexelSizeFromFloat(const float& size){ blurWidthBuffer_->SetTexelSizeFromFloat(size); }
 
 	const Vector2& GetGaussianHeightTexelSize() const{ return blurHeightBuffer_->GetTexelSize(); }
 	void SetGaussianHeightTexelSize(const Vector2& size){ blurHeightBuffer_->SetTexelSize(size); }
+	void SetGaussianHeightTexelSizeFromFloat(const float& size){ blurHeightBuffer_->SetTexelSizeFromFloat(size); }
 };
 

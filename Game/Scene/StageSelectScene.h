@@ -8,12 +8,14 @@
 // camera
 #include "Game/Camera/Camera3d.h"
 #include "Game/Camera/Camera2d.h"
+#include "Game/Camera/StageSelectCamera.h"
 #include "Game/Camera/DebugCamera.h"
 // actor
 #include "Game/WorldObject/Skybox.h"
 #include "Game/WorldObject/WorldObjects.h"
 // ui
 #include "Game/UI/StageSelector.h"
+#include "Game/UI/StageSelectCollection.h"
 #include "Game/StageRender/StageContents.h"
 #include "Game/Tool/StageLoader.h"
 #include "Engine/Module/PostEffect/IPostEffect.h"
@@ -43,6 +45,7 @@ private:
 	std::unique_ptr<DebugCamera> debugCamera_;
 	std::unique_ptr<Camera3d> camera3d_;
 	std::unique_ptr<Camera2d> camera2d_;
+	std::unique_ptr<StageSelectCamera> stageSelectCamera_;
 
 	// ------------------- actor ------------------- //
 
@@ -54,8 +57,8 @@ private:
 	// ------------------- ui ------------------- //
 	std::unique_ptr<StageLoader> stageLoader_;
 
-
 	std::unique_ptr<StageContents> stageContents_;
+	std::unique_ptr<StageSelectCollection> stageCollection;
 
 	// ------------------- effect ------------------- //
 	BaseParticles* particle_;
@@ -66,6 +69,17 @@ private:
 	SceneRenderer* sceneRenderer_;
 
 	std::shared_ptr<IPostEffect> gotRay_;
+
+	// ------------------- other ------------------- //
+
+	float scrollT_;
+	int32_t scrollDirection_;
+
+public:
+
+	void SetScrollT(float _value) { scrollT_ = _value; }
+	void SetScrollDirection(int32_t _direction) { scrollDirection_ = _direction; }
+
 };
 
 #pragma region Behavior

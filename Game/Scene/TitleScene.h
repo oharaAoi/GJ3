@@ -32,6 +32,27 @@ public:
 	void TransitionUpdate();
 
 private:
+	struct PostEffectParam
+		: public IJsonConverter,
+			public AttributeGui{
+	public:
+		PostEffectParam() = default;
+		~PostEffectParam() override = default;
+
+		void Init(const std::string& _paramName);
+		void Debug_Gui() override;
+
+		json ToJson(const std::string& id) const override;
+		void FromJson(const json& jsonData) override;
+
+		float bloomThreshold_ = 0.6f;
+		float bloomIntensity_ = 5.f;
+		float bloomTexelSize_ = 1.f;
+		float vignettePower_ = 0.3f;
+		float vignetteScale_ = 5.6f;
+	};
+
+private:
 	// ------------------- camera ------------------- //
 	std::unique_ptr<Camera2d> camera2d_ = nullptr;
 	std::unique_ptr<Camera3d> camera3d_ = nullptr;
@@ -39,6 +60,9 @@ private:
 
 	// ------------------- actor ------------------- //
 	Skybox* skybox_;
+
+	std::unique_ptr<PostEffectParam> minParam_;
+	std::unique_ptr<PostEffectParam> maxParam_;
 
 	// ------------------- ui ------------------- //
 	std::unique_ptr<TitleUIs> uis_;

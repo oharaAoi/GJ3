@@ -341,6 +341,9 @@
     <ClCompile Include="Game\UI\Tutorial\Text\CollisionGhost\TextUI_CollisionGhost_Line2.cpp" />
     <ClCompile Include="Game\UI\Tutorial\Text\Goal\TextUI_Goal_Line1.cpp" />
     <ClCompile Include="Game\UI\Tutorial\Text\Goal\TextUI_Goal_Line2.cpp" />
+    <ClCompile Include="Game\UI\StageSelectSegment.cpp" />
+    <ClCompile Include="Game\UI\StageSelectCollection.cpp" />
+    <ClCompile Include="Game\Camera\StageSelectCamera.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Scene\ClearScene.h" />
@@ -643,6 +646,9 @@
     <ClInclude Include="Game\UI\Tutorial\Text\CollisionGhost\TextUI_CollisionGhost_Line2.h" />
     <ClInclude Include="Game\UI\Tutorial\Text\Goal\TextUI_Goal_Line1.h" />
     <ClInclude Include="Game\UI\Tutorial\Text\Goal\TextUI_Goal_Line2.h" />
+    <ClInclude Include="Game\UI\StageSelectSegment.h" />
+    <ClInclude Include="Game\UI\StageSelectCollection.h" />
+    <ClInclude Include="Game\Camera\StageSelectCamera.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\Assets\HLSL\Light.hlsli" />

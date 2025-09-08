@@ -39,11 +39,14 @@ void StageSelectScene::Init(){
 	debugCamera_->Init();
 	camera2d_->Init();
 
+	stageSelectCamera_ = std::make_unique<StageSelectCamera>();
+	stageSelectCamera_->Init(camera2d_.get());
+
 	// -------------------------------------------------
 	// ↓ actorの初期化
 	// -------------------------------------------------
-	worldObjects_ = std::make_unique<WorldObjects>();
-	worldObjects_->Init();
+	//worldObjects_ = std::make_unique<WorldObjects>();
+	//worldObjects_->Init();
 
 	// -------------------------------------------------
 	// ↓ managerの初期化
@@ -56,8 +59,12 @@ void StageSelectScene::Init(){
 	stageLoader_ = std::make_unique<StageLoader>();
 	stageLoader_->Init();
 
+	stageCollection = std::make_unique<StageSelectCollection>();
+	stageCollection->Init(Engine::GetCanvas2d());
+
 	stageContents_ = std::make_unique<StageContents>();
 	stageContents_->Init(stageLoader_->GetMaxStageNum());
+	stageContents_->SetStageSelectCollection(stageCollection.get());
 
 	// -------------------------------------------------
 	// ↓ behaviorの初期化
@@ -90,16 +97,18 @@ void StageSelectScene::Init(){
 
 void StageSelectScene::Update(){
 
-	stageContents_->Update();
-
 	// -------------------------------------------------
 	// ↓ actorの更新
 	// -------------------------------------------------
-	worldObjects_->Update();
+	//worldObjects_->Update();
 
 	if(behavior_){
 		behavior_->Update();
 	}
+
+	stageContents_->Update();
+	stageCollection->Update(scrollT_, scrollDirection_);
+
 
 	// -------------------------------------------------
 	// ↓ spriteの更新
@@ -114,6 +123,7 @@ void StageSelectScene::Update(){
 		camera3d_->Update();
 	}
 	camera2d_->Update();
+	stageSelectCamera_->Update();
 
 	// -------------------------------------------------
 	// ↓ sceneの更新
@@ -153,8 +163,12 @@ SelectingStageBehavior::SelectingStageBehavior(StageSelectScene* _host)
 SelectingStageBehavior::~SelectingStageBehavior(){}
 
 void SelectingStageBehavior::Init(){
+
 	stageSelector_ = std::make_unique<StageSelector>();
 	stageSelector_->Init();
+	stageSelector_->SetTotalStageNum(host_->stageLoader_->GetMaxStageNum());
+	stageSelector_->SetStageSelectCollection(host_->stageCollection.get());
+	stageSelector_->SetStageContents(host_->stageContents_.get());
 
 	lightFlash_ = std::make_unique<LightFlash>();
 	lightFlash_->Init("LightFlash");
@@ -166,11 +180,13 @@ void SelectingStageBehavior::Update(){
 	lightFlash_->Update();
 
 	stageSelector_->Update();
+	host_->SetScrollT(stageSelector_->GetScrollT());
+	host_->SetScrollDirection(stageSelector_->GetScrollDirection());
 
 	if(stageSelector_->IsDecidedStage()){
 		// ステージが決定したら次のシーンへ
 		// StageSelector::GetCurrentStageIndex(); // 現在のステージ番号を取得
-		//host_->SetNextSceneType(SceneType::GAME);
+		host_->SetNextSceneType(SceneType::GAME);
 		host_->ChangeBehavior(new TransitionToGameBehavior(host_));
 		AudioPlayer::SinglShotPlay("start.mp3",0.3f);
 	}

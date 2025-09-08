@@ -10,6 +10,8 @@ struct Setting {
 	float angleStrength;// 角度方向のねじれの強さ
 	float speed;		// 速度
 	float frontWidth;	// フロント幅(にじみ)
+	
+	float swirlStrength;
 };
 ConstantBuffer<Setting> gSetting : register(b0);
 Texture2D<float4> gSceneTexture : register(t0);
@@ -50,7 +52,7 @@ PixelShaderOutput main(VertexShaderOutput input) {
 	float cover = SmoothStep(progress - gSetting.frontWidth, progress, arrival);
 	 
 	float time01 = frac(gSetting.time / 4.0f);
-	float pat = Zigzag(0.22f * lenSq + (-1.0f) * thetaN + 1.0f * time01) * COLWID
+	float pat = Zigzag(0.5f * lenSq + (gSetting.swirlStrength) * thetaN + 1.0f * time01) * COLWID
               + 0.05f * lenSq
               + 2.0f * time01;
 	
@@ -61,12 +63,14 @@ PixelShaderOutput main(VertexShaderOutput input) {
 	
 	float centerMask = 1.0f - cover; // 中央=1, 周囲=0
 	float3 finalRgb = lerp(swirlColor.rgb, sceneColor.rgb, centerMask);
-	if (length(swirlColor.rgb) >= 1.0f) {
-		output.color = sceneColor;
-	}
-	else {
-		output.color = float4(finalRgb, 1.0f);
-	}
+	//if (length(swirlColor.rgb) >= 1.0f) {
+	//	output.color = sceneColor;
+	//}
+	//else {
+	//	output.color = float4(finalRgb, 1.0f);
+	//}
+	
+	output.color = float4(finalRgb, 1.0f);
 	
 	//float2 uv01 = input.texcoord;
 	//float2 screenSize = gSetting.screenSize;

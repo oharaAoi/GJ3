@@ -11,24 +11,26 @@
 /// game
 #include "Game/Actor/Block/BlockWall.h"
 #include "Game/StageRender/StageRenderTarget.h"
+#include "Game/UI/StageSelectCollection.h"
+#include "Game/StageRender/StageContents.h"
 
 /// math
 #include <stdint.h>
 
 class StageSelector
-	:public AttributeGui{
+	:public AttributeGui {
 private:
 	static int32_t currentStageIndex_;
 
-	static constexpr std::array<uint8_t,2> kStageIndexAddKeys_ = {DIK_LEFT,DIK_A};
-	static constexpr std::array<uint8_t,2> kStageIndexSubKeys_ = {DIK_RIGHT,DIK_D};
-	static constexpr std::array<uint8_t,2> kStageDecideKeys_ = {DIK_RETURN,DIK_SPACE};
+	static constexpr std::array<uint8_t, 2> kStageIndexAddKeys_ = { DIK_LEFT,DIK_A };
+	static constexpr std::array<uint8_t, 2> kStageIndexSubKeys_ = { DIK_RIGHT,DIK_D };
+	static constexpr std::array<uint8_t, 2> kStageDecideKeys_ = { DIK_RETURN,DIK_SPACE };
 	static constexpr XInputButtons kStageIndexAddButtons_ = XInputButtons::DPAD_LEFT;
 	static constexpr XInputButtons kStageIndexSubButtons_ = XInputButtons::DPAD_RIGHT;
-	static constexpr std::array<XInputButtons,2> kStageDecideButtons_ = {XInputButtons::BUTTON_A,XInputButtons::BUTTON_B};
+	static constexpr std::array<XInputButtons, 2> kStageDecideButtons_ = { XInputButtons::BUTTON_A,XInputButtons::BUTTON_B };
 public:
-	static int32_t GetCurrentStageIndex(){ return currentStageIndex_; }
-	static void SetCurrentStageIndex(int32_t index){ currentStageIndex_ = index; }
+	static int32_t GetCurrentStageIndex() { return currentStageIndex_; }
+	static void SetCurrentStageIndex(int32_t index) { currentStageIndex_ = index; }
 public:
 	StageSelector() = default;
 	~StageSelector() = default;
@@ -42,7 +44,7 @@ public:
 	void Scroll();
 private:
 	struct RotateAnimationParam
-		:public IJsonConverter{
+		:public IJsonConverter {
 	public:
 		RotateAnimationParam();
 		~RotateAnimationParam()override;
@@ -59,7 +61,7 @@ private:
 		float elapsedTime = 0.0f;
 
 		/// pendulum
-		Vector3 anchor = Vector3(0.f,0.f,0.f);
+		Vector3 anchor = Vector3(0.f, 0.f, 0.f);
 		float angle_ = 0.f;
 		float angleVelo_ = 0.f;
 		float gravity = 9.8f;
@@ -74,11 +76,9 @@ private:
 
 
 private:
-	std::array<Sprite*,3> stagePreviews_;
-	std::array<Sprite*,3> stagePreviewFrame_; // プレビューの 枠
 
-	Sprite* background_ = nullptr;
-	std::array< Sprite*,2> arrows_; // 矢印 0:L 1:R
+	//Sprite* background_ = nullptr;
+	std::array< Sprite*, 2> arrows_; // 矢印 0:L 1:R
 
 	/// 押しっぱなし検出する時間
 	float firstPressInterval_ = 0.4f;
@@ -96,7 +96,8 @@ private:
 
 	float scrollTime_ = 0.0f;       // 現在のスクロール時間
 	float scrollDuration_ = 0.6f;   // スクロールにかける秒数
-	Vector2 centerPos_ = Vector2(640.f,360.0f);
+	float scrolT_;
+	Vector2 centerPos_ = Vector2(640.f, 360.0f);
 	float theSpaceBetweenButtons_ = 600.f;    // ボタン同士の間隔
 	float currentOffsetX_ = 0.0f;   // 現在のオフセット位置
 	float offsetY_ = -87.f; // Y オフセット Xは移動するが, Yは固定
@@ -104,10 +105,22 @@ private:
 	std::unique_ptr<RotateAnimationParam> leftArrowRotateParam_;
 	std::unique_ptr<RotateAnimationParam> rightArrowRotateParam_;
 
+	StageSelectCollection* pStageSelectCollection_;
+	StageContents* pStageContents_;
+
 public:
-	bool IsDecidedStage() const{ return decidedStage_; }
-	void SetDecidedStage(bool decided){ decidedStage_ = decided; }
+	bool IsDecidedStage() const { return decidedStage_; }
+	void SetDecidedStage(bool decided) { decidedStage_ = decided; }
+
+	float GetLeftPressTime() const { return leftPressTime_; }
+	int32_t GetScrollDirection() const { return scrollDirection_; }
+
+	float GetScrollT() const { return scrolT_; }
 
 	int32_t GetTotalStageNum() const{ return totalStageNum_; }
 	void SetTotalStageNum(int32_t num){ totalStageNum_ = num; }
+
+	void SetStageSelectCollection(StageSelectCollection* _collection) { pStageSelectCollection_ = _collection; }
+	void SetStageContents(StageContents* _contents) { pStageContents_ = _contents; }
+
 };

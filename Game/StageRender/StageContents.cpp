@@ -26,30 +26,40 @@ void StageContents::Init(uint32_t maxStageNum) {
 		std::string stageName = "stage_" + std::to_string(i + 1) + ".json";
 		stageRegistries_[i]->Register(stageName);
 	}
+
+	ResetCurrentDrawIndex(0);
+}
+
+void StageContents::ResetCurrentDrawIndex(int32_t currentStageIndex) {
+	drawIndex_.clear();
+	int leftIndex = (currentStageIndex - 1 + maxStageNum_) % maxStageNum_;
+	int centerIndex = currentStageIndex;
+	int rightIndex = (currentStageIndex + 1) % maxStageNum_;
+	drawIndex_.push_back(leftIndex);
+	drawIndex_.push_back(centerIndex);
+	drawIndex_.push_back(rightIndex);
 }
 
 void StageContents::Update() {
 	camera_->Update();
 	GraphicsContext* ctx = GraphicsContext::GetInstance();
+	pStageCollection_->SortSegments();
 
-	for (uint32_t i = 0; i < 3; ++i) {
+	for (uint32_t i = 0; i < drawIndex_.size(); ++i) {
+		int index = drawIndex_[i];
+		// RenderTargetを作成
 		std::vector<RenderTargetType> postRenderTypes;
-		RenderTargetType type;
-		if (i == 0) {
-			type = RenderTargetType::Stage_RenderTarget1;
-		} else if (i == 1) {
-			type = RenderTargetType::Stage_RenderTarget2;
-		} else {
-			type = RenderTargetType::Stage_RenderTarget3;
-		}
+		// segmentの座標から順番を割り出す
+		RenderTargetType type = pStageCollection_->GetRenderTarget(i);
 		postRenderTypes.push_back(type);
 
+		// RTVに変更
 		ctx->GetRenderTarget()->TransitionResource(ctx->GetCommandList(), type, D3D12_RESOURCE_STATE_NON_PIXEL_SHADER_RESOURCE, D3D12_RESOURCE_STATE_RENDER_TARGET);
-		stageRegistries_[i]->Update();
-		canvas2ds_[i]->Update();
+		stageRegistries_[index]->Update();
+		canvas2ds_[index]->Update();
 		
 		Render::SetRenderTarget(postRenderTypes, ctx->GetDxCommon()->GetDepthHandle());
-		canvas2ds_[i]->Draw();
+		canvas2ds_[index]->Draw();
 		ctx->GetRenderTarget()->TransitionResource(ctx->GetCommandList(), type, D3D12_RESOURCE_STATE_RENDER_TARGET, D3D12_RESOURCE_STATE_NON_PIXEL_SHADER_RESOURCE);
 	}
 }

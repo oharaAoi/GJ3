@@ -21,7 +21,8 @@ public:
 		float angleStrength = 0;// 角度方向のねじれの強さ
 		float speed = 0;		// 速度
 		float frontWidth = 1;	// フロント幅(にじみ)
-		float pad;
+
+		float swirlStrength;
 	};
 
 	struct SwirlParameter {
@@ -30,6 +31,7 @@ public:
 		float speed;		// 速度
 		float frontWidth;	// フロント幅(にじみ)
 		float rotateSpeed = 0.5f;
+		float swirlStrength = 1.0f;
 		bool isEnable;
 	};
 
