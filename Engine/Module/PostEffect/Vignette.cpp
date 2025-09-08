@@ -40,9 +40,6 @@ void Vignette::Debug_Gui() {
 		ImGui::DragFloat("scale", &param_.scale, 0.1f);
 		ImGui::DragFloat("power", &param_.power, 0.01f);
 
-		param_.scale = std::clamp(param_.scale, 0.0f, 20.0f);
-		param_.power = std::clamp(param_.power, 0.0f, 1.0f);
-
 		if (ImGui::Button("Save##vignette_save")) {
 			param_.isEnable = isEnable_;
 			JsonItems::Save("PostEffect", param_.ToJson(param_.GetName()));

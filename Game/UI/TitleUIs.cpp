@@ -15,22 +15,22 @@ void TitleUIs::Init(){
 	backGround_ = Engine::GetCanvas2d()->AddSprite("title_bg.png","BackGround","Sprite_Normal.json",-10,true);
 	backGround_->SetColor({0.15f,0.15f,0.15f,1.f});
 
-	titleWords_[0] = Engine::GetCanvas2d()->AddSprite("Title_su.png","su","Sprite_Normal.json",-1,true);   // す
-	titleWords_[1] = Engine::GetCanvas2d()->AddSprite("Title_ki.png","ki","Sprite_Normal.json",-1,true);   // き
-	titleWords_[2] = Engine::GetCanvas2d()->AddSprite("Title_da.png","da","Sprite_Normal.json",-1,true);   // だ
-	titleWords_[3] = Engine::GetCanvas2d()->AddSprite("Title_ma.png","ma","Sprite_Normal.json",-1,true);   // ま
-	titleWords_[4] = Engine::GetCanvas2d()->AddSprite("Title_ri.png","ri","Sprite_Normal.json",-1,true);   // り
+	titleWords_[0] = Engine::GetCanvas2d()->AddSprite("Title_su.png","su","Sprite_None.json",-1);   // す
+	titleWords_[1] = Engine::GetCanvas2d()->AddSprite("Title_ki.png","ki","Sprite_None.json",-1);   // き
+	titleWords_[2] = Engine::GetCanvas2d()->AddSprite("Title_da.png","da","Sprite_None.json",-1);   // だ
+	titleWords_[3] = Engine::GetCanvas2d()->AddSprite("Title_ma.png","ma","Sprite_None.json",-1);   // ま
+	titleWords_[4] = Engine::GetCanvas2d()->AddSprite("Title_ri.png","ri","Sprite_None.json",-1);   // り
 
 	for(auto word : titleWords_){
-		word->SetColor({0.65f,0.65f,0.65f,0.65f});
+		word->SetColor({1.f,1.f,1.f,1.f});
 	}
 
-	spaceKey_ = Engine::GetCanvas2d()->AddSprite("Title_space.png","SpaceKey","Sprite_Normal.json",10,true);
+	spaceKey_ = Engine::GetCanvas2d()->AddSprite("Title_space.png","SpaceKey","Sprite_Normal.json",10);
 
 	shelf_ = Engine::GetCanvas2d()->AddSprite("Title_shelf.png","Shelf","Sprite_Normal.json",-1,true);
 	shelf_->SetColor({0.15f,0.15f,0.15f,1.f});
 
-	ghost_ = Engine::GetCanvas2d()->AddSprite("title_ghost.png","Ghost","Sprite_Normal.json",5,true);
+	ghost_ = Engine::GetCanvas2d()->AddSprite("title_ghost.png","Ghost","Sprite_Normal.json",5);
 
 	///===========================================
 	// AttributeGui に登録
