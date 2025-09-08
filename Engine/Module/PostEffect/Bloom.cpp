@@ -108,7 +108,7 @@ void Bloom::Debug_Gui() {
 		brightnessBuffer_->Debug_Gui();
 		blurWidthBuffer_->Debug_Gui();
 		blurHeightBuffer_->Debug_Gui();
-		ImGui::DragFloat("bloomIntensity", &setting_->bloomIntensity, 0.1f);
+		ImGui::DragFloat("bloomIntensity", &param_.bloomIntensity, 0.1f);
 
 		if (ImGui::Button("Save##Bloom_save")) {
 			param_.isEnable = isEnable_;

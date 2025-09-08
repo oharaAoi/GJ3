@@ -35,10 +35,8 @@ void GaussianBlurHeight::CheckBox() {
 }
 
 void GaussianBlurHeight::Debug_Gui() {
-	static float sample = 1;
-	ImGui::DragFloat("sampleHeight", &sample, 0.1f, 0.0f, 10.0f);
-	param_.texelSize = { sample / (float)kWindowWidth_, sample / (float)kWindowHeight_ };
-
+	ImGui::DragFloat2("sampleHeight", &param_.texelSize.x, 0.1f, 0.0f, 100.0f);
+	
 	if (ImGui::Button("Save##Gaussian_save")) {
 		JsonItems::Save("PostEffect", param_.ToJson(param_.GetName()));
 	}
@@ -53,5 +51,5 @@ void GaussianBlurHeight::ApplySaveData() {
 }
 
 void GaussianBlurHeight::CopyData() {
-	blurSetting_->texelSize = param_.texelSize;
+	blurSetting_->texelSize = { param_.texelSize.x / (float)kWindowWidth_, param_.texelSize.y / (float)kWindowHeight_ };
 }
