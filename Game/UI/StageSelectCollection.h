@@ -30,6 +30,8 @@ public:
 
 	RenderTargetType GetRenderTarget(uint32_t index);
 
+	void SortSegments();
+
 private:
 
 	const int32_t kMax = 3;
@@ -42,7 +44,7 @@ private:
 	float scrollDuration_ = 0.6f;
 
 	float scrollPos_;
-	float slotSpacing_;
+	float slotSpacing_ = 1280.0f;
 
 
 };

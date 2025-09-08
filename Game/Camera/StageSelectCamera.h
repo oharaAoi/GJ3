@@ -6,10 +6,6 @@ class StageSelectCamera :
 	public AttributeGui {
 public:
 
-
-
-public:
-
 	StageSelectCamera() = default;
 	~StageSelectCamera() = default;
 

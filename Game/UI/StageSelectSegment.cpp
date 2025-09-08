@@ -51,19 +51,6 @@ void StageSelectSegment::Debug_Gui() {
 	}
 }
 
-void StageSelectSegment::ResetRenderTarget(int index) {
-	RenderTargetType type;
-	if (index == 0) {
-		type = RenderTargetType::Stage_RenderTarget1;
-	} else if (index == 1) {
-		type = RenderTargetType::Stage_RenderTarget2;
-	} else {
-		type = RenderTargetType::Stage_RenderTarget3;
-	}
-	rtType_ = type;
-	stageContent_->SetTextureResource(ctx_->GetRenderTarget()->GetRenderTargetResource(type));
-}
-
 void StageSelectSegment::SetCenterPosX(float _posX) {
 	centerPos_.x = _posX;
 	backGround_->SetTranslate(centerPos_);

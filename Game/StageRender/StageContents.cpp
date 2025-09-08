@@ -43,13 +43,17 @@ void StageContents::ResetCurrentDrawIndex(int32_t currentStageIndex) {
 void StageContents::Update() {
 	camera_->Update();
 	GraphicsContext* ctx = GraphicsContext::GetInstance();
+	pStageCollection_->SortSegments();
 
 	for (uint32_t i = 0; i < drawIndex_.size(); ++i) {
 		int index = drawIndex_[i];
+		// RenderTargetを作成
 		std::vector<RenderTargetType> postRenderTypes;
+		// segmentの座標から順番を割り出す
 		RenderTargetType type = pStageCollection_->GetRenderTarget(i);
 		postRenderTypes.push_back(type);
 
+		// RTVに変更
 		ctx->GetRenderTarget()->TransitionResource(ctx->GetCommandList(), type, D3D12_RESOURCE_STATE_NON_PIXEL_SHADER_RESOURCE, D3D12_RESOURCE_STATE_RENDER_TARGET);
 		stageRegistries_[index]->Update();
 		canvas2ds_[index]->Update();

@@ -5,7 +5,7 @@
 #include "Engine/Module/Components/2d/Canvas2d.h"
 
 /// <summary>
-/// StageSelectで描画する背景やステージの1区間
+/// StageSelectで描画する背景やステージの1単体
 /// </summary>
 class StageSelectSegment :
 	public AttributeGui {
@@ -19,8 +19,6 @@ public:
 	void Update();
 
 	void Debug_Gui() override;
-
-	void ResetRenderTarget(int index);
 
 public:
 

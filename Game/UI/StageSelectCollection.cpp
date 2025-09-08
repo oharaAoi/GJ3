@@ -24,12 +24,12 @@ void StageSelectCollection::Init(Canvas2d* _canvas2d) {
 	slotSpacing_ = 1280.0f;
 }
 
-void StageSelectCollection::Update(float _scrolT, int32_t _scrollDirection) {
+void StageSelectCollection::Update(float _scrollT, int32_t _scrollDirection) {
 	scrollPos_ = 0;
 	if (_scrollDirection < 0) {
-		scrollPos_ += _scrolT;
+		scrollPos_ += _scrollT;
 	} else if(_scrollDirection > 0) {
-		scrollPos_ -= _scrolT;
+		scrollPos_ -= _scrollT;
 	}
 
 	for (int i = 0; i < kMax; ++i) {
@@ -46,41 +46,16 @@ void StageSelectCollection::Update(float _scrolT, int32_t _scrollDirection) {
 		scrollPos_ += 1.0f;
 		std::rotate(segments_.rbegin(), segments_.rbegin() + 1, segments_.rend());
 	}
-
-	////// 左方向にスクロールさせる(ステージのindexを上げる)
-	////if (_scrolT == 0.0f) { return; }
-
-	////if (_scrollDirection < 0) {
-	////	// centerPositions_配列の頭と穴以外の座標をスクロールさせる
-	////	for (int oi = 1; oi < centerPositions_.size() - 1; ++oi) {
-	////		float newX = std::lerp(centerPositions_[oi].x, centerPositions_[oi - 1].x, _scrolT);
-	////		segments_[oi - 1]->SetCenterPosX(newX);
-	////	}
-
-	////	// tが1を超えたら一番左のステ－ジ内容を一番右に持ってくる
-	////	if (_scrolT >= 1) {
-	////		segments_[0]->SetCenterPosX(centerPositions_[kMax + 1].x);
-	////	}
-
-	////	// 右方向にスクロールさせる(ステージのindexを下げる)
-	////} else if (_scrollDirection > 0) {
-	////	// centerPositions_配列の頭と穴以外の座標をスクロールさせる
-	////	for (int oi = 1; oi < centerPositions_.size() - 1; ++oi) {
-	////		float newX = std::lerp(centerPositions_[oi].x, centerPositions_[oi + 1].x, _scrolT);
-	////		segments_[oi - 1]->SetCenterPosX(newX);
-	////	}
-
-	////	// tが1を超えたら一番右のステ－ジ内容を一番左に持ってくる
-	////	if (_scrolT >= 1) {
-	////		segments_[kMax - 1]->SetCenterPosX(centerPositions_[0].x);
-	////	}
-	////}
 }
 
 void StageSelectCollection::Debug_Gui() {
 }
 
 RenderTargetType StageSelectCollection::GetRenderTarget(uint32_t index) {
+	return ptrs[index]->GetRenderTargetType();
+}
+
+void StageSelectCollection::SortSegments() {
 	ptrs.clear();
 	ptrs.reserve(segments_.size());
 	for (auto& seg : segments_) {
@@ -92,5 +67,4 @@ RenderTargetType StageSelectCollection::GetRenderTarget(uint32_t index) {
 			  [](StageSelectSegment* a, StageSelectSegment* b) {
 				  return a->GetCenterPos().x < b->GetCenterPos().x;
 			  });
-	return ptrs[index]->GetRenderTargetType();
 }
