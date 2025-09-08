@@ -31,7 +31,7 @@ public:
 		float speed;		// 速度
 		float frontWidth;	// フロント幅(にじみ)
 		float rotateSpeed = 0.5f;
-		float swirlStrength = 0.5f;
+		float swirlStrength = 1.0f;
 		bool isEnable;
 	};
 

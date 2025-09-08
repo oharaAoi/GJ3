@@ -1,0 +1,68 @@
+{
+    "StagePreview": {
+        "anchorPoint": {
+            "x": 0.5,
+            "y": 0.5
+        },
+        "centerPos": {
+            "x": 640.0,
+            "y": 270.0,
+            "z": 0.0
+        },
+        "color": {
+            "w": 1.0,
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+        },
+        "drawRange": {
+            "x": 16.0,
+            "y": 16.0
+        },
+        "isBackGround": false,
+        "isFlipX": false,
+        "isFlipY": false,
+        "isFront": false,
+        "leftTop": {
+            "x": 0.0,
+            "y": 0.0
+        },
+        "rotate": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "scale": {
+            "x": 1.0,
+            "y": 1.0
+        },
+        "textureName": "white.png",
+        "textureSize": {
+            "x": 16.0,
+            "y": 16.0
+        },
+        "uvMaxSize": {
+            "x": 1.0,
+            "y": 1.0
+        },
+        "uvMinSize": {
+            "x": 0.0,
+            "y": 0.0
+        },
+        "uvRotate": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "uvScale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+        },
+        "uvTranslate": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        }
+    }
+}

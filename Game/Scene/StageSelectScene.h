@@ -8,6 +8,7 @@
 // camera
 #include "Game/Camera/Camera3d.h"
 #include "Game/Camera/Camera2d.h"
+#include "Game/Camera/StageSelectCamera.h"
 #include "Game/Camera/DebugCamera.h"
 // actor
 #include "Game/WorldObject/Skybox.h"
@@ -44,6 +45,7 @@ private:
 	std::unique_ptr<DebugCamera> debugCamera_;
 	std::unique_ptr<Camera3d> camera3d_;
 	std::unique_ptr<Camera2d> camera2d_;
+	std::unique_ptr<StageSelectCamera> stageSelectCamera_;
 
 	// ------------------- actor ------------------- //
 
@@ -54,9 +56,6 @@ private:
 
 	// ------------------- ui ------------------- //
 	std::unique_ptr<StageLoader> stageLoader_;
-
-
-	std::unique_ptr<StageContents> stageContents_;
 
 	// ------------------- effect ------------------- //
 	BaseParticles* particle_;
@@ -93,7 +92,9 @@ public:
 	void Init() override;
 	void Update() override;
 private:
+	std::unique_ptr<StageSelector> stageSelector_;
 	std::unique_ptr<StageSelectCollection> stageCollection;
+	std::unique_ptr<StageContents> stageContents_;
 	std::unique_ptr<LightFlash> lightFlash_;
 
 };

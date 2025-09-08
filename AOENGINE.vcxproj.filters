@@ -327,6 +327,7 @@
     <ClCompile Include="Game\Effect\SwirlTransition.cpp" />
     <ClCompile Include="Game\UI\StageSelectSegment.cpp" />
     <ClCompile Include="Game\UI\StageSelectCollection.cpp" />
+    <ClCompile Include="Game\Camera\StageSelectCamera.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Scene\ClearScene.h" />
@@ -614,6 +615,7 @@
     <ClInclude Include="Game\Effect\SwirlTransition.h" />
     <ClInclude Include="Game\UI\StageSelectSegment.h" />
     <ClInclude Include="Game\UI\StageSelectCollection.h" />
+    <ClInclude Include="Game\Camera\StageSelectCamera.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\Assets\HLSL\Light.hlsli" />

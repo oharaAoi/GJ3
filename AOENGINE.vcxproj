@@ -123,6 +123,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Game\Camera\StageSelectCamera.cpp" />
     <ClCompile Include="Game\Commands\Stage\CreateGraveBlock.cpp" />
     <ClCompile Include="Game\Effect\SwirlTransition.cpp" />
     <ClCompile Include="Game\UI\Clear\ClearSelector.cpp" />
@@ -390,6 +391,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Game\UI\Button\NextStageButtonUI.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Game\Camera\StageSelectCamera.h" />
     <ClInclude Include="Game\Commands\Stage\CreateGraveBlock.h" />
     <ClInclude Include="Game\Effect\SwirlTransition.h" />
     <ClInclude Include="Game\UI\Clear\ClearSelector.h" />
