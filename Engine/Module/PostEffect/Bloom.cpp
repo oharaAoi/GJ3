@@ -67,6 +67,8 @@ void Bloom::SetCommand(ID3D12GraphicsCommandList* commandList, DxResource* pingR
 	pingResource->Transition(commandList, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE);
 	sceneBuffer_->Transition(commandList, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE);
 
+	this->CopyData();
+
 	// renderTargetを設定
 	pingPongBuff_->SetRenderTarget(commandList, BufferType::PONG, depthHandle_);
 
@@ -108,7 +110,7 @@ void Bloom::Debug_Gui() {
 		brightnessBuffer_->Debug_Gui();
 		blurWidthBuffer_->Debug_Gui();
 		blurHeightBuffer_->Debug_Gui();
-		ImGui::DragFloat("bloomIntensity", &param_.bloomIntensity, 0.1f);
+		ImGui::DragFloat("bloomIntensity", &param_.bloomIntensity, 0.01f,0.0f,0.0f,"%.3f");
 
 		if (ImGui::Button("Save##Bloom_save")) {
 			param_.isEnable = isEnable_;

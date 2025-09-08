@@ -52,5 +52,6 @@ private:
 public:
 	Vector2 GetTexelSize() const{ return param_.texelSize; }
 	void SetTexelSize(const Vector2& size){ param_.texelSize = size; }
+	void SetTexelSizeFromFloat(const float& size){ param_.texelSize = Vector2(size,size); }
 };
 

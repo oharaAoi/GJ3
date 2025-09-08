@@ -3,26 +3,26 @@
 #include "Engine/Lib/Math/Vector2.h"
 
 class GaussianBlurWidth :
-	public IPostEffect {
+	public IPostEffect{
 public:	// 構造体
 
-	struct BlurSettings {
+	struct BlurSettings{
 		Vector2 texelSize;
 	};
 
-	struct GaussianBlurWidthParam : public IJsonConverter {
+	struct GaussianBlurWidthParam : public IJsonConverter{
 		Vector2 texelSize = {1,1};
 
-		GaussianBlurWidthParam() { SetName("GaussianBlurWidth"); }
+		GaussianBlurWidthParam(){ SetName("GaussianBlurWidth"); }
 
-		json ToJson(const std::string& id) const override {
+		json ToJson(const std::string& id) const override{
 			return JsonBuilder(id)
-				.Add("texelSize", texelSize)
+				.Add("texelSize",texelSize)
 				.Build();
 		}
 
-		void FromJson(const json& jsonData) override {
-			fromJson(jsonData, "texelSize", texelSize);
+		void FromJson(const json& jsonData) override{
+			fromJson(jsonData,"texelSize",texelSize);
 		}
 	};
 
@@ -33,7 +33,7 @@ public:
 
 	void Init() override;
 
-	void SetCommand(ID3D12GraphicsCommandList* commandList, DxResource* pingResource) override;
+	void SetCommand(ID3D12GraphicsCommandList* commandList,DxResource* pingResource) override;
 
 	void CheckBox() override;
 
@@ -52,5 +52,6 @@ private:
 public:
 	Vector2 GetTexelSize() const{ return param_.texelSize; }
 	void SetTexelSize(const Vector2& size){ param_.texelSize = size; }
+	void SetTexelSizeFromFloat(const float& size){ param_.texelSize = Vector2(size ,size); }
 };
 
