@@ -3,10 +3,13 @@
 #include "Game/Manager/Collision/Common/MapCollisionSystem.h"
 #include "Game/Manager/StageRegistry.h"
 
+#include "Game/Manager/GhostEffectController.h"
+
 /// command
 #include "Game/Commands/ObjectCommandInvoker.h"
 #include "Game/Commands/Stage/PlayerGetGhostCommand.h"
 #include "Game/Commands/Stage/CreateGraveBlock.h"
+
 
 void GhostBlockCollision::Init(MapCollisionSystem* system){
 	system_ = system;
@@ -55,8 +58,13 @@ void GhostBlockCollision::CreateTokenGhost(){
 					auto createGraveCommand = std::make_unique<CreateGraveBlock>(system_->GetStageRegi(),ghostIndex);
 					createGraveCommand->Execute();
 					ObjectCommandInvoker::GetInstance().PushCommand(std::move(createGraveCommand));
+
+					// エフェクト削除 要請
+					GhostEffectController::GetInstance()->DeleteGhostEffectByPlayer(ghostIndex);
 				} else{
 					system_->GetStageRegi()->CreateStageData(ghostIndex,BlockType::Ghost);
+					// エフェクト作成 要請
+					GhostEffectController::GetInstance()->CreateGhostEffect(ghostIndex);
 				}
 			}
 		}
@@ -111,5 +119,8 @@ void GhostBlockCollision::ChangeGrave(const Vector2Int& index){
 
 		auto PlayerGetGhostCommandCommand = std::make_unique<PlayerGetGhostCommand>(system_,index);
 		ObjectCommandInvoker::GetInstance().PushCommand(std::move(PlayerGetGhostCommandCommand));
+
+		// エフェクト削除 要請
+		GhostEffectController::GetInstance()->DeleteGhostEffectByPlayer(index);
 	}
 }

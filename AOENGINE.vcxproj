@@ -123,6 +123,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Game\Effect\GhostEffect.cpp" />
     <ClCompile Include="Game\Commands\Stage\CreateGraveBlock.cpp" />
     <ClCompile Include="Game\Effect\SwirlTransition.cpp" />
     <ClCompile Include="Game\UI\Clear\ClearSelector.cpp" />
@@ -363,6 +364,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Game\WorldObject\WorldObjects.cpp" />
     <ClCompile Include="Game\Manager\Collision\Map\GhostBlockCollision.cpp" />
     <ClCompile Include="Game\UI\Button\IButtonUI.cpp" />
+    <ClCompile Include="Game\Manager\GhostEffectController.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Engine\Module\Geometry\Structs\Vertices.cpp" />
     <ClCompile Include="Engine\System\ParticleSystem\Tool\ParticleSystemEditor.cpp" />
@@ -388,6 +390,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Game\UI\Button\NextStageButtonUI.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Game\Effect\GhostEffect.h" />
     <ClInclude Include="Game\Commands\Stage\CreateGraveBlock.h" />
     <ClInclude Include="Game\Effect\SwirlTransition.h" />
     <ClInclude Include="Game\UI\Clear\ClearSelector.h" />
@@ -668,6 +671,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Game\Commands\Stage\MoveBlockCommand.h" />
     <ClInclude Include="Game\UI\StageResetUI.h" />
     <ClInclude Include="Game\UI\Button\NextStageButtonUI.h" />
+    <ClInclude Include="Game\Manager\GhostEffectController.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Engine\Assets\HLSL\Particle\AccelerationField.CS.hlsl">

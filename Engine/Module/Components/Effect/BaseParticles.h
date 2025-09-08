@@ -54,10 +54,6 @@ public:
 	std::shared_ptr<Material> GetShareMaterial() { return shareMaterial_; }
 	void SetShareMaterial(std::shared_ptr<Material> _material) { shareMaterial_ = _material; }
 
-	bool GetIsAddBlend() const {return emitter_.isParticleAddBlend;}
-
-	void SetLoop(bool _loop) { emitter_.isLoop = _loop; }
-
 	bool GetChangeMesh() const { return changeMesh_; }
 
 protected:

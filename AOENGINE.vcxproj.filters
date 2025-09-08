@@ -325,6 +325,8 @@
     <ClCompile Include="Game\UI\TitleUIs.cpp" />
     <ClCompile Include="Game\Commands\Stage\CreateGraveBlock.cpp" />
     <ClCompile Include="Game\Effect\SwirlTransition.cpp" />
+    <ClCompile Include="Game\Effect\GhostEffect.cpp" />
+    <ClCompile Include="Game\Manager\GhostEffectController.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Scene\ClearScene.h" />
@@ -610,6 +612,8 @@
     <ClInclude Include="Game\UI\TitleUIs.h" />
     <ClInclude Include="Game\Commands\Stage\CreateGraveBlock.h" />
     <ClInclude Include="Game\Effect\SwirlTransition.h" />
+    <ClInclude Include="Game\Effect\GhostEffect.h" />
+    <ClInclude Include="Game\Manager\GhostEffectController.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\Assets\HLSL\Light.hlsli" />

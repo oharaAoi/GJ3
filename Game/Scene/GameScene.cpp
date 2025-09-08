@@ -4,14 +4,16 @@
 #include "Game/Commands/ObjectCommandInvoker.h"
 #include "Game/Input/StageInputHandler.h"
 
+#include "Game/Manager/GhostEffectController.h"
+
 #include "Game/UI/StageSelector.h"
 
 std::optional<GameScene::Result> GameScene::s_lastResult_ = std::nullopt;
 
-const std::optional<GameScene::Result>& GameScene::LastResult() {
+const std::optional<GameScene::Result>& GameScene::LastResult(){
 	return s_lastResult_;
 }
-void GameScene::ClearLastResult() {
+void GameScene::ClearLastResult(){
 	s_lastResult_.reset();
 }
 
@@ -19,6 +21,8 @@ GameScene::GameScene(){}
 GameScene::~GameScene(){ Finalize(); }
 
 void GameScene::Finalize(){
+	GhostEffectController::GetInstance()->Init(stageRegistry_.get());
+
 	sceneRenderer_->Finalize();
 	ParticleManager::GetInstance()->Finalize();
 	GpuParticleManager::GetInstance()->Finalize();
@@ -59,7 +63,7 @@ void GameScene::Init(){
 	player_->Init(Engine::GetCanvas2d());
 
 	ghostSoulManager_ = std::make_unique<GhostSoulManager>();
-	ghostSoulManager_->Init(Engine::GetCanvas2d(), player_.get());
+	ghostSoulManager_->Init(Engine::GetCanvas2d(),player_.get());
 
 	stageRegistry_ = std::make_unique<StageRegistry>();
 	stageRegistry_->Init(Engine::GetCanvas2d());
@@ -69,7 +73,7 @@ void GameScene::Init(){
 	stageRegistry_->Register(loadName);
 
 	mapCollision_ = std::make_unique<MapCollisionSystem>();
-	mapCollision_->Init(stageRegistry_.get(), ghostSoulManager_.get());
+	mapCollision_->Init(stageRegistry_.get(),ghostSoulManager_.get());
 
 	worldObjects_ = std::make_unique<WorldObjects>();
 	worldObjects_->Init();
@@ -109,7 +113,7 @@ void GameScene::Init(){
 
 	bgm_ = std::make_unique<AudioPlayer>();
 	bgm_->Init("Game.mp3");
-	bgm_->Play(true, 0.5f);
+	bgm_->Play(true,0.5f);
 
 	// -------------------------------------------------
 	// ↓ その他設定
@@ -120,6 +124,8 @@ void GameScene::Init(){
 	player_->SetPosition(stageRegistry_->GetStartPos());
 	player_->SetOffset(stageRegistry_->GetMapOffset());
 	player_->SetMapCollision(mapCollision_.get());
+
+	GhostEffectController::GetInstance()->Init(stageRegistry_.get());
 
 	resetTimer_ = 0.f;
 	isClearConditionMet_ = false;
@@ -138,7 +144,7 @@ void GameScene::Update(){
 	menuSelector_->Update();
 	ChengeScene();
 	// メニューを開いていなければ更新
-	if (!menuSelector_->GetOpenMenu()) {
+	if(!menuSelector_->GetOpenMenu()){
 		player_->Update();
 	}
 
@@ -158,19 +164,19 @@ void GameScene::Update(){
 	if(StageInputHandler::UndoInput()){
 		ObjectCommandInvoker::GetInstance().UndoCommand();
 		resetTimer_ = 0.f;
-		AudioPlayer::SinglShotPlay("button.mp3", 0.5f);
+		AudioPlayer::SinglShotPlay("button.mp3",0.5f);
 	} else if(StageInputHandler::RedoInput()){
 		resetTimer_ = 0.f;
 		ObjectCommandInvoker::GetInstance().RedoCommand();
-		AudioPlayer::SinglShotPlay("button.mp3", 0.5f);
+		AudioPlayer::SinglShotPlay("button.mp3",0.5f);
 	} else if(stageResetUI_->GetStageReset()){
 		stageRegistry_->ResetStage();
 		mapCollision_->ResetGhostCounter();
 		ObjectCommandInvoker::GetInstance().ClearHistory();
-		AudioPlayer::SinglShotPlay("button.mp3", 0.5f);
+		AudioPlayer::SinglShotPlay("button.mp3",0.5f);
 		stageResetUI_->Reset();
 		size_t size = ghostSoulManager_->GetSoulesSize();
-		for (size_t i = 0; i < size; ++i) {
+		for(size_t i = 0; i < size; ++i){
 			ghostSoulManager_->DeleteBackSoul();
 		}
 	} else{
@@ -178,28 +184,29 @@ void GameScene::Update(){
 		ObjectCommandInvoker::GetInstance().Update();
 	}
 
-	getGhostCountUI_->Update(mapCollision_->GetGhostCounter(), stageRegistry_->GetNeedGhostNum());
+	getGhostCountUI_->Update(mapCollision_->GetGhostCounter(),stageRegistry_->GetNeedGhostNum());
 
 	// クリア条件を満たしているかの判定
-	if (!isClearConditionMet_) {
-		if (stageRegistry_->GetNeedGhostNum() == mapCollision_->GetGhostCounter()) {
-			AudioPlayer::SinglShotPlay("ghost_full.mp3", 0.5f);
+	if(!isClearConditionMet_){
+		if(stageRegistry_->GetNeedGhostNum() == mapCollision_->GetGhostCounter()){
+			AudioPlayer::SinglShotPlay("ghost_full.mp3",0.5f);
 			isClearConditionMet_ = true;
 		}
 	}
 
 	// ステージをクリアしたかどうかの判定
-	if (mapCollision_->GetIsClear()) {
+	if(mapCollision_->GetIsClear()){
 		GameScene::Result r;
 		r.ghostCount = mapCollision_->GetGhostCounter();
 		GameScene::s_lastResult_ = r;
-		AudioPlayer::SinglShotPlay("fanfare.wav", 0.5f);
+		AudioPlayer::SinglShotPlay("fanfare.wav",0.5f);
 		nextSceneType_ = SceneType::CLEAR;
 	}
 
 	// -------------------------------------------------
 	// ↓ spriteの更新
 	// -------------------------------------------------
+	GhostEffectController::GetInstance()->Update();
 
 	// -------------------------------------------------
 	// ↓ cameraの更新
@@ -232,24 +239,22 @@ void GameScene::Draw() const{
 	sceneRenderer_->Draw();
 }
 
-void GameScene::ChengeScene()
-{
-	if (menuSelector_->GetChengeScene()) {
+void GameScene::ChengeScene(){
+	if(menuSelector_->GetChengeScene()){
 		const auto type = menuSelector_->GetButtonType();
-		switch (type)
-		{
-		case ButtonType::Select:
-			// セレクトに戻る
-			nextSceneType_ = SceneType::STAGE_SELECT;
-			menuSelector_->SetChengeScene(false);
-			break;
-		case ButtonType::Reset :
-			// ステージをリセットする
-			stageRegistry_->ResetStage();
-			menuSelector_->SetChengeScene(false);
-			break;
-		default:
-			break;
+		switch(type){
+			case ButtonType::Select:
+				// セレクトに戻る
+				nextSceneType_ = SceneType::STAGE_SELECT;
+				menuSelector_->SetChengeScene(false);
+				break;
+			case ButtonType::Reset:
+				// ステージをリセットする
+				stageRegistry_->ResetStage();
+				menuSelector_->SetChengeScene(false);
+				break;
+			default:
+				break;
 		}
 	}
 }

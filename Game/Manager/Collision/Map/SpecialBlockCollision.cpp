@@ -3,6 +3,8 @@
 #include "Game/Manager/Collision/Common/MapCollisionSystem.h"
 #include "Game/Manager/StageRegistry.h"
 
+#include "Game/Manager/GhostEffectController.h"
+
 /// command
 #include "Game/Commands/ObjectCommandInvoker.h"
 #include "Game/Commands/Stage/PlayerGetGhostCommand.h"
@@ -85,9 +87,16 @@ void SpecialBlockCollision::RecursionBlockChecker(const Vector2Int& _index)
 
 						auto createGraveCommand = std::make_unique<CreateGraveBlock>(system_->GetStageRegi(),ghostIndex);
 						ObjectCommandInvoker::GetInstance().PushCommand(std::move(createGraveCommand));
+
+						// エフェクト削除 要請
+						GhostEffectController::GetInstance()->DeleteGhostEffectByPlayer(ghostIndex);
+
 					} else {
 						system_->GetStageRegi()->CreateStageData(ghostIndex, BlockType::Ghost);
 						RecursionBlockChecker(ghostIndex);
+
+						// エフェクト作成 要請
+						GhostEffectController::GetInstance()->CreateGhostEffect(ghostIndex);
 					}
 				}
 			}
