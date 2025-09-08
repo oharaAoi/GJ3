@@ -1,10 +1,12 @@
 #include "BlockGhost.h"
 
-void BlockGhost::Init(Canvas2d* _canvas2d)
+void BlockGhost::Init(Canvas2d* _canvas2d, const Vector2& pos, const Vector2& tileSize)
 {
 	SetName("BlockGhost");
 	sprite_ = _canvas2d->AddSprite("ghostBlock.png", "ghostBlock", "Sprite_Normal.json");
 	transform_ = sprite_->GetTransform();
+	transform_->SetTranslate(pos);
+	tileSize_ = tileSize;
 	type_ = BlockType::GhostBlock;
 }
 

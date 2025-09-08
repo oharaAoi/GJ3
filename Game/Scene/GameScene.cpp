@@ -56,7 +56,7 @@ void GameScene::Init(){
 	// -------------------------------------------------
 
 	player_ = std::make_unique<Player>();
-	player_->Init(Engine::GetCanvas2d());
+	player_->Init(Engine::GetCanvas2d(), { 0, 0 }, {0, 0});
 
 	ghostSoulManager_ = std::make_unique<GhostSoulManager>();
 	ghostSoulManager_->Init(Engine::GetCanvas2d(), player_.get());

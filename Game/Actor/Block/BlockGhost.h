@@ -8,7 +8,7 @@ public:
 	BlockGhost() = default;
 	~BlockGhost() override = default;
 
-	void Init(Canvas2d* _canvas2d) override;
+	void Init(Canvas2d* _canvas2d, const Vector2& pos, const Vector2& tileSize) override;
 	void Update() override;
 	void Debug_Gui() override;
 

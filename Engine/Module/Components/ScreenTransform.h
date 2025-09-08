@@ -30,6 +30,8 @@ public:
 
 public:
 
+	void SetTranslateX(float x) { transform_.translate.x = x; }
+	void SetTranslateY(float y) { transform_.translate.y = y; }
 	void SetTranslateZ(float z) { transform_.translate.z = z; }
 
 	void SetTranslate(const Vector2& centerPos) { transform_.translate.x = centerPos.x, transform_.translate.y = centerPos.y, transform_.translate.z = 1.0f; };

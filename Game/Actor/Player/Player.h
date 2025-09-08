@@ -21,7 +21,7 @@ public:
 	Player();
 	~Player();
 
-	void Init(Canvas2d* _canvas2d);
+	void Init(Canvas2d* _canvas2d, const Vector2& _pos, const Vector2& _tileSize);
 	void Update() override;
 	void Debug_Gui() override;
 

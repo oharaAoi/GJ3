@@ -144,6 +144,10 @@ public:
 	const bool GetIsFlipX() const{ return isFlipX_; }
 	const bool GetIsFlipY() const{ return isFlipY_; }
 
+	void SetTranslateX(float _x) { transform_->SetTranslateX(_x); }
+	void SetTranslateY(float _y) { transform_->SetTranslateY(_y); }
+	void SetTranslateZ(float _z) { transform_->SetTranslateZ(_z); }
+
 	const bool GetEnable() const{ return isEnable_; }
 	void SetEnable(bool _isEnable){ isEnable_ = _isEnable; }
 

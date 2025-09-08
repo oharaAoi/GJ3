@@ -12,7 +12,7 @@
 Player::Player() : IBlock() {}
 Player::~Player() {}
 
-void Player::Init(Canvas2d *_canvas2d)
+void Player::Init(Canvas2d *_canvas2d, const Vector2& _pos, const Vector2& _tileSize)
 {
 	/// Tag
 	SetName("Player");
@@ -22,6 +22,8 @@ void Player::Init(Canvas2d *_canvas2d)
 	sprite_ = _canvas2d->AddSprite(kPlayerSideTextureName[0], "player", "Sprite_Normal.json", 100, true);
 	sprite_->SetIsFront(true);
 	transform_ = sprite_->GetTransform();
+	transform_->SetTranslate(_pos);
+	tileSize_ = _tileSize;
 
 	/// input handler
 	inputHandler_ = std::make_unique<PlayerInputHandler>();

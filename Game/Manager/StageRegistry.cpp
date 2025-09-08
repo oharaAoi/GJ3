@@ -96,14 +96,14 @@ void StageRegistry::CreatesStageByMapData(){
 			IBlock* newBlock = stageData_[row][col].get();
 			// 共通して設定する
 			if(newBlock != nullptr){
-				newBlock->Init(pCanvas2d_);
+				Vector2 pos = CalculateTilePos(row, col);
+				newBlock->Init(pCanvas2d_, pos, tileSize_);
 				newBlock->SetIndex(Vector2Int{static_cast<int>(col),static_cast<int>(row)});
 
 				// 位置を決定
 				newBlock->SetPosition(CalculateTilePos(row,col));
 				newBlock->GetSprite()->ReSetTextureSize(tileSize_);
 				newBlock->SetOffset(mapOffset_);
-				newBlock->SetTileSize(tileSize_);
 			}
 
 			// 特別な情報の取得
@@ -131,11 +131,11 @@ void StageRegistry::CreateStageData(const Vector2Int& index,BlockType type){
 	stageData_[index.y][index.x] = CreateBlock(static_cast<uint32_t>(type));
 	IBlock* newBlock = stageData_[index.y][index.x].get();
 
-	newBlock->Init(pCanvas2d_);
+	Vector2 pos = CalculateTilePos(index.y, index.x);
+	newBlock->Init(pCanvas2d_, pos, tileSize_);
 	newBlock->SetIndex(index);
 
 	// 位置を決定
-	newBlock->SetPosition(CalculateTilePos(index.y,index.x));
 	newBlock->GetSprite()->ReSetTextureSize(tileSize_);
 	newBlock->SetOffset(mapOffset_);
 	newBlock->SetTileSize(tileSize_);

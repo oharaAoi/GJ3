@@ -1,9 +1,11 @@
 #include "BlockNormal.h"
 
-void BlockNormal::Init(Canvas2d* _canvas2d) {
+void BlockNormal::Init(Canvas2d* _canvas2d, const Vector2& _pos, const Vector2& _tileSize) {
 	SetName("BlockNormal");
 	sprite_ = _canvas2d->AddSprite("normalBlock.png", "normalBlock", "Sprite_Normal.json");
 	transform_ = sprite_->GetTransform();
+	transform_->SetTranslate(_pos);
+	tileSize_ = _tileSize;
 	type_ = BlockType::NormalBlock;
 }
 

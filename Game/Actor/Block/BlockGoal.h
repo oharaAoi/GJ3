@@ -8,7 +8,7 @@ public:
 	BlockGoal() = default;
 	~BlockGoal() override = default;
 
-	void Init(Canvas2d* _canvas2d) override;
+	void Init(Canvas2d* _canvas2d, const Vector2& _pos, const Vector2& _tileSize) override;
 
 	void Update() override;
 
