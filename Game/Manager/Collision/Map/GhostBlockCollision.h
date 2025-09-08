@@ -28,6 +28,7 @@ public:
 
 	// ゴーストをマップに発生させるか
 	const bool GetGhostUpdate()const { return ghostUpdate_; }
+	const bool GetCreateGhost()const { return isCreateGhost_; }
 	void SetGhostUpdate(bool flag) { ghostUpdate_ = flag; }
 
 	// ゴーストブロックのペアIndex
@@ -48,5 +49,6 @@ private:
 	std::vector<Vector2Int> pairIndex_;
 	// ゴーストをマップに発生させるか
 	bool ghostUpdate_ = false;
+	bool isCreateGhost_ = false;
 
 };

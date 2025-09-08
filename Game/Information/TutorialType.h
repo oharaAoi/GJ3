@@ -7,4 +7,5 @@ enum class TutorialType {
 	Explanation = 3,	// ゴーストが何故できるか説明
 	CollisionGhost = 4,	// ゴーストを取らせる
 	Goal = 5,			// ゴールさせる
+	Finish = 6			// チュートリアル終了
 };

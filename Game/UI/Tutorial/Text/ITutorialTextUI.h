@@ -23,6 +23,13 @@ public:
 	void SetUvMinSize(float y) { textUI_->SetUvMinSize(Vector2{ 0.0f,y }); }
 	void SetUvMaxSize(float x) { textUI_->SetUvMaxSize(Vector2{ x,1.0f }); }
 
+	void Reset() {
+		isFinished_ = false;
+		textUI_->SetUvMaxSize(Vector2{ 1.0f,0.0f });
+		textUI_->SetColor(Vector4{ 1.0f,1.0f,1.0f,1.0f });
+		textUI_->SetEnable(false);
+	}
+
 protected:
 
 	// TextSprite

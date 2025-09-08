@@ -27,6 +27,7 @@ public:
 public:
 
 	const ButtonType GetButtonType() const{ return menuUIs_->GetTypeIndex(cursorIndex_); }
+	void SetOpenMenu(bool flag) { openMenu_ = flag; }
 	const bool GetOpenMenu()const { return openMenu_; }
 	const bool GetChengeScene()const { return chengeScene_; }
 	void SetChengeScene(bool flag) { chengeScene_ = flag; }

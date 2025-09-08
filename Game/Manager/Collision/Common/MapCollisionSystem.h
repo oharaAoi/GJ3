@@ -78,6 +78,8 @@ public:
 
 	const Vector2Int &GetPlayerIndex() { return playerIndex_; }
 
+	const bool GetCreateGhost()const { return ghostBlockCollision_->GetCreateGhost(); }
+
 	// ゴーストブロックのペアIndex
 	const std::vector<Vector2Int> &GetPairIndex() const { return ghostBlockCollision_->GetPairIndex(); }
 	void AddPairIndex(const Vector2Int index) { ghostBlockCollision_->AddPairIndex(index); }

@@ -83,9 +83,10 @@ void GameScene::Init(){
 	stageResetUI_ = std::make_unique<StageResetUI>();
 	stageResetUI_->SetTextureSize(stageRegistry_->GetTileSize());
 	stageResetUI_->Init(Engine::GetCanvas2d());
-
-	tutorialDirector_ = std::make_unique<TutorialDirector>();
-	tutorialDirector_->Init();
+	if (StageSelector::GetCurrentStageIndex() == 0) {
+		tutorialDirector_ = std::make_unique<TutorialDirector>();
+		tutorialDirector_->Init();
+	}
 
 	// -------------------------------------------------
 	// ↓ managerの初期化
@@ -137,20 +138,20 @@ void GameScene::Update(){
 	// -------------------------------------------------
 	// ↓ actorの更新
 	// -------------------------------------------------
+	if (tutorialDirector_ != nullptr && !menuSelector_->GetOpenMenu()) {
+		tutorialDirector_->SetGhostCount(mapCollision_->GetGhostCounter());
+		tutorialDirector_->SetCreateGhost(mapCollision_->GetCreateGhost());
+		tutorialDirector_->Update();
+	}
 
-	tutorialDirector_->Update();
-
-	if (tutorialDirector_ == nullptr ||
-		tutorialDirector_->GetIsMoveEnable()) {
+	bool isTutorial = tutorialDirector_ == nullptr || tutorialDirector_->GetIsMoveEnable();
+	if (isTutorial) {
 		menuSelector_->Update();
 		ChengeScene();
 	}
 	// メニューを開いていなければ更新
-	if (!menuSelector_->GetOpenMenu()) {
-		if (tutorialDirector_ == nullptr ||
-			tutorialDirector_->GetIsMoveEnable()) {
-			player_->Update();
-		}
+	if (!menuSelector_->GetOpenMenu() && isTutorial) {
+		player_->Update();
 	} 
 
 	swirlTransition_->Update();
@@ -163,18 +164,21 @@ void GameScene::Update(){
 
 	ghostSoulManager_->Update();
 
-	stageResetUI_->Update();
+	bool isEnable = !menuSelector_->GetOpenMenu() && isTutorial;
+	if (isEnable) {
+		stageResetUI_->Update();
+	}
 
 	// Todo : Invoker を使う
-	if(StageInputHandler::UndoInput()){
+	if(StageInputHandler::UndoInput() && isEnable){
 		ObjectCommandInvoker::GetInstance().UndoCommand();
 		resetTimer_ = 0.f;
 		AudioPlayer::SinglShotPlay("button.mp3", 0.5f);
-	} else if(StageInputHandler::RedoInput()){
+	} else if(StageInputHandler::RedoInput() && isEnable){
 		resetTimer_ = 0.f;
 		ObjectCommandInvoker::GetInstance().RedoCommand();
 		AudioPlayer::SinglShotPlay("button.mp3", 0.5f);
-	} else if(stageResetUI_->GetStageReset()){
+	} else if(stageResetUI_->GetStageReset() && isEnable){
 		stageRegistry_->ResetStage();
 		mapCollision_->ResetGhostCounter();
 		ObjectCommandInvoker::GetInstance().ClearHistory();
@@ -254,10 +258,22 @@ void GameScene::ChengeScene()
 			nextSceneType_ = SceneType::STAGE_SELECT;
 			menuSelector_->SetChengeScene(false);
 			break;
-		case ButtonType::Reset :
+		case ButtonType::Reset:
+		{
 			// ステージをリセットする
 			stageRegistry_->ResetStage();
+			if (tutorialDirector_ != nullptr) {
+				tutorialDirector_->TutorialReset();
+			}
+			mapCollision_->ResetGhostCounter();
+			stageResetUI_->Reset();
+			size_t size = ghostSoulManager_->GetSoulesSize();
+			for (size_t i = 0; i < size; ++i) {
+				ghostSoulManager_->DeleteBackSoul();
+			}
 			menuSelector_->SetChengeScene(false);
+			menuSelector_->SetOpenMenu(false);
+		}
 			break;
 		default:
 			break;

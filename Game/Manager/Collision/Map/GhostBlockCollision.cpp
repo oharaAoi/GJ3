@@ -57,6 +57,7 @@ void GhostBlockCollision::CreateTokenGhost(){
 					ObjectCommandInvoker::GetInstance().PushCommand(std::move(createGraveCommand));
 				} else{
 					system_->GetStageRegi()->CreateStageData(ghostIndex,BlockType::Ghost);
+					isCreateGhost_ = true;
 				}
 			}
 		}

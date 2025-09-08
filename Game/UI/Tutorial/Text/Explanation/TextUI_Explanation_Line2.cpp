@@ -12,7 +12,7 @@ void TextUI_Explanation_Line2::Init()
 	AddChild(textUI_);
 	EditorWindows::AddObjectWindow(textUI_, GetName());
 
-	//textUI_->ApplySaveData();
+	textUI_->ApplySaveData();
 	textUI_->SetUvMaxSize(Vector2{ 1.0f,0.0f });
 
 	isFinished_ = false;

@@ -32,6 +32,8 @@ void StageResetUI::Init(Canvas2d* _canvas2d)
 	backTextureUI_->SetTranslate(Vector2{ windowSize - textureSize_ });
 	resetButtonUI_->SetTranslate(Vector2{ windowSize - textureSize_ });
 	whiteTextureUI_->SetTranslate(Vector2{ windowSize - textureSize_ });
+
+	Update();
 }
 
 void StageResetUI::Update()
