@@ -90,6 +90,7 @@ void SwirlTransition::Close() {
 	swirl_->SetIsEnable(true);
 	swirl_->SetRadiusKernel(startData_.radiusKernel);
 	swirl_->SetRotateSpeed(startData_.rotateSpeed);
+	swirl_->SetPatternAlpha(0.f);
 	isFinish_ = false;
 	time_ = 0;
 }
@@ -102,4 +103,5 @@ void SwirlTransition::Open() {
 	swirl_->SetRotateSpeed(startData_.rotateSpeed);
 	isFinish_ = false;
 	time_ = 0;
+	swirl_->SetPatternAlpha(1.f);
 }
