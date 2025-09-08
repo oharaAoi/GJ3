@@ -363,6 +363,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Game\WorldObject\WorldObjects.cpp" />
     <ClCompile Include="Game\Manager\Collision\Map\GhostBlockCollision.cpp" />
     <ClCompile Include="Game\UI\Button\IButtonUI.cpp" />
+    <ClCompile Include="Game\UI\Tutorial\Text\ITutorialTextUI.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Engine\Module\Geometry\Structs\Vertices.cpp" />
     <ClCompile Include="Engine\System\ParticleSystem\Tool\ParticleSystemEditor.cpp" />
@@ -386,10 +387,26 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Game\Commands\Stage\MoveBlockCommand.cpp" />
     <ClCompile Include="Game\UI\StageResetUI.cpp" />
     <ClCompile Include="Game\UI\Button\NextStageButtonUI.cpp" />
+    <ClCompile Include="Game\UI\Tutorial\TutorialUIs.cpp" />
+    <ClCompile Include="Game\UI\Tutorial\Text\Self\TextUI_Self_Line1.cpp" />
+    <ClCompile Include="Game\UI\Tutorial\Text\Self\TextUI_Self_Line2.cpp" />
+    <ClCompile Include="Game\UI\Tutorial\TutorialDirector.cpp" />
+    <ClCompile Include="Game\UI\Tutorial\Text\Move\TextUI_Move_Line1.cpp" />
+    <ClCompile Include="Game\UI\Tutorial\Text\Move\TextUI_Move_Line2.cpp" />
+    <ClCompile Include="Game\UI\Tutorial\Text\Move\TextUI_Move_Line3.cpp" />
+    <ClCompile Include="Game\UI\Tutorial\Text\CreateGhost\TextUI_CreateGhost_Line1.cpp" />
+    <ClCompile Include="Game\UI\Tutorial\Text\CreateGhost\TextUI_CreateGhost_Line2.cpp" />
+    <ClCompile Include="Game\UI\Tutorial\Text\Explanation\TextUI_Explanation_Line1.cpp" />
+    <ClCompile Include="Game\UI\Tutorial\Text\Explanation\TextUI_Explanation_Line2.cpp" />
+    <ClCompile Include="Game\UI\Tutorial\Text\CollisionGhost\TextUI_CollisionGhost_Line1.cpp" />
+    <ClCompile Include="Game\UI\Tutorial\Text\CollisionGhost\TextUI_CollisionGhost_Line2.cpp" />
+    <ClCompile Include="Game\UI\Tutorial\Text\Goal\TextUI_Goal_Line1.cpp" />
+    <ClCompile Include="Game\UI\Tutorial\Text\Goal\TextUI_Goal_Line2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Commands\Stage\CreateGraveBlock.h" />
     <ClInclude Include="Game\Effect\SwirlTransition.h" />
+    <ClInclude Include="Game\Information\TutorialType.h" />
     <ClInclude Include="Game\UI\Clear\ClearSelector.h" />
     <ClInclude Include="Game\UI\Clear\ClearUIs.h" />
     <ClInclude Include="Engine\Module\PostEffect\SwirlEffect.h" />
@@ -668,6 +685,22 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Game\Commands\Stage\MoveBlockCommand.h" />
     <ClInclude Include="Game\UI\StageResetUI.h" />
     <ClInclude Include="Game\UI\Button\NextStageButtonUI.h" />
+    <ClInclude Include="Game\UI\Tutorial\TutorialUIs.h" />
+    <ClInclude Include="Game\UI\Tutorial\Text\ITutorialTextUI.h" />
+    <ClInclude Include="Game\UI\Tutorial\Text\Self\TextUI_Self_Line1.h" />
+    <ClInclude Include="Game\UI\Tutorial\Text\Self\TextUI_Self_Line2.h" />
+    <ClInclude Include="Game\UI\Tutorial\TutorialDirector.h" />
+    <ClInclude Include="Game\UI\Tutorial\Text\Move\TextUI_Move_Line1.h" />
+    <ClInclude Include="Game\UI\Tutorial\Text\Move\TextUI_Move_Line2.h" />
+    <ClInclude Include="Game\UI\Tutorial\Text\Move\TextUI_Move_Line3.h" />
+    <ClInclude Include="Game\UI\Tutorial\Text\CreateGhost\TextUI_CreateGhost_Line1.h" />
+    <ClInclude Include="Game\UI\Tutorial\Text\CreateGhost\TextUI_CreateGhost_Line2.h" />
+    <ClInclude Include="Game\UI\Tutorial\Text\Explanation\TextUI_Explanation_Line1.h" />
+    <ClInclude Include="Game\UI\Tutorial\Text\Explanation\TextUI_Explanation_Line2.h" />
+    <ClInclude Include="Game\UI\Tutorial\Text\CollisionGhost\TextUI_CollisionGhost_Line1.h" />
+    <ClInclude Include="Game\UI\Tutorial\Text\CollisionGhost\TextUI_CollisionGhost_Line2.h" />
+    <ClInclude Include="Game\UI\Tutorial\Text\Goal\TextUI_Goal_Line1.h" />
+    <ClInclude Include="Game\UI\Tutorial\Text\Goal\TextUI_Goal_Line2.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Engine\Assets\HLSL\Particle\AccelerationField.CS.hlsl">

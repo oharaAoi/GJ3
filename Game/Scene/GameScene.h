@@ -18,6 +18,7 @@
 #include "Game/UI/Menu/MenuSelector.h"
 #include "Game/UI/GetGhostCountUI.h"
 #include "Game/UI/StageResetUI.h"
+#include "Game/UI/Tutorial/TutorialDirector.h"
 #include "Game/Effect/SwirlTransition.h"
 
 class GameScene
@@ -68,6 +69,8 @@ private:
 	std::unique_ptr<GetGhostCountUI> getGhostCountUI_;
 
 	std::unique_ptr<StageResetUI> stageResetUI_;
+
+	std::unique_ptr<TutorialDirector> tutorialDirector_;
 
 	// ------------------- effect ------------------- //
 	BaseParticles* orb_;

@@ -325,6 +325,22 @@
     <ClCompile Include="Game\UI\TitleUIs.cpp" />
     <ClCompile Include="Game\Commands\Stage\CreateGraveBlock.cpp" />
     <ClCompile Include="Game\Effect\SwirlTransition.cpp" />
+    <ClCompile Include="Game\UI\Tutorial\TutorialUIs.cpp" />
+    <ClCompile Include="Game\UI\Tutorial\Text\ITutorialTextUI.cpp" />
+    <ClCompile Include="Game\UI\Tutorial\Text\Self\TextUI_Self_Line1.cpp" />
+    <ClCompile Include="Game\UI\Tutorial\Text\Self\TextUI_Self_Line2.cpp" />
+    <ClCompile Include="Game\UI\Tutorial\TutorialDirector.cpp" />
+    <ClCompile Include="Game\UI\Tutorial\Text\Move\TextUI_Move_Line1.cpp" />
+    <ClCompile Include="Game\UI\Tutorial\Text\Move\TextUI_Move_Line2.cpp" />
+    <ClCompile Include="Game\UI\Tutorial\Text\Move\TextUI_Move_Line3.cpp" />
+    <ClCompile Include="Game\UI\Tutorial\Text\CreateGhost\TextUI_CreateGhost_Line1.cpp" />
+    <ClCompile Include="Game\UI\Tutorial\Text\CreateGhost\TextUI_CreateGhost_Line2.cpp" />
+    <ClCompile Include="Game\UI\Tutorial\Text\Explanation\TextUI_Explanation_Line1.cpp" />
+    <ClCompile Include="Game\UI\Tutorial\Text\Explanation\TextUI_Explanation_Line2.cpp" />
+    <ClCompile Include="Game\UI\Tutorial\Text\CollisionGhost\TextUI_CollisionGhost_Line1.cpp" />
+    <ClCompile Include="Game\UI\Tutorial\Text\CollisionGhost\TextUI_CollisionGhost_Line2.cpp" />
+    <ClCompile Include="Game\UI\Tutorial\Text\Goal\TextUI_Goal_Line1.cpp" />
+    <ClCompile Include="Game\UI\Tutorial\Text\Goal\TextUI_Goal_Line2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Scene\ClearScene.h" />
@@ -610,6 +626,23 @@
     <ClInclude Include="Game\UI\TitleUIs.h" />
     <ClInclude Include="Game\Commands\Stage\CreateGraveBlock.h" />
     <ClInclude Include="Game\Effect\SwirlTransition.h" />
+    <ClInclude Include="Game\UI\Tutorial\TutorialUIs.h" />
+    <ClInclude Include="Game\Information\TutorialType.h" />
+    <ClInclude Include="Game\UI\Tutorial\Text\ITutorialTextUI.h" />
+    <ClInclude Include="Game\UI\Tutorial\Text\Self\TextUI_Self_Line1.h" />
+    <ClInclude Include="Game\UI\Tutorial\Text\Self\TextUI_Self_Line2.h" />
+    <ClInclude Include="Game\UI\Tutorial\TutorialDirector.h" />
+    <ClInclude Include="Game\UI\Tutorial\Text\Move\TextUI_Move_Line1.h" />
+    <ClInclude Include="Game\UI\Tutorial\Text\Move\TextUI_Move_Line2.h" />
+    <ClInclude Include="Game\UI\Tutorial\Text\Move\TextUI_Move_Line3.h" />
+    <ClInclude Include="Game\UI\Tutorial\Text\CreateGhost\TextUI_CreateGhost_Line1.h" />
+    <ClInclude Include="Game\UI\Tutorial\Text\CreateGhost\TextUI_CreateGhost_Line2.h" />
+    <ClInclude Include="Game\UI\Tutorial\Text\Explanation\TextUI_Explanation_Line1.h" />
+    <ClInclude Include="Game\UI\Tutorial\Text\Explanation\TextUI_Explanation_Line2.h" />
+    <ClInclude Include="Game\UI\Tutorial\Text\CollisionGhost\TextUI_CollisionGhost_Line1.h" />
+    <ClInclude Include="Game\UI\Tutorial\Text\CollisionGhost\TextUI_CollisionGhost_Line2.h" />
+    <ClInclude Include="Game\UI\Tutorial\Text\Goal\TextUI_Goal_Line1.h" />
+    <ClInclude Include="Game\UI\Tutorial\Text\Goal\TextUI_Goal_Line2.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\Assets\HLSL\Light.hlsli" />

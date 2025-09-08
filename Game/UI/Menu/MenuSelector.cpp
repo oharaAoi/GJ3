@@ -12,6 +12,8 @@ void MenuSelector::Init()
 
 	openMenu_ = false;
 	cursorIndex_ = -1;
+
+	Update();
 }
 
 void MenuSelector::OpenMenu()

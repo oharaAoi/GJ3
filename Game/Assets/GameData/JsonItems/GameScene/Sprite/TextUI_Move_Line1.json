@@ -1,0 +1,68 @@
+{
+    "TextUI_Move_Line1": {
+        "anchorPoint": {
+            "x": 0.5,
+            "y": 0.5
+        },
+        "centerPos": {
+            "x": 450.0,
+            "y": 500.0,
+            "z": 0.0
+        },
+        "color": {
+            "w": 1.0,
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+        },
+        "drawRange": {
+            "x": 416.0,
+            "y": 64.0
+        },
+        "isBackGround": false,
+        "isFlipX": false,
+        "isFlipY": false,
+        "isFront": false,
+        "leftTop": {
+            "x": 0.0,
+            "y": 0.0
+        },
+        "rotate": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "scale": {
+            "x": 1.0,
+            "y": 1.0
+        },
+        "textureName": "Tutorial_MoveText01.png",
+        "textureSize": {
+            "x": 416.0,
+            "y": 64.0
+        },
+        "uvMaxSize": {
+            "x": 1.0190081596374512,
+            "y": 1.0
+        },
+        "uvMinSize": {
+            "x": 0.0,
+            "y": 0.0
+        },
+        "uvRotate": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "uvScale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+        },
+        "uvTranslate": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        }
+    }
+}

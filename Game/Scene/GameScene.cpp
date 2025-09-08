@@ -84,6 +84,9 @@ void GameScene::Init(){
 	stageResetUI_->SetTextureSize(stageRegistry_->GetTileSize());
 	stageResetUI_->Init(Engine::GetCanvas2d());
 
+	tutorialDirector_ = std::make_unique<TutorialDirector>();
+	tutorialDirector_->Init();
+
 	// -------------------------------------------------
 	// ↓ managerの初期化
 	// -------------------------------------------------
@@ -135,12 +138,20 @@ void GameScene::Update(){
 	// ↓ actorの更新
 	// -------------------------------------------------
 
-	menuSelector_->Update();
-	ChengeScene();
+	tutorialDirector_->Update();
+
+	if (tutorialDirector_ == nullptr ||
+		tutorialDirector_->GetIsMoveEnable()) {
+		menuSelector_->Update();
+		ChengeScene();
+	}
 	// メニューを開いていなければ更新
 	if (!menuSelector_->GetOpenMenu()) {
-		player_->Update();
-	}
+		if (tutorialDirector_ == nullptr ||
+			tutorialDirector_->GetIsMoveEnable()) {
+			player_->Update();
+		}
+	} 
 
 	swirlTransition_->Update();
 
