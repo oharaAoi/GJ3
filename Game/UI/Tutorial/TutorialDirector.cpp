@@ -328,6 +328,8 @@ void TutorialDirector::Update()
 			SetColorUIs(uis_->GetExplanaUIs(), color);
 			SetColorUIs(uis_->GetCollisionUIs(), color);
 			SetColorUIs(uis_->GetGoalUIs(), color);
+			uis_->GetButtonA()->SetColor(color);
+			uis_->GetSpaceKey()->SetColor(color);
 			for (auto& ui : uis_->GetModeUIs()) {
 				ui->GetSprite()->SetColor(color);
 			}

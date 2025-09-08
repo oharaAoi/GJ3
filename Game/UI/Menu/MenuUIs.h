@@ -58,6 +58,13 @@ public:
 	void ResetIndex(int index) { buttonUIs_[index]->Reset(); }
 	void OperationUpdate(bool openOperation) { operationUI_->Update(openOperation); }
 
+	void SetColors(int index) {
+		for (size_t i = 0; i < buttonUIs_.size(); ++i) {
+			if (index == static_cast<int>(i)) { continue; }
+			buttonUIs_[i]->GetSprite()->SetColor(Vector4{1.0f,1.0f,1.0f,0.4f});
+		}
+	}
+
 	// ステージリセット時
 	void ResetUIs();
 

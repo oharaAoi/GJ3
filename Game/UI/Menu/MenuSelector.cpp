@@ -109,6 +109,7 @@ void MenuSelector::Update()
 	if (cursorIndex_ > -1) {
 		// index番号に応じて点滅させる
 		menuUIs_->BlinkingIndex(cursorIndex_);
+		menuUIs_->SetColors(cursorIndex_);
 	}
 }
 

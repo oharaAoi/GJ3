@@ -32,7 +32,7 @@ private:
 
 
 	// 今の選択したカーソルIndex 0 = Select,1 = nextScene
-	int cursorIndex_ = -1;
+	int cursorIndex_ = 1;
 
 };
 

@@ -48,6 +48,13 @@ public:
 	void BlinkingIndex(int index) { buttonUIs_[index]->Blinking(); }
 	void ResetIndex(int index) { buttonUIs_[index]->Reset(); }
 
+	void SetColors(int index,float alpha) {
+		for (size_t i = 0; i < buttonUIs_.size(); ++i) {
+			if (index == static_cast<int>(i)) { continue; }
+			buttonUIs_[i]->GetSprite()->SetColor(Vector4{ 1.0f,1.0f,1.0f,alpha });
+		}
+	}
+
 private:
 
 	// Clear_text

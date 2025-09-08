@@ -25,6 +25,8 @@ void ClearUIs::Init()
 		if (i == 1) { position = param_.nextStageButtonPos; }
 		buttonUIs_[i]->GetSprite()->SetTranslate(position);
 	}
+	buttonUIs_[0]->GetSprite()->SetTextureName("Clear_selectUI.png");
+	buttonUIs_[0]->GetSprite()->ReSetTextureSize(buttonUIs_[1]->GetSprite()->GetTextureSize());
 
 	// Clear_text
 	text_ = Engine::GetCanvas2d()->AddSprite("Clear_text.png", GetName(), "Sprite_Normal.json", 1);

@@ -6,10 +6,10 @@
 void SelectButtonUI::Init()
 {
 	SetName("SelectButtonUI");
-	buttonUI_ = Engine::GetCanvas2d()->AddSprite("Clear_selectUI.png", GetName(), "Sprite_Normal.json", 11);
+	buttonUI_ = Engine::GetCanvas2d()->AddSprite("Menu_selectUI.png", GetName(), "Sprite_Normal.json", 11);
 
 	//buttonUI_->ReSetTextureSize(Vector2{ 400.0f,50.0f });
-	buttonUI_->SetTranslate(Vector2{ 640.0f,200.0f });
+	buttonUI_->SetTranslate(Vector2{ 640.0f,360.0f });
 	type_ = ButtonType::Select;
 }
 

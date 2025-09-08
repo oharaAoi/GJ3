@@ -7,6 +7,8 @@ void ClearSelector::Init()
 {
 	clearUIs_ = std::make_unique<ClearUIs>();
 	clearUIs_->Init();
+
+	cursorIndex_ = 1;
 }
 
 void ClearSelector::Update()
@@ -52,6 +54,7 @@ void ClearSelector::Update()
 		cursorIndex_ = std::clamp(cursorIndex_, 0, 1);
 		// ButtonUIの点滅処理
 		clearUIs_->BlinkingIndex(cursorIndex_);
+		clearUIs_->SetColors(cursorIndex_, 0.2f);
 	}
 	//決定ボタンを押したら
 	if (decisionPressed && cursorIndex_ != -1) {

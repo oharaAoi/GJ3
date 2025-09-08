@@ -8,13 +8,13 @@
 void OperationUI::Init()
 {
 	SetName("OperationUI");
-	operation_ = Engine::GetCanvas2d()->AddSprite("white.png", GetName(), "Sprite_Normal.json", 12);
+	operation_ = Engine::GetCanvas2d()->AddSprite("Menu_operation.png", GetName(), "Sprite_Normal.json", 12);
 
 	AddChild(operation_);
 	EditorWindows::AddObjectWindow(this, GetName());
 	
 	operation_->SetTranslate(Vector2{ 640.0f,360.0f });
-	operation_->ReSetTextureSize(Vector2{ 960.0f,540.0f });
+	//operation_->ReSetTextureSize(Vector2{ 960.0f,540.0f });
 }
 
 void OperationUI::Update(bool openOperation)
