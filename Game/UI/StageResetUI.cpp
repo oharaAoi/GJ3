@@ -41,19 +41,19 @@ void StageResetUI::Update()
 	// Inputを取得
 	Input* input = Input::GetInstance();
 
-	bool keyInput = input->IsPressKey(DIK_R);
-	bool padInput = input->IsPressButton(XInputButtons::BUTTON_X);
+	keyInput_ = input->IsPressKey(DIK_R);
+	padInput_ = input->IsPressButton(XInputButtons::BUTTON_X);
 	// リセットボタンが長押しされているなら
-	if (keyInput || padInput) {
+	if (keyInput_ || padInput_) {
 		resetTimer_ += (GameTimer::DeltaTime() / param_.resetTime);
 		if (resetTimer_ > 1.0f) { isStageReset_ = true; }
 	} else {
 		resetTimer_ -= GameTimer::DeltaTime();
 		isStageReset_ = false;
 	}
-	if (keyInput) {
+	if (keyInput_) {
 		resetButtonUI_->SetTextureName("resetButton_R.png");
-	} else if (padInput) {
+	} else if (padInput_) {
 		resetButtonUI_->SetTextureName("resetButton_X.png");
 	}
 	resetTimer_ = std::clamp(resetTimer_, 0.0f, 1.0f);

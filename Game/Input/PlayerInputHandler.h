@@ -16,6 +16,7 @@ class Player;
 /// コマンドを実行するのは Invoker であって このクラスではない
 /// </summary>
 class PlayerInputHandler{
+public:
 	/// 移動 キー
 	static constexpr std::array<uint8_t,2> kMoveLeftKey = {DIK_LEFT,DIK_A};
 	static constexpr std::array<uint8_t,2> kMoveRightKey = {DIK_RIGHT,DIK_D};
@@ -45,11 +46,17 @@ private:
 private:
 	Player* player_ = nullptr;
 
+	bool isKeyInput_ = false; // キーボード入力かどうか
+	bool isPadInput_ = false; // パッド入力かどうか
+
 	MoveDirection preMoveDirection = MoveDirection::NONE; // 前回の移動方向
 	float autoMoveStartDelay   = 0.3f;  // 自動移動開始までの遅延
 	float autoMoveStepInterval = 0.1f; // 自動移動の間隔
 	float leftMoveEventTime_ = 0.0f; // 移動までの残り時間
 public:
 	void SetPlayer(Player* player){ player_ = player; }
+
+	bool isKeyInput() const{ return isKeyInput_; }
+	bool isPadInput() const{ return isPadInput_; }
 };
 

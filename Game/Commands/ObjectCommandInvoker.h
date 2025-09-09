@@ -15,6 +15,12 @@
 /// command
 #include "IObjectCommand.h"
 
+enum class UndoRedoState : int32_t{
+	MANUAL = 0, // 何もしていない
+	UNDO = 1, // Undo
+	REDO = 2 // Redo
+};
+
 /// <summary>
 /// コマンドを実行するクラス
 /// 基本は reqestQueue にコマンドを積んでおいて、ExecuteCommandRequest() で実行する
@@ -37,7 +43,7 @@ public:
 	void Initialize();
 	void Finalize();
 
-	void Update();
+	UndoRedoState InputHandle(bool& _padIsInput,bool& _keyIsInput);
 
 	/// <summary>
 	/// 積まれた コマンドを実行する
@@ -65,11 +71,6 @@ private:
 	std::deque<FrameCommand> commandHistory_;
 	size_t currentIndex_ = 0;
 
-	enum class UndoRedoState : int32_t{
-		MANUAL = 0, // 何もしていない
-		UNDO = 1, // Undo
-		REDO = 2 // Redo
-	};
 
 	bool isAutoUndoRedo_ = false;
 	UndoRedoState preAutoUndoRedoState_ = UndoRedoState::MANUAL; // 前回の状態
@@ -79,4 +80,6 @@ private:
 	float autoUndoRedoStepInterval_ = 0.1f; // 自動 Undo Redo の間隔
 public:
 	bool hasCommandRequest()const{ return !commandRequests_.commandQueue_.empty(); }
+
+
 };

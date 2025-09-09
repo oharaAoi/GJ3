@@ -64,11 +64,18 @@ private:
 
 	Vector2 textureSize_ = {};
 	bool isStageReset_ = false;
+	bool keyInput_ = false;
+	bool padInput_ = false;
+
 	float resetTimer_ = 0.0f;
 	float kResetTime_ = 1.0f;
 
 	Canvas2d* pCanvas2d_;
 
 	Parameter param_;
+public:
+	bool GetIsStageReset() const{ return isStageReset_; }
+	bool GetKeyInput() const{ return keyInput_; }
+	bool GetPadInput() const{ return padInput_; }
 };
 

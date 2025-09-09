@@ -349,6 +349,7 @@
     <ClCompile Include="Game\Manager\GhostSmokeManager.cpp" />
     <ClCompile Include="Game\UI\StageSelect\StageIndexUI.cpp" />
     <ClCompile Include="Game\Effect\GhostSmoke.cpp" />
+    <ClCompile Include="Game\UI\GameUIs.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Scene\ClearScene.h" />
@@ -658,6 +659,7 @@
     <ClInclude Include="Game\Manager\GhostSmokeManager.h" />
     <ClInclude Include="Game\Effect\GhostSmoke.h" />
     <ClInclude Include="Game\UI\StageSelect\StageIndexUI.h" />
+    <ClInclude Include="Game\UI\GameUIs.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\Assets\HLSL\Light.hlsli" />
