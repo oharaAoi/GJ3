@@ -196,39 +196,56 @@ void StageSelector::InputHandle(){
 }
 
 void StageSelector::Scroll(){
-	// 補間（線形速度で移動）
+	float dt = GameTimer::DeltaTime();
+	float totalStageF = static_cast<float>(totalStageNum_);
+	float halfStageF  = totalStageF * 0.5f;
+
+	// currentIndexF_ は「目標のfloatインデックス」
+	// scrollT_ は「現在のfloatインデックス（現在位置）」
 	float delta = currentIndexF_ - scrollT_;
 
-	float totalStageF = static_cast<float>(totalStageNum_);
-	float halfStageF = totalStageF * 0.5f;
-	// 最短経路で進むように補正
-	if(delta > halfStageF){
-		delta -= totalStageNum_;
-	}
-	if(delta < -halfStageF){
-		delta += totalStageNum_;
-	}
+	// 最短経路に補正（ラップを考慮）
+	while(delta > halfStageF) delta -= totalStageF;
+	while(delta <= -halfStageF) delta += totalStageF;
 
-	scrollDirection_ = (delta > 0.f) ? 1 : ((delta < 0.f) ? -1 : 0);
-
-	scrollT_ += delta * GameTimer::DeltaTime() * scrollSpeed_;
-
-	// ループ処理
-	if(scrollT_ < 0){
-		scrollT_ += totalStageNum_;
-	}
-	if(scrollT_ >= totalStageNum_){
-		scrollT_ -= totalStageNum_;
+	// 定速移動（オーバーシュートしない）
+	float maxStep = scrollSpeed_ * dt; // scrollSpeed_ : index / 秒
+	float step = 0.0f;
+	if(std::fabs(delta) <= maxStep){
+		step = delta; // 到達可能ならその分だけ動かす
+	} else{
+		step = (delta > 0.0f) ? maxStep : -maxStep;
 	}
 
-	// 整数部分を currentStageIndex_ として使う
-	currentStageIndex_ = static_cast<int>(std::round(scrollT_)) % totalStageNum_;
-	pStageContents_->ResetCurrentDrawIndex(currentStageIndex_);
+	// 方向
+	scrollDirection_ = (step > 0.0f) ? 1 : ((step < 0.0f) ? -1 : 0);
 
-	// 描画用オフセット
-	float frac = scrollT_ - std::floor(scrollT_);
-	currentOffsetX_ = -frac * theSpaceBetweenButtons_;
+	// 実際に進める
+	scrollT_ += step;
+
+	// ラップ処理（0..totalStageF)
+	if(scrollT_ < 0.0f) scrollT_ += totalStageF;
+	if(scrollT_ >= totalStageF) scrollT_ -= totalStageF;
+
+	// 表示上の「中央に一番近いインデックス」を更新
+	int centerIdx = static_cast<int>(std::lround(scrollT_)) % totalStageNum_;
+	if(centerIdx < 0) centerIdx += totalStageNum_;
+	currentStageIndex_ = centerIdx;
+
+	if(pStageContents_){
+		pStageContents_->ResetCurrentDrawIndex(currentStageIndex_);
+	}
+
+	// currentOffsetX_ は "centerIdx - scrollT_" の符号付き差分に space を掛けたものにする
+	// （従来の floor ベースの frac ではなく、round を基準にする）
+	float signedDiff = static_cast<float>(centerIdx) - scrollT_;
+	// signedDiff も最短経路に補正しておく
+	if(signedDiff > halfStageF)  signedDiff -= totalStageF;
+	if(signedDiff < -halfStageF) signedDiff += totalStageF;
+
+	currentOffsetX_ = signedDiff * theSpaceBetweenButtons_;
 }
+
 
 void StageSelector::ConvertIndexToScreen(){
 	// centerPos_ を基準に currentOffsetX_ でずらして配置

@@ -101,7 +101,7 @@ private:
 	bool decidedStage_ = false;
 
 	Vector2 centerPos_ = Vector2(640.f,360.0f);
-	float theSpaceBetweenButtons_ = 600.f;    // ボタン同士の間隔
+	float theSpaceBetweenButtons_ = 1280.0f;    // ボタン同士の間隔
 	float currentOffsetX_ = 0.0f;   // 現在のオフセット位置
 	float offsetY_ = -87.f; // Y オフセット Xは移動するが, Yは固定
 
@@ -116,6 +116,8 @@ public:
 	int32_t GetScrollDirection() const { return scrollDirection_; }
 
 	float GetScrollT() const { return scrollT_; }
+
+	float GetCurrentOffsetX() const{ return currentOffsetX_; }
 
 	int32_t GetTotalStageNum() const{ return totalStageNum_; }
 	void SetTotalStageNum(int32_t num){ totalStageNum_ = num; }

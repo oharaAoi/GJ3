@@ -72,14 +72,10 @@ private:
 
 	// ------------------- other ------------------- //
 
-	float scrollT_;
-	float currentStageIndexT_;
+	float currentOffsetX_;
 
 public:
-
-	void SetScrollT(float _value) { scrollT_ = _value; }
-	void SetCurrentStageIndexT(float _currentStageIndexT) { currentStageIndexT_ = _currentStageIndexT; }
-
+	void SetCurrenOffsetX(float _value) { currentOffsetX_ = _value; }
 };
 
 #pragma region Behavior

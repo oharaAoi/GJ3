@@ -23,16 +23,14 @@ void StageSelectCollection::Init(Canvas2d* _canvas2d) {
 	slotSpacing_ = 1280.0f;
 }
 
-void StageSelectCollection::Update(float _scrollT, float _currentIndexT) {
-	// スクロールの進行度合いに応じて位置を更新
-	float diffScroll = (_scrollT - _currentIndexT);
-	// 小数部分を取り出す
-	diffScroll -= static_cast<float>(static_cast<int>(diffScroll));
-
-	for (int i = 0; i < kMax; ++i) {
-		float x = centerPositions_[i].x - slotSpacing_ * diffScroll;
-		segments_[i]->SetCenterPosX(x);
-	}
+void StageSelectCollection::Update(float _currentOffset) {
+	// 3枚を配置
+	// 左
+	segments_[0]->SetCenterPosX(centerPositions_[1].x + _currentOffset - slotSpacing_);
+	// 中央
+	segments_[1]->SetCenterPosX(centerPositions_[1].x + _currentOffset);
+	// 右
+	segments_[2]->SetCenterPosX(centerPositions_[1].x + _currentOffset + slotSpacing_);
 }
 
 void StageSelectCollection::Debug_Gui() {

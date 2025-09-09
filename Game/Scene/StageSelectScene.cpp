@@ -124,8 +124,7 @@ void StageSelectScene::Update(){
 	}
 
 	stageContents_->Update();
-	stageCollection->Update(scrollT_,currentStageIndexT_);
-
+	stageCollection->Update(currentOffsetX_);
 
 	// -------------------------------------------------
 	// ↓ spriteの更新
@@ -197,8 +196,7 @@ void SelectingStageBehavior::Update(){
 	lightFlash_->Update();
 
 	stageSelector_->Update();
-	host_->SetScrollT(stageSelector_->GetScrollT());
-	host_->SetCurrentStageIndexT((float)stageSelector_->GetCurrentStageIndex());
+	host_->SetCurrenOffsetX(stageSelector_->GetCurrentOffsetX());
 
 	if(stageSelector_->IsDecidedStage()){
 		// ステージが決定したら次のシーンへ

@@ -22,9 +22,8 @@ public:
 	/// <summary>
 	/// 
 	/// </summary>
-	/// <param name="_leftTime">: 残り時間</param>
-	/// <param name="_currentIndexT">: 現在のindex(float)</param>
-	void Update(float _scrolT,float _currentIndexT);
+	/// <param name="_currentOffset">: 現在の差分</param>
+	void Update(float _currentOffset);
 
 	void Debug_Gui() override;
 
