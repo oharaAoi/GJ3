@@ -58,6 +58,7 @@ void GhostBlockCollision::CreateTokenGhost(){
 				} else{
 					system_->GetStageRegi()->CreateStageData(ghostIndex,BlockType::Ghost);
 					isCreateGhost_ = true;
+					system_->AddGhostThereIndies(ghostIndex);
 				}
 			}
 		}

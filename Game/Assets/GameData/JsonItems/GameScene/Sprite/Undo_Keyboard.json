@@ -1,0 +1,68 @@
+{
+    "Undo_Keyboard": {
+        "anchorPoint": {
+            "x": 0.5,
+            "y": 0.5
+        },
+        "centerPos": {
+            "x": 100.0,
+            "y": 470.0,
+            "z": 0.0
+        },
+        "color": {
+            "w": 1.0,
+            "x": 1.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "drawRange": {
+            "x": 1.0,
+            "y": 1.0
+        },
+        "isBackGround": false,
+        "isFlipX": false,
+        "isFlipY": false,
+        "isFront": false,
+        "leftTop": {
+            "x": 0.0,
+            "y": 0.0
+        },
+        "rotate": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "scale": {
+            "x": 5.0,
+            "y": 5.0
+        },
+        "textureName": "Game_undo_k.png",
+        "textureSize": {
+            "x": 256.0,
+            "y": 256.0
+        },
+        "uvMaxSize": {
+            "x": 1.0,
+            "y": 1.0
+        },
+        "uvMinSize": {
+            "x": 0.0,
+            "y": 0.0
+        },
+        "uvRotate": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "uvScale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+        },
+        "uvTranslate": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        }
+    }
+}

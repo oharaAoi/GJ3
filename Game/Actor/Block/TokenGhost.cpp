@@ -4,7 +4,9 @@
 #include "Game/Manager/GhostSmokeManager.h"
 
 TokenGhost::~TokenGhost() {
-	effect_->SetIsDestroy(true);
+	if (effect_) {
+		effect_->SetIsDestroy(true);
+	}
 }
 
 void TokenGhost::Init(Canvas2d* _canvas2d, const Vector2& _pos, const Vector2& _tileSize)
@@ -17,8 +19,6 @@ void TokenGhost::Init(Canvas2d* _canvas2d, const Vector2& _pos, const Vector2& _
 	type_ = BlockType::Ghost;
 
 	AudioPlayer::SinglShotPlay("ghost.mp3", 0.6f);
-
-	effect_ = GhostSmokeManager::GetInstance()->Create(_pos, tileSize_ * 3.f);
 }
 
 void TokenGhost::Update()
@@ -30,6 +30,10 @@ void TokenGhost::Update()
 void TokenGhost::Debug_Gui()
 {
 	ImGui::Text("X : %d\n Y : %d", index_.x, index_.y);
+}
+
+void TokenGhost::CreateGhostEffect() {
+	effect_ = GhostSmokeManager::GetInstance()->Create(transform_->GetTranslate(), tileSize_ * 3.f);
 }
 
 Vector2 TokenGhost::ConvertIndexToPosition(const Vector2Int& _index) {

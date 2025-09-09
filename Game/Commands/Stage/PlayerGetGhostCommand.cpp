@@ -18,6 +18,8 @@ void PlayerGetGhostCommand::Undo(){
 	mapCollision_->SubGhostCounter();
 	// お化けを復活させる
 	mapCollision_->GetStageRegi()->CreateStageData(index_,BlockType::Ghost);
+	// 前フレームの配列におばけのindexを追加(Effect生成のため, 前の状態ではおばけがあったことを示す)
+	mapCollision_->AddPreGhostThereIndies(index_);
 	// 出来たおばけを判定する
 	mapCollision_->GetSpecialBlockCollision()->RecursionBlockChecker(index_);
 

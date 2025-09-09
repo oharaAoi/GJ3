@@ -2,7 +2,7 @@
 
 void BlockNormal::Init(Canvas2d* _canvas2d, const Vector2& _pos, const Vector2& _tileSize) {
 	SetName("BlockNormal");
-	sprite_ = _canvas2d->AddSprite("normalBlock.png", "normalBlock", "Sprite_Normal.json");
+	sprite_ = _canvas2d->AddSprite("normalBlock.png", "normalBlock", "Sprite_Normal.json",0,true);
 	transform_ = sprite_->GetTransform();
 	transform_->SetTranslate(_pos);
 	tileSize_ = _tileSize;

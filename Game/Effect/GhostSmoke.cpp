@@ -8,6 +8,7 @@ GhostSmoke::~GhostSmoke() {
 
 void GhostSmoke::Init(const Vector2& pos, const Vector2& tileSize) {
 	SetName("Smoke");
+	position_ = pos;
 	for (uint32_t oi = 0; oi < 2; ++oi) {
 		ghostEffect_[oi] = std::make_unique<GhostEffect>();
 		ghostEffect_[oi]->Init(tileSize);

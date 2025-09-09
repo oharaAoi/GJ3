@@ -34,10 +34,10 @@ void StageResetUI::Update()
 	// Inputを取得
 	Input* input = Input::GetInstance();
 
-	bool keyInput = input->IsPressKey(DIK_R);
-	bool padInput = input->IsPressButton(XInputButtons::BUTTON_X);
+	keyInput_ = input->IsPressKey(DIK_R);
+	padInput_ = input->IsPressButton(XInputButtons::BUTTON_X);
 	// リセットボタンが長押しされているなら
-	if (keyInput || padInput) {
+	if (keyInput_ || padInput_) {
 		if (!isPush_) { 
 			isPush_ = true;
 			scaleTimer_ = 0.0f;
@@ -48,9 +48,9 @@ void StageResetUI::Update()
 		resetTimer_ -= GameTimer::DeltaTime();
 		isStageReset_ = false;
 	}
-	if (keyInput) {
+	if (keyInput_) {
 		resetButtonUI_->SetTextureName("resetButton_R.png");
-	} else if (padInput) {
+	} else if (padInput_) {
 		resetButtonUI_->SetTextureName("resetButton_X.png");
 	}
 	resetTimer_ = std::clamp(resetTimer_, 0.0f, 1.0f);
@@ -63,7 +63,7 @@ void StageResetUI::Update()
 		scaleTimer_ = std::clamp(scaleTimer_, 0.0f, 1.0f);
 		backTextureUI_->SetScale(Vector2::MochiPuniScaleNormalized(scaleTimer_));
 		resetButtonUI_->SetScale(Vector2::MochiPuniScaleNormalized(scaleTimer_));
-		if (scaleTimer_ == 1.0f && !keyInput && !padInput) { isPush_ = false; }
+		if (scaleTimer_ == 1.0f && !keyInput_ && !padInput_) { isPush_ = false; }
 	}
 }
 

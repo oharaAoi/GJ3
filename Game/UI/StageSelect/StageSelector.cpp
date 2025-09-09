@@ -97,7 +97,6 @@ void StageSelector::Debug_Gui(){
 void StageSelector::Update(){
 	InputHandle();
 	Scroll();
-	ConvertIndexToScreen();
 
 	leftArrowRotateParam_->Update(arrows_[0]);
 	rightArrowRotateParam_->Update(arrows_[1]);
@@ -135,10 +134,10 @@ void StageSelector::InputHandle(){
 		Vector2 leftStick = input->GetLeftJoyStick(0.5f);
 		if(leftStick.x < -0.1f){
 			isPressing  = true;
-			inputScrollDirection_ = +1;
+			inputScrollDirection_ = -1;
 		} else if(leftStick.x > +0.1f){
 			isPressing  = true;
-			inputScrollDirection_ = -1;
+			inputScrollDirection_ = +1;
 		}
 
 		if(input->IsPressButton(kStageIndexSubButtons_)){
@@ -246,18 +245,6 @@ void StageSelector::Scroll(){
 	currentOffsetX_ = signedDiff * theSpaceBetweenButtons_;
 }
 
-
-void StageSelector::ConvertIndexToScreen(){
-	// centerPos_ を基準に currentOffsetX_ でずらして配置
-	// 左
-	// stagePreviews_[0]->SetPosition(centerPos_ + Vector2(-theSpaceBetweenButtons_ + currentOffsetX_, offsetY_));
-	// 中央
-	// stagePreviews_[1]->SetPosition(centerPos_ + Vector2(0 + currentOffsetX_, offsetY_));
-	// 右
-	// stagePreviews_[2]->SetPosition(centerPos_ + Vector2(+theSpaceBetweenButtons_ + currentOffsetX_, offsetY_));
-}
-
-
 #pragma region Pendulum
 
 StageSelector::RotateAnimationParam::RotateAnimationParam(){}
@@ -347,6 +334,7 @@ void StageSelector::RotateAnimationParam::FromJson(const json& jsonData){
 	int curveSize = 0;
 	fromJson(jsonData,"curveSize",curveSize);
 	angleEvent_.keyframes.clear();
+
 	for(int i = 0; i < curveSize; ++i){
 		float time = 0.f;
 		float value = 0.f;

@@ -13,6 +13,10 @@ public:
 	void Update() override;
 	void Debug_Gui() override;
 
+public:
+
+	void CreateGhostEffect();
+
 private:
 
 	Vector2 ConvertIndexToPosition(const Vector2Int& _index);

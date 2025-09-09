@@ -84,3 +84,7 @@ Vector2 Player::ConvertIndexToPosition(const Vector2Int &_index)
 	return Vector2(offset_.x + _index.x * tileSize_.x + tileSize_.x / 2.0f,
 				   offset_.y + _index.y * tileSize_.y + tileSize_.y / 2.0f);
 }
+
+bool Player::isKeyInput() const{ return inputHandler_->isKeyInput(); }
+
+bool Player::isPadInput() const{ return inputHandler_->isPadInput(); }

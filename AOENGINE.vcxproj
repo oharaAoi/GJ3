@@ -123,6 +123,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Game\UI\GameUIs.cpp" />
     <ClCompile Include="Game\Camera\StageSelectCamera.cpp" />
     <ClCompile Include="Game\Commands\Stage\CreateGraveBlock.cpp" />
     <ClCompile Include="Game\Effect\GhostSmoke.cpp" />
@@ -411,6 +412,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Game\UI\StageSelect\StageIndexUI.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Game\UI\GameUIs.h" />
     <ClInclude Include="Game\Camera\StageSelectCamera.h" />
     <ClInclude Include="Game\Commands\Stage\CreateGraveBlock.h" />
     <ClInclude Include="Game\Effect\GhostSmoke.h" />
