@@ -15,9 +15,10 @@ void StageIndexUI::Init(const std::string& _name){
 	param_.FromJson(JsonItems::GetData("UI",GetName()));
 
 	for(int i = 0; i < param_.digitNum; ++i){
-		digitSprites_.emplace_back(Engine::GetCanvas2d()->AddSprite(param_.textureName_,GetName() + "_" + std::to_string(i),"Sprite_Normal.json"));
+		digitSprites_.emplace_back(Engine::GetCanvas2d()->AddSprite(param_.textureName_,GetName() + "_" + std::to_string(i),"Sprite_Normal.json",3,true));
 		digitSprites_.back()->ReSetTextureSize(param_.tileSpriteSize_);
 		digitSprites_.back()->SetDrawRange(param_.tileTextureSize_);
+		digitSprites_.back()->SetColor(param_.color_);
 	}
 
 	EditorWindows::AddObjectWindow(this,GetName());
@@ -63,10 +64,12 @@ void StageIndexUI::Debug_Gui(){
 	ImGui::DragFloat2("TileSpriteSize",&param_.tileSpriteSize_.x,1.0f);
 	ImGui::DragFloat2("TileTextureSize",&param_.tileTextureSize_.x,0.01f,0.0f,0.0f);
 	ImGui::DragFloat2("Offset",&param_.offset_.x,1.0f);
+	ImGui::ColorEdit4("Color",&param_.color_.x);
 
 	for(auto sprite : digitSprites_){
 		sprite->ReSetTextureSize(param_.tileSpriteSize_);
 		sprite->SetDrawRange(param_.tileTextureSize_);
+		sprite->SetColor(param_.color_);
 	}
 
 	if(ImGui::Button("Save")){
@@ -89,6 +92,7 @@ json StageIndexUI::Param::ToJson(const std::string& id) const{
 	builder.Add("tileSpriteSize",tileSpriteSize_);
 	builder.Add("tileTextureSize",tileTextureSize_);
 	builder.Add("textureName",textureName_);
+	builder.Add("color",color_);
 
 	return builder.Build();
 }
@@ -100,4 +104,5 @@ void StageIndexUI::Param::FromJson(const json& jsonData){
 	fromJson(jsonData,"tileSpriteSize",tileSpriteSize_);
 	fromJson(jsonData,"tileTextureSize",tileTextureSize_);
 	fromJson(jsonData,"textureName",textureName_);
+	fromJson(jsonData,"color",color_);
 }

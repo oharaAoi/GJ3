@@ -34,7 +34,7 @@ private:
 		Vector2 centerPos_ = {0,0};
 		Vector2 tileSpriteSize_ = {0,0};
 		Vector2 tileTextureSize_ = {0,0};
-
+		Vector4 color_ = {1,1,1,1};
 		std::string textureName_ = "white.png";
 	};
 private:
