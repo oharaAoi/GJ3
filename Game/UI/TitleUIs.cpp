@@ -25,7 +25,7 @@ void TitleUIs::Init(){
 		word->SetColor({1.f,1.f,1.f,1.f});
 	}
 
-	spaceKey_ = Engine::GetCanvas2d()->AddSprite("Title_space.png","SpaceKey","Sprite_Normal.json",10);
+	spaceKey_ = Engine::GetCanvas2d()->AddSprite("Title_space.png","SpaceKey","Sprite_Normal.json",6);
 
 	shelf_ = Engine::GetCanvas2d()->AddSprite("Title_shelf.png","Shelf","Sprite_Normal.json",-1,true);
 	shelf_->SetColor({0.15f,0.15f,0.15f,1.f});
