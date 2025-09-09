@@ -1,5 +1,6 @@
 #include "ClearSelector.h"
 
+#include "Engine/System/Audio/AudioPlayer.h"
 #include "Engine/System/Input/Input.h"
 #include "Engine/Lib/GameTimer.h"
 
@@ -49,8 +50,20 @@ void ClearSelector::Update()
 		if (upPressed) { cursorIndex_ = 0; }
 		if (downPressed) { cursorIndex_ = 1; }
 	} else {
-		if (upPressed) { clearUIs_->ResetIndex(cursorIndex_); --cursorIndex_; }
-		if (downPressed) { clearUIs_->ResetIndex(cursorIndex_); ++cursorIndex_; }
+		if (upPressed) { 
+			if (cursorIndex_ == 1) {
+				AudioPlayer::SinglShotPlay("button.mp3", 0.5f);
+			}
+			clearUIs_->ResetIndex(cursorIndex_); 
+			--cursorIndex_;
+		}
+		if (downPressed) { 
+			if (cursorIndex_ == 0) {
+				AudioPlayer::SinglShotPlay("button.mp3", 0.5f);
+			}
+			clearUIs_->ResetIndex(cursorIndex_); 
+			++cursorIndex_; 
+		}
 		cursorIndex_ = std::clamp(cursorIndex_, 0, 1);
 		// ButtonUIの点滅処理
 		clearUIs_->BlinkingIndex(cursorIndex_);
@@ -58,6 +71,7 @@ void ClearSelector::Update()
 	}
 	//決定ボタンを押したら
 	if (decisionPressed && cursorIndex_ != -1) {
+		AudioPlayer::SinglShotPlay("button.mp3", 0.5f);
 		const auto type = clearUIs_->GetTypeIndex(cursorIndex_);
 		switch (type)
 		{

@@ -124,6 +124,7 @@ void GameScene::Init(){
 	swirlTransition_ = std::make_unique<SwirlTransition>();
 	swirlTransition_->Init();
 	swirlTransition_->Open();
+	AudioPlayer::SinglShotPlay("start.mp3", 0.3f);
 
 	gameUIs_ = std::make_unique<GameUIs>();
 	gameUIs_->Init();
@@ -247,7 +248,11 @@ void GameScene::Update(){
 
 	// ステージをクリアしたかどうかの判定
 	if (mapCollision_->GetIsClear()) {
-		if (clearTimer_ == 0.0f) { swirlTransition_->Close(); }
+		if (clearTimer_ == 0.0f) { 
+			AudioPlayer::SinglShotPlay("goal.mp3", 0.5f);
+			AudioPlayer::SinglShotPlay("start.mp3", 0.3f);
+			swirlTransition_->Close(); 
+		}
 		clearTimer_ += GameTimer::DeltaTime();
 		if (swirlTransition_->GetIsFinish()) {
 			GameScene::Result r;
@@ -321,6 +326,7 @@ void GameScene::ChengeScene(){
 					menuSelector_->SetChengeScene(false);
 					menuSelector_->SetOpenMenu(false);
 					swirlTransition_->Open();
+					AudioPlayer::SinglShotPlay("start.mp3", 0.3f);
 				}
 				break;
 			default:
@@ -333,6 +339,7 @@ void GameScene::ChengeScene(){
 			ChangeBehavior(std::make_unique<ChangeSelectSceneBehavior>(this));
 		} else if(menuSelector_->GetResetButton()){
 			swirlTransition_->Close();
+			AudioPlayer::SinglShotPlay("start.mp3", 0.3f);
 			menuSelector_->SetChangeEffect(false);
 		}
 	}

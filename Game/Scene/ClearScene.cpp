@@ -69,6 +69,7 @@ void ClearScene::Init()
 	swirlTransition_ = std::make_unique<SwirlTransition>();
 	swirlTransition_->Init();
 	swirlTransition_->Open();
+	AudioPlayer::SinglShotPlay("start.mp3", 0.3f);
 }
 
 void ClearScene::Finalize()
@@ -162,6 +163,7 @@ void ClearScene::ChengeScene()
 			{
 				if (changeTimer_ == 0.0f) {
 					swirlTransition_->Close();
+					AudioPlayer::SinglShotPlay("start.mp3", 0.3f);
 				}
 				// タイムをプラスする
 				changeTimer_ += GameTimer::DeltaTime();

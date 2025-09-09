@@ -4,6 +4,7 @@
 #include "Engine/System/Input/Input.h"
 #include "Engine/Module/Components/2d/Canvas2d.h"
 #include "Engine/System/Editer/Window/EditorWindows.h"
+#include "Engine/System/Audio/AudioPlayer.h"
 #include "Engine/Lib/GameTimer.h"
 
 void StageResetUI::Init(Canvas2d* _canvas2d)
@@ -41,6 +42,7 @@ void StageResetUI::Update()
 		if (!isPush_) { 
 			isPush_ = true;
 			scaleTimer_ = 0.0f;
+			AudioPlayer::SinglShotPlay("button.mp3", 0.5f);
 		}
 		resetTimer_ += (GameTimer::DeltaTime() / param_.resetTime);
 		if (resetTimer_ > 1.0f) { isStageReset_ = true; }

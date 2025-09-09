@@ -54,5 +54,8 @@ protected:
 
 	bool isChengeBlock_ = false;
 
+	float scaleTimer_ = 0.0f;
+	Vector2Int backIndex_ = { 0,0 };
+
 };
 

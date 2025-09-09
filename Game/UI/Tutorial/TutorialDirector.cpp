@@ -249,7 +249,7 @@ void TutorialDirector::Update()
 		if (catComes_ == 0.0f && isSpeechFinish_) {
 			isMoveEnable_ = true;
 			if (ghostCount_ != 0) {
-				if (collisionTimer_ < 0.2f) {
+				if (collisionTimer_ < 0.1f) {
 					collisionTimer_ += GameTimer::DeltaTime();
 				} else {
 					isSpeechSkip_ = false;
