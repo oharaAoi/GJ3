@@ -85,11 +85,17 @@ void StageSelectScene::Init(){
 	// ------------------------------------------------
 	PostProcess* postProcess = Engine::GetPostProcess();
 	postProcess->SetIsActive(true);
-	postProcess->GetBloom()->SetIsEnable(true);
+
+	auto bloom = postProcess->GetBloom();
+	bloom->SetIsEnable(true);
+	bloom->SetThreshold(0.14f);
+	bloom->SetIntensity(0.25f);
+	bloom->SetGaussianHeightTexelSizeFromFloat(0.f);
+	bloom->SetGaussianWidthTexelSizeFromFloat(0.f);
+
 	auto vignette = postProcess->GetVignette();
 	vignette->SetIsEnable(true);
 	vignette->SetColor({0.0235f,0.0235f,0.031f,1.f});
-	vignette->SetIsEnable(true);
 	vignette->SetScale(75.100f);
 	vignette->SetPower(0.690f);
 
