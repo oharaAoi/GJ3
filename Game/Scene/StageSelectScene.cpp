@@ -2,7 +2,7 @@
 #include "Engine.h"
 #include "Engine/Lib/Json/JsonItems.h"
 #include "Engine/Module/PostEffect/PostProcess.h"
-#include "Game/Manager/GhostEffectManager.h"
+#include "Game/Manager/GhostSmokeManager.h"
 
 StageSelectScene::StageSelectScene(){}
 StageSelectScene::~StageSelectScene(){ Finalize(); }
@@ -15,7 +15,7 @@ void StageSelectScene::Finalize(){
 	postProcess->GetToonMap()->SetIsEnable(false);
 
 	sceneRenderer_->Finalize();
-	GhostEffectManager::GetInstance()->Finalize();
+	GhostSmokeManager::GetInstance()->Finalize();
 	ParticleManager::GetInstance()->Finalize();
 	GpuParticleManager::GetInstance()->Finalize();
 }

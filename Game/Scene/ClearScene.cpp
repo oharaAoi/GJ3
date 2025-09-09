@@ -3,7 +3,7 @@
 #include "Engine/Lib/Json/JsonItems.h"
 #include "Game/Scene/GameScene.h"
 #include "Game/UI/StageSelector.h"
-#include "Game/Manager/GhostEffectManager.h"
+#include "Game/Manager/GhostSmokeManager.h"
 
 ClearScene::ClearScene(){}
 
@@ -69,7 +69,7 @@ void ClearScene::Init()
 void ClearScene::Finalize()
 {
 	sceneRenderer_->Finalize();
-	GhostEffectManager::GetInstance()->Finalize();
+	GhostSmokeManager::GetInstance()->Finalize();
 	ParticleManager::GetInstance()->Finalize();
 	GpuParticleManager::GetInstance()->Finalize();
 }

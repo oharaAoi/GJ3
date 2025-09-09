@@ -103,7 +103,7 @@ void GameScene::Init(){
 	dust_ = ParticleManager::GetInstance()->CrateParticle("dust");
 	dust_->Reset();
 
-	ghostEffectManager_ = GhostEffectManager::GetInstance();
+	ghostEffectManager_ = GhostSmokeManager::GetInstance();
 	ghostEffectManager_->Init();
 
 	swirlTransition_ = std::make_unique<SwirlTransition>();
