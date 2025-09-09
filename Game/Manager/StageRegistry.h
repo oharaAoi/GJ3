@@ -38,6 +38,8 @@ public:
 	void CreateStageData(const Vector2Int& index, BlockType type);
 	void ClearStageData(const Vector2Int& index);
 
+	void CreateGhostEffect(const Vector2Int& index);
+
 	void DestroyStageData();
 	void DestroyMapData();
 	void DestroyData();

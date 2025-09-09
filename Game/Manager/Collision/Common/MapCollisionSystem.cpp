@@ -154,6 +154,48 @@ void MapCollisionSystem::UpdateSpanGhost(){
 	}
 	// 実際のおばけ生成ポイント
 	ghostBlockCollision_->CreateTokenGhost();
+
+	// 今フレームで新しくおばけが作成されたかどうかでEffectの生成処理判定を行う
+	for (const auto& nowFrame : ghostThereIndies_) {
+		// 過去フレームの配列が空だったら問答無用で作成
+		if (preFrameGhostThereIndies_.empty()) {
+			stageRegistry_->CreateGhostEffect(nowFrame);
+			continue;	// 下の処理で作成しないように次の要素へ
+		}
+		// 前フレームのindexの配列になかったら作成する
+		bool isExit = false;
+		for (const auto& preFrame : preFrameGhostThereIndies_) {
+			if (nowFrame == preFrame) {
+				isExit = true;
+				break;
+			}
+		}
+
+		// なかったので作成
+		if (!isExit) {
+			stageRegistry_->CreateGhostEffect(nowFrame);
+		}
+	}
+	preFrameGhostThereIndies_.clear();
+	preFrameGhostThereIndies_ = ghostThereIndies_;
+	ghostThereIndies_.clear();
+}
+
+void MapCollisionSystem::AddGhostThereIndies(const Vector2Int& index) {
+	/*if (ghostThereIndies_.empty()) {
+		ghostThereIndies_.push_back(index);
+	}
+	for (const auto& nowFrame : ghostThereIndies_) {
+		if (nowFrame != index) {
+			ghostThereIndies_.push_back(index);
+		}
+	}*/
+
+	ghostThereIndies_.push_back(index);
+}
+
+void MapCollisionSystem::AddPreGhostThereIndies(const Vector2Int& index) {
+	preFrameGhostThereIndies_.push_back(index);
 }
 
 bool MapCollisionSystem::OutOfRangeReference(const Vector2Int& index){
