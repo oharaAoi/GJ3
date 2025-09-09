@@ -1,6 +1,11 @@
 #include "TokenGhost.h"
 /// engine
 #include "Engine/System/AUdio/AudioPlayer.h"
+#include "Game/Manager/GhostEffectManager.h"
+
+TokenGhost::~TokenGhost() {
+	effect_->SetIsDestroy(true);
+}
 
 void TokenGhost::Init(Canvas2d* _canvas2d, const Vector2& _pos, const Vector2& _tileSize)
 {
@@ -12,6 +17,8 @@ void TokenGhost::Init(Canvas2d* _canvas2d, const Vector2& _pos, const Vector2& _
 	type_ = BlockType::Ghost;
 
 	AudioPlayer::SinglShotPlay("ghost.mp3", 0.6f);
+
+	effect_ = GhostEffectManager::GetInstance()->Create(_pos, tileSize_ * 3.f);
 }
 
 void TokenGhost::Update()

@@ -12,6 +12,7 @@
 #include "Game/WorldObject/Skybox.h"
 #include "Game/Actor/Player/Player.h"
 #include "Game/Actor/Effect/GhostSoulManager.h"
+#include "Game/Manager/GhostEffectManager.h"
 #include "Game/Manager/StageRegistry.h"
 #include "Game/Manager/Collision/Common/MapCollisionSystem.h"
 #include "Game/WorldObject/WorldObjects.h"
@@ -75,6 +76,7 @@ private:
 	// ------------------- effect ------------------- //
 	BaseParticles* orb_;
 	BaseParticles* dust_;
+	GhostEffectManager* ghostEffectManager_;
 
 	std::unique_ptr<SwirlTransition> swirlTransition_;
 

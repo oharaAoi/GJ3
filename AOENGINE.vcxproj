@@ -126,6 +126,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Game\Camera\StageSelectCamera.cpp" />
     <ClCompile Include="Game\Commands\Stage\CreateGraveBlock.cpp" />
     <ClCompile Include="Game\Effect\SwirlTransition.cpp" />
+    <ClCompile Include="Game\Manager\GhostEffectManager.cpp" />
     <ClCompile Include="Game\UI\Clear\ClearSelector.cpp" />
     <ClCompile Include="Game\UI\Clear\ClearUIs.cpp" />
     <ClCompile Include="Engine\Module\PostEffect\SwirlEffect.cpp" />
@@ -367,6 +368,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Game\Manager\Collision\Map\GhostBlockCollision.cpp" />
     <ClCompile Include="Game\UI\Button\IButtonUI.cpp" />
     <ClCompile Include="Game\UI\Tutorial\Text\ITutorialTextUI.cpp" />
+    <ClCompile Include="Game\Effect\GhostEffect.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Engine\Module\Geometry\Structs\Vertices.cpp" />
     <ClCompile Include="Engine\System\ParticleSystem\Tool\ParticleSystemEditor.cpp" />
@@ -411,6 +413,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Game\Commands\Stage\CreateGraveBlock.h" />
     <ClInclude Include="Game\Effect\SwirlTransition.h" />
     <ClInclude Include="Game\Information\TutorialType.h" />
+    <ClInclude Include="Game\Manager\GhostEffectManager.h" />
     <ClInclude Include="Game\UI\Clear\ClearSelector.h" />
     <ClInclude Include="Game\UI\Clear\ClearUIs.h" />
     <ClInclude Include="Engine\Module\PostEffect\SwirlEffect.h" />
@@ -707,6 +710,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Game\UI\Tutorial\Text\CollisionGhost\TextUI_CollisionGhost_Line2.h" />
     <ClInclude Include="Game\UI\Tutorial\Text\Goal\TextUI_Goal_Line1.h" />
     <ClInclude Include="Game\UI\Tutorial\Text\Goal\TextUI_Goal_Line2.h" />
+    <ClInclude Include="Game\Effect\GhostEffect.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Engine\Assets\HLSL\Particle\AccelerationField.CS.hlsl">
@@ -1018,6 +1022,12 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <FxCompile Include="Game\Assets\HLSL\Distortion.PS.hlsl">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Game\Assets\HLSL\GhostEffect.PS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </FxCompile>
     <FxCompile Include="Game\Assets\HLSL\Swirl.PS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>

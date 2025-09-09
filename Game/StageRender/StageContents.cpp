@@ -2,6 +2,8 @@
 #include "Engine/Core/GraphicsContext.h"
 
 StageContents::~StageContents() {
+	canvas2ds_.clear();
+	stageRegistries_.clear();
 }
 
 void StageContents::Init(uint32_t maxStageNum) {

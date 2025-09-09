@@ -57,6 +57,7 @@
     <FxCompile Include="Engine\Resources\HLSL\CS\VerticalBlur.CS.hlsl" />
     <FxCompile Include="Game\Assets\HLSL\Distortion.PS.hlsl" />
     <FxCompile Include="Game\Assets\HLSL\Swirl.PS.hlsl" />
+    <FxCompile Include="Game\Assets\HLSL\GhostEffect.PS.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game\Scene\ClearScene.cpp" />
@@ -344,6 +345,8 @@
     <ClCompile Include="Game\UI\StageSelectSegment.cpp" />
     <ClCompile Include="Game\UI\StageSelectCollection.cpp" />
     <ClCompile Include="Game\Camera\StageSelectCamera.cpp" />
+    <ClCompile Include="Game\Effect\GhostEffect.cpp" />
+    <ClCompile Include="Game\Manager\GhostEffectManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Scene\ClearScene.h" />
@@ -649,6 +652,8 @@
     <ClInclude Include="Game\UI\StageSelectSegment.h" />
     <ClInclude Include="Game\UI\StageSelectCollection.h" />
     <ClInclude Include="Game\Camera\StageSelectCamera.h" />
+    <ClInclude Include="Game\Effect\GhostEffect.h" />
+    <ClInclude Include="Game\Manager\GhostEffectManager.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\Assets\HLSL\Light.hlsli" />

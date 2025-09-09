@@ -133,7 +133,7 @@ void Bloom::ApplySaveData() {
 
 void Bloom::CopyData() {
 	setting_->bloomIntensity = param_.bloomIntensity;
-	brightnessBuffer_->ApplySaveData();
-	blurWidthBuffer_->ApplySaveData();
-	blurHeightBuffer_->ApplySaveData();
+	brightnessBuffer_->CopyData();
+	blurWidthBuffer_->CopyData();
+	blurHeightBuffer_->CopyData();
 }
