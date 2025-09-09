@@ -20,6 +20,7 @@ void StageContents::Init(uint32_t maxStageNum) {
 	for (uint32_t i = 0; i < maxStageNum_; ++i) {
 		canvas2ds_[i] = std::make_unique<Canvas2d>();
 		canvas2ds_[i]->Init();
+		canvas2ds_[i]->AddSprite("Game_bg.png", "backGround", "Sprite_Normal.json", -10, true);
 
 		stageRegistries_[i] = std::make_unique<StageRegistry>();
 		stageRegistries_[i]->Init(canvas2ds_[i].get());
@@ -64,6 +65,7 @@ void StageContents::Update() {
 		
 		Render::SetRenderTarget(postRenderTypes, ctx->GetDxCommon()->GetDepthHandle());
 		canvas2ds_[index]->Draw();
+		canvas2ds_[index]->PreDraw("Sprite_Normal.json");
 		ctx->GetRenderTarget()->TransitionResource(ctx->GetCommandList(), type, D3D12_RESOURCE_STATE_RENDER_TARGET, D3D12_RESOURCE_STATE_NON_PIXEL_SHADER_RESOURCE);
 	}
 }

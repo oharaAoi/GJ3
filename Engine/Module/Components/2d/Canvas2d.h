@@ -23,7 +23,7 @@ public:
 
 	void Update();
 
-	void PreDraw() const;
+	void PreDraw(const std::string& psoName = "Sprite_Normal_16.json") const;
 
 	void Draw() const;
 

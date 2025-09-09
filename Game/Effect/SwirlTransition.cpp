@@ -40,7 +40,10 @@ void SwirlTransition::Update() {
 
 		if (time_ >= startData_.transitionTime) {
 			isFinish_ = true;
-			swirl_->SetIsEnable(false);
+
+			if(isOpen_){
+				swirl_->SetIsEnable(true); swirl_->SetIsEnable(false);
+			}
 		}
 	}
 }
