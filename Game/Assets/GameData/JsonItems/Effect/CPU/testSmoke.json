@@ -1,5 +1,5 @@
 {
-    "new Particle": {
+    "testSmoke": {
         "angle": 27.0,
         "angleMax": 360.0,
         "angleMin": 0.0,

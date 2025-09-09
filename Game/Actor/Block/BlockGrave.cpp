@@ -1,4 +1,5 @@
 #include "BlockGrave.h"
+#include "Engine/System/Manager/ParticleManager.h"
 
 void BlockGrave::Init(Canvas2d* _canvas2d, const Vector2& _pos, const Vector2& _tileSize)
 {
@@ -17,6 +18,8 @@ void BlockGrave::Init(Canvas2d* _canvas2d, const Vector2& _pos, const Vector2& _
 	offsetPos.y -= startOffsetPosY_;
 	startFallPosY_ = offsetPos.y;
 	transform_->SetTranslate(offsetPos);
+
+	smoke_ = ParticleManager::GetInstance()->CrateParticle("testSmoke");
 }
 
 void BlockGrave::Update()
@@ -39,5 +42,9 @@ void BlockGrave::FallAppearance() {
 
 		sprite_->SetAlpha(alpha);
 		sprite_->SetTranslateY(y);
+
+		if (timer_ >= fallTime_) {
+			smoke_->Reset();
+		}
 	}
 }

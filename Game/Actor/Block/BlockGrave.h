@@ -1,5 +1,6 @@
 #pragma once
 #include "Game/Actor/Block/IBlock.h"
+#include "Engine/Module/Components/Effect/BaseParticles.h"
 
 class BlockGrave : 
 	public IBlock {
@@ -29,6 +30,8 @@ private:
 
 	float startFallPosY_;	// 落下の初期座標
 	float targetFallPosY_;	// 落下座標
+
+	BaseParticles* smoke_;
 
 };
 
