@@ -36,8 +36,8 @@ public:
 		Vector4 edgeColor = { 1,1,1,1 };
 		float threshold = 0.0f;
 
-		std::string baseTexture;
-		std::string dissolveTexture;
+		std::string baseTexture = "white.png";
+		std::string dissolveTexture = "white.png";
 
 		SaveItems() { SetName("GhostEffect"); }
 
@@ -75,7 +75,7 @@ public:
 
 	void Debug_Gui() override;
 
-	void ApplySaveData();
+	void ApplySaveData(const std::string& effectName);
 
 	void CopyData();
 

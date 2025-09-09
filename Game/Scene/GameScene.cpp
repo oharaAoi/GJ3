@@ -20,6 +20,7 @@ GameScene::~GameScene(){ Finalize(); }
 void GameScene::Finalize(){
 	sceneRenderer_->Finalize();
 	ghostEffectManager_->Finalize();
+	limitBlockEffectManager_->Finalize();
 	ParticleManager::GetInstance()->Finalize();
 	GpuParticleManager::GetInstance()->Finalize();
 }
@@ -39,6 +40,12 @@ void GameScene::Init(){
 	sceneRenderer_ = SceneRenderer::GetInstance();
 	sceneRenderer_->Init();
 	EditorWindows::GetInstance()->SetSceneRenderer(sceneRenderer_);
+
+	ghostEffectManager_ = GhostSmokeManager::GetInstance();
+	ghostEffectManager_->Init();
+
+	limitBlockEffectManager_ = LimitBlockEffectManager::GetInstance();
+	limitBlockEffectManager_->Init();
 
 	// -------------------------------------------------
 	// ↓ cameraの初期化
@@ -114,9 +121,6 @@ void GameScene::Init(){
 	dust_ = ParticleManager::GetInstance()->CrateParticle("dust");
 	dust_->Reset();
 
-	ghostEffectManager_ = GhostSmokeManager::GetInstance();
-	ghostEffectManager_->Init();
-
 	swirlTransition_ = std::make_unique<SwirlTransition>();
 	swirlTransition_->Init();
 	swirlTransition_->Open();
@@ -171,6 +175,7 @@ void GameScene::Update(){
 		player_->Update();
 	}
 	ghostEffectManager_->Update();
+	limitBlockEffectManager_->Update();
 
 	swirlTransition_->Update();
 
@@ -288,6 +293,7 @@ void GameScene::Draw() const{
 	sceneRenderer_->Draw();
 
 	ghostEffectManager_->Draw();
+	limitBlockEffectManager_->Draw();
 }
 
 void GameScene::ChengeScene(){

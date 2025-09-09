@@ -1,12 +1,13 @@
 #pragma once
 #include "Game/Actor/Block/IBlock.h"
+#include "Game/Effect/LimitBlockEffect.h"
 
 class BlockLimit :
 	public IBlock {
 public:
 
 	BlockLimit() = default;
-	~BlockLimit() override = default;
+	~BlockLimit() override;
 
 	void Init(Canvas2d* _canvas2d, const Vector2& _pos, const Vector2& _tileSize) override;
 	void Update() override;
@@ -15,5 +16,7 @@ public:
 private:
 
 	Vector2 ConvertIndexToPosition(const Vector2Int& _index);
+
+	LimitBlockEffect* effect_;
 };
 

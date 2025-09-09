@@ -1,4 +1,11 @@
 #include "BlockLimit.h"
+#include "Game/Manager/LimitBlockEffectManager.h"
+
+BlockLimit::~BlockLimit() {
+	if (effect_) {
+		effect_->SetIsDestroy(true);
+	}
+}
 
 void BlockLimit::Init(Canvas2d* _canvas2d, const Vector2& _pos, const Vector2& _tileSize)
 {
@@ -8,6 +15,9 @@ void BlockLimit::Init(Canvas2d* _canvas2d, const Vector2& _pos, const Vector2& _
 	transform_->SetTranslate(_pos);
 	tileSize_ = _tileSize;
 	type_ = BlockType::LimitBlock;
+
+	effect_ = LimitBlockEffectManager::GetInstance()->Create(transform_->GetTranslate(), tileSize_ * 3.f);
+	effect_->ApplySaveData("LimitBlock");
 }
 
 void BlockLimit::Update()

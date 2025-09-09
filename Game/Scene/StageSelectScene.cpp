@@ -3,6 +3,7 @@
 #include "Engine/Lib/Json/JsonItems.h"
 #include "Engine/Module/PostEffect/PostProcess.h"
 #include "Game/Manager/GhostSmokeManager.h"
+#include "Game/Manager/LimitBlockEffectManager.h"
 
 StageSelectScene::StageSelectScene(){}
 StageSelectScene::~StageSelectScene(){ Finalize(); }
@@ -16,6 +17,7 @@ void StageSelectScene::Finalize(){
 
 	sceneRenderer_->Finalize();
 	GhostSmokeManager::GetInstance()->Finalize();
+	LimitBlockEffectManager::GetInstance()->Finalize();
 	ParticleManager::GetInstance()->Finalize();
 	GpuParticleManager::GetInstance()->Finalize();
 }

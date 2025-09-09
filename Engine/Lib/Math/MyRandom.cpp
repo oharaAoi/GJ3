@@ -21,3 +21,12 @@ Vector3 RandomVector3(const Vector3& min, const Vector3& max) {
 
     return result;
 }
+
+Vector2 RandomVector2(const Vector2& min, const Vector2& max) {
+    Vector2 result;
+
+    result.x = RandomFloat(min.x, max.x);
+    result.y = RandomFloat(min.y, max.y);
+
+    return result;
+}

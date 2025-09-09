@@ -34,6 +34,7 @@ void TokenGhost::Debug_Gui()
 
 void TokenGhost::CreateGhostEffect() {
 	effect_ = GhostSmokeManager::GetInstance()->Create(transform_->GetTranslate(), tileSize_ * 3.f);
+	effect_->ApplySaveData("GhostEffect");
 }
 
 Vector2 TokenGhost::ConvertIndexToPosition(const Vector2Int& _index) {

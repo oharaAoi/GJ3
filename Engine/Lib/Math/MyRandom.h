@@ -10,3 +10,5 @@ float RandomFloat(const float& min, const float& max);
 int RandomInt(int min, int max);
 
 Vector3 RandomVector3(const Vector3& min, const Vector3& max);
+
+Vector2 RandomVector2(const Vector2& min, const Vector2& max);

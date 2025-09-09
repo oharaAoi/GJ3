@@ -40,6 +40,12 @@ void GhostSmoke::Draw() const {
 	}
 }
 
+void GhostSmoke::ApplySaveData(const std::string& effectName) {
+	for (uint32_t oi = 0; oi < 2; ++oi) {
+		ghostEffect_[oi]->ApplySaveData(effectName);
+	}
+}
+
 void GhostSmoke::Debug_Gui() {
 	for (uint32_t oi = 0; oi < 2; ++oi) {
 		std::string name = "effect_" + std::to_string(oi);
