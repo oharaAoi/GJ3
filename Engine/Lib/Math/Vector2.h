@@ -121,6 +121,14 @@ public:
 
 	/*アフィン*/
 	Matrix3x3 MakeAffine(const Vector2& scale,float theta,const Vector2& translate);
+
+	// ぷにぷにする
+	static Vector2 MochiPuniScaleNormalized(
+		float time,
+		float amplitude = 0.2f,
+		float damping = 0.15f
+	);
+
 };
 
 /// <summary>

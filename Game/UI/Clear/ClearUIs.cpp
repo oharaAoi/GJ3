@@ -29,13 +29,13 @@ void ClearUIs::Init()
 	buttonUIs_[0]->GetSprite()->ReSetTextureSize(buttonUIs_[1]->GetSprite()->GetTextureSize());
 
 	// Clear_text
-	text_ = Engine::GetCanvas2d()->AddSprite("Clear_text.png", GetName(), "Sprite_Normal.json", 1);
+	text_ = Engine::GetCanvas2d()->AddSprite("Clear_text.png", GetName(), "Sprite_Normal.json", 1, true);
 	// Clear_pot
-	pot_ = Engine::GetCanvas2d()->AddSprite("Clear_pot.png", GetName(), "Sprite_Normal.json", 1);
+	pot_ = Engine::GetCanvas2d()->AddSprite("Clear_pot.png", GetName(), "Sprite_Normal.json", 1, true);
 	// Clear_curtain
-	curtain_ = Engine::GetCanvas2d()->AddSprite("Clear_curtain.png", GetName(), "Sprite_Normal.json", 1);
+	curtain_ = Engine::GetCanvas2d()->AddSprite("Clear_curtain.png", GetName(), "Sprite_Normal.json", 1, true);
 	// Clear_bg
-	backGround_ = Engine::GetCanvas2d()->AddSprite("Clear_bg.png", GetName(), "Sprite_Normal.json");
+	backGround_ = Engine::GetCanvas2d()->AddSprite("Clear_bg.png", GetName(), "Sprite_Normal.json", 0, true);
 
 	text_->SetTranslate(Vector2{ 640.0f,360.0f });
 	pot_->SetTranslate(Vector2{ 640.0f,360.0f });
