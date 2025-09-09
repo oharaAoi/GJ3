@@ -21,6 +21,9 @@
 #include "Game/UI/StageResetUI.h"
 #include "Game/UI/Tutorial/TutorialDirector.h"
 #include "Game/Effect/SwirlTransition.h"
+// ui
+#include "Game/UI/GameUIs.h"
+
 // effect
 #include "Game/Effect/TitleFlashEffect.h"
 
@@ -78,6 +81,9 @@ private:
 	std::unique_ptr<StageResetUI> stageResetUI_;
 
 	std::unique_ptr<TutorialDirector> tutorialDirector_;
+
+	// ------------------- ui ------------------- //
+	std::unique_ptr<GameUIs> gameUIs_;
 
 	// ------------------- behavior ------------------- //
 

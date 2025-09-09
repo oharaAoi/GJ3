@@ -11,55 +11,63 @@ void ObjectCommandInvoker::Finalize(){
 	ClearHistory();
 }
 
-void ObjectCommandInvoker::Update(){
-	///-------------------------------------------------------------------------------------------------
-	// Commandの実行
-	///-------------------------------------------------------------------------------------------------
-	if(hasCommandRequest()){
-		ExecuteCommandRequest();
-	} else{
-		// Undo Redo
-		Input* input = Input::GetInstance();
+UndoRedoState ObjectCommandInvoker::InputHandle(bool& _padIsInput,bool& _keyIsInput){
+	// Undo Redo
+	Input* input = Input::GetInstance();
 
-		UndoRedoState currentAutoUndoRedoState = UndoRedoState::MANUAL;
+	UndoRedoState currentAutoUndoRedoState = UndoRedoState::MANUAL;
 
-		for(auto undoKey : kUndoKey){
-			if(input->IsTriggerKey(undoKey)){
-				currentAutoUndoRedoState = UndoRedoState::UNDO;
-				break;
-			}
-		}
+	if(input->IsControllerConnected()){
 		for(auto undoButton : kUndoButton){
 			if(input->IsTriggerButton(undoButton)){
 				currentAutoUndoRedoState = UndoRedoState::UNDO;
+
+				_padIsInput = true;
 				break;
 			}
 		}
-		if(currentAutoUndoRedoState == UndoRedoState::MANUAL){
-			for(auto redoKey : kRedoKey){
-				if(input->IsTriggerKey(redoKey)){
-					currentAutoUndoRedoState = UndoRedoState::REDO;
-					break;
-				}
-			}
-			for(auto redoButton : kRedoButton){
-				if(input->IsTriggerButton(redoButton)){
-					currentAutoUndoRedoState = UndoRedoState::REDO;
-					break;
-				}
-			}
-		}
+		for(auto redoButton : kRedoButton){
+			if(input->IsTriggerButton(redoButton)){
+				currentAutoUndoRedoState = UndoRedoState::REDO;
 
-
-		if(currentAutoUndoRedoState == UndoRedoState::MANUAL || currentAutoUndoRedoState != preAutoUndoRedoState_){
-			isAutoUndoRedo_ = false;
-		}
-		leftUndoRedoDelay_ -= GameTimer::DeltaTime();
-		if(leftUndoRedoDelay_ <= 0.f){
-			leftUndoRedoDelay_ = isAutoUndoRedo_ ? autoUndoRedoStepInterval_ : autoUndoRedoStartDelay_;
-			isAutoUndoRedo_ = true;
+				_padIsInput = true;
+				break;
+			}
 		}
 	}
+	if(currentAutoUndoRedoState == UndoRedoState::MANUAL){
+		for(auto redoKey : kRedoKey){
+			if(input->IsTriggerKey(redoKey)){
+				currentAutoUndoRedoState = UndoRedoState::REDO;
+
+				_keyIsInput = true;
+				break;
+			}
+		}
+		for(auto undoKey : kUndoKey){
+			if(input->IsTriggerKey(undoKey)){
+				currentAutoUndoRedoState = UndoRedoState::UNDO;
+
+				_keyIsInput = true;
+				break;
+			}
+		}
+
+	}
+
+	if(currentAutoUndoRedoState == UndoRedoState::MANUAL || currentAutoUndoRedoState != preAutoUndoRedoState_){
+		isAutoUndoRedo_ = false;
+	}
+
+	leftUndoRedoDelay_ -= GameTimer::DeltaTime();
+	if(leftUndoRedoDelay_ <= 0.f && currentAutoUndoRedoState != UndoRedoState::MANUAL){
+		leftUndoRedoDelay_ = isAutoUndoRedo_ ? autoUndoRedoStepInterval_ : autoUndoRedoStartDelay_;
+		isAutoUndoRedo_ = true;
+
+		return currentAutoUndoRedoState;
+	}
+
+	return UndoRedoState::MANUAL;
 }
 
 void ObjectCommandInvoker::ExecuteCommandRequest(){

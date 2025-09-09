@@ -56,25 +56,32 @@ Vector2Int PlayerInputHandler::DecideMoveDirection(){
 
 	MoveDirection currentMoveDirection = MoveDirection::NONE;
 
+	isKeyInput_ = false;
+	isPadInput_ = false;
+
 	// キー入力をチェック
 	for(auto moveLeftKey : kMoveLeftKey){
 		if(input->IsPressKey(moveLeftKey)){
 			currentMoveDirection = MoveDirection::LEFT;
+			isKeyInput_ = true;
 		}
 	}
 	for(auto moveRightKey : kMoveRightKey){
 		if(input->IsPressKey(moveRightKey)){
 			currentMoveDirection = MoveDirection::RIGHT;
+			isKeyInput_ = true;
 		}
 	}
 	for(auto moveUpKey : kMoveUpKey){
 		if(input->IsPressKey(moveUpKey)){
 			currentMoveDirection = MoveDirection::UP;
+			isKeyInput_ = true;
 		}
 	}
 	for(auto moveDownKey : kMoveDownKey){
 		if(input->IsPressKey(moveDownKey)){
 			currentMoveDirection = MoveDirection::DOWN;
+			isKeyInput_ = true;
 		}
 	}
 
@@ -83,32 +90,40 @@ Vector2Int PlayerInputHandler::DecideMoveDirection(){
 		// 十字キー
 		if(input->IsPressButton(kMoveLeftButton)){
 			currentMoveDirection = MoveDirection::LEFT;
+			isKeyInput_ = true;
 		}
 		if(input->IsPressButton(kMoveRightButton)){
 			currentMoveDirection = MoveDirection::RIGHT;
+			isKeyInput_ = true;
 		}
 		if(input->IsPressButton(kMoveUpButton)){
 			currentMoveDirection = MoveDirection::UP;
+			isKeyInput_ = true;
 		}
 		if(input->IsPressButton(kMoveDownButton)){
 			currentMoveDirection = MoveDirection::DOWN;
+			isKeyInput_ = true;
 		}
 
 		// 左スティック
-		Vector2 leftStick = input->GetLeftJoyStick(0.5f);
+		Vector2 leftStick = input->GetLeftJoyStick(0.4f);
 		if(std::abs(leftStick.x) > std::abs(leftStick.y)){
 			// 横移動
 			if(leftStick.x < 0.f){
 				currentMoveDirection = MoveDirection::LEFT;
+				isKeyInput_ = true;
 			} else if(leftStick.x > 0.f){
 				currentMoveDirection = MoveDirection::RIGHT;
+				isKeyInput_ = true;
 			}
 		} else if(std::abs(leftStick.x) < std::abs(leftStick.y)){
 			// 縦移動
 			if(leftStick.y < 0.f){
 				currentMoveDirection = MoveDirection::DOWN;
+				isKeyInput_ = true;
 			} else if(leftStick.y > 0.f){
 				currentMoveDirection = MoveDirection::UP;
+				isKeyInput_ = true;
 			}
 		}
 	}
