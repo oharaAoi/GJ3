@@ -53,6 +53,8 @@ void StageContents::Update() {
 		RenderTargetType type = pStageCollection_->GetRenderTarget(i);
 		postRenderTypes.push_back(type);
 
+		pStageCollection_->SetStageIndexForSegment(i,index);
+
 		// RTVに変更
 		ctx->GetRenderTarget()->TransitionResource(ctx->GetCommandList(), type, D3D12_RESOURCE_STATE_NON_PIXEL_SHADER_RESOURCE, D3D12_RESOURCE_STATE_RENDER_TARGET);
 		stageRegistries_[index]->Update();

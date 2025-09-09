@@ -7,6 +7,12 @@ StageSelectScene::StageSelectScene(){}
 StageSelectScene::~StageSelectScene(){ Finalize(); }
 
 void StageSelectScene::Finalize(){
+	PostProcess* postProcess = Engine::GetPostProcess();
+	postProcess->SetIsActive(false);
+	postProcess->GetBloom()->SetIsEnable(false);
+	postProcess->GetVignette()->SetIsEnable(false);
+	postProcess->GetToonMap()->SetIsEnable(false);
+
 	sceneRenderer_->Finalize();
 	ParticleManager::GetInstance()->Finalize();
 	GpuParticleManager::GetInstance()->Finalize();
@@ -75,6 +81,17 @@ void StageSelectScene::Init(){
 	// -------------------------------------------------
 	// ↓ 演出の初期化
 	// ------------------------------------------------
+	PostProcess* postProcess = Engine::GetPostProcess();
+	postProcess->SetIsActive(true);
+	postProcess->GetBloom()->SetIsEnable(true);
+	auto vignette = postProcess->GetVignette();
+	vignette->SetIsEnable(true);
+	vignette->SetColor({0.0235f,0.0235f,0.031f,1.f});
+	vignette->SetIsEnable(true);
+	vignette->SetScale(75.100f);
+	vignette->SetPower(0.690f);
+
+	postProcess->GetToonMap()->SetIsEnable(true);
 
 	particle_ = ParticleManager::GetInstance()->CrateParticle("dust");
 	particle_->Reset();
@@ -107,7 +124,7 @@ void StageSelectScene::Update(){
 	}
 
 	stageContents_->Update();
-	stageCollection->Update(scrollT_, scrollDirection_);
+	stageCollection->Update(scrollT_,currentStageIndexT_);
 
 
 	// -------------------------------------------------
@@ -181,7 +198,7 @@ void SelectingStageBehavior::Update(){
 
 	stageSelector_->Update();
 	host_->SetScrollT(stageSelector_->GetScrollT());
-	host_->SetScrollDirection(stageSelector_->GetScrollDirection());
+	host_->SetCurrentStageIndexT((float)stageSelector_->GetCurrentStageIndex());
 
 	if(stageSelector_->IsDecidedStage()){
 		// ステージが決定したら次のシーンへ

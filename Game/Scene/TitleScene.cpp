@@ -14,6 +14,12 @@ TitleScene::~TitleScene(){
 }
 
 void TitleScene::Finalize(){
+	PostProcess* postProcess = Engine::GetPostProcess();
+	postProcess->SetIsActive(false);
+	postProcess->GetBloom()->SetIsEnable(false);
+	postProcess->GetVignette()->SetIsEnable(false);
+	postProcess->GetToonMap()->SetIsEnable(false);
+
 	sceneRenderer_->Finalize();
 	ParticleManager::GetInstance()->Finalize();
 	GpuParticleManager::GetInstance()->Finalize();

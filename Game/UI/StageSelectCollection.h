@@ -23,14 +23,19 @@ public:
 	/// 
 	/// </summary>
 	/// <param name="_leftTime">: 残り時間</param>
-	/// <param name="scrollDirection">: 方向</param>
-	void Update(float _scrolT, int32_t _scrollDirection);
+	/// <param name="_currentIndexT">: 現在のindex(float)</param>
+	void Update(float _scrolT,float _currentIndexT);
 
 	void Debug_Gui() override;
 
 	RenderTargetType GetRenderTarget(uint32_t index);
 
 	void SortSegments();
+
+	void SetStageIndexForSegment(int32_t segmentIndex, int32_t stageIndex) {
+		if (segmentIndex < 0 || segmentIndex >= segments_.size()) return;
+		segments_[segmentIndex]->SetStageIndex(stageIndex);
+	}
 
 private:
 
@@ -43,7 +48,6 @@ private:
 
 	float scrollDuration_ = 0.6f;
 
-	float scrollPos_;
 	float slotSpacing_ = 1280.0f;
 
 

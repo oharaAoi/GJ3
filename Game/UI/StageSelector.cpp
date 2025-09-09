@@ -17,8 +17,8 @@ void StageSelector::Init(){
 	/// ==============================
 	// arrows
 	/// ==============================
-	arrows_[0] = Engine::GetCanvas2d()->AddSprite("Select_arrow_left.png","Arrow_Left","Sprite_Normal.json",5, true);
-	arrows_[1] = Engine::GetCanvas2d()->AddSprite("Select_arrow_right.png","Arrow_Right","Sprite_Normal.json",5, true);
+	arrows_[0] = Engine::GetCanvas2d()->AddSprite("Select_arrow_left.png","Arrow_Left","Sprite_Normal.json",5,true);
+	arrows_[1] = Engine::GetCanvas2d()->AddSprite("Select_arrow_right.png","Arrow_Right","Sprite_Normal.json",5,true);
 	arrows_[0]->SetTranslate({84.f,268.7f});
 	arrows_[1]->SetTranslate({1196.f,268.7f});
 
@@ -33,28 +33,26 @@ void StageSelector::Init(){
 	AddChild(arrows_[0]);
 	AddChild(arrows_[1]);
 
-	
 	/// ==============================
 	// others
 	/// ==============================
 	decidedStage_ = false;
 
-	targetStageIndex_ = StageSelector::currentStageIndex_;
-	scrollStartIndex_ = StageSelector::currentStageIndex_;
+	currentIndexF_ = static_cast<float>(StageSelector::currentStageIndex_);
+	scrollT_ = currentIndexF_;
 
 	currentStageIndex_ = 0;
 
 	EditorWindows::AddObjectWindow(this,GetName());
 }
 void StageSelector::Debug_Gui(){
-	ImGui::Text("currentIndex : %d", currentStageIndex_);
+	ImGui::Text("currentIndex : %d",currentStageIndex_);
 	ImGui::DragFloat("firstPressInterval",&firstPressInterval_,0.01f,0.0f,1.0f);
 	ImGui::DragFloat("pressInterval",&pressInterval_,0.01f,0.0f,1.0f);
 
 	ImGui::Spacing();
 
-	ImGui::DragFloat("scrollDuration",&scrollDuration_,0.01f,0.0f,5.0f);
-	ImGui::SliderFloat("ScrollTime",&scrollTime_,0.0f,scrollDuration_);
+	ImGui::DragFloat("ScrollSpeed",&scrollSpeed_,0.01f,0.0f);
 
 	ImGui::Spacing();
 
@@ -68,9 +66,9 @@ void StageSelector::Debug_Gui(){
 	if(ImGui::TreeNode("LeftArrow_AngleEvent")){
 		ImGui::DragFloat("Duration##LeftArrow_AngleEvent",&leftArrowRotateParam_->duration,0.01f);
 		ImGui::SliderFloat("ElapsedTime##LeftArrow_AngleEvent",&leftArrowRotateParam_->elapsedTime,0.0f,leftArrowRotateParam_->duration);
-#ifdef _DEBUG
-		ImGui::EditKeyFrame("LeftArrow_AngleEvent", leftArrowRotateParam_->angleEvent_, leftArrowRotateParam_->duration, 0.0f);
-#endif // _DEBUG
+	#ifdef _DEBUG
+		ImGui::EditKeyFrame("LeftArrow_AngleEvent",leftArrowRotateParam_->angleEvent_,leftArrowRotateParam_->duration,0.0f);
+	#endif // _DEBUG
 
 		ImGui::Spacing();
 
@@ -83,9 +81,9 @@ void StageSelector::Debug_Gui(){
 	if(ImGui::TreeNode("RightArrow_AngleEvent")){
 		ImGui::DragFloat("Duration##RightArrow_AngleEvent",&rightArrowRotateParam_->duration,0.01f);
 		ImGui::SliderFloat("ElapsedTime##RightArrow_AngleEvent",&rightArrowRotateParam_->elapsedTime,0.0f,rightArrowRotateParam_->duration);
-#ifdef _DEBUG
+	#ifdef _DEBUG
 		ImGui::EditKeyFrame("RightArrow_AngleEvent",rightArrowRotateParam_->angleEvent_,rightArrowRotateParam_->duration,0.0f);
-#endif // _DEBUG
+	#endif // _DEBUG
 		ImGui::Spacing();
 
 		ImGui::DragFloat2("Anchor##RightArrow_AngleEvent",&rightArrowRotateParam_->anchor.x,0.1f);
@@ -105,38 +103,57 @@ void StageSelector::Update(){
 	rightArrowRotateParam_->Update(arrows_[1]);
 }
 
+// StageSelector.cpp
 void StageSelector::InputHandle(){
 	Input* input = Input::GetInstance();
+
 
 	if(decidedStage_){
 		return;
 	}
 
+	for(auto decideButton : kStageDecideButtons_){
+		if(input->IsTriggerButton(decideButton)){
+			decidedStage_ = true;
+			AudioPlayer::SinglShotPlay("button.mp3",0.5f);
+			return;
+		}
+	}
+
+	for(auto decideKey : kStageDecideKeys_){
+		if(input->IsTriggerKey(decideKey)){
+			decidedStage_ = true;
+			AudioPlayer::SinglShotPlay("button.mp3",0.5f);
+			return;
+		}
+	}
+
 	bool isPressing = false;
 
+	inputScrollDirection_ = 0;
 	if(input->IsControllerConnected()){
 		Vector2 leftStick = input->GetLeftJoyStick(0.5f);
 		if(leftStick.x < -0.1f){
 			isPressing  = true;
-			scrollDirection_ = +1;
+			inputScrollDirection_ = +1;
 		} else if(leftStick.x > +0.1f){
 			isPressing  = true;
-			scrollDirection_ = -1;
+			inputScrollDirection_ = -1;
 		}
-		 
+
 		if(input->IsPressButton(kStageIndexSubButtons_)){
 			isPressing  = true;
-			scrollDirection_ = -1;
+			inputScrollDirection_ = -1;
 		} else if(input->IsPressButton(kStageIndexAddButtons_)){
 			isPressing  = true;
-			scrollDirection_ = +1;
+			inputScrollDirection_ = +1;
 		}
 	}
 
 	for(auto addIndexKey : kStageIndexAddKeys_){
 		if(input->IsPressKey(addIndexKey)){
 			isPressing  = true;
-			scrollDirection_ = +1;
+			inputScrollDirection_ = +1;
 			break;
 		}
 	}
@@ -145,103 +162,84 @@ void StageSelector::InputHandle(){
 		for(auto subIndexKey : kStageIndexSubKeys_){
 			if(input->IsPressKey(subIndexKey)){
 				isPressing  = true;
-				scrollDirection_ = -1;
+				inputScrollDirection_ = -1;
 				break;
 			}
 		}
 	}
 
-	if(isPressing){
-		leftPressTime_ -= GameTimer::DeltaTime();
-		if(leftPressTime_){
-			targetStageIndex_ = (currentStageIndex_ + scrollDirection_ + totalStageNum_) % totalStageNum_;
-			if(!isScrolling_){
-				AudioPlayer::SinglShotPlay("button.mp3",0.5f);
-				scrollTime_ = 0.0f;
-				scrolT_ = 0.0f;
-				scrollStartIndex_ = currentStageIndex_;
+	leftPressTime_ -= GameTimer::DeltaTime();
+	leftPressTime_ = (std::max)(0.f,leftPressTime_);
 
-				leftPressTime_ = firstPressInterval_;
-			} else{
-				leftPressTime_ = pressInterval_;
-			}
-			isScrolling_ = true;
-		}
-	} else{
-		leftPressTime_ = 0.0f;
+	if(!isPressing){
+		return;
 	}
 
-	for(auto decideButton : kStageDecideButtons_){
-		if(input->IsTriggerButton(decideButton)){
-			decidedStage_ = true;
-			break;
-		}
+	if(leftPressTime_ > 0.f){
+		return;
 	}
 
-	for(auto decideKey : kStageDecideKeys_){
-		if(input->IsTriggerKey(decideKey)){
-			decidedStage_ = true;
-			break;
-		}
+	AudioPlayer::SinglShotPlay("button.mp3",0.5f);
+
+	// インデックスを更新
+	currentIndexF_ += static_cast<float>(inputScrollDirection_);
+
+	leftPressTime_ = isScrolling_ ? pressInterval_ : firstPressInterval_;
+
+	// ループさせる（floatなのでfmodを使う）
+	if(currentIndexF_ < 0){
+		currentIndexF_ += totalStageNum_;
+	}
+	if(currentIndexF_ >= totalStageNum_){
+		currentIndexF_ -= totalStageNum_;
 	}
 }
 
 void StageSelector::Scroll(){
-	if(!isScrolling_){
-		currentOffsetX_ = 0.0f;
-		scrollTime_ = 0;
-		scrolT_ = 0;
-		scrollDirection_ = 0;
-		return;
+	// 補間（線形速度で移動）
+	float delta = currentIndexF_ - scrollT_;
+
+	float totalStageF = static_cast<float>(totalStageNum_);
+	float halfStageF = totalStageF * 0.5f;
+	// 最短経路で進むように補正
+	if(delta > halfStageF){
+		delta -= totalStageNum_;
+	}
+	if(delta < -halfStageF){
+		delta += totalStageNum_;
 	}
 
-	scrollTime_ += GameTimer::DeltaTime();
-	scrolT_ = (std::min)(scrollTime_ / scrollDuration_,1.0f);
+	scrollDirection_ = (delta > 0.f) ? 1 : ((delta < 0.f) ? -1 : 0);
 
-	// アニメーション進行度から現在インデックスを補間
-	float indexF = static_cast<float>(targetStageIndex_) + scrollDirection_ * scrolT_;
-	if(indexF < 0){
-		indexF += totalStageNum_;
+	scrollT_ += delta * GameTimer::DeltaTime() * scrollSpeed_;
+
+	// ループ処理
+	if(scrollT_ < 0){
+		scrollT_ += totalStageNum_;
 	}
-	if(indexF > totalStageNum_){
-		indexF -= totalStageNum_;
+	if(scrollT_ >= totalStageNum_){
+		scrollT_ -= totalStageNum_;
 	}
 
-	//currentStageIndex_ = static_cast<int>(std::floor(indexF)); // 四捨五入で更新
+	// 整数部分を currentStageIndex_ として使う
+	currentStageIndex_ = static_cast<int>(std::round(scrollT_)) % totalStageNum_;
+	pStageContents_->ResetCurrentDrawIndex(currentStageIndex_);
 
-	// 描画用オフセット（-1.0 ~ +1.0）
-	currentOffsetX_ = scrollDirection_ * (scrolT_ * theSpaceBetweenButtons_);
-
-	if(scrolT_ >= 1.0f){
-		if (scrollDirection_ < 0) {
-			currentStageIndex_++;
-		} else {
-			currentStageIndex_--;
-		}
-
-		if (currentStageIndex_ < 0) {
-			currentStageIndex_ = totalStageNum_ - 1;
-		}
-
-		if (currentStageIndex_ >= totalStageNum_) {
-			currentStageIndex_ = 0;
-		}
-
-		if (pStageContents_) {
-			pStageContents_->ResetCurrentDrawIndex(currentStageIndex_);
-		}
-
-		currentOffsetX_ = 0.0f;
-		isScrolling_ = false;
-	}
+	// 描画用オフセット
+	float frac = scrollT_ - std::floor(scrollT_);
+	currentOffsetX_ = -frac * theSpaceBetweenButtons_;
 }
 
 void StageSelector::ConvertIndexToScreen(){
-	/// テクスチャの切り替え用
-	/*int leftIndex   = (currentStageIndex_ - 1 + totalStageNum_) % totalStageNum_;
-	int centerIndex = currentStageIndex_;
-	int rightIndex  = (currentStageIndex_ + 1) % totalStageNum_;*/
+	// centerPos_ を基準に currentOffsetX_ でずらして配置
+	// 左
+	// stagePreviews_[0]->SetPosition(centerPos_ + Vector2(-theSpaceBetweenButtons_ + currentOffsetX_, offsetY_));
+	// 中央
+	// stagePreviews_[1]->SetPosition(centerPos_ + Vector2(0 + currentOffsetX_, offsetY_));
+	// 右
+	// stagePreviews_[2]->SetPosition(centerPos_ + Vector2(+theSpaceBetweenButtons_ + currentOffsetX_, offsetY_));
 }
+
 
 #pragma region Pendulum
 
