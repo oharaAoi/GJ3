@@ -25,6 +25,9 @@ public:
 	void SetCenterPosX(float _posX);
 	const Vector2& GetCenterPos() const { return centerPos_; }
 
+	int32_t GetStageIndex() const{ return stageIndex_; }
+	void SetStageIndex(int32_t index){ stageIndex_ = index; }
+
 	RenderTargetType GetRenderTargetType() const { return rtType_; }
 
 private:
@@ -36,6 +39,8 @@ private:
 	Sprite* stageContent_;
 
 	Vector2 centerPos_ = {640.f, 360.f};
+
+	int32_t stageIndex_;
 
 	RenderTargetType rtType_;
 

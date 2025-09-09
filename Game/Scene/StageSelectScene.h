@@ -73,12 +73,12 @@ private:
 	// ------------------- other ------------------- //
 
 	float scrollT_;
-	int32_t scrollDirection_;
+	float currentStageIndexT_;
 
 public:
 
 	void SetScrollT(float _value) { scrollT_ = _value; }
-	void SetScrollDirection(int32_t _direction) { scrollDirection_ = _direction; }
+	void SetCurrentStageIndexT(float _currentStageIndexT) { currentStageIndexT_ = _currentStageIndexT; }
 
 };
 
