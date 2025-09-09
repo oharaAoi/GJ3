@@ -170,6 +170,7 @@ void GameScene::Update(){
 	if(!menuSelector_->GetOpenMenu() && isTutorial){
 		player_->Update();
 	}
+	ghostEffectManager_->Update();
 
 	swirlTransition_->Update();
 
@@ -266,8 +267,6 @@ void GameScene::Update(){
 	// ↓ sceneの更新
 	// -------------------------------------------------
 	sceneRenderer_->Update();
-
-	ghostEffectManager_->Update();
 
 	// -------------------------------------------------
 	// ↓ 最後に行いたい更新

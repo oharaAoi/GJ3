@@ -195,6 +195,11 @@ void ParticleSystemEditor::ParticlesUpdate() {
 				}
 			}
 
+			// 閾値を更新
+			if (pr.isLerpDiscardValue) {
+				pr.discardValue = std::lerp(pr.startDiscard, pr.endDiscard, t);
+			}
+
 			Matrix4x4 scaleMatrix = pr.scale.MakeScaleMat();
 			Matrix4x4 rotateMatrix;
 			if (pr.isBillBord) {
@@ -214,6 +219,7 @@ void ParticleSystemEditor::ParticlesUpdate() {
 			particles.second.forGpuData_[index].worldMat = localWorld;
 			particles.second.forGpuData_[index].color = pr.color;
 			particles.second.forGpuData_[index].draw2d = pr.isDraw2d;
+			particles.second.forGpuData_[index].discardValue = pr.discardValue;
 
 			particles.second.isAddBlend = pr.isAddBlend;
 

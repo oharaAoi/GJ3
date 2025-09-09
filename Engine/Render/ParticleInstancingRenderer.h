@@ -16,9 +16,10 @@ class ParticleInstancingRenderer {
 public:		// 構造体
 
 	struct ParticleData {
-		Matrix4x4 worldMat;
-		Vector4 color;
-		uint32_t draw2d;
+		Matrix4x4 worldMat;		// 座標
+		Vector4 color;			// 色
+		uint32_t draw2d;		// 2d描画かどうか
+		float discardValue;	// discardの値
 	};
 
 	struct Information {

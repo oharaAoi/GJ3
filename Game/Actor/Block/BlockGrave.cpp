@@ -4,7 +4,7 @@
 void BlockGrave::Init(Canvas2d* _canvas2d, const Vector2& _pos, const Vector2& _tileSize)
 {
 	SetName("Grave");
-	sprite_ = _canvas2d->AddSprite("grave.png", "grave", "Sprite_Normal.json");
+	sprite_ = _canvas2d->AddSprite("grave.png", "grave", "Sprite_Normal.json", 10, true);
 	transform_ = sprite_->GetTransform();
 	tileSize_ = _tileSize;
 	type_ = BlockType::GraveBlock;
@@ -19,7 +19,7 @@ void BlockGrave::Init(Canvas2d* _canvas2d, const Vector2& _pos, const Vector2& _
 	startFallPosY_ = offsetPos.y;
 	transform_->SetTranslate(offsetPos);
 
-	smoke_ = ParticleManager::GetInstance()->CrateParticle("testSmoke");
+	smoke_ = ParticleManager::GetInstance()->CrateParticle("graveSmoke");
 }
 
 void BlockGrave::Update()
@@ -44,7 +44,11 @@ void BlockGrave::FallAppearance() {
 		sprite_->SetTranslateY(y);
 
 		if (timer_ >= fallTime_) {
-			smoke_->Reset();
+			if (smoke_) {
+				smoke_->Reset();
+				Vector2 createPos = transform_->GetTranslate();
+				smoke_->SetPos({ createPos.x, createPos.y + (startOffsetPosY_ * 0.5f), 0.f });
+			}
 		}
 	}
 }

@@ -26,6 +26,7 @@ VertexShaderOutput main(VertexShaderInput input, uint instanceId : SV_InstanceID
 	}
 	output.texcoord = input.texcoord;
 	output.color = particle.color;
+	output.discardValue = particle.discardValue;
 	
 	return output;
 }

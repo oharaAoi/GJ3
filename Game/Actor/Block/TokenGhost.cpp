@@ -4,7 +4,9 @@
 #include "Game/Manager/GhostSmokeManager.h"
 
 TokenGhost::~TokenGhost() {
-	effect_->SetIsDestroy(true);
+	if (effect_) {
+		effect_->SetIsDestroy(true);
+	}
 }
 
 void TokenGhost::Init(Canvas2d* _canvas2d, const Vector2& _pos, const Vector2& _tileSize)

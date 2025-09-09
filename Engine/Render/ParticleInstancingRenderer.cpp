@@ -32,6 +32,7 @@ void ParticleInstancingRenderer::Update(const std::string& id, const std::vector
 			particleMap_[id].particleData[currentUseIndex + oi].worldMat = particleData[oi].worldMat;
 			particleMap_[id].particleData[currentUseIndex + oi].color = particleData[oi].color;
 			particleMap_[id].particleData[currentUseIndex + oi].draw2d = particleData[oi].draw2d;
+			particleMap_[id].particleData[currentUseIndex + oi].discardValue = particleData[oi].discardValue;
 			// 使用しているindexを更新する
 			particleMap_[id].useIndex = oi + 1;
 		}

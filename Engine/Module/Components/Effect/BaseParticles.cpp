@@ -86,8 +86,10 @@ void BaseParticles::Emit(const Vector3& pos) {
 			float rangeY = RandomFloat(-emitter_.radius, emitter_.radius);
 			float rangeZ = RandomFloat(-emitter_.radius, emitter_.radius);
 			newParticle.translate = Vector3(rangeX, rangeY, rangeZ) + pos;
-		} else {
-			newParticle.translate = pos;
+		} else if (emitter_.shape == (int)CpuEmitterShape::CONE) {
+			float rangeX = RandomFloat(-emitter_.radius, emitter_.radius);
+			float rangeZ = RandomFloat(-emitter_.radius, emitter_.radius);
+			newParticle.translate = Vector3(rangeX, 0.f, rangeZ) + pos;
 		}
 	} 
 
@@ -171,6 +173,11 @@ void BaseParticles::Emit(const Vector3& pos) {
 	}
 
 	// EmitterからParticleのパラメータを取得する
+	newParticle.isLerpDiscardValue = emitter_.isLerpDiscardValue;
+	newParticle.discardValue = emitter_.discardValue;
+	newParticle.startDiscard = emitter_.startDiscard;
+	newParticle.endDiscard = emitter_.endDiscard;
+
 	newParticle.lifeTime = emitter_.lifeTime;
 	newParticle.currentTime = 0.0f;
 	newParticle.damping = emitter_.dampig;
