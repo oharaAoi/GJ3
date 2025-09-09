@@ -3,7 +3,6 @@
 #include "Engine/Lib/Json/JsonItems.h"
 #include "Game/Commands/ObjectCommandInvoker.h"
 #include "Game/Input/StageInputHandler.h"
-
 #include "Game/UI/StageSelector.h"
 
 std::optional<GameScene::Result> GameScene::s_lastResult_ = std::nullopt;
