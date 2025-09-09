@@ -48,4 +48,7 @@ public:
 
 	const SpriteDirection& GetSpriteDirection() const{ return spriteDirection_; }
 	void SetSpriteDirection(const SpriteDirection& direction){ spriteDirection_ = direction; }
+
+	bool isKeyInput() const;
+	bool isPadInput() const;
 };

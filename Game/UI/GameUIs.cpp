@@ -25,14 +25,6 @@ void GameUIs::Init(){
 	redoUIs_[1]->ApplySaveData();
 	AddChild(redoUIs_[0]);
 	AddChild(redoUIs_[1]);
-	
-	// reset
-	resetUIs_[0] = canvas2d->AddSprite("Game_reset_k.png","Reset_Keyboard","Sprite_Normal.json",200,false);
-	resetUIs_[1] = canvas2d->AddSprite("Game_reset_p.png","Reset_Pad","Sprite_Normal.json",200,false);
-	resetUIs_[0]->ApplySaveData();
-	resetUIs_[1]->ApplySaveData();
-	AddChild(resetUIs_[0]);
-	AddChild(resetUIs_[1]);
 
 	// menu
 	menuUIs_[0] = canvas2d->AddSprite("Game_menu_k.png","Menu_Keyboard","Sprite_Normal.json",200,false);
@@ -41,18 +33,34 @@ void GameUIs::Init(){
 	menuUIs_[1]->ApplySaveData();
 	AddChild(menuUIs_[0]);
 	AddChild(menuUIs_[1]);
+
+	EditorWindows::AddObjectWindow(this,"Game UIs");
 }
 
 void GameUIs::Update(bool _isKeyInput,bool _isPadInput){
 	if(_isPadInput){
+		undoUIs_[0]->SetEnable(false);
+		undoUIs_[1]->SetEnable(true);
+
+		redoUIs_[0]->SetEnable(false);
+		redoUIs_[1]->SetEnable(true);
+
+		menuUIs_[0]->SetEnable(false);
+		menuUIs_[1]->SetEnable(true);
 
 		return;
 	}
 	if(_isKeyInput){
+		undoUIs_[0]->SetEnable(true);
+		undoUIs_[1]->SetEnable(false);
 
+		redoUIs_[0]->SetEnable(true);
+		redoUIs_[1]->SetEnable(false);
+
+		menuUIs_[0]->SetEnable(true);
+		menuUIs_[1]->SetEnable(false);
 		return;
 	}
-
 
 }
 

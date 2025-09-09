@@ -195,9 +195,12 @@ void GameScene::Update(){
 
 		// Command 
 		UndoRedoState state = ObjectCommandInvoker::GetInstance().InputHandle(padIsInput,keyIsInput);
-
+		 
 		padIsInput |= stageResetUI_->GetPadInput();
 		keyIsInput |= stageResetUI_->GetKeyInput();
+
+		padIsInput |= player_->isPadInput();
+		keyIsInput |= player_->isKeyInput();
 
 		if(state == UndoRedoState::UNDO){
 			ObjectCommandInvoker::GetInstance().UndoCommand();
@@ -212,7 +215,7 @@ void GameScene::Update(){
 			ObjectCommandInvoker::GetInstance().ExecuteCommandRequest();
 		}
 
-		if(stageResetUI_->GetStageReset() && isEnable){
+		if(stageResetUI_->GetStageReset()){
 			stageRegistry_->ResetStage();
 			mapCollision_->ResetGhostCounter();
 			ObjectCommandInvoker::GetInstance().ClearHistory();
@@ -223,6 +226,7 @@ void GameScene::Update(){
 				ghostSoulManager_->DeleteBackSoul();
 			}
 		}
+		gameUIs_->Update(keyIsInput,padIsInput);
 	}
 
 	getGhostCountUI_->Update(mapCollision_->GetGhostCounter(),stageRegistry_->GetNeedGhostNum());

@@ -25,9 +25,6 @@ private:
 	std::array<Sprite*,2> redoUIs_{nullptr,nullptr};
 
 	// [0] = Keyboard , [1] = GamePad
-	std::array<Sprite*,2> resetUIs_{nullptr,nullptr};
-
-	// [0] = Keyboard , [1] = GamePad
 	std::array<Sprite*,2> menuUIs_{nullptr,nullptr};
 };
 

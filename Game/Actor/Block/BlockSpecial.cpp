@@ -3,7 +3,7 @@
 void BlockSpecial::Init(Canvas2d* _canvas2d, const Vector2& _pos, const Vector2& _tileSize)
 {
 	SetName("BlockSpecial");
-	sprite_ = _canvas2d->AddSprite("specialBlock.png", "specialBlock", "Sprite_Normal.json");
+	sprite_ = _canvas2d->AddSprite("specialBlock.png", "specialBlock", "Sprite_Normal.json",0,true);
 	transform_ = sprite_->GetTransform();
 	transform_->SetTranslate(_pos);
 	tileSize_ = _tileSize;
