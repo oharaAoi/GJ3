@@ -12,6 +12,7 @@ GhostEffect::~GhostEffect() {
 	indexBuffer_.Reset();
 	materialBuffer_.Reset();
 	transform_.reset();
+	dissolveResource_->Finalize();
 }
 
 void GhostEffect::Init(const Vector2& tileSize){
