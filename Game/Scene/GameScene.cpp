@@ -75,7 +75,7 @@ void GameScene::Init(){
 	worldObjects_->Init();
 
 	menuSelector_ = std::make_unique<MenuSelector>();
-	menuSelector_->Init();
+	menuSelector_->Init(Engine::GetCanvas2d());
 
 	getGhostCountUI_ = std::make_unique<GetGhostCountUI>();
 	getGhostCountUI_->Init(Engine::GetCanvas2d());
@@ -177,6 +177,10 @@ void GameScene::Update(){
 	mapCollision_->Update();
 
 	ghostSoulManager_->Update();
+
+	if (behavior_) {
+		behavior_->Update();
+	}
 
 	bool isEnable = !menuSelector_->GetOpenMenu() && isTutorial;
 	if (isEnable) {
@@ -291,10 +295,40 @@ void GameScene::ChengeScene()
 			}
 			menuSelector_->SetChengeScene(false);
 			menuSelector_->SetOpenMenu(false);
+			swirlTransition_->Open();
 		}
 			break;
 		default:
 			break;
 		}
 	}
+	if (menuSelector_->GetChangeEffect()) {
+		if (menuSelector_->GetSelectButton()) {
+			menuSelector_->SetChangeEffect(false);
+			ChangeBehavior(std::make_unique<ChangeSelectSceneBehavior>(this));
+		} else if (menuSelector_->GetResetButton()) {
+			swirlTransition_->Close();
+			menuSelector_->SetChangeEffect(false);
+		}
+	}
+}
+
+void GameScene::ChangeBehavior(std::unique_ptr<IGameSceneBehavior> newBehavior)
+{
+	behavior_ = std::move(newBehavior);
+	behavior_->Init();
+}
+
+ChangeSelectSceneBehavior::ChangeSelectSceneBehavior(GameScene* _host) : IGameSceneBehavior(_host) {}
+ChangeSelectSceneBehavior::~ChangeSelectSceneBehavior(){}
+
+void ChangeSelectSceneBehavior::Init()
+{
+	lightFlash_ = std::make_unique<LightFlash>();
+	lightFlash_->Init("LightFlash");
+}
+
+void ChangeSelectSceneBehavior::Update()
+{
+	lightFlash_->Update();
 }

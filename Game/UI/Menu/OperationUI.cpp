@@ -8,7 +8,7 @@
 void OperationUI::Init()
 {
 	SetName("OperationUI");
-	operation_ = Engine::GetCanvas2d()->AddSprite("Menu_operation.png", GetName(), "Sprite_Normal.json", 12);
+	operation_ = Engine::GetCanvas2d()->AddSprite("Menu_operation.png", GetName(), "Sprite_Normal.json", 20);
 
 	AddChild(operation_);
 	EditorWindows::AddObjectWindow(this, GetName());

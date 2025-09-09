@@ -4,11 +4,16 @@
 #include "Engine/System/Audio/AudioPlayer.h"
 #include "Engine/Lib/GameTimer.h"
 
-void MenuSelector::Init()
+#include "Engine/Module/Components/2d/BaseEntity2d.h"
+#include "Engine/Module/Components/2d/Canvas2d.h"
+
+void MenuSelector::Init(Canvas2d* canvas2d)
 {
 	// メニューSpritesの初期化
 	menuUIs_ = std::make_unique<MenuUIs>();
 	menuUIs_->Init();
+
+	pCanvas2d_ = canvas2d;
 
 	openMenu_ = false;
 	cursorIndex_ = -1;
@@ -32,6 +37,8 @@ void MenuSelector::OpenMenu()
 	} else if ((keyInput || buttonInput) && openMenu_ &&
 		!chengeScene_ && !drawEffect_ && !openOperation_) {
 		menuUIs_->FadeOut();
+		chengeScene_ = true;
+		cursorIndex_ = 3;
 	}
 }
 
@@ -52,12 +59,15 @@ void MenuSelector::Update()
 	// エフェクトを出している時間
 	if (drawEffect_) {
 		effectFrame_ -= GameTimer::DeltaTime();
-		effectFrame_ = std::clamp(effectFrame_, 0.0f, 1.0f);
+		effectFrame_ = std::clamp(effectFrame_, 0.0f, 5.0f);
+		menuUIs_->SetColor(cursorIndex_);
+		menuUIs_->SetColors(cursorIndex_);
 		if (effectFrame_ == 0.0f) {
 			chengeScene_ = true;
 			drawEffect_ = false;
 			menuUIs_->ResetUIs();
 		}
+		return;
 	}
 	// ======================================================================
 	//								入力処理
@@ -78,8 +88,18 @@ void MenuSelector::Update()
 
 	// 操作方法を表示する
 	menuUIs_->OperationUpdate(openOperation_);
+	if (openOperation_) {
+		menuUIs_->SetColor(cursorIndex_);
+		menuUIs_->SetColors(cursorIndex_);
+	}
 	if (decisionPressed && openOperation_) {
 		openOperation_ = false;
+		return;
+	}
+	if (menuUIs_->GetOpEndFade()) {
+		SetMenuRenderQueue(10);
+	} else {
+		menuUIs_->SetColor(cursorIndex_);
 		return;
 	}
 	// メニューを開いていなければreturn
@@ -88,7 +108,11 @@ void MenuSelector::Update()
 	// 決定ボタンが押されたら
 	if (decisionPressed) {
 		ChengeScene();
-		AudioPlayer::SinglShotPlay("button.mp3", 0.3f);
+		if (cursorIndex_ != -1) {
+			menuUIs_->SetColor(cursorIndex_);
+			menuUIs_->SetColors(cursorIndex_);
+			AudioPlayer::SinglShotPlay("button.mp3", 0.3f);
+		}
 		return;
 	}
 	// 上方向の処理
@@ -106,7 +130,7 @@ void MenuSelector::Update()
 		AudioPlayer::SinglShotPlay("button.mp3", 0.3f);
 	}
 	// 0より大きければ
-	if (cursorIndex_ > -1) {
+	if (cursorIndex_ > -1 && !chengeScene_) {
 		// index番号に応じて点滅させる
 		menuUIs_->BlinkingIndex(cursorIndex_);
 		menuUIs_->SetColors(cursorIndex_);
@@ -124,15 +148,19 @@ void MenuSelector::ChengeScene()
 	case ButtonType::Select:
 		chengeScene_ = false;
 		drawEffect_ = true;
-		effectFrame_ = 1.0f;
+		changeEffect_ = true;
+		effectFrame_ = 2.0f;
 		break;
 	case ButtonType::Reset:
 		chengeScene_ = false;
 		drawEffect_ = true;
-		effectFrame_ = 1.0f;
+		changeEffect_ = true;
+		effectFrame_ = 4.0f;
 		break;
 	case ButtonType::Operation:
 		openOperation_ = true;
+		menuUIs_->SetColor(cursorIndex_);
+		SetMenuRenderQueue(15);
 		break;
 	case ButtonType::Back:
 		menuUIs_->FadeOut();
@@ -146,6 +174,12 @@ void MenuSelector::ChengeScene()
 
 void MenuSelector::Debug_Gui()
 {
+}
+
+void MenuSelector::SetMenuRenderQueue(int renderQueue)
+{
+	Canvas2d::ObjectPair* pair = pCanvas2d_->GetObjectPair(menuUIs_->GetMenuBG());
+	pair->renderQueue = renderQueue;
 }
 
 void MenuSelector::Reset()

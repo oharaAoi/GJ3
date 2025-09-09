@@ -17,12 +17,13 @@ void MenuUIs::Init()
 	EditorWindows::AddObjectWindow(this, GetName());
 
 	// ボタン生成、初期化
-	menu_ = Engine::GetCanvas2d()->AddSprite("menu.png", GetName(), "Sprite_Normal.json", 10);
+	menu_ = Engine::GetCanvas2d()->AddSprite("Menu_bg.png", GetName(), "Sprite_Normal.json", 10);
 	menu_->SetTranslate(Vector2{ 640.0f,360.0f });
 	buttonUIs_[0] = std::make_unique<SelectButtonUI>();
 	buttonUIs_[1] = std::make_unique<ResetButtonUI>();
 	buttonUIs_[2] = std::make_unique<OperationButtonUI>();
 	buttonUIs_[3] = std::make_unique<BackButtonUI>();
+	//menu_->SetEnable(false);
 	// 初期化
 	for (auto& buttonUI : buttonUIs_) {
 		buttonUI->Init();
@@ -39,7 +40,9 @@ void MenuUIs::Init()
 		};
 		if (i == 3) { position = param_.centerPos + param_.backButtonPos; }
 		buttonUIs_[i]->GetSprite()->SetTranslate(position);
+		buttonUIs_[i]->GetSprite()->SetColor(Vector4{ 1.0f,1.0f,1.0f,0.0f });
 	}
+	ResetUIs();
 }
 
 void MenuUIs::Update()
@@ -53,7 +56,8 @@ void MenuUIs::Update()
 	float alpha = fadeFrame_ = std::clamp(fadeFrame_, 0.0f, 1.0f);
 	if (fadeFrame_ == 0.0f || fadeFrame_ == 1.0f) { endFade_ = true; }
 	// alphaをセットする
-	menu_->SetColor(Vector4{ 1.0f,1.0f,1.0f,alpha });
+	Vector4 color = param_.bgColor;
+	menu_->SetColor(Vector4{ 0.0f,0.0f,0.0f,alpha } + color);
 	for (size_t i = 0; i < buttonUIs_.size(); ++i) {
 		Vector2 position = {
 			param_.centerPos.x,
@@ -61,6 +65,7 @@ void MenuUIs::Update()
 		};
 		if (i == 3) { position = param_.centerPos + param_.backButtonPos; }
 		buttonUIs_[i]->GetSprite()->SetTranslate(position);
+		if (!isFade_) { alpha = std::clamp(alpha, 0.0f, 0.4f); }
 		buttonUIs_[i]->GetSprite()->SetColor(Vector4{1.0f,1.0f,1.0f,alpha});
 	}
 }
@@ -70,6 +75,7 @@ void MenuUIs::Debug_Gui()
 	ImGui::DragFloat2("centerPos", &param_.centerPos.x, 0.1f);
 	ImGui::DragFloat("interval", &param_.interval, 0.1f);
 	ImGui::DragFloat2("backButtonPos", &param_.backButtonPos.x, 0.1f);
+	ImGui::ColorEdit4("bgColor", &param_.bgColor.x);
 
 	if (ImGui::Button("Save")) {
 		JsonItems::Save(GetName(), param_.ToJson(param_.GetName()));

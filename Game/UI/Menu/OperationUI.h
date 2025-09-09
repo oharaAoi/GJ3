@@ -17,6 +17,8 @@ public:
 
 	void Debug_Gui() override;
 
+	const bool FadeEnd()const { return fadeFrame_ == 0.0f; }
+
 private:
 
 	// メニュー背景

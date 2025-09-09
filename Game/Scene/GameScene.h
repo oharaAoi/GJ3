@@ -21,6 +21,10 @@
 #include "Game/UI/StageResetUI.h"
 #include "Game/UI/Tutorial/TutorialDirector.h"
 #include "Game/Effect/SwirlTransition.h"
+// effect
+#include "Game/Effect/TitleFlashEffect.h"
+
+class IGameSceneBehavior;
 
 class GameScene
 	: public BaseScene{
@@ -46,6 +50,8 @@ public:
 private:
 
 	void ChengeScene();
+
+	void ChangeBehavior(std::unique_ptr<IGameSceneBehavior> newBehavior);
 
 private:
 	// ------------------- camera ------------------- //
@@ -73,6 +79,10 @@ private:
 
 	std::unique_ptr<TutorialDirector> tutorialDirector_;
 
+	// ------------------- behavior ------------------- //
+
+	std::unique_ptr<IGameSceneBehavior> behavior_;
+
 	// ------------------- effect ------------------- //
 	BaseParticles* orb_;
 	BaseParticles* dust_;
@@ -89,4 +99,31 @@ private:
 	SceneRenderer* sceneRenderer_;
 
 	static std::optional<Result> s_lastResult_;
+};
+
+class IGameSceneBehavior {
+public: 
+	IGameSceneBehavior(GameScene* _host) :host_(_host) {}
+	virtual ~IGameSceneBehavior() = default;
+
+	virtual void Init() = 0;
+	virtual void Update() = 0;
+
+private:
+	GameScene* host_ = nullptr;
+};
+
+class ChangeSelectSceneBehavior :
+	public IGameSceneBehavior {
+public:
+	ChangeSelectSceneBehavior(GameScene* _host);
+	~ChangeSelectSceneBehavior() override;
+
+	void Init() override;
+	void Update() override;
+
+private:
+
+	std::unique_ptr<LightFlash> lightFlash_;
+
 };
