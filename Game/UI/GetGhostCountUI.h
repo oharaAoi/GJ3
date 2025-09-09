@@ -17,6 +17,7 @@ public:
 		Vector2 targetPos;
 		Vector2 barPos;
 		Vector2 numberSize;
+		Vector4 color;
 
 		Parameter() { SetName("GetGhostCountUIParam"); }
 
@@ -26,6 +27,7 @@ public:
 				.Add("targetPos", targetPos)
 				.Add("barPos", barPos)
 				.Add("numberSize", numberSize)
+				.Add("numberColor", color)
 				.Build();
 		}
 
@@ -34,6 +36,7 @@ public:
 			fromJson(jsonData, "targetPos", targetPos);
 			fromJson(jsonData, "barPos", barPos);
 			fromJson(jsonData, "numberSize", numberSize);
+			fromJson(jsonData, "numberColor", color);
 		}
 	};
 
@@ -52,10 +55,9 @@ private:
 
 	Canvas2d* pCanvas2d_;
 
-	std::vector<Sprite*> nowCount_;
 	std::vector<Sprite*> targetCount_;
 
-	Sprite* barSprite_;
+	Sprite* crystalSprite_;
 
 	Vector2 numberSize_ = { 64.0f, 64.0f };
 

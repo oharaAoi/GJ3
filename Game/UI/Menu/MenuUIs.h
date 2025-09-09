@@ -2,9 +2,12 @@
 #include <memory>
 #include <array>
 
+#include "Engine.h"
 #include "Engine/Module/Components/2d/Sprite.h"
 #include "Engine/Module/Components/Attribute/AttributeGui.h"
 #include "Engine/Lib/Json/IJsonConverter.h"
+#include "Engine/Module/Components/2d/BaseEntity2d.h"
+#include "Engine/Module/Components/2d/Canvas2d.h"
 
 #include "Game/UI/Button/IButtonUI.h"
 #include "Game/UI/Menu/OperationUI.h"
@@ -18,6 +21,7 @@ public:
 		Vector2 centerPos;
 		float interval;
 		Vector2 backButtonPos;
+		Vector4 bgColor;
 
 		Parameter() { SetName("MenuUIs"); }
 
@@ -26,6 +30,7 @@ public:
 				.Add("centerPos", centerPos)
 				.Add("interval", interval)
 				.Add("backButtonPos", backButtonPos)
+				.Add("bgColor", bgColor)
 				.Build();
 		}
 
@@ -33,6 +38,7 @@ public:
 			fromJson(jsonData, "centerPos", centerPos);
 			fromJson(jsonData, "interval", interval);
 			fromJson(jsonData, "backButtonPos", backButtonPos);
+			fromJson(jsonData, "bgColor", bgColor);
 		}
 	};
 
@@ -47,16 +53,20 @@ public:
 
 	void Debug_Gui() override;
 
-	void FadeIn() { isFade_ = true; endFade_ = false; }
-	void FadeOut() { isFade_ = false; endFade_ = false; }
+	void FadeIn() { isFade_ = true; endFade_ = false; fadeFrame_ = 0.0f; }
+	void FadeOut() { isFade_ = false; endFade_ = false; fadeFrame_ = 1.0f; }
 
 	bool GetEndFade()const { return endFade_; }
 	bool GetIsFade()const { return isFade_; }
+
+	Sprite* GetMenuBG()const { return menu_; }
+	bool GetOpEndFade()const { return operationUI_->FadeEnd(); }
 
 	ButtonType GetTypeIndex(int index)const { return buttonUIs_[index]->GetButtonType(); }
 	void BlinkingIndex(int index) { buttonUIs_[index]->Blinking(); }
 	void ResetIndex(int index) { buttonUIs_[index]->Reset(); }
 	void OperationUpdate(bool openOperation) { operationUI_->Update(openOperation); }
+	void SetColor(int index) { buttonUIs_[index]->GetSprite()->SetColor(Vector4{ 1.0f,1.0f,1.0f,0.4f }); }
 
 	void SetColors(int index) {
 		for (size_t i = 0; i < buttonUIs_.size(); ++i) {

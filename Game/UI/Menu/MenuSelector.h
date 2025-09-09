@@ -16,7 +16,7 @@ public:
 	MenuSelector() = default;
 	~MenuSelector() = default;
 
-	void Init();
+	void Init(Canvas2d* canvas2d);
 
 	void OpenMenu();
 	void Update();
@@ -31,6 +31,13 @@ public:
 	const bool GetOpenMenu()const { return openMenu_; }
 	const bool GetChengeScene()const { return chengeScene_; }
 	void SetChengeScene(bool flag) { chengeScene_ = flag; }
+
+	const bool GetSelectButton()const { return cursorIndex_ == 0; }
+	const bool GetResetButton()const { return cursorIndex_ == 1; }
+	const bool GetChangeEffect()const { return changeEffect_; }
+	void SetChangeEffect(bool flag) { changeEffect_ = flag; }
+
+	void SetMenuRenderQueue(int renderQueue);
 
 	void Reset();
 
@@ -55,6 +62,7 @@ private:
 	// シーン切り替えを選択したら
 	float effectFrame_ = 0.0f;
 	bool drawEffect_ = false;
+	bool changeEffect_ = false;
 	bool chengeScene_ = false;
 	// 操作方法を開いたら
 	bool openOperation_ = false;

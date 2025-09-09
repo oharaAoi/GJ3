@@ -171,7 +171,7 @@ void LightFlash::Init(const std::string &_parameterName)
 	// 読み込み
 	parameter_.FromJson(JsonItems::GetData("Effect", parameterName_));
 
-	flashOverlaySprite_ = Engine::GetCanvas2d()->AddSprite("white.png", GetName(), "Sprite_Normal.json", 6);
+	flashOverlaySprite_ = Engine::GetCanvas2d()->AddSprite("white.png", GetName(), "Sprite_Normal.json", 100);
 	flashOverlaySprite_->SetAnchorPoint({1.f, 1.f});
 	flashOverlaySprite_->SetScale(Vector2(1920.f, 1080.f));
 	flashOverlaySprite_->SetColor(Vector4(0.f, 0.f, 0.f, 0.f));
