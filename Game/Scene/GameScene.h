@@ -99,8 +99,9 @@ private:
 	// ------------------- sound ------------------- //
 	std::unique_ptr<AudioPlayer> bgm_;
 
-	float resetTimer_ = 0.0f; // 現在のリセットまでの時間
-	bool isClearConditionMet_ = false; // クリア条件を満たしたかどうか
+	float resetTimer_ = 0.0f;			// 現在のリセットまでの時間
+	bool isClearConditionMet_ = false;	// クリア条件を満たしたかどうか
+	float clearTimer_ = 0.0f;			// クリア時の遷移時間
 
 	SceneRenderer* sceneRenderer_;
 

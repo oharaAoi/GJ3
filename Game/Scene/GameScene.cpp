@@ -162,12 +162,12 @@ void GameScene::Update(){
 	}
 
 	bool isTutorial = tutorialDirector_ == nullptr || tutorialDirector_->GetIsMoveEnable();
-	if(isTutorial){
+	if (isTutorial && !mapCollision_->GetIsClear()) {
 		menuSelector_->Update();
 		ChengeScene();
 	}
 	// メニューを開いていなければ更新
-	if(!menuSelector_->GetOpenMenu() && isTutorial){
+	if (!menuSelector_->GetOpenMenu() && isTutorial && !mapCollision_->GetIsClear()) {
 		player_->Update();
 	}
 	ghostEffectManager_->Update();
@@ -187,7 +187,7 @@ void GameScene::Update(){
 	}
 
 	bool isEnable = !menuSelector_->GetOpenMenu() && isTutorial;
-	if(isEnable){
+	if (isEnable && !mapCollision_->GetIsClear()) {
 		stageResetUI_->Update();
 
 		// UI Input
@@ -241,12 +241,16 @@ void GameScene::Update(){
 	}
 
 	// ステージをクリアしたかどうかの判定
-	if(mapCollision_->GetIsClear()){
-		GameScene::Result r;
-		r.ghostCount = mapCollision_->GetGhostCounter();
-		GameScene::s_lastResult_ = r;
-		AudioPlayer::SinglShotPlay("fanfare.wav",0.5f);
-		nextSceneType_ = SceneType::CLEAR;
+	if (mapCollision_->GetIsClear()) {
+		if (clearTimer_ == 0.0f) { swirlTransition_->Close(); }
+		clearTimer_ += GameTimer::DeltaTime();
+		if (swirlTransition_->GetIsFinish()) {
+			GameScene::Result r;
+			r.ghostCount = mapCollision_->GetGhostCounter();
+			GameScene::s_lastResult_ = r;
+			AudioPlayer::SinglShotPlay("fanfare.wav", 0.5f);
+			nextSceneType_ = SceneType::CLEAR;
+		}
 	}
 
 	// -------------------------------------------------

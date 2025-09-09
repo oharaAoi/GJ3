@@ -10,28 +10,21 @@ void StageResetUI::Init(Canvas2d* _canvas2d)
 {
 	pCanvas2d_ = _canvas2d;
 	resetButtonUI_ = pCanvas2d_->AddSprite("resetButton_R.png", GetName(), "Sprite_Normal.json", 6);
-	//resetButtonUI_->SetAnchorPoint(Vector2{ 1.0f,1.0f });
 
 	backTextureUI_ = pCanvas2d_->AddSprite("white.png", GetName(), "Sprite_Normal.json", 5);
-	//backTextureUI_->SetAnchorPoint(Vector2{ 0.5f,1.0f });
-	backTextureUI_->SetColor(Vector4{ 1.0f,0.0f,0.0f,1.0f });
-
-	whiteTextureUI_ = pCanvas2d_->AddSprite("white.png", GetName(), "Sprite_Normal.json", 4);
-	//whiteTextureUI_->SetAnchorPoint(Vector2{ 1.0f,1.0f });
 
 	SetName("StageResetButtonUI");
 	AddChild(this);
 	EditorWindows::AddObjectWindow(this, GetName());
 	param_.FromJson(JsonItems::GetData(GetName(), param_.GetName()));
 
-	backTextureUI_->ReSetTextureSize(textureSize_);
-	whiteTextureUI_->ReSetTextureSize(textureSize_);
+	backTextureUI_->SetColor(param_.backColor);
+	backTextureUI_->ReSetTextureSize(textureSize_ * 0.8f);
 	resetButtonUI_->ReSetTextureSize(textureSize_);
 
 	Vector2 windowSize = { kWindowWidth_, kWindowHeight_ };
 	backTextureUI_->SetTranslate(Vector2{ windowSize - textureSize_ });
 	resetButtonUI_->SetTranslate(Vector2{ windowSize - textureSize_ });
-	whiteTextureUI_->SetTranslate(Vector2{ windowSize - textureSize_ });
 
 	Update();
 }
@@ -45,6 +38,10 @@ void StageResetUI::Update()
 	padInput_ = input->IsPressButton(XInputButtons::BUTTON_X);
 	// リセットボタンが長押しされているなら
 	if (keyInput_ || padInput_) {
+		if (!isPush_) { 
+			isPush_ = true;
+			scaleTimer_ = 0.0f;
+		}
 		resetTimer_ += (GameTimer::DeltaTime() / param_.resetTime);
 		if (resetTimer_ > 1.0f) { isStageReset_ = true; }
 	} else {
@@ -58,13 +55,23 @@ void StageResetUI::Update()
 	}
 	resetTimer_ = std::clamp(resetTimer_, 0.0f, 1.0f);
 	backTextureUI_->SetUvMinSize({ 0.0f,1.0f - resetTimer_ });
+	backTextureUI_->SetColor(param_.backColor);
 
+	// 押したらぷにっと
+	if (isPush_) {
+		scaleTimer_ += GameTimer::DeltaTime() * 5.0f;
+		scaleTimer_ = std::clamp(scaleTimer_, 0.0f, 1.0f);
+		backTextureUI_->SetScale(Vector2::MochiPuniScaleNormalized(scaleTimer_));
+		resetButtonUI_->SetScale(Vector2::MochiPuniScaleNormalized(scaleTimer_));
+		if (scaleTimer_ == 1.0f && !keyInput_ && !padInput_) { isPush_ = false; }
+	}
 }
 
 void StageResetUI::Debug_Gui()
 {
 	ImGui::DragFloat2("resetButtonPos", &param_.resetButtonPos.x, 0.1f);
 	ImGui::DragFloat2("backTexturePos", &param_.backTexturePos.x, 0.1f);
+	ImGui::ColorEdit4("backColor", &param_.backColor.x);
 	ImGui::DragFloat("def_size", &param_.def_size, 0.1f);
 	ImGui::DragFloat("resetTime", &param_.resetTime, 0.1f);
 

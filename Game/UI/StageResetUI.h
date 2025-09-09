@@ -15,6 +15,7 @@ public:
 		Vector2 backTexturePos;
 		float def_size;
 		float resetTime;
+		Vector3 backColor;
 
 		Parameter() { SetName("StageResetUIParam"); }
 
@@ -24,6 +25,7 @@ public:
 				.Add("backTexturePos", backTexturePos)
 				.Add("def_size", def_size)
 				.Add("resetTime", resetTime)
+				.Add("backColor", backColor)
 				.Build();
 		}
 
@@ -32,6 +34,7 @@ public:
 			fromJson(jsonData, "backTexturePos", backTexturePos);
 			fromJson(jsonData, "def_size", def_size);
 			fromJson(jsonData, "resetTime", resetTime);
+			fromJson(jsonData, "backColor", backColor);
 		}
 	};
 
@@ -60,7 +63,6 @@ private:
 	Sprite* resetButtonUI_ = nullptr;
 
 	Sprite* backTextureUI_ = nullptr;
-	Sprite* whiteTextureUI_ = nullptr;
 
 	Vector2 textureSize_ = {};
 	bool isStageReset_ = false;
@@ -69,6 +71,10 @@ private:
 
 	float resetTimer_ = 0.0f;
 	float kResetTime_ = 1.0f;
+
+	// 押した瞬間にプルっとなる
+	bool isPush_ = false;
+	float scaleTimer_ = 0.0f;
 
 	Canvas2d* pCanvas2d_;
 
