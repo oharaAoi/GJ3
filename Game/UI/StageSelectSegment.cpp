@@ -21,11 +21,10 @@ void StageSelectSegment::Init(Canvas2d* _canvas2d, int index) {
 	stageContent_ = _canvas2d->AddSprite("white.png", "StagePreview", "Sprite_Normal.json", 2, true);
 	stageContent_->SetTextureResource(ctx_->GetRenderTarget()->GetRenderTargetResource(type));
 	stageContent_->ApplySaveData();
-	stageContent_->ReSetTextureSize({ kWindowWidth_ * 0.3f,kWindowHeight_ * 0.3f });
+	stageContent_->ReSetTextureSize({ kWindowWidth_ * 0.34f ,kWindowHeight_ * 0.34f});
 
 	backGround_->SetColor({0.494f,0.494f,0.494f,1.f});
-	pictureFrame_->SetColor({0.51f,0.51f,0.51f,1.f});
-	pictureFrame_->SetScale({0.86f,1.f});
+	pictureFrame_->SetColor({0.67f,0.67f,0.67f,1.f});
 
 	// 座標を設定
 	centerPos_.x = (kWindowWidth_ * 0.5f) + (kWindowWidth_ * (index - 1));

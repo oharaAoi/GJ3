@@ -34,7 +34,7 @@ void BrightnessThreshold::CheckBox() {
 }
 
 void BrightnessThreshold::Debug_Gui() {
-	ImGui::DragFloat("threshold", &param_.threshold,0.001f,0.0f,0.0f,"%.3f");
+	ImGui::DragFloat("threshold", &param_.threshold,0.01f,0.0f,0.0f,"%.3f");
 	if (ImGui::Button("Save##BrightnessThreshold_save")) {
 		param_.isEnable = isEnable_;
 		JsonItems::Save("PostEffect", param_.ToJson(param_.GetName()));
