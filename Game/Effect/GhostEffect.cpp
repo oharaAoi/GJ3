@@ -16,6 +16,7 @@ GhostEffect::~GhostEffect() {
 }
 
 void GhostEffect::Init(const Vector2& tileSize){
+	SetName("GhostEffect");
 	GraphicsContext* ctx = GraphicsContext::GetInstance();
 	ID3D12Device* pDevice = ctx->GetDevice();
 
@@ -23,6 +24,7 @@ void GhostEffect::Init(const Vector2& tileSize){
 	textureSize_ = tileSize;
 	drawRange_ = textureSize_;
 	leftTop_ = { 0.0f, 0.0f };
+	saveItems_.FromJson(JsonItems::GetData(GetName(), saveItems_.GetName()));
 
 	// ----------------------------------------------------------------------------------
 	vertexBuffer_ = CreateBufferResource(pDevice, sizeof(TextureMesh) * 4);
@@ -61,6 +63,7 @@ void GhostEffect::Init(const Vector2& tileSize){
 	vertexData_[3].texcoord = { 1.0f, 0.0f };
 
 	// ----------------------------------------------------------------------------------
+	// indexBufferを作成
 	indexBuffer_ = CreateBufferResource(pDevice, sizeof(uint32_t) * 6);
 	indexBufferView_.BufferLocation = indexBuffer_->GetGPUVirtualAddress();
 	indexBufferView_.SizeInBytes = UINT(sizeof(uint32_t) * 6);
@@ -75,17 +78,19 @@ void GhostEffect::Init(const Vector2& tileSize){
 	indexData_[3] = 1;
 	indexData_[4] = 3;
 	indexData_[5] = 2;
-	// ----------------------------------------------------------------------------------
+	// ---------------------------------------------------------------------------------
+	// Materialを作成
 	materialBuffer_ = CreateBufferResource(pDevice, sizeof(TextureMaterial));
 	materialBuffer_->Map(0, nullptr, reinterpret_cast<void**>(&materialData_));
 	materialData_->color = { 1.0f, 1.0f, 1.0f, 1.0f };
 	materialData_->uvTransform = Matrix4x4::MakeUnit();
 
 	// ----------------------------------------------------------------------------------
+	// Tarnsformを作成
 	transform_ = std::make_unique<ScreenTransform>();
 	transform_->Init(pDevice);
 
-	uvTransform_ = { {1.0f,1.0f,1.0f} , {0.0f, 0.0f, 0.0f}, {0, 0, 0} };// ----------------------------------------------------------------------------------
+	uvTransform_ = { {1.0f,1.0f,1.0f} , {0.0f, 0.0f, 0.0f}, {0, 0, 0} };
 	indexBuffer_ = CreateBufferResource(pDevice, sizeof(uint32_t) * 6);
 	indexBufferView_.BufferLocation = indexBuffer_->GetGPUVirtualAddress();
 	indexBufferView_.SizeInBytes = UINT(sizeof(uint32_t) * 6);
@@ -117,6 +122,8 @@ void GhostEffect::Init(const Vector2& tileSize){
 		(anchorPoint.y - 0.5f) * textureSize_.y   // ピボットオフセット（中心からのオフセット）
 	};
 
+	// ----------------------------------------------------------------------------------
+	// dissolveのデータを作成する
 	dissolveResource_ = std::make_unique<DxResource>();
 	dissolveResource_->Init(ctx->GetDevice(), ctx->GetDxHeap(), ResourceType::COMMON);
 	dissolveResource_->CreateResource(sizeof(DissolveParam));
@@ -131,9 +138,11 @@ void GhostEffect::Init(const Vector2& tileSize){
 	dissolveUvTransform_.rotate = { 0,0,0 };
 	dissolveUvTransform_.translate = { 0,0,0 };
 
-	textureName_ = "white.png";
-	dissolveTextureName_ = "smoke.png";
+	textureName_ = "smoke2.png";
+	dissolveTextureName_ = "FireNoize.png";
 	isDestroy_ = false;
+
+	ApplySaveData();
 }
 
 void GhostEffect::Update() {
@@ -204,12 +213,39 @@ void GhostEffect::Debug_Gui() {
 		ImGui::DragFloat("threshold", &dissolveParam_->threshold, 0.01f);
 	}
 	TextureManager* textureManager = TextureManager::GetInstance();
-	if (ImGui::TreeNode("Base Texture")) {
+	if (ImGui::CollapsingHeader("Base Texture")) {
 		textureName_ = textureManager->SelectTexture(textureName_);
-		ImGui::TreePop();
 	}
-	if (ImGui::TreeNode("Dissolve Texture")) {
+	if (ImGui::CollapsingHeader("Dissolve Texture")) {
 		dissolveTextureName_ = textureManager->SelectTexture(dissolveTextureName_);
-		ImGui::TreePop();
 	}
+
+	if (ImGui::Button("Save")) {
+		CopyData();
+		JsonItems::Save(GetName(), saveItems_.ToJson(saveItems_.GetName()));
+	}
+	if (ImGui::Button("Apply")) {
+		saveItems_.FromJson(JsonItems::GetData(GetName(), saveItems_.GetName()));
+	}
+
+}
+
+void GhostEffect::ApplySaveData() {
+	materialData_->color = saveItems_.color;
+	dissolveParam_->color = saveItems_.dissolveColor;
+	dissolveParam_->edgeColor = saveItems_.edgeColor;
+	dissolveParam_->threshold = saveItems_.threshold;
+	
+	textureName_ = saveItems_.baseTexture;
+	dissolveTextureName_ = saveItems_.dissolveTexture;
+}
+
+void GhostEffect::CopyData() {
+	saveItems_.color = materialData_->color;
+	saveItems_.dissolveColor = dissolveParam_->color;
+	saveItems_.edgeColor = dissolveParam_->edgeColor;
+	saveItems_.threshold = dissolveParam_->threshold;
+
+	saveItems_.baseTexture = textureName_;
+	saveItems_.dissolveTexture = dissolveTextureName_;
 }

@@ -125,8 +125,9 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
   <ItemGroup>
     <ClCompile Include="Game\Camera\StageSelectCamera.cpp" />
     <ClCompile Include="Game\Commands\Stage\CreateGraveBlock.cpp" />
+    <ClCompile Include="Game\Effect\GhostSmoke.cpp" />
     <ClCompile Include="Game\Effect\SwirlTransition.cpp" />
-    <ClCompile Include="Game\Manager\GhostEffectManager.cpp" />
+    <ClCompile Include="Game\Manager\GhostSmokeManager.cpp" />
     <ClCompile Include="Game\UI\Clear\ClearSelector.cpp" />
     <ClCompile Include="Game\UI\Clear\ClearUIs.cpp" />
     <ClCompile Include="Engine\Module\PostEffect\SwirlEffect.cpp" />
@@ -412,9 +413,10 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
   <ItemGroup>
     <ClInclude Include="Game\Camera\StageSelectCamera.h" />
     <ClInclude Include="Game\Commands\Stage\CreateGraveBlock.h" />
+    <ClInclude Include="Game\Effect\GhostSmoke.h" />
     <ClInclude Include="Game\Effect\SwirlTransition.h" />
     <ClInclude Include="Game\Information\TutorialType.h" />
-    <ClInclude Include="Game\Manager\GhostEffectManager.h" />
+    <ClInclude Include="Game\Manager\GhostSmokeManager.h" />
     <ClInclude Include="Game\UI\Clear\ClearSelector.h" />
     <ClInclude Include="Game\UI\Clear\ClearUIs.h" />
     <ClInclude Include="Engine\Module\PostEffect\SwirlEffect.h" />

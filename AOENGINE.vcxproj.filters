@@ -346,8 +346,9 @@
     <ClCompile Include="Game\UI\StageSelect\StageSelectCollection.cpp" />
     <ClCompile Include="Game\Camera\StageSelectCamera.cpp" />
     <ClCompile Include="Game\Effect\GhostEffect.cpp" />
-    <ClCompile Include="Game\Manager\GhostEffectManager.cpp" />
+    <ClCompile Include="Game\Manager\GhostSmokeManager.cpp" />
     <ClCompile Include="Game\UI\StageSelect\StageIndexUI.cpp" />
+    <ClCompile Include="Game\Effect\GhostSmoke.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Scene\ClearScene.h" />
@@ -654,7 +655,8 @@
     <ClInclude Include="Game\UI\StageSelect\StageSelectCollection.h" />
     <ClInclude Include="Game\Camera\StageSelectCamera.h" />
     <ClInclude Include="Game\Effect\GhostEffect.h" />
-    <ClInclude Include="Game\Manager\GhostEffectManager.h" />
+    <ClInclude Include="Game\Manager\GhostSmokeManager.h" />
+    <ClInclude Include="Game\Effect\GhostSmoke.h" />
     <ClInclude Include="Game\UI\StageSelect\StageIndexUI.h" />
   </ItemGroup>
   <ItemGroup>

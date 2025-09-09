@@ -2,7 +2,7 @@
 #include "Engine.h"
 #include "Engine/System/Input/Input.h"
 #include "Engine/Lib/Json/JsonItems.h"
-#include "Game/Manager/GhostEffectManager.h"
+#include "Game/Manager/GhostSmokeManager.h"
 
 #include "Engine.h"
 
@@ -22,7 +22,7 @@ void TitleScene::Finalize(){
 	postProcess->GetToonMap()->SetIsEnable(false);
 
 	sceneRenderer_->Finalize();
-	GhostEffectManager::GetInstance()->Finalize();
+	GhostSmokeManager::GetInstance()->Finalize();
 	ParticleManager::GetInstance()->Finalize();
 	GpuParticleManager::GetInstance()->Finalize();
 }

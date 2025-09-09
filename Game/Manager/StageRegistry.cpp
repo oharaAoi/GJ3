@@ -161,7 +161,10 @@ void StageRegistry::DestroyStageData(){
 		}
 	}
 
-	startBlock_ = nullptr;
+	if (startBlock_) {
+		startBlock_->SetIsDestroy(true);
+		startBlock_ = nullptr;
+	}
 }
 
 void StageRegistry::DestroyMapData(){

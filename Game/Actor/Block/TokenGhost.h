@@ -1,6 +1,6 @@
 #pragma once
 #include "Game/Actor/Block/IBlock.h"
-#include <Game/Effect/GhostEffect.h>
+#include "Game/Effect/GhostSmoke.h"
 
 class TokenGhost :
 	public IBlock {
@@ -17,6 +17,6 @@ private:
 
 	Vector2 ConvertIndexToPosition(const Vector2Int& _index);
 
-	GhostEffect* effect_;
+	GhostSmoke* effect_;
 };
 
