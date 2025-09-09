@@ -19,7 +19,7 @@ void GhostSmokeManager::Init() {
 	ghostEffect_.clear();
 }
 
-void GhostSmokeManager::ｄ() {
+void GhostSmokeManager::Update() {
 	for (auto it = ghostEffect_.begin(); it != ghostEffect_.end(); ) {
 		if ((*it)->GetIsDestroy()) {
 			it = ghostEffect_.erase(it);
