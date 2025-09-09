@@ -40,6 +40,13 @@ void GhostSmokeManager::Draw() const {
 }
 
 GhostSmoke* GhostSmokeManager::Create(const Vector2& pos, const Vector2& tileSize) {
+	for (const auto& effect : ghostEffect_) {
+		Vector2 effectPos = effect->GetPos();
+		if (pos.x == effectPos.x && pos.y == effectPos.y) {
+			return nullptr;
+		}
+	}
+
 	auto& newEffect = ghostEffect_.emplace_back(std::make_unique<GhostSmoke>());
 	newEffect->Init(pos, tileSize);
 	return newEffect.get();

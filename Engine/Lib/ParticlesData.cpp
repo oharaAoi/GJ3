@@ -34,6 +34,13 @@ void ParticleEmit::Attribute_Gui() {
 		} else {
 			ImGui::ColorEdit4("Color", (float*)&color); 
 		}
+		ImGui::Checkbox("isLerpDiscard", &isLerpDiscardValue);
+		if (!isLerpDiscardValue) {
+			ImGui::DragFloat("discardValue", &discardValue, 0.01f, 0.0f, 1.0f);
+		} else {
+			ImGui::DragFloat("startDiscard", &startDiscard, 0.01f, 0.0f, 1.0f);
+			ImGui::DragFloat("endDiscard", &endDiscard, 0.01f, 0.0f, 1.0f);
+		}
 		ImGui::Checkbox("SeparateByAxisScale", &separateByAxisScale);
 		if (separateByAxisScale) {
 			ImGui::DragFloat3("minScale", &minScale.x, 0.1f);

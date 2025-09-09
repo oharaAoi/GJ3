@@ -55,6 +55,9 @@ public:
 	void SetIsDestroy(bool _isDestroy) { isDestroy_ = _isDestroy; }
 	bool GetIsDestroy() const { return isDestroy_; }
 
+
+	const Vector2& GetPos() const { return position_; }
+
 private:
 
 	std::unique_ptr<GhostEffect> ghostEffect_[2];
@@ -63,6 +66,9 @@ private:
 
 	VectorTween<float> appearanceAnime_;
 	AnimationItems animationItems_;
+
+
+	Vector2 position_;
 
 };
 

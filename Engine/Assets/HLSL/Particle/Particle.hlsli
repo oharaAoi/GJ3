@@ -3,12 +3,14 @@ struct VertexShaderOutput{
 	float4 position : SV_POSITION;
 	float2 texcoord : TEXCOORD0;
 	float4 color : COLOR0;
+	float discardValue : DISCARD0;
 };
 
 struct CpuParticle {
 	float4x4 worldMat;
 	float4 color;
 	int draw2d;
+	float discardValue;
 };
 
 struct GpuParticle {

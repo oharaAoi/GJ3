@@ -37,6 +37,10 @@ struct ParticleSingle {
 	float currentTime;		// 現在の時間
 	float damping;			// 減衰
 	float gravity;			// 重力
+	bool isLerpDiscardValue;		// discardの値をlerpさせるか
+	float discardValue = 0.01f;		// discardをするしきい値
+	float startDiscard = 0.01f;		// discardの初期値
+	float endDiscard = 1.0f;		// discardの終了値
 	bool isLifeOfScale = false;	// 生存時間によるサイズ
 	bool isLifeOfAlpha = false;	// 生存時間による透明度
 	bool isFadeInOut = false;
@@ -48,7 +52,7 @@ struct ParticleSingle {
 	Vector3 upScale;
 	bool isBillBord = true;
 	bool isDraw2d = true;
-	bool isCenterFor = false; 
+	bool isCenterFor = false;
 };
 
 struct ParticleEmit : public IJsonConverter {
@@ -60,12 +64,16 @@ struct ParticleEmit : public IJsonConverter {
 	int shape = 0;						// emitterの種類
 	int emitDirection = 1;
 	int emitOrigin = 0;
-	
+
 	// particle自体のparameter
 	bool isRandomColor = false;
 	Vector4 color = Vector4{ 1,1,1,1 };			// 色
 	Vector4 randColor1 = Vector4{ 1,0,0,1 };	// 色
 	Vector4 randColor2 = Vector4{ 0,0,1,1 };	// 色
+	bool isLerpDiscardValue;					// discardの値をlerpさせるか
+	float discardValue = 0.01f;					// discardをするしきい値
+	float startDiscard = 0.01f;					// discardの初期値
+	float endDiscard = 1.0f;					// discardの終了値
 	bool separateByAxisScale = false;
 	Vector3 minScale = CVector3::UNIT;			// 最小の大きさ
 	Vector3 maxScale = CVector3::UNIT;			// 最大の大きさ
@@ -81,7 +89,7 @@ struct ParticleEmit : public IJsonConverter {
 	bool isFadeInOut = false;					// FadeInOutで出現
 	float fadeInTime = 0;
 	float fadeOutTime = 0;
-	
+
 	bool isParticleAddBlend = false;			// blendModeをAddBlendにするかのフラグ
 	bool isDraw2d = false;						// blendModeをAddBlendにするかのフラグ
 	bool isBillBord = true;
@@ -117,6 +125,10 @@ struct ParticleEmit : public IJsonConverter {
 			.Add("isRandomColor", isRandomColor)
 			.Add("randColor1", randColor1)
 			.Add("randColor2", randColor2)
+			.Add("isLerpDiscardValue", isLerpDiscardValue)
+			.Add("discardValue", discardValue)
+			.Add("startDiscard", startDiscard)
+			.Add("endDiscard", endDiscard)
 			.Add("separateByAxisScale", separateByAxisScale)
 			.Add("minScale", minScale)
 			.Add("maxScale", maxScale)
@@ -159,6 +171,10 @@ struct ParticleEmit : public IJsonConverter {
 		fromJson(jsonData, "isRandomColor", isRandomColor);
 		fromJson(jsonData, "randColor1", randColor1);
 		fromJson(jsonData, "randColor2", randColor2);
+		fromJson(jsonData, "isLerpDiscardValue", isLerpDiscardValue);
+		fromJson(jsonData, "discardValue", discardValue);
+		fromJson(jsonData, "startDiscard", startDiscard);
+		fromJson(jsonData, "endDiscard", endDiscard);
 		fromJson(jsonData, "separateByAxisScale", separateByAxisScale);
 		fromJson(jsonData, "minScale", minScale);
 		fromJson(jsonData, "maxScale", maxScale);
@@ -188,4 +204,132 @@ struct ParticleEmit : public IJsonConverter {
 	}
 
 	void Attribute_Gui();
+
+public:
+	// ======== Setters / Getters ========
+	void SetIsLoop(bool _isLoop) { isLoop = _isLoop; }
+	bool GetIsLoop() const { return isLoop; }
+
+	void SetDuration(float _duration) { duration = _duration; }
+	float GetDuration() const { return duration; }
+
+	void SetTranslate(const Vector3& _translate) { translate = _translate; }
+	const Vector3& GetTranslate() const { return translate; }
+
+	void SetRotate(const Vector3& _rotate) { rotate = _rotate; }
+	const Vector3& GetRotate() const { return rotate; }
+
+	void SetRateOverTimeCout(uint32_t _count) { rateOverTimeCout = _count; }
+	uint32_t GetRateOverTimeCout() const { return rateOverTimeCout; }
+
+	void SetShape(int _shape) { shape = _shape; }
+	int GetShape() const { return shape; }
+
+	void SetEmitDirection(int _emitDirection) { emitDirection = _emitDirection; }
+	int GetEmitDirection() const { return emitDirection; }
+
+	void SetEmitOrigin(int _emitOrigin) { emitOrigin = _emitOrigin; }
+	int GetEmitOrigin() const { return emitOrigin; }
+
+	void SetIsRandomColor(bool _isRandomColor) { isRandomColor = _isRandomColor; }
+	bool GetIsRandomColor() const { return isRandomColor; }
+
+	void SetColor(const Vector4& _color) { color = _color; }
+	const Vector4& GetColor() const { return color; }
+
+	void SetRandColor1(const Vector4& _randColor1) { randColor1 = _randColor1; }
+	const Vector4& GetRandColor1() const { return randColor1; }
+
+	void SetRandColor2(const Vector4& _randColor2) { randColor2 = _randColor2; }
+	const Vector4& GetRandColor2() const { return randColor2; }
+
+	void SetIsLerpDiscard(bool _isDiscard) { isLerpDiscardValue = _isDiscard; }
+	bool GetIsLerpDiscard() const { return isLerpDiscardValue; }
+
+	void SetDiscardValue(float _discardValue) { discardValue = _discardValue; }
+	float GetDiscardValue() const { return discardValue; }
+
+	void SetStartDiscard(float _stDiscard) { startDiscard = _stDiscard; }
+	float GetStartDiscard() const { return startDiscard; }
+
+	void SetEndDiscard(float _endDiscard) { endDiscard = _endDiscard; }
+	bool GetEndDiscard() const { return endDiscard; }
+	
+	void SetSeparateByAxisScale(bool _flag) { separateByAxisScale = _flag; }
+	bool GetSeparateByAxisScale() const { return separateByAxisScale; }
+
+	void SetMinScale(const Vector3& _minScale) { minScale = _minScale; }
+	const Vector3& GetMinScale() const { return minScale; }
+
+	void SetMaxScale(const Vector3& _maxScale) { maxScale = _maxScale; }
+	const Vector3& GetMaxScale() const { return maxScale; }
+
+	void SetSpeed(float _speed) { speed = _speed; }
+	float GetSpeed() const { return speed; }
+
+	void SetLifeTime(float _lifeTime) { lifeTime = _lifeTime; }
+	float GetLifeTime() const { return lifeTime; }
+
+	void SetGravity(float _gravity) { gravity = _gravity; }
+	float GetGravity() const { return gravity; }
+
+	void SetDampig(float _dampig) { dampig = _dampig; }
+	float GetDampig() const { return dampig; }
+
+	void SetAngleMin(float _angleMin) { angleMin = _angleMin; }
+	float GetAngleMin() const { return angleMin; }
+
+	void SetAngleMax(float _angleMax) { angleMax = _angleMax; }
+	float GetAngleMax() const { return angleMax; }
+
+	void SetIsDirectionRotate(bool _flag) { isDirectionRotate = _flag; }
+	bool GetIsDirectionRotate() const { return isDirectionRotate; }
+
+	void SetIsLifeOfScale(bool _flag) { isLifeOfScale = _flag; }
+	bool GetIsLifeOfScale() const { return isLifeOfScale; }
+
+	void SetIsLifeOfAlpha(bool _flag) { isLifeOfAlpha = _flag; }
+	bool GetIsLifeOfAlpha() const { return isLifeOfAlpha; }
+
+	void SetIsFadeInOut(bool _flag) { isFadeInOut = _flag; }
+	bool GetIsFadeInOut() const { return isFadeInOut; }
+
+	void SetFadeInTime(float _time) { fadeInTime = _time; }
+	float GetFadeInTime() const { return fadeInTime; }
+
+	void SetFadeOutTime(float _time) { fadeOutTime = _time; }
+	float GetFadeOutTime() const { return fadeOutTime; }
+
+	void SetIsParticleAddBlend(bool _flag) { isParticleAddBlend = _flag; }
+	bool GetIsParticleAddBlend() const { return isParticleAddBlend; }
+
+	void SetIsDraw2d(bool _flag) { isDraw2d = _flag; }
+	bool GetIsDraw2d() const { return isDraw2d; }
+
+	void SetIsBillBord(bool _flag) { isBillBord = _flag; }
+	bool GetIsBillBord() const { return isBillBord; }
+
+	void SetIsScaleUp(bool _flag) { isScaleUp = _flag; }
+	bool GetIsScaleUp() const { return isScaleUp; }
+
+	void SetScaleUpScale(const Vector3& _scale) { scaleUpScale = _scale; }
+	const Vector3& GetScaleUpScale() const { return scaleUpScale; }
+
+	void SetRadius(float _radius) { radius = _radius; }
+	float GetRadius() const { return radius; }
+
+	void SetAngle(float _angle) { angle = _angle; }
+	float GetAngle() const { return angle; }
+
+	void SetHeight(float _height) { height = _height; }
+	float GetHeight() const { return height; }
+
+	void SetSize(const Vector3& _size) { size = _size; }
+	const Vector3& GetSize() const { return size; }
+
+	void SetUseTexture(const std::string& _useTexture) { useTexture = _useTexture; }
+	const std::string& GetUseTexture() const { return useTexture; }
+
+	void SetUseMesh(const std::string& _useMesh) { useMesh = _useMesh; }
+	const std::string& GetUseMesh() const { return useMesh; }
 };
