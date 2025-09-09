@@ -6,6 +6,8 @@
 /// info
 #include "Game/Information/StageInformation.h"
 
+#include "Engine/System/Editer/Window/EditorWindows.h"
+
 /// math
 #include "Engine/Lib/Math/Easing.h"
 
@@ -19,8 +21,10 @@ void Player::Init(Canvas2d *_canvas2d, const Vector2& _pos, const Vector2& _tile
 	type_ = BlockType::Player;
 
 	/// sprite
-	sprite_ = _canvas2d->AddSprite(kPlayerSideTextureName[0], "player", "Sprite_Normal.json", 100, true);
+	sprite_ = _canvas2d->AddSprite(kPlayerSideTextureName[0], "player", "Sprite_Normal.json", 100,true);
+	sprite_->ApplySaveData();
 	sprite_->SetIsFront(true);
+
 	transform_ = sprite_->GetTransform();
 	transform_->SetTranslate(_pos);
 	tileSize_ = _tileSize;
@@ -28,6 +32,8 @@ void Player::Init(Canvas2d *_canvas2d, const Vector2& _pos, const Vector2& _tile
 	/// input handler
 	inputHandler_ = std::make_unique<PlayerInputHandler>();
 	inputHandler_->SetPlayer(this);
+
+	EditorWindows::AddObjectWindow(this,GetName());
 }
 
 void Player::Update()
@@ -70,6 +76,7 @@ void Player::Update()
 void Player::Debug_Gui()
 {
 	ImGui::Text("X : %d\n Y : %d", index_.x, index_.y);
+	sprite_->Debug_Gui();
 }
 
 Vector2 Player::ConvertIndexToPosition(const Vector2Int &_index)

@@ -1,28 +1,28 @@
 {
-    "backGround": {
+    "player": {
         "anchorPoint": {
             "x": 0.5,
             "y": 0.5
         },
         "centerPos": {
-            "x": 640.0,
+            "x": 690.4000244140625,
             "y": 360.0,
             "z": 0.0
         },
         "color": {
             "w": 1.0,
-            "x": 0.6325581073760986,
-            "y": 0.5757407546043396,
-            "z": 0.5619469285011292
+            "x": 0.42751458287239075,
+            "y": 0.4270416498184204,
+            "z": 0.4372093081474304
         },
         "drawRange": {
-            "x": 1280.0,
-            "y": 720.0
+            "x": 512.0,
+            "y": 512.0
         },
-        "isBackGround": true,
+        "isBackGround": false,
         "isFlipX": false,
         "isFlipY": false,
-        "isFront": false,
+        "isFront": true,
         "leftTop": {
             "x": 0.0,
             "y": 0.0
@@ -36,10 +36,10 @@
             "x": 1.0,
             "y": 1.0
         },
-        "textureName": "Game_bg.png",
+        "textureName": "player_right.png",
         "textureSize": {
-            "x": 1280.0,
-            "y": 720.0
+            "x": 512.0,
+            "y": 512.0
         },
         "uvMaxSize": {
             "x": 1.0,

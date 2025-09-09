@@ -1,7 +1,7 @@
 #include "StageSelectSegment.h"
 #include "Engine.h"
 
-void StageSelectSegment::Init(Canvas2d* _canvas2d, int index) {
+void StageSelectSegment::Init(Canvas2d* _canvas2d,int32_t index) {
 	std::string thisName = "StageSelectSegment_" + std::to_string(index);
 	SetName(thisName.c_str());
 	ctx_ = GraphicsContext::GetInstance();

@@ -2,7 +2,7 @@
 #include "Engine.h"
 #include "Engine/Lib/Json/JsonItems.h"
 #include "Game/Scene/GameScene.h"
-#include "Game/UI/StageSelector.h"
+#include "Game/UI/StageSelect/StageSelector.h"
 #include "Game/Manager/GhostEffectManager.h"
 
 ClearScene::ClearScene(){}

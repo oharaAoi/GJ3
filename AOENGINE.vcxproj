@@ -359,8 +359,8 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Game\Tool\MapChipLoader.cpp" />
     <ClCompile Include="Game\Tool\StageEditor.cpp" />
     <ClCompile Include="Game\Tool\StageLoader.cpp" />
-    <ClCompile Include="Game\UI\StageSelectCollection.cpp" />
-    <ClCompile Include="Game\UI\StageSelectSegment.cpp" />
+    <ClCompile Include="Game\UI\StageSelect\StageSelectCollection.cpp" />
+    <ClCompile Include="Game\UI\StageSelect\StageSelectSegment.cpp" />
     <ClCompile Include="Game\UI\TitleUIs.cpp" />
     <ClCompile Include="Game\WorldObject\BackGround.cpp" />
     <ClCompile Include="Game\WorldObject\Skybox.cpp" />
@@ -377,7 +377,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Game\Commands\Player\PlayerMoveCommand.cpp" />
     <ClCompile Include="Game\Input\PlayerInputHandler.cpp" />
     <ClCompile Include="Game\Manager\Collision\Common\MapCollisionSystem.cpp" />
-    <ClCompile Include="Game\UI\StageSelector.cpp" />
+    <ClCompile Include="Game\UI\StageSelect\StageSelector.cpp" />
     <ClCompile Include="Game\Actor\Block\TokenGhost.cpp" />
     <ClCompile Include="Game\StageRender\StageContents.cpp" />
     <ClCompile Include="Game\Manager\Collision\Map\SpecialBlockCollision.cpp" />
@@ -407,6 +407,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Game\UI\Tutorial\Text\CollisionGhost\TextUI_CollisionGhost_Line2.cpp" />
     <ClCompile Include="Game\UI\Tutorial\Text\Goal\TextUI_Goal_Line1.cpp" />
     <ClCompile Include="Game\UI\Tutorial\Text\Goal\TextUI_Goal_Line2.cpp" />
+    <ClCompile Include="Game\UI\StageSelect\StageIndexUI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Camera\StageSelectCamera.h" />
@@ -663,8 +664,8 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Game\Tool\StageEditor.h" />
     <ClInclude Include="Game\Tool\StageLoader.h" />
     <ClInclude Include="Game\UI\Button\ButtonType.h" />
-    <ClInclude Include="Game\UI\StageSelectCollection.h" />
-    <ClInclude Include="Game\UI\StageSelectSegment.h" />
+    <ClInclude Include="Game\UI\StageSelect\StageSelectCollection.h" />
+    <ClInclude Include="Game\UI\StageSelect\StageSelectSegment.h" />
     <ClInclude Include="Game\UI\TitleUIs.h" />
     <ClInclude Include="Game\WorldObject\BackGround.h" />
     <ClInclude Include="Game\WorldObject\Skybox.h" />
@@ -677,7 +678,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Game\Input\PlayerInputHandler.h" />
     <ClInclude Include="Game\Manager\Collision\Common\MapCollisionSystem.h" />
     <ClInclude Include="Game\WorldObject\WorldObjects.h" />
-    <ClInclude Include="Game\UI\StageSelector.h" />
+    <ClInclude Include="Game\UI\StageSelect\StageSelector.h" />
     <ClInclude Include="Game\Actor\Block\TokenGhost.h" />
     <ClInclude Include="Game\StageRender\StageContents.h" />
     <ClInclude Include="Game\Manager\Collision\Map\SpecialBlockCollision.h" />
@@ -711,6 +712,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Game\UI\Tutorial\Text\Goal\TextUI_Goal_Line1.h" />
     <ClInclude Include="Game\UI\Tutorial\Text\Goal\TextUI_Goal_Line2.h" />
     <ClInclude Include="Game\Effect\GhostEffect.h" />
+    <ClInclude Include="Game\UI\StageSelect\StageIndexUI.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Engine\Assets\HLSL\Particle\AccelerationField.CS.hlsl">

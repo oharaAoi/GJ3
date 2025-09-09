@@ -74,6 +74,9 @@ void StageSelectScene::Init(){
 	stageContents_->Init(stageLoader_->GetMaxStageNum());
 	stageContents_->SetStageSelectCollection(stageCollection.get());
 
+	stageIndexUI_ = std::make_unique<StageIndexUI>();
+	stageIndexUI_->Init("StageIndexUI");
+
 	// -------------------------------------------------
 	// ↓ behaviorの初期化
 	// -------------------------------------------------
@@ -137,6 +140,7 @@ void StageSelectScene::Update(){
 	// -------------------------------------------------
 	// ↓ spriteの更新
 	// -------------------------------------------------
+	stageIndexUI_->Update(StageSelector::GetCurrentStageIndex());
 
 	// -------------------------------------------------
 	// ↓ cameraの更新
@@ -199,8 +203,6 @@ void SelectingStageBehavior::Init(){
 }
 
 void SelectingStageBehavior::Update(){
-	/*if(lightFlash_->GetIsFinish()){
-	}*/
 	lightFlash_->Update();
 
 	stageSelector_->Update();

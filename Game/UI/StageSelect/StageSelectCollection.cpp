@@ -1,6 +1,6 @@
 #include "StageSelectCollection.h"
 #include "Engine/System/Editer/Window/EditorWindows.h"
-#include "Game/UI/StageSelector.h"
+#include "Game/UI/StageSelect/StageSelector.h"
 
 void StageSelectCollection::Init(Canvas2d* _canvas2d) {
 	SetName("StageSelectCollection");

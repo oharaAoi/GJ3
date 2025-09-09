@@ -1,0 +1,22 @@
+{
+    "StageIndexUI": {
+        "centerPos": {
+            "x": 588.0,
+            "y": 546.0
+        },
+        "digitNum": 2,
+        "offset": {
+            "x": 29.0,
+            "y": 0.0
+        },
+        "textureName": "stage_number.png",
+        "tileSpriteSize": {
+            "x": 128.0,
+            "y": 128.0
+        },
+        "tileTextureSize": {
+            "x": 71.87999725341797,
+            "y": 71.87999725341797
+        }
+    }
+}

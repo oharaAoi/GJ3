@@ -14,12 +14,13 @@
 #include "Game/WorldObject/Skybox.h"
 #include "Game/WorldObject/WorldObjects.h"
 // ui
-#include "Game/UI/StageSelector.h"
-#include "Game/UI/StageSelectCollection.h"
+#include "Game/UI/StageSelect/StageSelector.h"
+#include "Game/UI/StageSelect/StageSelectCollection.h"
 #include "Game/StageRender/StageContents.h"
 #include "Game/Tool/StageLoader.h"
 #include "Engine/Module/PostEffect/IPostEffect.h"
 #include "Game/Effect/SwirlTransition.h"
+#include "Game/UI/StageSelect/StageIndexUI.h"
 // effect
 #include "Game/Effect/TitleFlashEffect.h"
 
@@ -60,6 +61,8 @@ private:
 	std::unique_ptr<StageContents> stageContents_;
 	std::unique_ptr<StageSelectCollection> stageCollection;
 
+	std::unique_ptr<StageIndexUI> stageIndexUI_;
+
 	// ------------------- effect ------------------- //
 	BaseParticles* particle_;
 
@@ -75,7 +78,7 @@ private:
 	float currentOffsetX_;
 
 public:
-	void SetCurrenOffsetX(float _value) { currentOffsetX_ = _value; }
+	void SetCurrenOffsetX(float _value){ currentOffsetX_ = _value; }
 };
 
 #pragma region Behavior

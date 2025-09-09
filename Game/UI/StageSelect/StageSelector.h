@@ -11,7 +11,7 @@
 /// game
 #include "Game/Actor/Block/BlockWall.h"
 #include "Game/StageRender/StageRenderTarget.h"
-#include "Game/UI/StageSelectCollection.h"
+#include "Game/UI/StageSelect/StageSelectCollection.h"
 #include "Game/StageRender/StageContents.h"
 
 /// math

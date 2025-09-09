@@ -5,7 +5,7 @@
 #include "Engine/Module/Components/Attribute/AttributeGui.h"
 #include "Engine/Module/Components/2d/Canvas2d.h"
 // game
-#include "Game/UI/StageSelectSegment.h"
+#include "Game/UI/StageSelect/StageSelectSegment.h"
 
 /// <summary>
 /// Stageの内容をまとめたクラス
@@ -36,8 +36,9 @@ public:
 		segments_[segmentIndex]->SetStageIndex(stageIndex);
 	}
 
-private:
 
+
+private:
 	const int32_t kMax = 3;
 	int32_t stageNumMax_;
 
@@ -48,7 +49,5 @@ private:
 	float scrollDuration_ = 0.6f;
 
 	float slotSpacing_ = 1280.0f;
-
-
 };
 

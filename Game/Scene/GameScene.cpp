@@ -3,7 +3,7 @@
 #include "Engine/Lib/Json/JsonItems.h"
 #include "Game/Commands/ObjectCommandInvoker.h"
 #include "Game/Input/StageInputHandler.h"
-#include "Game/UI/StageSelector.h"
+#include "Game/UI/StageSelect/StageSelector.h"
 
 std::optional<GameScene::Result> GameScene::s_lastResult_ = std::nullopt;
 
@@ -92,6 +92,17 @@ void GameScene::Init(){
 	// ↓ managerの初期化
 	// -------------------------------------------------
 	ObjectCommandInvoker::GetInstance().Initialize();
+
+	// -------------------------------------------------
+	// ↓ PostEffect の初期化
+	// -------------------------------------------------
+	PostProcess* postProcess = Engine::GetPostProcess();
+	postProcess->SetIsActive(true);
+	postProcess->GetToonMap()->SetIsEnable(true);
+	postProcess->GetBloom()->SetEnable(true);
+	postProcess->GetBloom()->ApplySaveData();
+	postProcess->GetVignette()->SetIsEnable(true);
+	postProcess->GetVignette()->ApplySaveData();
 
 	// -------------------------------------------------
 	// ↓ spriteの初期化

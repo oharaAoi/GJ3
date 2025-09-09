@@ -1,20 +1,20 @@
 {
     "orb": {
         "angle": 27.0,
-        "angleMax": 360.0,
+        "angleMax": 0.0,
         "angleMin": 0.0,
         "color": {
-            "w": 1.0,
+            "w": 0.11372549086809158,
             "x": 1.0,
             "y": 1.0,
             "z": 1.0
         },
-        "damping": 0.0,
+        "damping": -0.019999999552965164,
         "duration": 5.0,
         "emitDirection": 1,
         "emitOrigin": 1,
-        "fadeInTime": 2.0,
-        "fadeOutTime": 2.0,
+        "fadeInTime": 1.2000000476837158,
+        "fadeOutTime": 1.7999999523162842,
         "gravity": 0.0,
         "height": 1.0,
         "isBillBord": false,
@@ -25,7 +25,7 @@
         "isLifeOfScale": false,
         "isLoop": true,
         "isParticleAddBlend": true,
-        "isRandomColor": true,
+        "isRandomColor": false,
         "isScaleUp": false,
         "lifeTime": 8.0,
         "maxScale": {
@@ -51,7 +51,7 @@
             "y": 0.8186047077178955,
             "z": 1.0
         },
-        "rateOverTimeCout": 2,
+        "rateOverTimeCout": 1,
         "rotate": {
             "x": 0.0,
             "y": 0.0,
@@ -76,6 +76,6 @@
             "z": 0.0
         },
         "useMesh": "plane",
-        "useTexture": "circle2.png"
+        "useTexture": "circle2 (2).png"
     }
 }

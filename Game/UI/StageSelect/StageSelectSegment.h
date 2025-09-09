@@ -14,7 +14,7 @@ public:
 	StageSelectSegment() = default;
 	~StageSelectSegment() = default;
 
-	void Init(Canvas2d* _canvas2d, int index);
+	void Init(Canvas2d* _canvas2d,int32_t index);
 
 	void Update();
 
@@ -43,6 +43,7 @@ private:
 	int32_t stageIndex_;
 
 	RenderTargetType rtType_;
-
+public:
+	int32_t getStageIndex() const{ return stageIndex_; }
 };
 
