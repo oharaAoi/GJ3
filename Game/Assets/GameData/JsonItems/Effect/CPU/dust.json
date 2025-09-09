@@ -24,7 +24,7 @@
         "isLifeOfAlpha": false,
         "isLifeOfScale": false,
         "isLoop": true,
-        "isParticleAddBlend": false,
+        "isParticleAddBlend": true,
         "isRandomColor": false,
         "isScaleUp": false,
         "lifeTime": 5.0,
