@@ -204,6 +204,9 @@ void SelectingStageBehavior::Init(){
 
 void SelectingStageBehavior::Update(){
 	lightFlash_->Update();
+	
+	// 点滅が終わるまで入力を受け付けない
+	Input::SetNotAccepted(!lightFlash_->GetIsFinish());
 
 	stageSelector_->Update();
 	host_->SetCurrenOffsetX(stageSelector_->GetCurrentOffsetX());
