@@ -1,10 +1,9 @@
 #include "BackGround.h"
 #include "Engine.h"
-#include "Engine/Module/Components/2d/Canvas2d.h"
 
-void BackGround::Init() {
+void BackGround::Init(Canvas2d* _canvas2d) {
 	SetName("backGround");
-	sprite_ = Engine::GetCanvas2d()->AddSprite("Game_bg.png", "backGround", "Sprite_Normal.json", -10, true);
+	sprite_ = _canvas2d->AddSprite("Game_bg.png", "backGround", "Sprite_Normal.json", -10, true);
 	sprite_->SetIsBackGround(true);
 	sprite_->ApplySaveData();
 

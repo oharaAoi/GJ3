@@ -40,11 +40,11 @@ void Canvas2d::Update() {
 // ↓　描画処理
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
-void Canvas2d::PreDraw() const {
+void Canvas2d::PreDraw(const std::string& psoName) const {
 	for (const auto& it : spriteList_) {
 		if (it->isPreDraw) {
 			if (it->sprite->GetEnable()) {
-				Pipeline* pso = Engine::SetPipeline(PSOType::Sprite, "Sprite_Normal_16.json");
+				Pipeline* pso = Engine::SetPipeline(PSOType::Sprite, psoName);
 				it->sprite->Draw(pso);
 			}
 		}
