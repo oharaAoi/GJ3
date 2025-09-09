@@ -2,6 +2,8 @@
 #include "Engine/Core/GraphicsContext.h"
 
 StageContents::~StageContents() {
+	canvas2ds_.clear();
+	stageRegistries_.clear();
 }
 
 void StageContents::Init(uint32_t maxStageNum) {
@@ -52,6 +54,8 @@ void StageContents::Update() {
 		// segmentの座標から順番を割り出す
 		RenderTargetType type = pStageCollection_->GetRenderTarget(i);
 		postRenderTypes.push_back(type);
+
+		pStageCollection_->SetStageIndexForSegment(i,index);
 
 		// RTVに変更
 		ctx->GetRenderTarget()->TransitionResource(ctx->GetCommandList(), type, D3D12_RESOURCE_STATE_NON_PIXEL_SHADER_RESOURCE, D3D12_RESOURCE_STATE_RENDER_TARGET);

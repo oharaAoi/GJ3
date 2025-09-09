@@ -1,6 +1,6 @@
 #include "StageSelectCollection.h"
 #include "Engine/System/Editer/Window/EditorWindows.h"
-#include "Game/UI/StageSelector.h"
+#include "Game/UI/StageSelect/StageSelector.h"
 
 void StageSelectCollection::Init(Canvas2d* _canvas2d) {
 	SetName("StageSelectCollection");
@@ -14,38 +14,23 @@ void StageSelectCollection::Init(Canvas2d* _canvas2d) {
 		AddChild(segments_[oi].get());
 	}
 
-	// □123□のようにしスクロールのための座標を代入する
-	centerPositions_.insert(centerPositions_.begin(), centerPositions_[0] - (kWindowWidth_ * 0.5f));
-	centerPositions_.push_back(centerPositions_.back() + (kWindowWidth_ * 0.5f));
+	//// □123□のようにしスクロールのための座標を代入する
+	//centerPositions_.insert(centerPositions_.begin(), centerPositions_[0] - (kWindowWidth_ * 0.5f));
+	//centerPositions_.push_back(centerPositions_.back() + (kWindowWidth_ * 0.5f));
 
 	EditorWindows::AddObjectWindow(this, GetName());
 
-	scrollPos_ = 0;
 	slotSpacing_ = 1280.0f;
 }
 
-void StageSelectCollection::Update(float _scrollT, int32_t _scrollDirection) {
-	scrollPos_ = 0;
-	if (_scrollDirection < 0) {
-		scrollPos_ += _scrollT;
-	} else if(_scrollDirection > 0) {
-		scrollPos_ -= _scrollT;
-	}
-
-	for (int i = 0; i < kMax; ++i) {
-		float x = centerPositions_[i + 1].x - slotSpacing_ * scrollPos_;
-		segments_[i]->SetCenterPosX(x);
-	}
-
-	while (scrollPos_ >= 1.0f) {
-		scrollPos_ -= 1.0f;
-		// 先頭を末尾へ回す等：segments_をローテートし、見かけ上の並びを保つ
-		std::rotate(segments_.begin(), segments_.begin() + 1, segments_.end());
-	}
-	while (scrollPos_ <= -1.0f) {
-		scrollPos_ += 1.0f;
-		std::rotate(segments_.rbegin(), segments_.rbegin() + 1, segments_.rend());
-	}
+void StageSelectCollection::Update(float _currentOffset) {
+	// 3枚を配置
+	// 左
+	segments_[0]->SetCenterPosX(centerPositions_[1].x + _currentOffset - slotSpacing_);
+	// 中央
+	segments_[1]->SetCenterPosX(centerPositions_[1].x + _currentOffset);
+	// 右
+	segments_[2]->SetCenterPosX(centerPositions_[1].x + _currentOffset + slotSpacing_);
 }
 
 void StageSelectCollection::Debug_Gui() {

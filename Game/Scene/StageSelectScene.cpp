@@ -2,12 +2,20 @@
 #include "Engine.h"
 #include "Engine/Lib/Json/JsonItems.h"
 #include "Engine/Module/PostEffect/PostProcess.h"
+#include "Game/Manager/GhostSmokeManager.h"
 
 StageSelectScene::StageSelectScene(){}
 StageSelectScene::~StageSelectScene(){ Finalize(); }
 
 void StageSelectScene::Finalize(){
+	PostProcess* postProcess = Engine::GetPostProcess();
+	postProcess->SetIsActive(false);
+	postProcess->GetBloom()->SetIsEnable(false);
+	postProcess->GetVignette()->SetIsEnable(false);
+	postProcess->GetToonMap()->SetIsEnable(false);
+
 	sceneRenderer_->Finalize();
+	GhostSmokeManager::GetInstance()->Finalize();
 	ParticleManager::GetInstance()->Finalize();
 	GpuParticleManager::GetInstance()->Finalize();
 }
@@ -66,6 +74,9 @@ void StageSelectScene::Init(){
 	stageContents_->Init(stageLoader_->GetMaxStageNum());
 	stageContents_->SetStageSelectCollection(stageCollection.get());
 
+	stageIndexUI_ = std::make_unique<StageIndexUI>();
+	stageIndexUI_->Init("StageIndexUI");
+
 	// -------------------------------------------------
 	// ↓ behaviorの初期化
 	// -------------------------------------------------
@@ -75,6 +86,23 @@ void StageSelectScene::Init(){
 	// -------------------------------------------------
 	// ↓ 演出の初期化
 	// ------------------------------------------------
+	PostProcess* postProcess = Engine::GetPostProcess();
+	postProcess->SetIsActive(true);
+
+	auto bloom = postProcess->GetBloom();
+	bloom->SetIsEnable(true);
+	bloom->SetThreshold(0.14f);
+	bloom->SetIntensity(0.25f);
+	bloom->SetGaussianHeightTexelSizeFromFloat(0.f);
+	bloom->SetGaussianWidthTexelSizeFromFloat(0.f);
+
+	auto vignette = postProcess->GetVignette();
+	vignette->SetIsEnable(true);
+	vignette->SetColor({0.0235f,0.0235f,0.031f,1.f});
+	vignette->SetScale(75.100f);
+	vignette->SetPower(0.690f);
+
+	postProcess->GetToonMap()->SetIsEnable(true);
 
 	particle_ = ParticleManager::GetInstance()->CrateParticle("dust");
 	particle_->Reset();
@@ -107,12 +135,12 @@ void StageSelectScene::Update(){
 	}
 
 	stageContents_->Update();
-	stageCollection->Update(scrollT_, scrollDirection_);
-
+	stageCollection->Update(currentOffsetX_);
 
 	// -------------------------------------------------
 	// ↓ spriteの更新
 	// -------------------------------------------------
+	stageIndexUI_->Update(StageSelector::GetCurrentStageIndex());
 
 	// -------------------------------------------------
 	// ↓ cameraの更新
@@ -175,13 +203,10 @@ void SelectingStageBehavior::Init(){
 }
 
 void SelectingStageBehavior::Update(){
-	/*if(lightFlash_->GetIsFinish()){
-	}*/
 	lightFlash_->Update();
 
 	stageSelector_->Update();
-	host_->SetScrollT(stageSelector_->GetScrollT());
-	host_->SetScrollDirection(stageSelector_->GetScrollDirection());
+	host_->SetCurrenOffsetX(stageSelector_->GetCurrentOffsetX());
 
 	if(stageSelector_->IsDecidedStage()){
 		// ステージが決定したら次のシーンへ

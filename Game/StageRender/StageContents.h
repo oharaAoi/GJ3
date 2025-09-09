@@ -5,7 +5,7 @@
 #include "Game/Manager/StageRegistry.h"
 #include "Game/Camera/StageContentCamera.h"
 #include "Game/StageRender/StageRenderTarget.h"
-#include "Game/UI/StageSelectCollection.h"
+#include "Game/UI/StageSelect/StageSelectCollection.h"
 #include "Game/Actor/Player/Player.h"
 
 class StageContents {

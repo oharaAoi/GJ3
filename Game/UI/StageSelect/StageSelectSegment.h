@@ -14,7 +14,7 @@ public:
 	StageSelectSegment() = default;
 	~StageSelectSegment() = default;
 
-	void Init(Canvas2d* _canvas2d, int index);
+	void Init(Canvas2d* _canvas2d,int32_t index);
 
 	void Update();
 
@@ -24,6 +24,9 @@ public:
 
 	void SetCenterPosX(float _posX);
 	const Vector2& GetCenterPos() const { return centerPos_; }
+
+	int32_t GetStageIndex() const{ return stageIndex_; }
+	void SetStageIndex(int32_t index){ stageIndex_ = index; }
 
 	RenderTargetType GetRenderTargetType() const { return rtType_; }
 
@@ -37,7 +40,10 @@ private:
 
 	Vector2 centerPos_ = {640.f, 360.f};
 
-	RenderTargetType rtType_;
+	int32_t stageIndex_;
 
+	RenderTargetType rtType_;
+public:
+	int32_t getStageIndex() const{ return stageIndex_; }
 };
 

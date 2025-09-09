@@ -3,8 +3,7 @@
 #include "Engine/Lib/Json/JsonItems.h"
 #include "Game/Commands/ObjectCommandInvoker.h"
 #include "Game/Input/StageInputHandler.h"
-
-#include "Game/UI/StageSelector.h"
+#include "Game/UI/StageSelect/StageSelector.h"
 
 std::optional<GameScene::Result> GameScene::s_lastResult_ = std::nullopt;
 
@@ -20,6 +19,7 @@ GameScene::~GameScene(){ Finalize(); }
 
 void GameScene::Finalize(){
 	sceneRenderer_->Finalize();
+	ghostEffectManager_->Finalize();
 	ParticleManager::GetInstance()->Finalize();
 	GpuParticleManager::GetInstance()->Finalize();
 }
@@ -94,6 +94,17 @@ void GameScene::Init(){
 	ObjectCommandInvoker::GetInstance().Initialize();
 
 	// -------------------------------------------------
+	// ↓ PostEffect の初期化
+	// -------------------------------------------------
+	PostProcess* postProcess = Engine::GetPostProcess();
+	postProcess->SetIsActive(true);
+	postProcess->GetToonMap()->SetIsEnable(true);
+	postProcess->GetBloom()->SetEnable(true);
+	postProcess->GetBloom()->ApplySaveData();
+	postProcess->GetVignette()->SetIsEnable(true);
+	postProcess->GetVignette()->ApplySaveData();
+
+	// -------------------------------------------------
 	// ↓ spriteの初期化
 	// ------------------------------------------------
 
@@ -102,6 +113,9 @@ void GameScene::Init(){
 
 	dust_ = ParticleManager::GetInstance()->CrateParticle("dust");
 	dust_->Reset();
+
+	ghostEffectManager_ = GhostSmokeManager::GetInstance();
+	ghostEffectManager_->Init();
 
 	swirlTransition_ = std::make_unique<SwirlTransition>();
 	swirlTransition_->Init();
@@ -235,6 +249,8 @@ void GameScene::Update(){
 	// -------------------------------------------------
 	sceneRenderer_->Update();
 
+	ghostEffectManager_->Update();
+
 	// -------------------------------------------------
 	// ↓ 最後に行いたい更新
 	// -------------------------------------------------
@@ -249,6 +265,8 @@ void GameScene::Update(){
 void GameScene::Draw() const{
 	// Sceneの描画
 	sceneRenderer_->Draw();
+
+	ghostEffectManager_->Draw();
 }
 
 void GameScene::ChengeScene()

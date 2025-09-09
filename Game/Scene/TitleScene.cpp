@@ -2,6 +2,7 @@
 #include "Engine.h"
 #include "Engine/System/Input/Input.h"
 #include "Engine/Lib/Json/JsonItems.h"
+#include "Game/Manager/GhostSmokeManager.h"
 
 #include "Engine.h"
 
@@ -14,7 +15,14 @@ TitleScene::~TitleScene(){
 }
 
 void TitleScene::Finalize(){
+	PostProcess* postProcess = Engine::GetPostProcess();
+	postProcess->SetIsActive(false);
+	postProcess->GetBloom()->SetIsEnable(false);
+	postProcess->GetVignette()->SetIsEnable(false);
+	postProcess->GetToonMap()->SetIsEnable(false);
+
 	sceneRenderer_->Finalize();
+	GhostSmokeManager::GetInstance()->Finalize();
 	ParticleManager::GetInstance()->Finalize();
 	GpuParticleManager::GetInstance()->Finalize();
 }

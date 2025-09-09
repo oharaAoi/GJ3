@@ -1,7 +1,7 @@
 #include "StageSelectSegment.h"
 #include "Engine.h"
 
-void StageSelectSegment::Init(Canvas2d* _canvas2d, int index) {
+void StageSelectSegment::Init(Canvas2d* _canvas2d,int32_t index) {
 	std::string thisName = "StageSelectSegment_" + std::to_string(index);
 	SetName(thisName.c_str());
 	ctx_ = GraphicsContext::GetInstance();
@@ -21,7 +21,10 @@ void StageSelectSegment::Init(Canvas2d* _canvas2d, int index) {
 	stageContent_ = _canvas2d->AddSprite("white.png", "StagePreview", "Sprite_Normal.json", 2, true);
 	stageContent_->SetTextureResource(ctx_->GetRenderTarget()->GetRenderTargetResource(type));
 	stageContent_->ApplySaveData();
-	stageContent_->ReSetTextureSize({ kWindowWidth_ * 0.3f,kWindowHeight_ * 0.3f });
+	stageContent_->ReSetTextureSize({ kWindowWidth_ * 0.34f ,kWindowHeight_ * 0.34f});
+
+	backGround_->SetColor({0.494f,0.494f,0.494f,1.f});
+	pictureFrame_->SetColor({0.67f,0.67f,0.67f,1.f});
 
 	// 座標を設定
 	centerPos_.x = (kWindowWidth_ * 0.5f) + (kWindowWidth_ * (index - 1));

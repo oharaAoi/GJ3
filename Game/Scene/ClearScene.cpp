@@ -2,9 +2,10 @@
 #include "Engine.h"
 #include "Engine/Lib/Json/JsonItems.h"
 #include "Game/Scene/GameScene.h"
-#include "Game/UI/StageSelector.h"
+#include "Game/UI/StageSelect/StageSelector.h"
+#include "Game/Manager/GhostSmokeManager.h"
 
-ClearScene::ClearScene(){}
+ClearScene::ClearScene() {}
 
 ClearScene::~ClearScene() { Finalize(); }
 
@@ -14,7 +15,7 @@ ClearScene::~ClearScene() { Finalize(); }
 
 void ClearScene::Init()
 {
-	JsonItems* adjust = JsonItems::GetInstance();
+	JsonItems *adjust = JsonItems::GetInstance();
 	adjust->Init("StageSelectScene");
 
 	// -------------------------------------------------
@@ -41,20 +42,22 @@ void ClearScene::Init()
 	// -------------------------------------------------
 
 	// GameSceneからの値を取得
-	if (const auto& opt = GameScene::LastResult()) {
+	if (const auto &opt = GameScene::LastResult())
+	{
 		ghostCount_ = opt->ghostCount;
 	}
 
 	ghostSoulManager_ = std::make_unique<GhostSoulManager>();
 	ghostSoulManager_->InitClearScene(Engine::GetCanvas2d());
-	for (int i = 0; i < ghostCount_; ++i) {
-		ghostSoulManager_->CreateSoul(Vector2{ 64.0f,64.0f }, true);
+	for (int i = 0; i < ghostCount_; ++i)
+	{
+		ghostSoulManager_->CreateSoul(Vector2{64.0f, 64.0f}, true);
 	}
-	ghostSoulManager_->SetPosition(Vector2{ 640.0f,360.0f });
+	ghostSoulManager_->SetPosition(Vector2{640.0f, 360.0f});
 
 	worldObjects_ = std::make_unique<WorldObjects>();
 	worldObjects_->Init();
-	//worldObjects_->SetTexture("clear.png");
+	// worldObjects_->SetTexture("clear.png");
 
 	clearSelector_ = std::make_unique<ClearSelector>();
 	clearSelector_->Init();
@@ -62,12 +65,12 @@ void ClearScene::Init()
 	bgm_ = std::make_unique<AudioPlayer>();
 	bgm_->Init("Clear.mp3");
 	bgm_->Play(true, 0.5f);
-
 }
 
 void ClearScene::Finalize()
 {
 	sceneRenderer_->Finalize();
+	GhostSmokeManager::GetInstance()->Finalize();
 	ParticleManager::GetInstance()->Finalize();
 	GpuParticleManager::GetInstance()->Finalize();
 }
@@ -92,9 +95,12 @@ void ClearScene::Update()
 	// -------------------------------------------------
 	// ↓ cameraの更新
 	// -------------------------------------------------
-	if (debugCamera_->GetIsActive()) {
+	if (debugCamera_->GetIsActive())
+	{
 		debugCamera_->Update();
-	} else {
+	}
+	else
+	{
 		camera3d_->Update();
 	}
 	camera2d_->Update();
@@ -124,15 +130,19 @@ void ClearScene::Draw() const
 void ClearScene::ChengeScene()
 {
 	// ステージ選択されているか
-	if (clearSelector_->GetChangeScene() || clearSelector_->GetChangeStage()) {
+	if (clearSelector_->GetChangeScene() || clearSelector_->GetChangeStage())
+	{
 		// 遷移の実行が可能か
-		if (clearSelector_->GetIsExecute()) {
+		if (clearSelector_->GetIsExecute())
+		{
 			// セレクトシーンに遷移
-			if (clearSelector_->GetChangeScene()) {
+			if (clearSelector_->GetChangeScene())
+			{
 				nextSceneType_ = SceneType::STAGE_SELECT;
 			}
 			// 次のステージに遷移
-			if (clearSelector_->GetChangeStage()) {
+			if (clearSelector_->GetChangeStage())
+			{
 				nextSceneType_ = SceneType::GAME;
 				int32_t index = StageSelector::GetCurrentStageIndex() + 1;
 				StageSelector::SetCurrentStageIndex(index);

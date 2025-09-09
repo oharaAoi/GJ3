@@ -1,0 +1,25 @@
+{
+    "GhostEffect": {
+        "baseTexture": "smoke2.png",
+        "color": {
+            "w": 1.0,
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+        },
+        "dissolveColor": {
+            "w": 1.0,
+            "x": 0.4555976092815399,
+            "y": 0.8212348818778992,
+            "z": 0.8372092843055725
+        },
+        "dissolveTexture": "FireNoize.png",
+        "edgeColor": {
+            "w": 0.0,
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+        },
+        "threshold": 1.069537878036499
+    }
+}

@@ -5,7 +5,7 @@
 #include "Engine/Module/Components/Attribute/AttributeGui.h"
 #include "Engine/Module/Components/2d/Canvas2d.h"
 // game
-#include "Game/UI/StageSelectSegment.h"
+#include "Game/UI/StageSelect/StageSelectSegment.h"
 
 /// <summary>
 /// Stageの内容をまとめたクラス
@@ -22,9 +22,8 @@ public:
 	/// <summary>
 	/// 
 	/// </summary>
-	/// <param name="_leftTime">: 残り時間</param>
-	/// <param name="scrollDirection">: 方向</param>
-	void Update(float _scrolT, int32_t _scrollDirection);
+	/// <param name="_currentOffset">: 現在の差分</param>
+	void Update(float _currentOffset);
 
 	void Debug_Gui() override;
 
@@ -32,8 +31,14 @@ public:
 
 	void SortSegments();
 
-private:
+	void SetStageIndexForSegment(int32_t segmentIndex, int32_t stageIndex) {
+		if (segmentIndex < 0 || segmentIndex >= segments_.size()) return;
+		segments_[segmentIndex]->SetStageIndex(stageIndex);
+	}
 
+
+
+private:
 	const int32_t kMax = 3;
 	int32_t stageNumMax_;
 
@@ -43,9 +48,6 @@ private:
 
 	float scrollDuration_ = 0.6f;
 
-	float scrollPos_;
 	float slotSpacing_ = 1280.0f;
-
-
 };
 
