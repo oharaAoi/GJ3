@@ -2,6 +2,7 @@
 #include "Engine.h"
 #include "Engine/Core/GraphicsContext.h"
 #include "Engine/System/Manager/TextureManager.h"
+#include "Engine/Lib/Math/MyRandom.h"
 
 ScreenGotRay::~ScreenGotRay() {
 	cBuffer_->Finalize();
@@ -32,7 +33,8 @@ void ScreenGotRay::Init() {
 
 void ScreenGotRay::SetCommand(ID3D12GraphicsCommandList* commandList, DxResource* pingResource) {
 	CopyData();
-	setting_->time = GameTimer::DeltaTime();
+	setting_->time += GameTimer::DeltaTime();
+	//setting_->seed = RandomFloat(0.5f, 1.0f);
 
 	Pipeline* pso = Engine::SetPipeline(PSOType::ProcessedScene, "PostProcess_GotRay.json");
 	UINT index = pso->GetRootSignatureIndex("g_SceneTex");
@@ -75,7 +77,7 @@ void ScreenGotRay::Debug_Gui() {
 		ImGui::DragFloat("Seed", &param_.seed, 0.01f, 0.0f, 10.0f);
 
 		// 時間（デバッグ用）
-		ImGui::DragFloat("Time", &param_.time, 0.01f, 0.0f, 100.0f);
+		ImGui::DragFloat("Time", &setting_->time, 0.01f);
 
 		if (ImGui::Button("Save##gotRay_save")) {
 			param_.isEnable = isEnable_;
@@ -105,7 +107,6 @@ void ScreenGotRay::CopyData() {
 	setting_->ray1Density = param_.ray1Density;
 	setting_->ray2Density = param_.ray2Density;
 	setting_->ray3Density = param_.ray3Density;
-	setting_->seed = param_.seed;
 }
 
 void ScreenGotRay::SetRayDensity(float _value, uint16_t index) {

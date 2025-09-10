@@ -66,9 +66,9 @@ PixelShaderOutput main(VertexShaderOutput input) {
 
     // Ray coords
 	float2 ray1 = float2(transformed.x * gGotRay.ray1Density +
-                         sin(gGotRay.time * 0.1 * gGotRay.speed) * (gGotRay.ray1Density * 0.2) + gGotRay.seed, 1.0);
+                         sin(gGotRay.time * 0.3 * gGotRay.speed) * (gGotRay.ray1Density * 0.2) + gGotRay.seed, 1.0);
 	float2 ray2 = float2(transformed.x * gGotRay.ray2Density +
-                         sin(gGotRay.time * 0.5 * gGotRay.speed) * (gGotRay.ray2Density * 0.2) + gGotRay.seed, 1.0);
+                         sin(gGotRay.time * 0.8 * gGotRay.speed) * (gGotRay.ray2Density * 0.2) + gGotRay.seed, 1.0);
 
     // Cutoff
 	float cut = step(gGotRay.cutoff, transformed.x) * step(gGotRay.cutoff, 1.0 - transformed.x);

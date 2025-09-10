@@ -14,18 +14,21 @@ public:
 	struct GotRaySetting {
 		Vector4 color;
 		Vector2 pos;
-		float pad[2];
 		float angle;	// 光の角度
 		float spread;	// 光の広がり
+
 		float cutoff;	// 光筋のカットオフ
 		float falloff;	// 下方向へのフェード
 		float edgeFade;	// 左右端のフェード
 		float speed;
+
 		float ray1Density;
 		float ray2Density;
 		float ray3Density;
 		float seed;
+
 		float time;
+		float pad[3];
 	};
 
 	struct GotRayParam : public IJsonConverter {
