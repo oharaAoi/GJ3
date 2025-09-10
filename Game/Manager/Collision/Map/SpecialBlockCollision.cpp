@@ -71,11 +71,13 @@ void SpecialBlockCollision::RecursionBlockChecker(const Vector2Int& _index)
 		// おばけが出来ているなら作成する
 		for (auto& pair : system_->GetPairIndex()) {
 			Vector2Int ghostIndex = system_->SearchGhostIndex(pair);
+			if (!system_->OutOfRangeReference(ghostIndex)) { continue; }
 			if (data[ghostIndex.y][ghostIndex.x] == nullptr ||
 				(data[ghostIndex.y][ghostIndex.x]->GetType() != BlockType::NormalBlock &&
 					data[ghostIndex.y][ghostIndex.x]->GetType() != BlockType::GhostBlock &&
 					data[ghostIndex.y][ghostIndex.x]->GetType() != BlockType::SpecialBlock &&
-					data[ghostIndex.y][ghostIndex.x]->GetType() != BlockType::LimitBlock)) {
+					data[ghostIndex.y][ghostIndex.x]->GetType() != BlockType::LimitBlock &&
+					data[ghostIndex.y][ghostIndex.x]->GetType() != BlockType::Ghost)) {
 				// ブロックを押したタイミングでゴーストに当たっているなら
 				if (system_->CheckLimitBlock(ghostIndex)) {
 					const auto& playerIndex = system_->GetPlayerIndex();
