@@ -6,9 +6,8 @@
 
 void TextUI_Move_Line3::Init()
 {
-	textUI_ = Engine::GetCanvas2d()->AddSprite("Tutorial_MoveText03.png", GetName(), "Sprite_Normal.json", 200);
-
 	SetName("TextUI_Move_Line3");
+	textUI_ = Engine::GetCanvas2d()->AddSprite("Tutorial_MoveText03.png", GetName(), "Sprite_Normal.json", 200);
 	AddChild(textUI_);
 	EditorWindows::AddObjectWindow(textUI_, GetName());
 

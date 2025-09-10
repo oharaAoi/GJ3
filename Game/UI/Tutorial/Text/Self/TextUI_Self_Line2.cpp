@@ -6,9 +6,8 @@
 
 void TextUI_Self_Line2::Init()
 {
-	textUI_ = Engine::GetCanvas2d()->AddSprite("Tutorial_SelfText02.png", GetName(), "Sprite_Normal.json", 200);
-
 	SetName("TextUI_Self_Line2");
+	textUI_ = Engine::GetCanvas2d()->AddSprite("Tutorial_SelfText02.png", GetName(), "Sprite_Normal.json", 200);
 	AddChild(textUI_);
 	EditorWindows::AddObjectWindow(textUI_, GetName());
 

@@ -6,9 +6,8 @@
 
 void TextUI_Goal_Line1::Init()
 {
-	textUI_ = Engine::GetCanvas2d()->AddSprite("Tutorial_GoalText01.png", GetName(), "Sprite_Normal.json", 200);
-
 	SetName("TextUI_Goal_Line1");
+	textUI_ = Engine::GetCanvas2d()->AddSprite("Tutorial_GoalText01.png", GetName(), "Sprite_Normal.json", 200);
 	AddChild(textUI_);
 	EditorWindows::AddObjectWindow(textUI_, GetName());
 

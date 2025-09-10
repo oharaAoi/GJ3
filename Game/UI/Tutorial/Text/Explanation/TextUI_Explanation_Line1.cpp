@@ -6,9 +6,9 @@
 
 void TextUI_Explanation_Line1::Init()
 {
+	SetName("TextUI_Explanation_Line1");
 	textUI_ = Engine::GetCanvas2d()->AddSprite("Tutorial_ExplanationText01.png", GetName(), "Sprite_Normal.json", 200);
 
-	SetName("TextUI_Explanation_Line1");
 	AddChild(textUI_);
 	EditorWindows::AddObjectWindow(textUI_, GetName());
 
