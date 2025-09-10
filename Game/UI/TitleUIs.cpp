@@ -39,11 +39,6 @@ void TitleUIs::Init(){
 		titleWords_[i]->ApplySaveData();
 		AddChild(titleWords_[i]);
 	}
-	/*titleWords_[0]->SetAnchorPoint({ 0.9f,0.1f });
-	titleWords_[1]->SetAnchorPoint({ 0.5f,0.1f });
-	titleWords_[2]->SetAnchorPoint({ 0.9f,0.1f });
-	titleWords_[3]->SetAnchorPoint({ 0.1f,0.1f });
-	titleWords_[4]->SetAnchorPoint({ 0.5f,0.1f });*/
 	AddChild(spaceKey_);
 	AddChild(shelf_);
 	AddChild(ghost_);
@@ -52,10 +47,10 @@ void TitleUIs::Init(){
 	shelf_->ApplySaveData();
 	backGround_->ApplySaveData();
 
-	spaceKey_->SetAnchorPoint({1.f,1.f});
-	shelf_->SetAnchorPoint({1.f,1.f});
-	ghost_->SetAnchorPoint({1.f,1.f});
-	backGround_->SetAnchorPoint({1.f,1.f});
+	spaceKey_->SetTranslate(Vector2{ kWindowWidth_ / 2.0f,kWindowHeight_ / 2.0f });
+	shelf_->SetTranslate(Vector2{ kWindowWidth_ / 2.0f,kWindowHeight_ / 2.0f });
+	ghost_->SetTranslate(Vector2{ kWindowWidth_ / 2.0f,kWindowHeight_ / 2.0f });
+	backGround_->SetTranslate(Vector2{ kWindowWidth_ / 2.0f,kWindowHeight_ / 2.0f });
 
 	EditorWindows::AddObjectWindow(this,GetName());
 }
