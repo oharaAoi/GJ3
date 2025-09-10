@@ -61,6 +61,7 @@ public:
 private:
 
 	Sprite* resetButtonUI_ = nullptr;
+	Sprite* resetIcon_ = nullptr;
 
 	Sprite* backTextureUI_ = nullptr;
 

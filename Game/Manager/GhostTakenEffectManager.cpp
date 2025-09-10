@@ -47,6 +47,7 @@ void GhostTakenEffectManager::Create(const Vector2& pos, const Vector2& tileSize
 
 	auto& newEffect = ghostTakenEffect_.emplace_back(std::make_unique<GhostTakenEffect>());
 	newEffect->Init(pos, tileSize);
+	newEffect->ApplySaveData("GhostEffect");
 }
 
 void GhostTakenEffectManager::Debug_Gui() {

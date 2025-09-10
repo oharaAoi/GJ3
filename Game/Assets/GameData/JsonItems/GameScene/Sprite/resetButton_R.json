@@ -1,19 +1,19 @@
 {
-    "Undo_Keyboard": {
+    "resetButton_R": {
         "anchorPoint": {
             "x": 0.5,
             "y": 0.5
         },
         "centerPos": {
-            "x": 119.80000305175781,
+            "x": 1115.300048828125,
             "y": 520.7000122070313,
             "z": 0.0
         },
         "color": {
             "w": 1.0,
-            "x": 0.7647058963775635,
-            "y": 0.7647058963775635,
-            "z": 0.7647058963775635
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
         },
         "drawRange": {
             "x": 167.0,
@@ -36,7 +36,7 @@
             "x": 1.0,
             "y": 1.0
         },
-        "textureName": "Game_undo_k.png",
+        "textureName": "resetButton_R.png",
         "textureSize": {
             "x": 137.0,
             "y": 137.0

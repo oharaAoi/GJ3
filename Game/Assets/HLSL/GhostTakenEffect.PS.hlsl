@@ -76,16 +76,18 @@ PixelShaderOutput main(VertexShaderOutput input) {
 	// -----------------------------
 	
 	float mask = gMaskTexture.Sample(gSampler, input.texcoord).r;
+	if (mask < 0.01f) {
+		discard;
+	}
 
 	// -----------------------------
 	// 最終画像の計算
 	// -----------------------------
 	
-	output.color = gBaseTexture.Sample(gSampler, transformedUV.xy);
+	output.color = gBaseTexture.Sample(gSampler, newUV.xy);
 	output.color = lerp(output.color, gDissolve.color, mask);
 	// edge部分ならedgeColorを足す
 	output.color.rgb += edge * gDissolve.edgeColor.rgb;
-	output.color.a = gMaterial.color.a * textureColor.a;
 	output.color = clamp(output.color, 0.0f, 1.0f);
 	
 	if (textureColor.a <= 0.01f) {

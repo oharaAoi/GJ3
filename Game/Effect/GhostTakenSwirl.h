@@ -41,9 +41,12 @@ public:
 		Vector4 dissolveColor = { 1,1,1,1 };
 		Vector4 edgeColor = { 1,1,1,1 };
 		float threshold = 0.0f;
+		float swirlStrength = 0.0f;
+		float timeRate = 0.0f;
 
 		std::string baseTexture = "white.png";
 		std::string dissolveTexture = "white.png";
+		std::string maskTexture = "white.png";
 
 		SaveItems() { SetName("GhostEffect"); }
 
@@ -53,8 +56,11 @@ public:
 				.Add("dissolveColor", dissolveColor)
 				.Add("edgeColor", edgeColor)
 				.Add("threshold", threshold)
+				.Add("swirlStrength", swirlStrength)
+				.Add("timeRate", timeRate)
 				.Add("baseTexture", baseTexture)
 				.Add("dissolveTexture", dissolveTexture)
+				.Add("maskTexture", maskTexture)
 				.Build();
 		}
 
@@ -63,8 +69,11 @@ public:
 			fromJson(jsonData, "dissolveColor", dissolveColor);
 			fromJson(jsonData, "edgeColor", edgeColor);
 			fromJson(jsonData, "threshold", threshold);
+			fromJson(jsonData, "swirlStrength", swirlStrength);
+			fromJson(jsonData, "timeRate", timeRate);
 			fromJson(jsonData, "baseTexture", baseTexture);
 			fromJson(jsonData, "dissolveTexture", dissolveTexture);
+			fromJson(jsonData, "maskTexture", maskTexture);
 		}
 	};
 

@@ -15,7 +15,7 @@ public:
 	struct AnimationItems : public IJsonConverter {
 		float duration = 10;
 
-		AnimationItems() { SetName("GhosttTakenAnimation"); }
+		AnimationItems() { SetName("GhostTakenAnimation"); }
 
 		json ToJson(const std::string& id) const override {
 			return JsonBuilder(id)
@@ -52,9 +52,9 @@ public:
 
 private:
 
-	std::unique_ptr<GhostTakenSwirl> ghostEffect_[2];
-
+	std::unique_ptr<GhostTakenSwirl> ghostEffect_;
 	bool isDestroy_;
+
 	AnimationItems animationItems_;
 	float lifeTimer_;
 

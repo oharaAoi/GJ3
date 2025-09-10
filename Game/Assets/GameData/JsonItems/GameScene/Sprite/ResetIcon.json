@@ -1,23 +1,23 @@
 {
-    "Undo_Keyboard": {
+    "ResetIcon": {
         "anchorPoint": {
             "x": 0.5,
             "y": 0.5
         },
         "centerPos": {
-            "x": 119.80000305175781,
-            "y": 520.7000122070313,
+            "x": 1104.0,
+            "y": 407.20001220703125,
             "z": 0.0
         },
         "color": {
             "w": 1.0,
-            "x": 0.7647058963775635,
-            "y": 0.7647058963775635,
-            "z": 0.7647058963775635
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
         },
         "drawRange": {
-            "x": 167.0,
-            "y": 167.0
+            "x": 160.0,
+            "y": 90.0
         },
         "isBackGround": false,
         "isFlipX": false,
@@ -36,10 +36,10 @@
             "x": 1.0,
             "y": 1.0
         },
-        "textureName": "Game_undo_k.png",
+        "textureName": "reset_text.png",
         "textureSize": {
-            "x": 137.0,
-            "y": 137.0
+            "x": 160.0,
+            "y": 90.0
         },
         "uvMaxSize": {
             "x": 1.0,

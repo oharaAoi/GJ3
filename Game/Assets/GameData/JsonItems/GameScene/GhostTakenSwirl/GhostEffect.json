@@ -1,0 +1,28 @@
+{
+    "GhostEffect": {
+        "baseTexture": "smoke.png",
+        "color": {
+            "w": 1.0,
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+        },
+        "dissolveColor": {
+            "w": 1.0,
+            "x": 0.0,
+            "y": 0.986046552658081,
+            "z": 1.0
+        },
+        "dissolveTexture": "swrilflash.png",
+        "edgeColor": {
+            "w": 1.0,
+            "x": 0.14704659581184387,
+            "y": 0.6232558488845825,
+            "z": 0.09276366233825684
+        },
+        "maskTexture": "monokuro.png",
+        "swirlStrength": 6.0,
+        "threshold": 0.47999998927116394,
+        "timeRate": 6.0
+    }
+}

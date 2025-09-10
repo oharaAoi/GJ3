@@ -9,23 +9,25 @@
 
 void StageResetUI::Init(Canvas2d* _canvas2d)
 {
-	pCanvas2d_ = _canvas2d;
-	resetButtonUI_ = pCanvas2d_->AddSprite("resetButton_R.png", GetName(), "Sprite_Normal.json", 6);
-
-	backTextureUI_ = pCanvas2d_->AddSprite("white.png", GetName(), "Sprite_Normal.json", 5);
-
 	SetName("StageResetButtonUI");
-	AddChild(this);
 	EditorWindows::AddObjectWindow(this, GetName());
+
+	pCanvas2d_ = _canvas2d;
+	resetButtonUI_ = pCanvas2d_->AddSprite("resetButton_R.png", "resetButton_R", "Sprite_Normal.json", 6);
+	resetButtonUI_->ApplySaveData();
+	AddChild(resetButtonUI_);
+
+	resetIcon_ = pCanvas2d_->AddSprite("reset_text.png","ResetIcon","Sprite_Normal.json",7);
+	resetIcon_->ApplySaveData();
+	AddChild(resetIcon_);
+
+	backTextureUI_ = pCanvas2d_->AddSprite("white.png", "backTexture", "Sprite_Normal.json", 5);
+	backTextureUI_->ApplySaveData();
+	backTextureUI_->ReSetTextureSize(backTextureUI_->GetTextureSize());
+	//backTextureUI_->ApplySaveData();
+	AddChild(backTextureUI_);
+
 	param_.FromJson(JsonItems::GetData(GetName(), param_.GetName()));
-
-	backTextureUI_->SetColor(param_.backColor);
-	backTextureUI_->ReSetTextureSize(textureSize_ * 0.8f);
-	resetButtonUI_->ReSetTextureSize(textureSize_);
-
-	Vector2 windowSize = { kWindowWidth_, kWindowHeight_ };
-	backTextureUI_->SetTranslate(Vector2{ windowSize - textureSize_ });
-	resetButtonUI_->SetTranslate(Vector2{ windowSize - textureSize_ });
 
 	Update();
 }
@@ -57,7 +59,6 @@ void StageResetUI::Update()
 	}
 	resetTimer_ = std::clamp(resetTimer_, 0.0f, 1.0f);
 	backTextureUI_->SetUvMinSize({ 0.0f,1.0f - resetTimer_ });
-	backTextureUI_->SetColor(param_.backColor);
 
 	// 押したらぷにっと
 	if (isPush_) {
