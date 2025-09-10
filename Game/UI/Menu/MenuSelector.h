@@ -41,6 +41,9 @@ public:
 
 	void Reset();
 
+	bool GetKeyInput()const{ return isKeyInput_; }
+	bool GetPadInput()const{ return isPadInput_; }
+	bool GetOpenTrigger()const{ return openTrigger_; }
 private:
 
 	bool ProcessRepeat(bool pressed, bool& wasPressed, float& holdTime, float dt)const;
@@ -50,7 +53,11 @@ private:
 	// メニュー画面のUI
 	std::unique_ptr<MenuUIs> menuUIs_ = nullptr;
 
+	bool isKeyInput_ = false;
+	bool isPadInput_ = false;
+
 	// メニューを開いているか
+	bool openTrigger_ = false;
 	bool openMenu_ = false;
 	// 入力しているか
 	float repeatDelay_ = 0.35f;		// 初回リピートまでの遅延秒

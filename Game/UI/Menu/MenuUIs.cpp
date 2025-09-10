@@ -17,7 +17,7 @@ void MenuUIs::Init()
 	EditorWindows::AddObjectWindow(this, GetName());
 
 	// ボタン生成、初期化
-	menu_ = Engine::GetCanvas2d()->AddSprite("Menu_bg.png", GetName(), "Sprite_Normal.json", 10);
+	menu_ = Engine::GetCanvas2d()->AddSprite("Menu_bg.png", GetName(), "Sprite_Normal.json", 1000);
 	menu_->SetTranslate(Vector2{ 640.0f,360.0f });
 	buttonUIs_[0] = std::make_unique<SelectButtonUI>();
 	buttonUIs_[1] = std::make_unique<ResetButtonUI>();

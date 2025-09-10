@@ -169,6 +169,9 @@ void GameScene::Init()
 
 void GameScene::Update()
 {
+	// UI Input
+	bool padIsInput = false;
+	bool keyIsInput = false;
 
 	// -------------------------------------------------
 	// ↓ actorの更新
@@ -216,13 +219,15 @@ void GameScene::Update()
 		stageResetUI_->Update();
 	}
 
+
+	if(menuSelector_->GetOpenTrigger()){
+		gameUIs_->ActiveInputMenu();
+		padIsInput = menuSelector_->GetPadInput();
+		keyIsInput = menuSelector_->GetKeyInput();
+	}
+
 	if (!menuSelector_->GetOpenMenu())
 	{
-
-		// UI Input
-		bool padIsInput = false;
-		bool keyIsInput = false;
-
 		// Command
 		UndoRedoState state = ObjectCommandInvoker::GetInstance().InputHandle(padIsInput, keyIsInput);
 
@@ -237,12 +242,14 @@ void GameScene::Update()
 			ObjectCommandInvoker::GetInstance().UndoCommand();
 			resetTimer_ = 0.f;
 			AudioPlayer::SinglShotPlay("button.mp3", 0.5f);
+			gameUIs_->ActiveInputUndo();
 		}
 		else if (state == UndoRedoState::REDO)
 		{
 			resetTimer_ = 0.f;
 			ObjectCommandInvoker::GetInstance().RedoCommand();
 			AudioPlayer::SinglShotPlay("button.mp3", 0.5f);
+			gameUIs_->ActiveInputRedo();
 		}
 		else
 		{
@@ -267,9 +274,9 @@ void GameScene::Update()
 				ghostSoulManager_->DeleteBackSoul();
 			}
 		}
-		gameUIs_->Update(keyIsInput, padIsInput);
 	}
 
+	gameUIs_->Update(keyIsInput, padIsInput);
 	getGhostCountUI_->Update(mapCollision_->GetGhostCounter(), stageRegistry_->GetNeedGhostNum());
 
 	// クリア条件を満たしているかの判定
