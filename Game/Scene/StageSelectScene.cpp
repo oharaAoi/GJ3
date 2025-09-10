@@ -9,11 +9,7 @@ StageSelectScene::StageSelectScene(){}
 StageSelectScene::~StageSelectScene(){ Finalize(); }
 
 void StageSelectScene::Finalize(){
-	PostProcess* postProcess = Engine::GetPostProcess();
-	postProcess->SetIsActive(false);
-	postProcess->GetBloom()->SetIsEnable(false);
-	postProcess->GetVignette()->SetIsEnable(false);
-	postProcess->GetToonMap()->SetIsEnable(false);
+	Engine::GetPostProcess()->SetAllEnable(false);
 
 	sceneRenderer_->Finalize();
 	GhostSmokeManager::GetInstance()->Finalize();

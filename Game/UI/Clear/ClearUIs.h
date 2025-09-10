@@ -59,8 +59,10 @@ private:
 
 	// Clear_text
 	Sprite* text_ = nullptr;
-	// Clear_pot
+	// pot
 	Sprite* pot_ = nullptr;
+	// potion
+	Sprite* potion_ = nullptr;
 	// Clear_curtain
 	Sprite* curtain_ = nullptr;
 	// Clear_bg

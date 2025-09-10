@@ -1,8 +1,8 @@
 {
-    "backGround": {
+    "BackGround": {
         "anchorPoint": {
-            "x": 1.0,
-            "y": 1.0
+            "x": 0.5,
+            "y": 0.5
         },
         "centerPos": {
             "x": 640.0,
@@ -11,15 +11,15 @@
         },
         "color": {
             "w": 1.0,
-            "x": 1.0,
-            "y": 1.0,
-            "z": 1.0
+            "x": 0.7906976938247681,
+            "y": 0.7906976938247681,
+            "z": 0.7906976938247681
         },
         "drawRange": {
             "x": 1280.0,
             "y": 720.0
         },
-        "isBackGround": true,
+        "isBackGround": false,
         "isFlipX": false,
         "isFlipY": false,
         "isFront": false,
@@ -36,7 +36,7 @@
             "x": 1.0,
             "y": 1.0
         },
-        "textureName": "backGround.png",
+        "textureName": "Clear_bg.png",
         "textureSize": {
             "x": 1280.0,
             "y": 720.0

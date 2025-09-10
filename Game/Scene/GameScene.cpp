@@ -21,9 +21,12 @@ GameScene::~GameScene() { Finalize(); }
 
 void GameScene::Finalize()
 {
+	Engine::GetPostProcess()->SetAllEnable(false);
+
 	sceneRenderer_->Finalize();
 	ghostEffectManager_->Finalize();
 	limitBlockEffectManager_->Finalize();
+	ghostTakenEffectManager_->Finalize();
 	ParticleManager::GetInstance()->Finalize();
 	GpuParticleManager::GetInstance()->Finalize();
 }
@@ -50,6 +53,9 @@ void GameScene::Init()
 
 	limitBlockEffectManager_ = LimitBlockEffectManager::GetInstance();
 	limitBlockEffectManager_->Init();
+
+	ghostTakenEffectManager_ = GhostTakenEffectManager::GetInstance();
+	ghostTakenEffectManager_->Init();
 
 	// -------------------------------------------------
 	// ↓ cameraの初期化
@@ -110,6 +116,7 @@ void GameScene::Init()
 	// -------------------------------------------------
 	PostProcess *postProcess = Engine::GetPostProcess();
 	postProcess->SetIsActive(true);
+
 	postProcess->GetToonMap()->SetIsEnable(true);
 	postProcess->GetBloom()->SetEnable(true);
 	postProcess->GetBloom()->ApplySaveData();
@@ -186,6 +193,7 @@ void GameScene::Update()
 	}
 	ghostEffectManager_->Update();
 	limitBlockEffectManager_->Update();
+	ghostTakenEffectManager_->Update();
 
 	swirlTransition_->Update();
 
@@ -246,6 +254,7 @@ void GameScene::Update()
 		{
 			ghostEffectManager_->Finalize();
 			limitBlockEffectManager_->Finalize();
+			ghostTakenEffectManager_->Finalize();
 
 			stageRegistry_->ResetStage();
 			mapCollision_->ResetGhostCounter();
@@ -333,6 +342,7 @@ void GameScene::Draw() const
 
 	ghostEffectManager_->Draw();
 	limitBlockEffectManager_->Draw();
+	ghostTakenEffectManager_->Draw();
 }
 
 void GameScene::ChengeScene()
@@ -352,6 +362,7 @@ void GameScene::ChengeScene()
 			// ステージをリセットする
 			ghostEffectManager_->Finalize();
 			limitBlockEffectManager_->Finalize();
+			ghostTakenEffectManager_->Finalize();
 
 			stageRegistry_->ResetStage();
 			if (tutorialDirector_ != nullptr)

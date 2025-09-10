@@ -137,7 +137,6 @@ void Sprite::Draw(const Pipeline* pipeline) {
 
 	// テクスチャ位置を保持するための補正行列
 	Matrix4x4 correctionTranslation = Vector3({ pivotOffset.x, pivotOffset.y, 0.0f }).MakeTranslateMat();
-
 	transform_->Update(correctionTranslation, projection);
 
 	Render::DrawSprite(this, pipeline);
@@ -251,7 +250,7 @@ void Sprite::SaveData() {
 	spriteData_.uvTranslate = uvTransform_.translate;
 
 	spriteData_.scale = transform_->GetScale();
-	spriteData_.rotate = { 0, 0, transform_->GetRotate() }; // z回転だけならこう
+	spriteData_.rotate = { 0, 0, transform_->GetRotateZ() }; // z回転だけならこう
 	spriteData_.centerPos = {  transform_->GetTranslate().x,
 							   transform_->GetTranslate().y,
 							   0.0f };
@@ -280,7 +279,7 @@ void Sprite::ApplySaveData() {
 	uvTransform_.translate = spriteData_.uvTranslate;
 
 	transform_->SetScale(spriteData_.scale);
-	transform_->SetRotate(spriteData_.rotate.z);
+	transform_->SetRotateZ(spriteData_.rotate.z);
 	transform_->SetTranslate({ spriteData_.centerPos.x, spriteData_.centerPos.y });
 
 	textureSize_ = spriteData_.textureSize;

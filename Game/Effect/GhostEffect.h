@@ -87,12 +87,12 @@ public:
 
 	// transform
 	void SetScale(const Vector2& scale) { transform_->SetScale(scale); }
-	void SetRotate(float rotate) { transform_->SetRotate(rotate); }
+	void SetRotate(float rotate) { transform_->SetRotateZ(rotate); }
 	void SetTranslate(const Vector2& translate) { transform_->SetTranslate(translate); }
 
 	const Vector2& GetTranslate() const { return transform_->GetTranslate(); }
 	const Vector2& GetScale() const { return transform_->GetScale(); }
-	const float GetRotate() const { return transform_->GetRotate(); }
+	const float GetRotate() const { return transform_->GetRotateZ(); }
 
 	// uvTransform
 	void SetUvScale(const Vector3& _scale) { uvTransform_.scale = _scale; }

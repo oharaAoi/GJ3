@@ -58,6 +58,7 @@
     <FxCompile Include="Game\Assets\HLSL\Distortion.PS.hlsl" />
     <FxCompile Include="Game\Assets\HLSL\Swirl.PS.hlsl" />
     <FxCompile Include="Game\Assets\HLSL\GhostEffect.PS.hlsl" />
+    <FxCompile Include="Game\Assets\HLSL\GhostTakenEffect.PS.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game\Scene\ClearScene.cpp" />
@@ -352,6 +353,9 @@
     <ClCompile Include="Game\UI\GameUIs.cpp" />
     <ClCompile Include="Game\Effect\LimitBlockEffect.cpp" />
     <ClCompile Include="Game\Manager\LimitBlockEffectManager.cpp" />
+    <ClCompile Include="Game\Effect\GhostTakenEffect.cpp" />
+    <ClCompile Include="Game\Manager\GhostTakenEffectManager.cpp" />
+    <ClCompile Include="Game\Effect\GhostTakenSwirl.cpp" />
     <ClCompile Include="Game\UI\TitleUIsAnimation.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -665,6 +669,9 @@
     <ClInclude Include="Game\UI\GameUIs.h" />
     <ClInclude Include="Game\Effect\LimitBlockEffect.h" />
     <ClInclude Include="Game\Manager\LimitBlockEffectManager.h" />
+    <ClInclude Include="Game\Effect\GhostTakenEffect.h" />
+    <ClInclude Include="Game\Manager\GhostTakenEffectManager.h" />
+    <ClInclude Include="Game\Effect\GhostTakenSwirl.h" />
     <ClInclude Include="Game\UI\TitleUIsAnimation.h" />
   </ItemGroup>
   <ItemGroup>

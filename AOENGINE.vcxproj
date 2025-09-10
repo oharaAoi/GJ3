@@ -123,7 +123,10 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Game\Effect\GhostTakenEffect.cpp" />
+    <ClCompile Include="Game\Effect\GhostTakenSwirl.cpp" />
     <ClCompile Include="Game\Effect\LimitBlockEffect.cpp" />
+    <ClCompile Include="Game\Manager\GhostTakenEffectManager.cpp" />
     <ClCompile Include="Game\Manager\LimitBlockEffectManager.cpp" />
     <ClCompile Include="Game\UI\GameUIs.cpp" />
     <ClCompile Include="Game\Camera\StageSelectCamera.cpp" />
@@ -415,7 +418,10 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Game\UI\TitleUIsAnimation.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Game\Effect\GhostTakenEffect.h" />
+    <ClInclude Include="Game\Effect\GhostTakenSwirl.h" />
     <ClInclude Include="Game\Effect\LimitBlockEffect.h" />
+    <ClInclude Include="Game\Manager\GhostTakenEffectManager.h" />
     <ClInclude Include="Game\Manager\LimitBlockEffectManager.h" />
     <ClInclude Include="Game\UI\GameUIs.h" />
     <ClInclude Include="Game\Camera\StageSelectCamera.h" />
@@ -1040,6 +1046,12 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Game\Assets\HLSL\GhostTakenEffect.PS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </FxCompile>
     <FxCompile Include="Game\Assets\HLSL\Swirl.PS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
