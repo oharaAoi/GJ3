@@ -73,6 +73,8 @@ void ClearScene::Init(){
 	// -------------------------------------------------
 	auto postProcess = Engine::GetPostProcess();
 
+	postProcess->GetToonMap()->SetIsEnable(true);
+
 	auto bloom = postProcess->GetBloom();
 	bloom->SetEnable(true);
 	bloom->ApplySaveData();

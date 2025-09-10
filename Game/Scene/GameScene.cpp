@@ -112,6 +112,7 @@ void GameScene::Init()
 	// -------------------------------------------------
 	PostProcess *postProcess = Engine::GetPostProcess();
 	postProcess->SetIsActive(true);
+
 	postProcess->GetToonMap()->SetIsEnable(true);
 	postProcess->GetBloom()->SetEnable(true);
 	postProcess->GetBloom()->ApplySaveData();

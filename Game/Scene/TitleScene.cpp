@@ -37,9 +37,8 @@ void TitleScene::Init(){
 	// -------------------------------------------------
 	PostProcess* postProcess = Engine::GetPostProcess();
 	postProcess->SetAllEnable(false);
-	postProcess->SetIsActive(true);
 
-	postProcess->GetGotRay()->SetIsEnable(false);
+	postProcess->SetIsActive(true);
 
 	postProcess->GetBloom()->SetIsEnable(true);
 	postProcess->GetVignette()->SetIsEnable(true);
