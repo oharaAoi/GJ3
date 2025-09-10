@@ -19,7 +19,7 @@ UndoRedoState ObjectCommandInvoker::InputHandle(bool& _padIsInput,bool& _keyIsIn
 
 	if(input->IsControllerConnected()){
 		for(auto undoButton : kUndoButton){
-			if(input->IsTriggerButton(undoButton)){
+			if(input->IsPressButton(undoButton)){
 				currentAutoUndoRedoState = UndoRedoState::UNDO;
 
 				_padIsInput = true;
@@ -27,7 +27,7 @@ UndoRedoState ObjectCommandInvoker::InputHandle(bool& _padIsInput,bool& _keyIsIn
 			}
 		}
 		for(auto redoButton : kRedoButton){
-			if(input->IsTriggerButton(redoButton)){
+			if(input->IsPressButton(redoButton)){
 				currentAutoUndoRedoState = UndoRedoState::REDO;
 
 				_padIsInput = true;
@@ -37,7 +37,7 @@ UndoRedoState ObjectCommandInvoker::InputHandle(bool& _padIsInput,bool& _keyIsIn
 	}
 	if(currentAutoUndoRedoState == UndoRedoState::MANUAL){
 		for(auto redoKey : kRedoKey){
-			if(input->IsTriggerKey(redoKey)){
+			if(input->IsPressKey(redoKey)){
 				currentAutoUndoRedoState = UndoRedoState::REDO;
 
 				_keyIsInput = true;
@@ -45,7 +45,7 @@ UndoRedoState ObjectCommandInvoker::InputHandle(bool& _padIsInput,bool& _keyIsIn
 			}
 		}
 		for(auto undoKey : kUndoKey){
-			if(input->IsTriggerKey(undoKey)){
+			if(input->IsPressKey(undoKey)){
 				currentAutoUndoRedoState = UndoRedoState::UNDO;
 
 				_keyIsInput = true;
@@ -71,6 +71,10 @@ UndoRedoState ObjectCommandInvoker::InputHandle(bool& _padIsInput,bool& _keyIsIn
 }
 
 void ObjectCommandInvoker::ExecuteCommandRequest(){
+
+	if(commandRequests_.commandQueue_.empty()){
+		return;
+	}
 
 	// 積まれたコマンドを全て実行する
 	for(auto& cmd : commandRequests_.commandQueue_){

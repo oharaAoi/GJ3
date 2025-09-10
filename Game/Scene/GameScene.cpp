@@ -189,6 +189,9 @@ void GameScene::Update(){
 	bool isEnable = !menuSelector_->GetOpenMenu() && isTutorial;
 	if(isEnable){
 		stageResetUI_->Update();
+	}
+
+	if(!menuSelector_->GetOpenMenu()){
 
 		// UI Input
 		bool padIsInput = false;
@@ -196,7 +199,7 @@ void GameScene::Update(){
 
 		// Command 
 		UndoRedoState state = ObjectCommandInvoker::GetInstance().InputHandle(padIsInput,keyIsInput);
-		 
+
 		padIsInput |= stageResetUI_->GetPadInput();
 		keyIsInput |= stageResetUI_->GetKeyInput();
 
@@ -229,6 +232,7 @@ void GameScene::Update(){
 		}
 		gameUIs_->Update(keyIsInput,padIsInput);
 	}
+
 
 	getGhostCountUI_->Update(mapCollision_->GetGhostCounter(),stageRegistry_->GetNeedGhostNum());
 

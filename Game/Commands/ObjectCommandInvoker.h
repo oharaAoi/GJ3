@@ -35,7 +35,7 @@ public:
 	}
 
 	static constexpr std::array<uint8_t,2> kUndoKey = {DIK_Z,DIK_Q};
-	static constexpr std::array<uint8_t,2> kRedoKey = {DIK_Y,DIK_E};
+	static constexpr std::array<uint8_t,2> kRedoKey = {DIK_X,DIK_E};
 	static constexpr  std::array<XInputButtons,2> kUndoButton = {XInputButtons::LT_SHOULDER,XInputButtons::L_SHOULDER};
 	static constexpr  std::array<XInputButtons,2> kRedoButton = {XInputButtons::RT_SHOULDER,XInputButtons::R_SHOULDER};
 
@@ -76,8 +76,8 @@ private:
 	UndoRedoState preAutoUndoRedoState_ = UndoRedoState::MANUAL; // 前回の状態
 
 	float leftUndoRedoDelay_ = 0.0f; // Undo Redo の残り時間
-	float autoUndoRedoStartDelay_ = 0.4f; // 自動 Undo Redo 開始までの遅延
-	float autoUndoRedoStepInterval_ = 0.1f; // 自動 Undo Redo の間隔
+	float autoUndoRedoStartDelay_ = 0.15f; // 自動 Undo Redo 開始までの遅延
+	float autoUndoRedoStepInterval_ = 0.07f; // 自動 Undo Redo の間隔
 public:
 	bool hasCommandRequest()const{ return !commandRequests_.commandQueue_.empty(); }
 
