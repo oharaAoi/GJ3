@@ -352,6 +352,7 @@
     <ClCompile Include="Game\UI\GameUIs.cpp" />
     <ClCompile Include="Game\Effect\LimitBlockEffect.cpp" />
     <ClCompile Include="Game\Manager\LimitBlockEffectManager.cpp" />
+    <ClCompile Include="Game\UI\TitleUIsAnimation.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Scene\ClearScene.h" />
@@ -664,6 +665,7 @@
     <ClInclude Include="Game\UI\GameUIs.h" />
     <ClInclude Include="Game\Effect\LimitBlockEffect.h" />
     <ClInclude Include="Game\Manager\LimitBlockEffectManager.h" />
+    <ClInclude Include="Game\UI\TitleUIsAnimation.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\Assets\HLSL\Light.hlsli" />

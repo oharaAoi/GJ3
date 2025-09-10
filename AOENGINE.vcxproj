@@ -412,6 +412,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Game\UI\Tutorial\Text\Goal\TextUI_Goal_Line1.cpp" />
     <ClCompile Include="Game\UI\Tutorial\Text\Goal\TextUI_Goal_Line2.cpp" />
     <ClCompile Include="Game\UI\StageSelect\StageIndexUI.cpp" />
+    <ClCompile Include="Game\UI\TitleUIsAnimation.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Effect\LimitBlockEffect.h" />
@@ -721,6 +722,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Game\UI\Tutorial\Text\Goal\TextUI_Goal_Line2.h" />
     <ClInclude Include="Game\Effect\GhostEffect.h" />
     <ClInclude Include="Game\UI\StageSelect\StageIndexUI.h" />
+    <ClInclude Include="Game\UI\TitleUIsAnimation.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Engine\Assets\HLSL\Particle\AccelerationField.CS.hlsl">

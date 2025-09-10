@@ -128,6 +128,12 @@ public:
 		float amplitude = 0.2f,
 		float damping = 0.15f
 	);
+	// シェイクさせる
+	static Vector2 Shake(
+		float time,
+		float amplitude = 1.0f,
+		float frequency = 10.0f
+	);
 
 };
 

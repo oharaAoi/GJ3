@@ -71,6 +71,9 @@ void TitleScene::Init(){
 	uis_ = std::make_unique<TitleUIs>();
 	uis_->Init();
 
+	titleUIsAnima_ = std::make_unique<TitleUIsAnimation>();
+	titleUIsAnima_->Init(uis_.get());
+
 	thunderFlash_ = std::make_unique<ThunderFlash>();
 	thunderFlash_->Init();
 
@@ -133,6 +136,7 @@ void TitleScene::Update(){
 	}
 	camera2d_->Update();
 
+	titleUIsAnima_->Update();
 	uis_->Update();
 
 	sceneRenderer_->Update();

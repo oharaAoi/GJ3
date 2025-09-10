@@ -22,6 +22,36 @@ class TitleUIs :
 	public AttributeGui{
 public:
 
+	struct Parameter : public IJsonConverter {
+		Vector2 Title_su_Pos;
+		Vector2 Title_ki_Pos;
+		Vector2 Title_da_Pos;
+		Vector2 Title_ma_Pos;
+		Vector2 Title_ri_Pos;
+
+		Parameter() { SetName("Title_TextUI"); }
+
+		json ToJson(const std::string& id) const override {
+			return JsonBuilder(id)
+				.Add("Title_su_Pos", Title_su_Pos)
+				.Add("Title_ki_Pos", Title_ki_Pos)
+				.Add("Title_da_Pos", Title_da_Pos)
+				.Add("Title_ma_Pos", Title_ma_Pos)
+				.Add("Title_ri_Pos", Title_ri_Pos)
+				.Build();
+		}
+
+		void FromJson(const json& jsonData) override {
+			fromJson(jsonData, "Title_su_Pos", Title_su_Pos);
+			fromJson(jsonData, "Title_ki_Pos", Title_ki_Pos);
+			fromJson(jsonData, "Title_da_Pos", Title_da_Pos);
+			fromJson(jsonData, "Title_ma_Pos", Title_ma_Pos);
+			fromJson(jsonData, "Title_ri_Pos", Title_ri_Pos);
+		}
+	};
+
+public:
+
 	TitleUIs() = default;
 	~TitleUIs() = default;
 
@@ -34,9 +64,12 @@ public:
 private:
 	Sprite* backGround_;
 	std::array<Sprite*,5> titleWords_;
+
 	Sprite* spaceKey_;
 	Sprite* shelf_;
 	Sprite* ghost_;
+
+	Parameter param_;
 public:
 	Sprite* GetGhostSprite() const{ return ghost_; }
 	Sprite* GetGhostSpriteRef(){ return ghost_; }

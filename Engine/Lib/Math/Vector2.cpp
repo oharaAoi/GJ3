@@ -109,3 +109,20 @@ Vector2 Vector2::MochiPuniScaleNormalized(float time, float amplitude, float dam
 
 	return { sx, sy };
 }
+
+Vector2 Vector2::Shake(float time, float amplitude, float frequency)
+{
+	// Clamp
+	time = std::clamp(time, 0.0f, 1.0f);
+
+	// 減衰（終わりにかけて揺れを小さくする）
+	float decay = 1.0f - time;
+
+	// ランダム方向を擬似的に出す（sin, cos を位相ずらして使う）
+	float angle = time * frequency * 2.0f * 3.14159265f;
+
+	float offsetX = std::sin(angle * 1.3f) * amplitude * decay;
+	float offsetY = std::cos(angle * 0.7f) * amplitude * decay;
+
+	return { offsetX, offsetY };
+}

@@ -12,6 +12,7 @@
 #include "Game/WorldObject/Skybox.h"
 //ui
 #include "Game/UI/TitleUIs.h"
+#include "Game/UI/TitleUIsAnimation.h"
 #include "Game/Effect/TitleFlashEffect.h"
 
 class TitleScene :
@@ -66,6 +67,7 @@ private:
 
 	// ------------------- ui ------------------- //
 	std::unique_ptr<TitleUIs> uis_;
+	std::unique_ptr<TitleUIsAnimation> titleUIsAnima_;
 	std::unique_ptr<ThunderFlash> thunderFlash_; // 通常エフェクト
 
 	// ------------------- transition ------------------- //
