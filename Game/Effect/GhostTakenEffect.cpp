@@ -30,7 +30,7 @@ void GhostTakenEffect::Update() {
 	}
 	// スケールを小さくする
 	float t = lifeTimer_ / animationItems_.duration;
-	Vector2 scale = Vector2::Lerp(CVector2::UNIT, CVector2::ZERO, Ease::In::Back(t));
+	Vector2 scale = Vector2::Lerp(CVector2::UNIT * 1.5f, CVector2::ZERO, Ease::In::Back(t));
 	ghostEffect_->SetScale(scale);
 	ghostEffect_->Update();
 
