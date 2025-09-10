@@ -39,8 +39,8 @@ void GameUIs::Init(){
 	AddChild(redoUIs_[2]);
 
 	// menu
-	menuUIs_[0] = canvas2d->AddSprite("Game_menu_k.png","Menu_Keyboard","Sprite_Normal.json",20,true);
-	menuUIs_[1] = canvas2d->AddSprite("Game_menu_p.png","Menu_Pad","Sprite_Normal.json",20,true);
+	menuUIs_[0] = canvas2d->AddSprite("Game_menu_k.png","Menu_Keyboard","Sprite_Normal.json",7,false);
+	menuUIs_[1] = canvas2d->AddSprite("Game_menu_p.png","Menu_Pad","Sprite_Normal.json",7,false);
 	menuUIs_[0]->ApplySaveData();
 	menuUIs_[1]->ApplySaveData();
 	AddChild(menuUIs_[0]);
