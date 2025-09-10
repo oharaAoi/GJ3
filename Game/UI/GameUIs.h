@@ -8,6 +8,8 @@ class PlayerInputHandler;
 
 class GameUIs
 	:public AttributeGui{
+	static bool activeKeyboardUIs_;
+	static bool activeGamePadUIs_;
 public:
 	GameUIs();
 	~GameUIs() override;
