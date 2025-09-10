@@ -52,6 +52,7 @@ void TitleUIs::Init(){
 	backGround_->ApplySaveData();
 
 	spaceKey_->SetTranslate(Vector2{kWindowWidth_ / 2.0f,kWindowHeight_ / 2.0f});
+	aButton_->SetTranslate(spaceKey_->GetTranslate());
 	shelf_->SetTranslate(Vector2{kWindowWidth_ / 2.0f,kWindowHeight_ / 2.0f});
 	ghost_->SetTranslate(Vector2{kWindowWidth_ / 2.0f,kWindowHeight_ / 2.0f});
 	backGround_->SetTranslate(Vector2{kWindowWidth_ / 2.0f,kWindowHeight_ / 2.0f});

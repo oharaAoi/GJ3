@@ -65,9 +65,9 @@ private:
 	Sprite* backGround_;
 	std::array<Sprite*,5> titleWords_;
 
-	float uiAnimationTime_ = 0.4f;
+	float uiAnimationTime_ = 0.7f;
 	float uiAnimationTimer_ = 0.0f;
-	float startAlpha_ = 0.7f;
+	float startAlpha_ = 0.2f;
 	float endAlpha_ = 1.f;
 
 	Sprite* spaceKey_;
