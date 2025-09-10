@@ -107,6 +107,12 @@ private:
 	StageSelectCollection* pStageSelectCollection_;
 	StageContents* pStageContents_;
 
+	struct AnimaParam {
+		float animaTimer;
+		bool isAnima;
+	};
+	std::array<AnimaParam, 2> param_;
+
 public:
 	bool IsDecidedStage() const { return decidedStage_; }
 	void SetDecidedStage(bool decided) { decidedStage_ = decided; }
@@ -123,5 +129,22 @@ public:
 
 	void SetStageSelectCollection(StageSelectCollection* _collection) { pStageSelectCollection_ = _collection; }
 	void SetStageContents(StageContents* _contents) { pStageContents_ = _contents; }
+
+private:
+
+	float Radians(float deg) { return deg * kPI / 180.0f; }
+
+	// 0..1 の正規化時間
+	// 初回ピークのおおよその振れ幅（度）
+	// 0..1 のあいだに何回 揺れるか（周回数）
+	// 減衰の強さ（大きいほど早く収束）
+	// 振り子のように揺れる処理
+	float DampedPendulumAngle(
+		float time,
+		float amplitudeDeg = 25.0f,
+		float cycles = 2.5f,
+		float damping = 4.0f
+	);
+
 
 };

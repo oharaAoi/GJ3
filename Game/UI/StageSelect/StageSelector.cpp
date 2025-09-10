@@ -32,6 +32,8 @@ void StageSelector::Init(){
 
 	AddChild(arrows_[0]);
 	AddChild(arrows_[1]);
+	arrows_[0]->ApplySaveData();
+	arrows_[1]->ApplySaveData();
 
 	/// ==============================
 	// others
@@ -100,6 +102,19 @@ void StageSelector::Update(){
 
 	leftArrowRotateParam_->Update(arrows_[0]);
 	rightArrowRotateParam_->Update(arrows_[1]);
+
+	for (size_t i = 0; i < param_.size(); ++i) {
+		if (param_[i].isAnima) {
+			param_[i].animaTimer += GameTimer::DeltaTime() * 2.5f;
+			param_[i].animaTimer = std::clamp(param_[i].animaTimer, 0.0f, 1.0f);
+			float rotate = DampedPendulumAngle(param_[i].animaTimer);
+			arrows_[i]->SetRotate(rotate);
+			if (param_[i].animaTimer == 1.0f) {
+				param_[i].isAnima = false;
+				param_[i].animaTimer = 0.0f;
+			}
+		}
+	}
 }
 
 // StageSelector.cpp
@@ -135,17 +150,21 @@ void StageSelector::InputHandle(){
 		if(leftStick.x < -0.1f){
 			isPressing  = true;
 			inputScrollDirection_ = -1;
+			param_[0].isAnima = true;
 		} else if(leftStick.x > +0.1f){
 			isPressing  = true;
 			inputScrollDirection_ = +1;
+			param_[1].isAnima = true;
 		}
 
 		if(input->IsPressButton(kStageIndexSubButtons_)){
 			isPressing  = true;
 			inputScrollDirection_ = -1;
+			param_[0].isAnima = true;
 		} else if(input->IsPressButton(kStageIndexAddButtons_)){
 			isPressing  = true;
 			inputScrollDirection_ = +1;
+			param_[1].isAnima = true;
 		}
 	}
 
@@ -153,6 +172,7 @@ void StageSelector::InputHandle(){
 		if(input->IsPressKey(addIndexKey)){
 			isPressing  = true;
 			inputScrollDirection_ = +1;
+			param_[1].isAnima = true;
 			break;
 		}
 	}
@@ -162,6 +182,7 @@ void StageSelector::InputHandle(){
 			if(input->IsPressKey(subIndexKey)){
 				isPressing  = true;
 				inputScrollDirection_ = -1;
+				param_[0].isAnima = true;
 				break;
 			}
 		}
@@ -243,6 +264,19 @@ void StageSelector::Scroll(){
 	if(signedDiff < -halfStageF) signedDiff += totalStageF;
 
 	currentOffsetX_ = signedDiff * theSpaceBetweenButtons_;
+}
+
+float StageSelector::DampedPendulumAngle(float time, float amplitudeDeg, float cycles, float damping)
+{
+	time = std::clamp(time, 0.0f, 1.0f);
+
+	// 初期角 0, 初期角速度 > 0 を想定：A * e^{-d t} * sin(2π f t)
+	const float A = Radians(amplitudeDeg);
+	const float angle =
+		A * std::exp(-damping * time) *
+		std::sin(2.0f * kPI * cycles * time);
+
+	return angle; // ラジアン（AnchorPoint がヒンジ点ならそのまま回せます）
 }
 
 #pragma region Pendulum
