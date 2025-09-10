@@ -15,3 +15,8 @@ void TitleUIsAnimation::Update()
 void TitleUIsAnimation::Debug_Gui()
 {
 }
+
+float TitleUIsAnimation::DropDown(float time)
+{
+	return time;
+}

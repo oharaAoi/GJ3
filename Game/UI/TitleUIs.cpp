@@ -39,11 +39,11 @@ void TitleUIs::Init(){
 		titleWords_[i]->ApplySaveData();
 		AddChild(titleWords_[i]);
 	}
-	titleWords_[0]->SetAnchorPoint({ 0.9f,0.1f });
+	/*titleWords_[0]->SetAnchorPoint({ 0.9f,0.1f });
 	titleWords_[1]->SetAnchorPoint({ 0.5f,0.1f });
 	titleWords_[2]->SetAnchorPoint({ 0.9f,0.1f });
 	titleWords_[3]->SetAnchorPoint({ 0.1f,0.1f });
-	titleWords_[4]->SetAnchorPoint({ 0.5f,0.1f });
+	titleWords_[4]->SetAnchorPoint({ 0.5f,0.1f });*/
 	AddChild(spaceKey_);
 	AddChild(shelf_);
 	AddChild(ghost_);

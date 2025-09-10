@@ -19,6 +19,11 @@ public:
 	void Debug_Gui() override;
 
 private:
+	// 額縁
+	struct FrameFallResult {
+		Vector2 pos;   
+		float   rotate;
+	};
 
 	// 額縁が落ちる処理
 	float DropDown(float time);
