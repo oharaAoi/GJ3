@@ -229,6 +229,12 @@ void Engine::RenderFrame() {
 
 	BlendFinalTexture(Sprite2d_RenderTarget);
 
+	// -------------------------------------------------
+	// ↓ シーン遷移の描画
+	// -------------------------------------------------
+
+	postProcess_->AfterExecute(dxCmdList_, processedSceneFrame_->GetResource());
+
 	// guiの描画
 #ifdef _DEBUG
 	editorWindows_->Update();

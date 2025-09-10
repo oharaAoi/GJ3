@@ -14,8 +14,8 @@ public:
 	struct TransitionData : public IJsonConverter {
 		float rotateSpeed;
 		float radiusKernel;
-		float transitionTime = 3;
-
+		float transitionTime = 1;
+		
 		TransitionData() { SetName("SwirlTransitionData"); }
 
 		json ToJson(const std::string& id) const override {

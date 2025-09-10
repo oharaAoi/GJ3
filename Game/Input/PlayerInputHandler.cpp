@@ -28,7 +28,7 @@ void PlayerInputHandler::HandleInput(){
 		return;
 	}
 
-	AudioPlayer::SinglShotPlay("panch.mp3",0.3f);
+	AudioPlayer::SinglShotPlay("player_walk.mp3",0.9f);
 
 	// animationする
 	player_->SetIsAnimation(true);

@@ -55,6 +55,7 @@ public:
 	void Init(ID3D12Device* device, DescriptorHeap* descriptorHeap, RenderTarget* renderTarget);
 
 	void Execute(ID3D12GraphicsCommandList* commandList, ShaderResource* shaderResource);
+	void AfterExecute(ID3D12GraphicsCommandList* commandList, ShaderResource* shaderResource);
 
 	void Copy(ID3D12GraphicsCommandList* commandList, ShaderResource* shaderResource);
 
@@ -123,6 +124,7 @@ private:
 	std::shared_ptr<SwirlEffect> swirlEffect_;
 
 	std::list<std::shared_ptr<IPostEffect>> effectList_;
+	std::list<std::shared_ptr<IPostEffect>> afterEffectList_;
 	std::list<PostEffectType> addEffectList_;
 
 };

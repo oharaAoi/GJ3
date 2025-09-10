@@ -34,6 +34,7 @@ PixelShaderOutput main(VertexShaderOutput input) {
 	float4 dissolveUV = mul(float4(input.texcoord, 0.0f, 1.0f), gDissolve.uvTransform);
 	// maskを計算する
 	float mask = gDissolveTexture.Sample(gSampler, dissolveUV.xy);
+	mask = 1.0f - mask;
 	// 閾値以下だったら透明にする
 	if (mask <= gDissolve.threshold) {
 		discard;

@@ -159,7 +159,7 @@ void ClearScene::ChengeScene(){
 				}
 				// タイムをプラスする
 				changeTimer_ += GameTimer::DeltaTime();
-				if(changeTimer_ <= 2.0f){ return; }
+				if(changeTimer_ <= 1.0f){ return; }
 				nextSceneType_ = SceneType::STAGE_SELECT;
 			}
 			// 次のステージに遷移
@@ -170,7 +170,7 @@ void ClearScene::ChengeScene(){
 				}
 				// タイムをプラスする
 				changeTimer_ += GameTimer::DeltaTime();
-				if(changeTimer_ <= 4.0f){ return; }
+				if(changeTimer_ <= 1.0f){ return; }
 				nextSceneType_ = SceneType::GAME;
 				int32_t index = StageSelector::GetCurrentStageIndex() + 1;
 				StageSelector::SetCurrentStageIndex(index);
