@@ -111,9 +111,6 @@ void StageRegistry::CreatesStageByMapData(){
 			if(mapData_[row][col] == static_cast<int>(BlockType::Player)){
 				startIndex_ = {(int)col,(int)row};
 				startPos_ = CalculateTilePos(row,col);
-				startBlock_ = pCanvas2d_->AddSprite("startBlock.png","startBlock","Sprite_Normal.json");
-				startBlock_->SetTranslate(startPos_);
-				startBlock_->ReSetTextureSize(tileSize_);
 
 			} else if(mapData_[row][col] == static_cast<int>(BlockType::Goal)){
 				goalIndex_ = {(int)col,(int)row};
@@ -167,11 +164,6 @@ void StageRegistry::DestroyStageData(){
 				stageData_[row][col]->Destroy();
 			}
 		}
-	}
-
-	if (startBlock_) {
-		startBlock_->SetIsDestroy(true);
-		startBlock_ = nullptr;
 	}
 }
 
