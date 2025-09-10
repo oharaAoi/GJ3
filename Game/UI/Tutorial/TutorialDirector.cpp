@@ -534,17 +534,14 @@ void TutorialDirector::PushButton()
 	if (isControllerConnected_) {
 		uis_->GetButtonA()->SetEnable(true);
 		uis_->GetSpaceKey()->SetEnable(false);
-		if (input->IsTriggerButton(XInputButtons::BUTTON_A)) {
-			AudioPlayer::SinglShotPlay("button.mp3", 0.5f);
-			isPush_ = true;
-		}
 	} else {
 		uis_->GetButtonA()->SetEnable(false);
 		uis_->GetSpaceKey()->SetEnable(true);
-		if (input->IsTriggerKey(DIK_SPACE)) {
-			AudioPlayer::SinglShotPlay("button.mp3", 0.5f);
-			isPush_ = true;
-		}
+	}
+	if (input->IsTriggerButton(XInputButtons::BUTTON_A) ||
+		input->IsTriggerKey(DIK_SPACE)) {
+		AudioPlayer::SinglShotPlay("button.mp3", 0.5f);
+		isPush_ = true;
 	}
 }
 
