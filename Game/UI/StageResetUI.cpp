@@ -36,6 +36,7 @@ void StageResetUI::Update()
 {
 	// Inputを取得
 	Input* input = Input::GetInstance();
+	bool isPad = input->IsControllerConnected();
 
 	keyInput_ = input->IsPressKey(DIK_R);
 	padInput_ = input->IsPressButton(XInputButtons::BUTTON_X);
@@ -54,7 +55,7 @@ void StageResetUI::Update()
 	}
 	if (keyInput_) {
 		resetButtonUI_->SetTextureName("resetButton_R.png");
-	} else if (padInput_) {
+	} else if (padInput_ || isPad) {
 		resetButtonUI_->SetTextureName("resetButton_X.png");
 	}
 	resetTimer_ = std::clamp(resetTimer_, 0.0f, 1.0f);
