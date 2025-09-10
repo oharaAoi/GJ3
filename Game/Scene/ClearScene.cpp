@@ -5,17 +5,16 @@
 #include "Game/UI/StageSelect/StageSelector.h"
 #include "Game/Manager/GhostSmokeManager.h"
 
-ClearScene::ClearScene() {}
+ClearScene::ClearScene(){}
 
-ClearScene::~ClearScene() { Finalize(); }
+ClearScene::~ClearScene(){ Finalize(); }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 // ↓　初期化
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
-void ClearScene::Init()
-{
-	JsonItems *adjust = JsonItems::GetInstance();
+void ClearScene::Init(){
+	JsonItems* adjust = JsonItems::GetInstance();
 	adjust->Init("StageSelectScene");
 
 	// -------------------------------------------------
@@ -42,18 +41,16 @@ void ClearScene::Init()
 	// -------------------------------------------------
 
 	// GameSceneからの値を取得
-	if (const auto &opt = GameScene::LastResult())
-	{
+	if(const auto& opt = GameScene::LastResult()){
 		ghostCount_ = opt->ghostCount;
 	}
 
 	ghostSoulManager_ = std::make_unique<GhostSoulManager>();
 	ghostSoulManager_->InitClearScene(Engine::GetCanvas2d());
-	for (int i = 0; i < ghostCount_; ++i)
-	{
-		ghostSoulManager_->CreateSoul(Vector2{64.0f, 64.0f}, true);
+	for(int i = 0; i < ghostCount_; ++i){
+		ghostSoulManager_->CreateSoul(Vector2{64.0f,64.0f},true);
 	}
-	ghostSoulManager_->SetPosition(Vector2{640.0f, 360.0f});
+	ghostSoulManager_->SetPosition(Vector2{640.0f,360.0f});
 
 	worldObjects_ = std::make_unique<WorldObjects>();
 	worldObjects_->Init();
@@ -64,16 +61,32 @@ void ClearScene::Init()
 
 	bgm_ = std::make_unique<AudioPlayer>();
 	bgm_->Init("Clear.mp3");
-	bgm_->Play(true, 0.5f);
+	bgm_->Play(true,0.5f);
 
 	swirlTransition_ = std::make_unique<SwirlTransition>();
 	swirlTransition_->Init();
 	swirlTransition_->Open();
-	AudioPlayer::SinglShotPlay("start.mp3", 0.3f);
+	AudioPlayer::SinglShotPlay("start.mp3",0.3f);
+
+	// -------------------------------------------------
+	// ↓ PostProcess
+	// -------------------------------------------------
+	auto postProcess = Engine::GetPostProcess();
+
+	postProcess->GetToonMap()->SetIsEnable(true);
+
+	auto bloom = postProcess->GetBloom();
+	bloom->SetEnable(true);
+	bloom->ApplySaveData();
+
+	auto vignette = postProcess->GetVignette();
+	vignette->SetIsEnable(true);
+	vignette->ApplySaveData();
+
 }
 
-void ClearScene::Finalize()
-{
+void ClearScene::Finalize(){
+	Engine::GetPostProcess()->SetAllEnable(false);
 	sceneRenderer_->Finalize();
 	GhostSmokeManager::GetInstance()->Finalize();
 	ParticleManager::GetInstance()->Finalize();
@@ -84,8 +97,7 @@ void ClearScene::Finalize()
 // ↓　更新
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
-void ClearScene::Update()
-{
+void ClearScene::Update(){
 	// -------------------------------------------------
 	// ↓ actorの更新
 	// -------------------------------------------------
@@ -97,7 +109,7 @@ void ClearScene::Update()
 	clearSelector_->Update();
 	ChengeScene();
 
-	if (lightFlash_) {
+	if(lightFlash_){
 		lightFlash_->Update();
 	}
 
@@ -106,12 +118,9 @@ void ClearScene::Update()
 	// -------------------------------------------------
 	// ↓ cameraの更新
 	// -------------------------------------------------
-	if (debugCamera_->GetIsActive())
-	{
+	if(debugCamera_->GetIsActive()){
 		debugCamera_->Update();
-	}
-	else
-	{
+	} else{
 		camera3d_->Update();
 	}
 	camera2d_->Update();
@@ -132,42 +141,36 @@ void ClearScene::Update()
 	sceneRenderer_->PostUpdate();
 }
 
-void ClearScene::Draw() const
-{
+void ClearScene::Draw() const{
 	// Sceneの描画
 	sceneRenderer_->Draw();
 }
 
-void ClearScene::ChengeScene()
-{
+void ClearScene::ChengeScene(){
 	// ステージ選択されているか
-	if (clearSelector_->GetChangeScene() || clearSelector_->GetChangeStage())
-	{
+	if(clearSelector_->GetChangeScene() || clearSelector_->GetChangeStage()){
 		// 遷移の実行が可能か
-		if (clearSelector_->GetIsExecute())
-		{
+		if(clearSelector_->GetIsExecute()){
 			// セレクトシーンに遷移
-			if (clearSelector_->GetChangeScene())
-			{
-				if (changeTimer_ == 0.0f) {
+			if(clearSelector_->GetChangeScene()){
+				if(changeTimer_ == 0.0f){
 					lightFlash_ = std::make_unique<LightFlash>();
 					lightFlash_->Init("LightFlash");
 				}
 				// タイムをプラスする
 				changeTimer_ += GameTimer::DeltaTime();
-				if (changeTimer_ <= 2.0f) { return; }
+				if(changeTimer_ <= 2.0f){ return; }
 				nextSceneType_ = SceneType::STAGE_SELECT;
 			}
 			// 次のステージに遷移
-			if (clearSelector_->GetChangeStage())
-			{
-				if (changeTimer_ == 0.0f) {
+			if(clearSelector_->GetChangeStage()){
+				if(changeTimer_ == 0.0f){
 					swirlTransition_->Close();
-					AudioPlayer::SinglShotPlay("start.mp3", 0.3f);
+					AudioPlayer::SinglShotPlay("start.mp3",0.3f);
 				}
 				// タイムをプラスする
 				changeTimer_ += GameTimer::DeltaTime();
-				if (changeTimer_ <= 4.0f) { return; }
+				if(changeTimer_ <= 4.0f){ return; }
 				nextSceneType_ = SceneType::GAME;
 				int32_t index = StageSelector::GetCurrentStageIndex() + 1;
 				StageSelector::SetCurrentStageIndex(index);

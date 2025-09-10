@@ -21,6 +21,8 @@ GameScene::~GameScene() { Finalize(); }
 
 void GameScene::Finalize()
 {
+	Engine::GetPostProcess()->SetAllEnable(false);
+
 	sceneRenderer_->Finalize();
 	ghostEffectManager_->Finalize();
 	limitBlockEffectManager_->Finalize();
@@ -110,6 +112,7 @@ void GameScene::Init()
 	// -------------------------------------------------
 	PostProcess *postProcess = Engine::GetPostProcess();
 	postProcess->SetIsActive(true);
+
 	postProcess->GetToonMap()->SetIsEnable(true);
 	postProcess->GetBloom()->SetEnable(true);
 	postProcess->GetBloom()->ApplySaveData();

@@ -98,6 +98,7 @@ public:
 	std::shared_ptr<ScreenGotRay> GetGotRay() { return gotRay_; }
 	std::shared_ptr<SwirlEffect> GetSwirlEffect() { return swirlEffect_; }
 
+	void SetAllEnable(bool enable);
 private:
 
 	ComPtr<ID3D12Resource> depthStencilResource_ = nullptr;
