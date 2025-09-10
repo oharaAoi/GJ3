@@ -172,7 +172,7 @@ void Sprite::ReSetTexture(const std::string& fileName) {
 	textureSize_ = TextureManager::GetInstance()->GetTextureSize(fileName);
 	spriteSize_ = textureSize_;
 
-	Vector3 anchorPoint = { 0.5f, 0.5f };
+	Vector2 anchorPoint{ 0.5f, 0.5f };
 	Vector3 pivotOffset = {
 		textureSize_.x * anchorPoint.x,
 		textureSize_.y * anchorPoint.y,
@@ -204,7 +204,7 @@ void Sprite::ReSetTexture(const std::string& fileName) {
 
 void Sprite::ReSetTextureSize(const Vector2& size) {
 	spriteSize_ = size;
-	Vector3 anchorPoint = { 0.5f, 0.5f };
+	Vector2 anchorPoint{ 0.5f, 0.5f };
 	Vector3 pivotOffset = {
 		size.x * anchorPoint.x,
 		size.y * anchorPoint.y,
@@ -299,6 +299,7 @@ void Sprite::ApplySaveData() {
 
 	ReSetTexture(textureName_);
 	textureSize_ = spriteData_.textureSize;
+
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -322,6 +323,10 @@ void Sprite::Debug_Gui() {
 	ImGui::DragFloat2("uvMin", &materialData_->uvMinSize.x, 0.01f);
 	ImGui::DragFloat2("uvMax", &materialData_->uvMaxSize.x, 0.01f);
 	ImGui::ColorEdit4("color", &materialData_->color.x);
+
+	if (ImGui::Button("ResetSize")) {
+		ReSetTextureSize(textureSize_);
+	}
 
 	std::string name = GetName();
 	if (InputTextWithString("SaveName", "##Sprite", name)) {
