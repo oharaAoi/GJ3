@@ -1,7 +1,8 @@
 {
     "StartData": {
-        "radiusKernel": -5.0,
-        "rotateSpeed": 0.5,
-        "transitionTime": 4.0
+        "closeTime": 1.0,
+        "openTime": 2.0,
+        "radiusKernel": -2.0,
+        "rotateSpeed": 0.5
     }
 }

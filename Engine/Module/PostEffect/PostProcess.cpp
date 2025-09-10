@@ -25,6 +25,7 @@ void PostProcess::Finalize() {
 	gotRay_.reset();
 	swirlEffect_.reset();
 	effectList_.clear();
+	afterEffectList_.clear();
 	depthStencilResource_.Reset();
 }
 
@@ -77,16 +78,16 @@ void PostProcess::Init(ID3D12Device* device, DescriptorHeap* descriptorHeap, Ren
 
 	smoothing_ = std::make_unique<Smoothing>();
 	smoothing_->Init();
-	
+
 	gaussianFilter_ = std::make_shared<GaussianFilter>();
 	gaussianFilter_->Init();
-	
+
 	luminanceOutline_ = std::make_shared<LuminanceBasedOutline>();
 	luminanceOutline_->Init();
-	
+
 	depthOutline_ = std::make_shared<DepthBasedOutline>();
 	depthOutline_->Init();
-	
+
 	motionBlur_ = std::make_shared<MotionBlur>();
 	motionBlur_->Init();
 	motionBlur_->SetMotionResource(renderTarget->GetRenderTargetResource(RenderTargetType::MotionVector_RenderTarget));
@@ -122,22 +123,56 @@ void PostProcess::Init(ID3D12Device* device, DescriptorHeap* descriptorHeap, Ren
 	AddEffect(PostEffectType::SWIRL);
 	AddEffect(PostEffectType::TOONMAP);
 
+	afterEffectList_.push_back(swirlEffect_);
+
 	EditorWindows::AddObjectWindow(this, "Post Process");
 }
 
 void PostProcess::Execute(ID3D12GraphicsCommandList* commandList, ShaderResource* shaderResource) {
 	std::vector<RenderTargetType> types(1, RenderTargetType::OffScreen_RenderTarget);
 	Render::SetRenderTarget(types, depthHandle_);
-	
+
 	if (effectList_.empty()) {
 		return;
 	}
-	
+
 	Copy(commandList, shaderResource);
 
 	pingPongBuff_->SetRenderTarget(commandList, BufferType::PONG, depthHandle_.handleCPU);
 	uint32_t cout = 0;
 	for (auto& effect : effectList_) {
+		if (effect != swirlEffect_) {
+			if (effect->GetIsEnable()) {
+				effect->SetCommand(commandList, pingPongBuff_->GetPingResource());
+
+				pingPongBuff_->Swap(commandList);
+				pingPongBuff_->SetRenderTarget(commandList, BufferType::PONG, depthHandle_.handleCPU);
+				cout++;
+			}
+		}
+	}
+
+	if (effectList_.size() % 2 == 0 && !effectList_.empty()) {
+		pingPongBuff_->Swap(commandList);
+	}
+
+
+	PostCopy(commandList, shaderResource);
+}
+
+void PostProcess::AfterExecute(ID3D12GraphicsCommandList* commandList, ShaderResource* shaderResource) {
+	std::vector<RenderTargetType> types(1, RenderTargetType::OffScreen_RenderTarget);
+	Render::SetRenderTarget(types, depthHandle_);
+
+	if (afterEffectList_.empty()) {
+		return;
+	}
+
+	Copy(commandList, shaderResource);
+
+	pingPongBuff_->SetRenderTarget(commandList, BufferType::PONG, depthHandle_.handleCPU);
+	uint32_t cout = 0;
+	for (auto& effect : afterEffectList_) {
 		if (effect->GetIsEnable()) {
 			effect->SetCommand(commandList, pingPongBuff_->GetPingResource());
 
@@ -147,11 +182,11 @@ void PostProcess::Execute(ID3D12GraphicsCommandList* commandList, ShaderResource
 		}
 	}
 
-	if (effectList_.size() % 2 == 0 && !effectList_.empty()) {
+	if (afterEffectList_.size() % 2 == 0 && !afterEffectList_.empty()) {
 		pingPongBuff_->Swap(commandList);
 	}
 
-	
+
 	PostCopy(commandList, shaderResource);
 }
 
@@ -291,8 +326,8 @@ void PostProcess::Debug_Gui() {
 	}
 }
 
-void PostProcess::SetAllEnable(bool enable){
-	for(auto& process : effectList_){
+void PostProcess::SetAllEnable(bool enable) {
+	for (auto& process : effectList_) {
 		process->SetIsEnable(enable);
 	}
 }

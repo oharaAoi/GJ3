@@ -77,6 +77,33 @@ void SwirlEffect::SetCommand(ID3D12GraphicsCommandList* commandList, DxResource*
 	commandList->DrawIndexedInstanced(3, 1, 0, 0, 0);
 }
 
+void SwirlEffect::SetShaderResourceCommand(ID3D12GraphicsCommandList* commandList, ShaderResource* pingResource) {
+	pingResource->Transition(commandList, D3D12_RESOURCE_STATE_COPY_SOURCE);
+	sceneBuffer_->Transition(commandList, D3D12_RESOURCE_STATE_COPY_DEST);
+	commandList->CopyResource(sceneBuffer_->GetResource(), pingResource->GetResource());
+	// copyの状態から戻す
+	pingResource->Transition(commandList, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE);
+	sceneBuffer_->Transition(commandList, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE);
+
+	swirlMask_->SetCommand();
+
+	postProcessResource_->Swap(commandList);
+	postProcessResource_->SetRenderTarget(commandList, BufferType::PONG, depthHandle_.handleCPU);
+
+	CopyData();
+	//setting_->uv = param_.uvTransform.MakeAffine()
+	setting_->time += GameTimer::DeltaTime() * param_.rotateSpeed;
+
+	Pipeline* pso = Engine::SetPipeline(PSOType::ProcessedScene, "PostProcess_Swirl.json");
+	UINT index = pso->GetRootSignatureIndex("gSceneTexture");
+	commandList->SetGraphicsRootDescriptorTable(index, sceneBuffer_->GetSRV().handleGPU);
+	index = pso->GetRootSignatureIndex("gPatternTexture");
+	commandList->SetGraphicsRootDescriptorTable(index, postProcessResource_->GetPingResource()->GetSRV().handleGPU);
+	index = pso->GetRootSignatureIndex("gSetting");
+	commandList->SetGraphicsRootConstantBufferView(index, settingBuffer_->GetResource()->GetGPUVirtualAddress());
+	commandList->DrawIndexedInstanced(3, 1, 0, 0, 0);
+}
+
 void SwirlEffect::CheckBox() {
 	ImGui::Checkbox("SwirlEffect##SwirlEffectSwirlEffect_checkBox", &isEnable_);
 }

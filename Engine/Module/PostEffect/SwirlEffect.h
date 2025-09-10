@@ -2,6 +2,7 @@
 #include <string>
 #include <memory>
 #include "Engine/Module/PostEffect/IPostEffect.h"
+#include "Engine/DirectX/Resource/ShaderResource.h"
 #include "Engine/Lib/Math/MathStructures.h"
 #include "Engine/Module/PostEffect/PingPongBuffer.h"
 #include "Engine/Module/PostEffect/SwirlMask.h"
@@ -48,6 +49,8 @@ public:
 	void Init() override;
 
 	void SetCommand(ID3D12GraphicsCommandList* commandList, DxResource* pingResource) override;
+
+	void SetShaderResourceCommand(ID3D12GraphicsCommandList* commandList, ShaderResource* pingResource);
 
 	void CheckBox() override;
 

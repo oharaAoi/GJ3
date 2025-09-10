@@ -16,9 +16,7 @@ void LimitBlockEffect::Init(const Vector2& pos, const Vector2& tileSize) {
 		ghostEffect_[oi]->Init(tileSize);
 		ghostEffect_[oi]->SetTranslate(pos);
 
-		ghostEffect_[oi]->SetDissolveUvScale(RandomVector3(CVector3::UNIT * -2.0f, CVector3::UNIT * 2.0f));
-
-		ghostEffect_[oi]->SetDissolveUvScale(RandomVector3(CVector3::UNIT * 3.0f, CVector3::UNIT * 6.0f));
+		ghostEffect_[oi]->SetDissolveUvScale(RandomVector3(CVector3::UNIT * -1.0f, CVector3::UNIT * 1.0f));
 
 		Vector3 min = RandomVector3(CVector3::UNIT * -1.0f, CVector3::UNIT * 1.0f);
 		Vector3 max = RandomVector3(CVector3:: UNIT * 1.0f, CVector3::UNIT * 1.0f);

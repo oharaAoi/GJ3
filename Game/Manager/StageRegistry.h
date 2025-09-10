@@ -77,7 +77,6 @@ private:
 
 	std::unique_ptr<StageEditor> stageEditor_;
 	std::unique_ptr<StageLoader> stageLoader_;
-	Sprite* startBlock_ = nullptr;
 
 	// その他クラスのポイン
 	Canvas2d* pCanvas2d_;

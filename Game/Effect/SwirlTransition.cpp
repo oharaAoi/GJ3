@@ -1,5 +1,6 @@
 #include "SwirlTransition.h"
 #include "Engine.h"
+#include "Engine/Lib/Math/Easing.h"
 #include "Engine/System/Editer/Window/EditorWindows.h"
 
 void SwirlTransition::Init() {
@@ -20,25 +21,32 @@ void SwirlTransition::Init() {
 void SwirlTransition::Update() {
 	if (!isFinish_) {
 		time_ += GameTimer::DeltaTime();
-		float t = time_ / startData_.transitionTime;
 		float kr = 0;
 		float speed = 0;
 		float patternAlpha = 0;
 		if (!isOpen_) {
-			kr = std::lerp(startData_.radiusKernel, endData_.radiusKernel, t);
-			speed = std::lerp(startData_.rotateSpeed, endData_.rotateSpeed, t);
-			patternAlpha = std::lerp(0.0f, 1.0f, t);
+			float t = time_ / startData_.transitionTime;
+			kr = std::lerp(startData_.radiusKernel, endData_.radiusKernel, Ease::Out::Quart(t));
+			speed = std::lerp(startData_.rotateSpeed, endData_.rotateSpeed, Ease::Out::Quart(t));
+			patternAlpha = std::lerp(0.0f, 1.0f, Ease::Out::Quart(t));
 		} else {
-			kr = std::lerp(endData_.radiusKernel, startData_.radiusKernel, t);
-			speed = std::lerp(endData_.rotateSpeed, startData_.rotateSpeed, t);
-			patternAlpha = std::lerp(1.0f, 0.0f, t);
+			float t = time_ / endData_.transitionTime;
+			kr = std::lerp(endData_.radiusKernel, startData_.radiusKernel, Ease::In::Cubic(t));
+			speed = std::lerp(endData_.rotateSpeed, startData_.rotateSpeed, Ease::In::Cubic(t));
+			patternAlpha = std::lerp(1.0f, 0.0f, Ease::In::Cubic(t));
 		}
 
 		swirl_->SetRadiusKernel(kr);
 		swirl_->SetRotateSpeed(speed);
 		swirl_->SetPatternAlpha(patternAlpha);
 
-		if (time_ >= startData_.transitionTime) {
+		float finishTime;
+		if (!isOpen_) {
+			finishTime = startData_.transitionTime;
+		} else {
+			finishTime = endData_.transitionTime;
+		}
+		if (time_ >= finishTime) {
 			isFinish_ = true;
 
 			if(isOpen_){
@@ -58,8 +66,8 @@ void SwirlTransition::Debug_Gui() {
 	}
 
 	if (ImGui::CollapsingHeader("Start")) {
+		ImGui::DragFloat("transitionTime", &startData_.transitionTime);
 		if (ImGui::Button("Insert Start Data")) {
-			ImGui::DragFloat("transitionTime", &startData_.transitionTime);
 			startData_.radiusKernel = swirl_->GetRadiusKernel();
 			startData_.rotateSpeed = swirl_->GetRotateSpeed();
 		}
@@ -73,6 +81,7 @@ void SwirlTransition::Debug_Gui() {
 	}
 
 	if (ImGui::CollapsingHeader("End")) {
+		ImGui::DragFloat("transitionTime", &endData_.transitionTime);
 		if (ImGui::Button("Insert End Data")) {
 			endData_.radiusKernel = swirl_->GetRadiusKernel();
 			endData_.rotateSpeed = swirl_->GetRotateSpeed();

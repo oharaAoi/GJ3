@@ -29,9 +29,8 @@ public:
 		sprite_->ReSetTextureSize(size); 
 		Canvas2d::ObjectPair* pair = pCanvas2d_->GetObjectPair(sprite_);
 		pair->renderQueue = static_cast<int>(size.x);
-		pair->isPreDraw = false;
+		pair->isPreDraw = true;
 	}
-
 
 private:
 
