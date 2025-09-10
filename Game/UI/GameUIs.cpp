@@ -15,9 +15,9 @@ void GameUIs::Init(){
 	auto canvas2d = Engine::GetCanvas2d();
 
 	// undo
-	undoUIs_[0] = canvas2d->AddSprite("Game_undo_k.png","Undo_Keyboard","Sprite_Normal.json",20,false);
-	undoUIs_[1] = canvas2d->AddSprite("Game_undo_p.png","Undo_Pad","Sprite_Normal.json",20,false);
-	undoUIs_[2] = canvas2d->AddSprite("Undo.png","Undo_Icon","Sprite_Normal.json",20,false);
+	undoUIs_[0] = canvas2d->AddSprite("Game_undo_k.png","Undo_Keyboard","Sprite_Normal.json",7,false);
+	undoUIs_[1] = canvas2d->AddSprite("Game_undo_p.png","Undo_Pad","Sprite_Normal.json",7,false);
+	undoUIs_[2] = canvas2d->AddSprite("Undo.png","Undo_Icon","Sprite_Normal.json",7,false);
 	undoUIs_[0]->ApplySaveData();
 	undoUIs_[1]->ApplySaveData();
 	undoUIs_[2]->ApplySaveData();
@@ -27,9 +27,9 @@ void GameUIs::Init(){
 	AddChild(undoUIs_[2]);
 
 	// redo
-	redoUIs_[0] = canvas2d->AddSprite("Game_redo_k.png","Redo_Keyboard","Sprite_Normal.json",20,false);
-	redoUIs_[1] = canvas2d->AddSprite("Game_redo_p.png","Redo_Pad","Sprite_Normal.json",20,false);
-	redoUIs_[2] = canvas2d->AddSprite("Redo.png","Redo_Icon","Sprite_Normal.json",20,false);
+	redoUIs_[0] = canvas2d->AddSprite("Game_redo_k.png","Redo_Keyboard","Sprite_Normal.json",7,false);
+	redoUIs_[1] = canvas2d->AddSprite("Game_redo_p.png","Redo_Pad","Sprite_Normal.json",7,false);
+	redoUIs_[2] = canvas2d->AddSprite("Redo.png","Redo_Icon","Sprite_Normal.json",7,false);
 	redoUIs_[0]->ApplySaveData();
 	redoUIs_[1]->ApplySaveData();
 	redoUIs_[2]->ApplySaveData();
@@ -39,8 +39,8 @@ void GameUIs::Init(){
 	AddChild(redoUIs_[2]);
 
 	// menu
-	menuUIs_[0] = canvas2d->AddSprite("Game_menu_k.png","Menu_Keyboard","Sprite_Normal.json",200,false);
-	menuUIs_[1] = canvas2d->AddSprite("Game_menu_p.png","Menu_Pad","Sprite_Normal.json",20,false);
+	menuUIs_[0] = canvas2d->AddSprite("Game_menu_k.png","Menu_Keyboard","Sprite_Normal.json",20,true);
+	menuUIs_[1] = canvas2d->AddSprite("Game_menu_p.png","Menu_Pad","Sprite_Normal.json",20,true);
 	menuUIs_[0]->ApplySaveData();
 	menuUIs_[1]->ApplySaveData();
 	AddChild(menuUIs_[0]);
