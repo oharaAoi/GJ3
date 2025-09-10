@@ -4,6 +4,9 @@
 #include "Engine/System/Input/Input.h"
 #include "Engine/Lib/GameTimer.h"
 
+#include "Game/UI/StageSelect/StageSelector.h"
+#include "Game/Tool/StageLoader.h"
+
 void ClearSelector::Init()
 {
 	clearUIs_ = std::make_unique<ClearUIs>();
@@ -44,6 +47,30 @@ void ClearSelector::Update()
 	// 下入力が押されているか
 	const bool downPressed = input->IsTriggerKey(DIK_S) || input->IsTriggerKey(DIK_DOWN) ||
 		input->IsTriggerButton(XInputButtons::DPAD_DOWN) || (lsY < -0.5f);
+
+	if (StageSelector::GetCurrentStageIndex() >= static_cast<int32_t>(StageLoader::GetMaxStageNum() - 1)) {
+		// 点滅処理
+		clearUIs_->DrawEnable(1);
+		cursorIndex_ = 0;
+		clearUIs_->BlinkingIndex(cursorIndex_);
+		//決定ボタンを押したら
+		if (decisionPressed && cursorIndex_ != -1) {
+			AudioPlayer::SinglShotPlay("button.mp3", 0.5f);
+			const auto type = clearUIs_->GetTypeIndex(cursorIndex_);
+			switch (type)
+			{
+			case ButtonType::Select:
+				changeScene_ = true;
+				break;
+			case ButtonType::NextStage:
+				changeStage_ = true;
+				break;
+			default:
+				break;
+			}
+		}
+		return;
+	}
 
 	// 入力されていないなら-1で
 	if (cursorIndex_ == -1) {

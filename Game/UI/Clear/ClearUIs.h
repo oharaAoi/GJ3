@@ -47,6 +47,7 @@ public:
 	ButtonType GetTypeIndex(int index)const { return buttonUIs_[index]->GetButtonType(); }
 	void BlinkingIndex(int index) { buttonUIs_[index]->Blinking(); }
 	void ResetIndex(int index) { buttonUIs_[index]->Reset(); }
+	void DrawEnable(int index) { buttonUIs_[index]->GetSprite()->SetEnable(false); }
 
 	void SetColors(int index,float alpha) {
 		for (size_t i = 0; i < buttonUIs_.size(); ++i) {

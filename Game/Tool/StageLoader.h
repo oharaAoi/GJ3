@@ -23,7 +23,7 @@ public:
 
 	const std::string GetStageName() const { return currentFileName_; }
 
-	uint32_t GetMaxStageNum() const { return maxStageNum_; }
+	static uint32_t GetMaxStageNum(){ return maxStageNum_; }
 
 private:
 
@@ -33,7 +33,7 @@ private:
 	std::string currentFileName_;
 	int currentIndex_;
 
-	uint32_t maxStageNum_;	// ステージの最大数
+	static uint32_t maxStageNum_;	// ステージの最大数
 
 };
 
