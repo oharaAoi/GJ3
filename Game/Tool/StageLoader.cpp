@@ -3,6 +3,8 @@
 #include <fstream>
 #include "Engine/Utilities/ImGuiHelperFunc.h"
 
+uint32_t StageLoader::maxStageNum_ = 0;
+
 namespace fs = std::filesystem;
 
 void StageLoader::Init() {
