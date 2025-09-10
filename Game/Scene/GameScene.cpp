@@ -21,6 +21,8 @@ GameScene::~GameScene() { Finalize(); }
 
 void GameScene::Finalize()
 {
+	Engine::GetPostProcess()->SetAllEnable(false);
+
 	sceneRenderer_->Finalize();
 	ghostEffectManager_->Finalize();
 	limitBlockEffectManager_->Finalize();

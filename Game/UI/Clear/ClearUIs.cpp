@@ -10,7 +10,6 @@
 void ClearUIs::Init()
 {
 	SetName("ClearUIs");
-	AddChild(this);
 	EditorWindows::AddObjectWindow(this, GetName());
 
 	param_.FromJson(JsonItems::GetData(GetName(), param_.GetName()));
@@ -29,13 +28,18 @@ void ClearUIs::Init()
 	buttonUIs_[0]->GetSprite()->ReSetTextureSize(buttonUIs_[1]->GetSprite()->GetTextureSize());
 
 	// Clear_text
-	text_ = Engine::GetCanvas2d()->AddSprite("Clear_text.png", GetName(), "Sprite_Normal.json", 1, true);
+	text_ = Engine::GetCanvas2d()->AddSprite("Clear_text.png", "Text", "Sprite_Normal.json", 1, true);
+	AddChild(text_);
 	// Clear_pot
-	pot_ = Engine::GetCanvas2d()->AddSprite("Clear_pot.png", GetName(), "Sprite_Normal.json", 1, true);
+	pot_ = Engine::GetCanvas2d()->AddSprite("Clear_pot.png","Pot", "Sprite_Normal.json", 1, true);
+	AddChild(pot_);
+
 	// Clear_curtain
-	curtain_ = Engine::GetCanvas2d()->AddSprite("Clear_curtain.png", GetName(), "Sprite_Normal.json", 1, true);
+	curtain_ = Engine::GetCanvas2d()->AddSprite("Clear_curtain.png", "Curtain", "Sprite_Normal.json", 1, true);
+	AddChild(curtain_);
 	// Clear_bg
-	backGround_ = Engine::GetCanvas2d()->AddSprite("Clear_bg.png", GetName(), "Sprite_Normal.json", 0, true);
+	backGround_ = Engine::GetCanvas2d()->AddSprite("Clear_bg.png", "BackGround", "Sprite_Normal.json", 0, true);
+	AddChild(backGround_);
 
 	text_->SetTranslate(Vector2{ 640.0f,360.0f });
 	pot_->SetTranslate(Vector2{ 640.0f,360.0f });

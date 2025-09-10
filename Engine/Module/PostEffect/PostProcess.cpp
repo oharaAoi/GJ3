@@ -290,3 +290,9 @@ void PostProcess::Debug_Gui() {
 		effect->Debug_Gui();
 	}
 }
+
+void PostProcess::SetAllEnable(bool enable){
+	for(auto& process : effectList_){
+		process->SetIsEnable(enable);
+	}
+}

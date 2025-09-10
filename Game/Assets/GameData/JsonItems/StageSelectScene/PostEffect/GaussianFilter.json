@@ -1,6 +1,6 @@
 {
     "GaussianFilter": {
-        "bloomIntensity": 0.5,
+        "bloomIntensity": 0.4399999976158142,
         "isEnable": true
     }
 }

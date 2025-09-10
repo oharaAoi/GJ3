@@ -15,11 +15,8 @@ TitleScene::~TitleScene(){
 }
 
 void TitleScene::Finalize(){
-	PostProcess* postProcess = Engine::GetPostProcess();
-	postProcess->SetIsActive(false);
-	postProcess->GetBloom()->SetIsEnable(false);
-	postProcess->GetVignette()->SetIsEnable(false);
-	postProcess->GetToonMap()->SetIsEnable(false);
+
+	Engine::GetPostProcess()->SetAllEnable(false);
 
 	sceneRenderer_->Finalize();
 	GhostSmokeManager::GetInstance()->Finalize();
@@ -39,6 +36,7 @@ void TitleScene::Init(){
 	// ↓ PostProcess の初期化
 	// -------------------------------------------------
 	PostProcess* postProcess = Engine::GetPostProcess();
+	postProcess->SetAllEnable(false);
 	postProcess->SetIsActive(true);
 
 	postProcess->GetGotRay()->SetIsEnable(false);
@@ -110,7 +108,7 @@ void TitleScene::Update(){
 		uis_->GetGhostSpriteRef()->SetColor(ghostColor);
 
 		PostProcess* postProcess = Engine::GetPostProcess();
-		
+
 		// bloom
 		auto bloom = postProcess->GetBloom();
 		float bloomT = Ease::Out::Quad(alpha);
@@ -195,15 +193,15 @@ void TitleScene::PostEffectParam::Init(const std::string& _paramName){
 }
 
 void TitleScene::PostEffectParam::Debug_Gui(){
-		ImGui::DragFloat("Bloom Intensity",&bloomIntensity_,0.01f,0.f);
-		ImGui::DragFloat("Bloom Threshold",&bloomThreshold_,0.01f,0.f);
-		ImGui::DragFloat("Bloom Texel Size",&bloomTexelSize_,0.01f,0.1f);
-		ImGui::DragFloat("Vignette Power",&vignettePower_,0.01f,0.f);
-		ImGui::DragFloat("Vignette Scale",&vignetteScale_,0.01f,0.f);
+	ImGui::DragFloat("Bloom Intensity",&bloomIntensity_,0.01f,0.f);
+	ImGui::DragFloat("Bloom Threshold",&bloomThreshold_,0.01f,0.f);
+	ImGui::DragFloat("Bloom Texel Size",&bloomTexelSize_,0.01f,0.1f);
+	ImGui::DragFloat("Vignette Power",&vignettePower_,0.01f,0.f);
+	ImGui::DragFloat("Vignette Scale",&vignetteScale_,0.01f,0.f);
 
-		if(ImGui::Button("Save##TitleScenePostEffectParam")){
-			JsonItems::Save("Effect",ToJson(IJsonConverter::GetName()));
-		}
+	if(ImGui::Button("Save##TitleScenePostEffectParam")){
+		JsonItems::Save("Effect",ToJson(IJsonConverter::GetName()));
+	}
 }
 
 json TitleScene::PostEffectParam::ToJson(const std::string& id) const{
