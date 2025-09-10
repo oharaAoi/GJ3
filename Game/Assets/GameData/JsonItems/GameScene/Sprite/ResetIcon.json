@@ -1,23 +1,23 @@
 {
-    "Undo_Pad": {
+    "ResetIcon": {
         "anchorPoint": {
             "x": 0.5,
             "y": 0.5
         },
         "centerPos": {
-            "x": 107.4000015258789,
-            "y": 508.0,
+            "x": 1168.0,
+            "y": 534.0,
             "z": 0.0
         },
         "color": {
             "w": 1.0,
-            "x": 0.7647058963775635,
-            "y": 0.7647058963775635,
-            "z": 0.7647058963775635
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
         },
         "drawRange": {
-            "x": 256.0,
-            "y": 256.0
+            "x": 160.0,
+            "y": 90.0
         },
         "isBackGround": false,
         "isFlipX": false,
@@ -36,10 +36,10 @@
             "x": 1.0,
             "y": 1.0
         },
-        "textureName": "Game_undo_p.png",
+        "textureName": "reset_text.png",
         "textureSize": {
-            "x": 170.0,
-            "y": 170.0
+            "x": 160.0,
+            "y": 90.0
         },
         "uvMaxSize": {
             "x": 1.0,

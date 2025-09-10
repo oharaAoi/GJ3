@@ -9,14 +9,17 @@
 
 void StageResetUI::Init(Canvas2d* _canvas2d)
 {
+	SetName("StageResetButtonUI");
+	EditorWindows::AddObjectWindow(this, GetName());
+
 	pCanvas2d_ = _canvas2d;
 	resetButtonUI_ = pCanvas2d_->AddSprite("resetButton_R.png", GetName(), "Sprite_Normal.json", 6);
 
+	resetIcon_ = pCanvas2d_->AddSprite("reset_text.png","ResetIcon","Sprite_Normal.json",7);
+	AddChild(resetIcon_);
+
 	backTextureUI_ = pCanvas2d_->AddSprite("white.png", GetName(), "Sprite_Normal.json", 5);
 
-	SetName("StageResetButtonUI");
-	AddChild(this);
-	EditorWindows::AddObjectWindow(this, GetName());
 	param_.FromJson(JsonItems::GetData(GetName(), param_.GetName()));
 
 	backTextureUI_->SetColor(param_.backColor);
