@@ -33,6 +33,10 @@ void BlockLimit::Update()
 	transform_->SetTranslate(ConvertIndexToPosition(index_));
 
 	backIndex_ = index_;
+
+	if (effect_) {
+		effect_->SetPos(transform_->GetTranslate());
+	}
 }
 
 void BlockLimit::Debug_Gui()

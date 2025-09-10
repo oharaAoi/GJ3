@@ -49,6 +49,12 @@ void LimitBlockEffect::ApplySaveData(const std::string& effectName) {
 	}
 }
 
+void LimitBlockEffect::SetPos(const Vector2& pos) {
+	for (uint32_t oi = 0; oi < 2; ++oi) {
+		ghostEffect_[oi]->SetTranslate(pos);
+	}
+}
+
 void LimitBlockEffect::Debug_Gui() {
 	for (uint32_t oi = 0; oi < 2; ++oi) {
 		std::string name = "effect_" + std::to_string(oi);

@@ -122,6 +122,8 @@ void GameScene::Init()
 	postProcess->GetBloom()->ApplySaveData();
 	postProcess->GetVignette()->SetIsEnable(true);
 	postProcess->GetVignette()->ApplySaveData();
+	postProcess->GetGotRay()->SetIsEnable(true);
+	postProcess->GetGotRay()->ApplySaveData();
 
 	// -------------------------------------------------
 	// ↓ spriteの初期化

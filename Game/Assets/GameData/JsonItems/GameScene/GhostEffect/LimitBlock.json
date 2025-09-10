@@ -1,6 +1,6 @@
 {
     "LimitBlock": {
-        "baseTexture": "smoke2.png",
+        "baseTexture": "limitBlock.png",
         "color": {
             "w": 1.0,
             "x": 1.0,
@@ -13,13 +13,13 @@
             "y": 0.10288803279399872,
             "z": 0.13488370180130005
         },
-        "dissolveTexture": "cell.png",
+        "dissolveTexture": "white.png",
         "edgeColor": {
             "w": 1.0,
             "x": 0.0,
             "y": 0.0,
             "z": 0.0
         },
-        "threshold": 0.8100000023841858
+        "threshold": -0.8500000238418579
     }
 }
