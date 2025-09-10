@@ -14,6 +14,7 @@
 #include "Game/Actor/Effect/GhostSoulManager.h"
 #include "Game/Manager/GhostSmokeManager.h"
 #include "Game/Manager/LimitBlockEffectManager.h"
+#include "Game/Manager/GhostTakenEffectManager.h"
 #include "Game/Manager/StageRegistry.h"
 #include "Game/Manager/Collision/Common/MapCollisionSystem.h"
 #include "Game/WorldObject/WorldObjects.h"
@@ -95,6 +96,7 @@ private:
 	BaseParticles* dust_;
 	GhostSmokeManager* ghostEffectManager_;
 	LimitBlockEffectManager* limitBlockEffectManager_;
+	GhostTakenEffectManager* ghostTakenEffectManager_;
 
 	std::unique_ptr<SwirlTransition> swirlTransition_;
 

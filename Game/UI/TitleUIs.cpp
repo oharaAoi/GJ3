@@ -12,6 +12,7 @@ void TitleUIs::Init(){
 	///===========================================
 	// Sprites
 	///===========================================
+
 	backGround_ = Engine::GetCanvas2d()->AddSprite("title_bg.png","BackGround","Sprite_Normal.json",-10,true);
 
 	titleWords_[0] = Engine::GetCanvas2d()->AddSprite("Title_su.png","su","Sprite_None.json",-1);   // す

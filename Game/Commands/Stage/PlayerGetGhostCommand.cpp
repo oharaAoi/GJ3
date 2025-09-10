@@ -2,6 +2,7 @@
 
 #include "Game/Manager/Collision/Common/MapCollisionSystem.h"
 #include "Game/Manager/StageRegistry.h"
+#include "Game/Manager/GhostTakenEffectManager.h"
 
 PlayerGetGhostCommand::PlayerGetGhostCommand(MapCollisionSystem* _mapCollision,const Vector2Int& _index)
 	:mapCollision_(_mapCollision),index_(_index){}
@@ -12,6 +13,9 @@ void PlayerGetGhostCommand::Execute(){
 	mapCollision_->AddGhostCounter();
 	// 出来たおばけを判定する
 	mapCollision_->GetSpecialBlockCollision()->RecursionBlockChecker(index_);
+	// おばけを取得した際に出すおばけ吸収エフェクト
+	Vector2 createPos = mapCollision_->GetStageRegi()->CalculateTilePos(index_.y, index_.x);
+	GhostTakenEffectManager::GetInstance()->Create(createPos, mapCollision_->GetStageRegi()->GetTileSize() * 3.0f);
 }
 void PlayerGetGhostCommand::Undo(){
 	// おばけの数を減らす
