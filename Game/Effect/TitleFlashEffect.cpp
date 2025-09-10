@@ -6,6 +6,7 @@
 
 /// engine
 #include "Engine.h"
+#include "Engine/System/Audio/AudioPlayer.h"
 #include "Engine/Module/Components/2d/Canvas2d.h"
 #include "Engine/System/Editer/Window/EditorWindows.h"
 #include "Engine/Lib/Json/JsonItems.h"
@@ -57,7 +58,7 @@ void ThunderFlash::Finalize()
 	parameter_.flashCurve_.keyframes.clear();
 }
 
-float ThunderFlash::CalculateCurrentFlushAlpha() const
+float ThunderFlash::CalculateCurrentFlushAlpha() 
 {
 	///===========================================
 	/// 例外処理
@@ -71,13 +72,14 @@ float ThunderFlash::CalculateCurrentFlushAlpha() const
 		return parameter_.flashCurve_.keyframes[0].value;
 	}
 
-	for (size_t index = 0; index < parameter_.flashCurve_.keyframes.size() - 1; ++index)
+	for(int32_t index = 0; index < int32_t(parameter_.flashCurve_.keyframes.size()) - 1; ++index)
 	{
 		size_t nextIndex = index + 1;
 		// index と nextIndex の 2つを
 		// 取得して 現時刻が 範囲内か
 		if (parameter_.flashCurve_.keyframes[index].time <= parameter_.currentFlashTime_ && parameter_.currentFlashTime_ <= parameter_.flashCurve_.keyframes[nextIndex].time)
 		{
+			currentFlashCurveIndex_ = index;
 			// 範囲内 で 保管
 			float t = (parameter_.currentFlashTime_ - parameter_.flashCurve_.keyframes[index].time) / (parameter_.flashCurve_.keyframes[nextIndex].time - parameter_.flashCurve_.keyframes[index].time);
 			return std::lerp(parameter_.flashCurve_.keyframes[index].value, parameter_.flashCurve_.keyframes[nextIndex].value, t);
@@ -94,11 +96,18 @@ void ThunderFlash::Update()
 	// ループする
 	if (parameter_.currentFlashTime_ >= parameter_.flashDuration_)
 	{
+		prevFlashCurveIndex_ = -1;
+		currentFlashCurveIndex_ = 0;
 		parameter_.currentFlashTime_ = 0.0f;
 	}
 
 	// alpha値を取得
 	alpha_ = CalculateCurrentFlushAlpha();
+	if(currentFlashCurveIndex_ != prevFlashCurveIndex_){
+		if(alpha_ >= 0.2f){
+			AudioPlayer::SinglShotPlay("thunder.mp3",std::clamp(alpha_,0.06f,0.6f));
+		}
+	}
 }
 
 void ThunderFlash::Debug_Gui()

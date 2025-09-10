@@ -24,7 +24,7 @@ public:
 
 	void Debug_Gui() override;
 protected:
-	float CalculateCurrentFlushAlpha()const;
+	float CalculateCurrentFlushAlpha();
 
 	struct Parameter
 		: public IJsonConverter{
@@ -42,6 +42,8 @@ protected:
 
 private:
 	float alpha_ = 0.0f;
+	int32_t currentFlashCurveIndex_ = 0;
+	int32_t prevFlashCurveIndex_ = -1;
 
 	Parameter parameter_;
 public:
@@ -49,6 +51,7 @@ public:
 	void SetAlpha(float alpha){ alpha_ = alpha; }
 
 };
+
 class LightFlash :
 	public AttributeGui{
 public:
@@ -80,6 +83,8 @@ private:
 	Sprite* flashOverlaySprite_;
 
 	std::string parameterName_;
+
+	AudioPlayer* flashSound_;
 
 	Parameter parameter_;
 public:
