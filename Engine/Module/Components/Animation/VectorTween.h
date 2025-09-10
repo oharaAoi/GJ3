@@ -26,7 +26,7 @@ public:
 
 	template <typename T>
 	void Init(const T& _start, const T& _end, float _duration, int _easeIndex, LoopType _loop) {
-		value_ = 0;
+		value_ = T{};
 		start_ = _start;
 		end_ = _end;
 		duration_ = _duration;

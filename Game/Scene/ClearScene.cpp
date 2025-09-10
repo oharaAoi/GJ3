@@ -65,6 +65,11 @@ void ClearScene::Init()
 	bgm_ = std::make_unique<AudioPlayer>();
 	bgm_->Init("Clear.mp3");
 	bgm_->Play(true, 0.5f);
+
+	swirlTransition_ = std::make_unique<SwirlTransition>();
+	swirlTransition_->Init();
+	swirlTransition_->Open();
+	AudioPlayer::SinglShotPlay("start.mp3", 0.3f);
 }
 
 void ClearScene::Finalize()
@@ -91,6 +96,12 @@ void ClearScene::Update()
 
 	clearSelector_->Update();
 	ChengeScene();
+
+	if (lightFlash_) {
+		lightFlash_->Update();
+	}
+
+	swirlTransition_->Update();
 
 	// -------------------------------------------------
 	// ↓ cameraの更新
@@ -138,11 +149,25 @@ void ClearScene::ChengeScene()
 			// セレクトシーンに遷移
 			if (clearSelector_->GetChangeScene())
 			{
+				if (changeTimer_ == 0.0f) {
+					lightFlash_ = std::make_unique<LightFlash>();
+					lightFlash_->Init("LightFlash");
+				}
+				// タイムをプラスする
+				changeTimer_ += GameTimer::DeltaTime();
+				if (changeTimer_ <= 2.0f) { return; }
 				nextSceneType_ = SceneType::STAGE_SELECT;
 			}
 			// 次のステージに遷移
 			if (clearSelector_->GetChangeStage())
 			{
+				if (changeTimer_ == 0.0f) {
+					swirlTransition_->Close();
+					AudioPlayer::SinglShotPlay("start.mp3", 0.3f);
+				}
+				// タイムをプラスする
+				changeTimer_ += GameTimer::DeltaTime();
+				if (changeTimer_ <= 4.0f) { return; }
 				nextSceneType_ = SceneType::GAME;
 				int32_t index = StageSelector::GetCurrentStageIndex() + 1;
 				StageSelector::SetCurrentStageIndex(index);

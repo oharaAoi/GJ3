@@ -88,6 +88,7 @@ void SpecialBlockCollision::RecursionBlockChecker(const Vector2Int& _index)
 					} else {
 						system_->GetStageRegi()->CreateStageData(ghostIndex, BlockType::Ghost);
 						RecursionBlockChecker(ghostIndex);
+						system_->AddGhostThereIndies(ghostIndex);
 					}
 				}
 			}

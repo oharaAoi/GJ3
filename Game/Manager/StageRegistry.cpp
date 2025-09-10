@@ -2,6 +2,7 @@
 #include "Engine/System/Editer/Window/EditorWindows.h"
 #include "Game/Tool/MapChipLoader.h"
 #include "Game/Actor/Block/BlockWall.h"
+#include "Game/Actor/Block/TokenGhost.h"
 #include "Game/Actor/Block/BlockFactory.h"
 #include "Game/Information/StageInformation.h"
 #include "Enviroment.h"
@@ -145,6 +146,13 @@ void StageRegistry::CreateStageData(const Vector2Int& index,BlockType type){
 void StageRegistry::ClearStageData(const Vector2Int& index){
 	stageData_[index.y][index.x]->Destroy();
 	stageData_[index.y][index.x] = nullptr;
+}
+
+void StageRegistry::CreateGhostEffect(const Vector2Int& index) {
+	if (stageData_[index.y][index.x] != nullptr) {
+		TokenGhost* ghost = dynamic_cast<TokenGhost*>(stageData_[index.y][index.x].get());
+		ghost->CreateGhostEffect();
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////

@@ -53,6 +53,9 @@ public:
 	// pairIndexを入れたらゴーストのIndexの位置が取得できる
 	Vector2Int SearchGhostIndex(const Vector2Int &index) { return ghostBlockCollision_->SearchGhostIndex(index); }
 
+	void AddGhostThereIndies(const Vector2Int& index);
+	void AddPreGhostThereIndies(const Vector2Int& index);
+
 	// ====================================================================== //
 	//					回収したおばけの数を取得する
 	// ====================================================================== //
@@ -99,6 +102,11 @@ private:
 	Vector2Int playerIndex_ = {0, 0};
 	// 中心から8方向へのoffset
 	std::array<Vector2Int, 8> neighborOffsets_;
+
+	// ghostを生成したときのIndexを保持
+	std::vector<Vector2Int> ghostThereIndies_;
+	// 前のフレームの上記
+	std::vector<Vector2Int> preFrameGhostThereIndies_;
 
 	// 触れたおばけの数を保持
 	uint32_t ghostCounter_ = 0;

@@ -12,8 +12,17 @@ void BlockGhost::Init(Canvas2d* _canvas2d, const Vector2& pos, const Vector2& ti
 
 void BlockGhost::Update()
 {
+	if (backIndex_.x != index_.x || backIndex_.y != index_.y) {
+		scaleTimer_ = 0.0f;
+	}
+	scaleTimer_ += GameTimer::DeltaTime() * 6.0f;
+	scaleTimer_ = std::clamp(scaleTimer_, 0.0f, 1.0f);
+	transform_->SetScale(Vector2::MochiPuniScaleNormalized(scaleTimer_));
+
 	/// 座標更新
 	transform_->SetTranslate(ConvertIndexToPosition(index_));
+
+	backIndex_ = index_;
 }
 
 void BlockGhost::Debug_Gui()

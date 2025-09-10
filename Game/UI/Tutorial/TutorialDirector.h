@@ -73,7 +73,6 @@ private:
 
 	// チュートリアル猫
 	float catComes_ = 0.0f;		// 出てくる
-
 	// チュートリアルの吹き出し
 	float spComes_ = 0.0f;		// 出てくる
 	// 自己紹介しろ
@@ -93,8 +92,10 @@ private:
 	uint32_t ghostCount_ = 0;
 	// ゴールさせる
 	float goalTimer_ = 0.0f;
-	// リセット処理
+	// リセット処理(チュートリアル完全スキップ処理)
 	float skipTimer_ = 1.0f;
 	bool isSkip_ = false;
+	// スピーチスキップ処理
+	bool isSpeechSkip_ = false;
 };
 

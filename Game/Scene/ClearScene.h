@@ -11,6 +11,9 @@
 #include "Game/Actor/Effect/GhostSoulManager.h"
 #include "Game/UI/Clear/ClearSelector.h"
 #include "Engine/System/Audio/AudioPlayer.h"
+#include "Game/Effect/SwirlTransition.h"
+// effect
+#include "Game/Effect/TitleFlashEffect.h"
 
 class ClearScene : 
 	public BaseScene
@@ -45,6 +48,11 @@ private:
 	std::unique_ptr<GhostSoulManager> ghostSoulManager_;
 
 	std::unique_ptr<ClearSelector> clearSelector_;
+
+	std::unique_ptr<SwirlTransition> swirlTransition_;
+
+	std::unique_ptr<LightFlash> lightFlash_;
+	float changeTimer_ = 0.0f;
 
 	std::unique_ptr<AudioPlayer> bgm_;
 

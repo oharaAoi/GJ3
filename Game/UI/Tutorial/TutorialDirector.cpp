@@ -1,5 +1,6 @@
 #include "TutorialDirector.h"
 
+#include "Engine/System/Audio/AudioPlayer.h"
 #include "Engine/System/Input/Input.h"
 #include "Engine/Lib/GameTimer.h"
 #include "Engine/Lib/Math/Easing.h"
@@ -16,6 +17,8 @@ void TutorialDirector::Update()
 
 	isControllerConnected_ = input->IsControllerConnected();
 
+	bool speechSkipKey = input->IsTriggerButton(XInputButtons::BUTTON_A) || input->IsTriggerKey(DIK_SPACE);
+
 	const float speechSpeed = 500.0f;
 
 	switch (type_)
@@ -24,6 +27,10 @@ void TutorialDirector::Update()
 	{
 		if (isSkip_) { break; }
 		SpeechCatScene(uis_->GetSelfUIs(), selfTimer_, TutorialType::Move);
+		if (!isSpeechSkip_ && speechSkipKey) {
+			AudioPlayer::SinglShotPlay("button.mp3", 0.5f);
+			isSpeechSkip_ = true;
+		}
 	}
 
 	break;
@@ -55,6 +62,7 @@ void TutorialDirector::Update()
 				} else {
 					type_ = TutorialType::CreateGhost;
 					isMoveEnable_ = false;
+					isSpeechSkip_ = false;
 				}
 			}
 			if (key || pad || stick) {
@@ -110,6 +118,20 @@ void TutorialDirector::Update()
 				}
 			}
 		}
+		if (isSpeechSkip_ && !isFinish) {
+			for (size_t i = 0; i < uis_->GetModeUIs().size(); ++i) {
+				if (i == 0) {
+					uis_->GetModeUIs()[i]->SetUvMaxSize(1.0f);
+					uis_->GetModeUIs()[i]->GetSprite()->SetEnable(true);
+					uis_->GetModeUIs()[i]->SetIsFinished(true);
+				} else {
+					uis_->GetModeUIs()[i]->SetUvMaxSize(1.0f);
+					uis_->GetModeUIs()[i]->SetIsFinished(true);
+				}
+			}
+			moveTimer_ = 3.0f;
+		}
+
 		// テキストが読み終わっていたら
 		if (isFinish) {
 			// テキスト読む時間を与え消える
@@ -132,6 +154,10 @@ void TutorialDirector::Update()
 				}
 			}
 		}
+		if (!isSpeechSkip_ && speechSkipKey) {
+			AudioPlayer::SinglShotPlay("button.mp3", 0.5f);
+			isSpeechSkip_ = true;
+		}
 
 	}
 	break;
@@ -145,6 +171,7 @@ void TutorialDirector::Update()
 				if (createGhostTimer_ < 0.2f) {
 					createGhostTimer_ += GameTimer::DeltaTime();
 				} else {
+					isSpeechSkip_ = false;
 					isMoveEnable_ = false;
 					isSpeechFinish_ = false;
 					type_ = TutorialType::Explanation;
@@ -162,6 +189,11 @@ void TutorialDirector::Update()
 				SpeechBubble_SceneIn();
 				//吹き出しが出たらしゃべる
 			} else {
+				if (!isSpeechSkip_ && speechSkipKey) {
+					AudioPlayer::SinglShotPlay("button.mp3", 0.5f);
+					isSpeechSkip_ = true;
+					drawGhostBlockTimer_ = 1.0f;
+				}
 				// ゴーストブロックは描画済みか
 				const float textureSize = speechSpeed / uis_->GetGhostBlock()->GetTextureSize().x * 5.0f;
 				drawGhostBlockTimer_ += GameTimer::DeltaTime() * textureSize;
@@ -204,6 +236,10 @@ void TutorialDirector::Update()
 	{
 		if (isSkip_) { break; }
 		SpeechCatScene(uis_->GetExplanaUIs(), explanaTimer_, TutorialType::CollisionGhost);
+		if (!isSpeechSkip_ && speechSkipKey) {
+			AudioPlayer::SinglShotPlay("button.mp3", 0.5f);
+			isSpeechSkip_ = true;
+		}
 	}
 	break;
 	case TutorialType::CollisionGhost:
@@ -213,9 +249,10 @@ void TutorialDirector::Update()
 		if (catComes_ == 0.0f && isSpeechFinish_) {
 			isMoveEnable_ = true;
 			if (ghostCount_ != 0) {
-				if (collisionTimer_ < 0.2f) {
+				if (collisionTimer_ < 0.1f) {
 					collisionTimer_ += GameTimer::DeltaTime();
 				} else {
+					isSpeechSkip_ = false;
 					isMoveEnable_ = false;
 					isSpeechFinish_ = false;
 					type_ = TutorialType::Goal;
@@ -247,7 +284,10 @@ void TutorialDirector::Update()
 				}
 			}
 		}
-
+		if (!isSpeechSkip_ && speechSkipKey) {
+			AudioPlayer::SinglShotPlay("button.mp3", 0.5f);
+			isSpeechSkip_ = true;
+		}
 	}
 	break;
 	case TutorialType::Goal:
@@ -256,6 +296,7 @@ void TutorialDirector::Update()
 		// チュートリアルを終了する
 		if (catComes_ == 0.0f && isSpeechFinish_) {
 			isMoveEnable_ = true;
+			isSpeechSkip_ = false;
 			type_ = TutorialType::Goal;
 			return;
 		}
@@ -301,6 +342,10 @@ void TutorialDirector::Update()
 						}
 					}
 				}
+				if (!isSpeechSkip_ && speechSkipKey) {
+					AudioPlayer::SinglShotPlay("button.mp3", 0.5f);
+					isSpeechSkip_ = true;
+				}
 			}
 		}
 	}
@@ -317,6 +362,7 @@ void TutorialDirector::Update()
 	if (!isMoveEnable_) {
 		if ((input->IsTriggerKey(DIK_R) || input->IsTriggerButton(XInputButtons::BUTTON_X)) &&
 			!isSkip_) {
+			AudioPlayer::SinglShotPlay("button.mp3", 0.5f);
 			isSkip_ = true;
 		}
 		if (isSkip_) {
@@ -469,6 +515,14 @@ bool TutorialDirector::IsSpeechCat(const std::array<std::unique_ptr<ITutorialTex
 			break;
 		}
 	}
+	if (isSpeechSkip_ && !isFinish) {
+		time = static_cast<float>(uis.size() + 1);
+		for (auto& ui : uis) {
+			ui->SetUvMaxSize(1.0f);
+			ui->GetSprite()->SetEnable(true);
+			ui->SetIsFinished(true);
+		}
+	}
 	return isFinish;
 }
 
@@ -480,12 +534,14 @@ void TutorialDirector::PushButton()
 		uis_->GetButtonA()->SetEnable(true);
 		uis_->GetSpaceKey()->SetEnable(false);
 		if (input->IsTriggerButton(XInputButtons::BUTTON_A)) {
+			AudioPlayer::SinglShotPlay("button.mp3", 0.5f);
 			isPush_ = true;
 		}
 	} else {
 		uis_->GetButtonA()->SetEnable(false);
 		uis_->GetSpaceKey()->SetEnable(true);
 		if (input->IsTriggerKey(DIK_SPACE)) {
+			AudioPlayer::SinglShotPlay("button.mp3", 0.5f);
 			isPush_ = true;
 		}
 	}
@@ -514,6 +570,7 @@ void TutorialDirector::DeleteSpeechUI(const std::array<std::unique_ptr<ITutorial
 		uis_->GetSpaceKey()->SetColor(Vector4{ 1.0f,1.0f,1.0f,1.0f });
 		isPush_ = false;
 		type_ = nextType;
+		isSpeechSkip_ = false;
 	}
 }
 

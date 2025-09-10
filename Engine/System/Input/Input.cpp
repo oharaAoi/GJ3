@@ -139,7 +139,7 @@ void Input::GamePadInitialize() {
 bool Input::IsTriggerKey(uint8_t keyNum) {
 	if (!preKey_[keyNum] && key_[keyNum]) {
 		inputDevice_ = Keybord;
-		return true;
+ 		return true;
 	}
 
 	return false;

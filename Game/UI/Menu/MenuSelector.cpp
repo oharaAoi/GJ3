@@ -93,6 +93,7 @@ void MenuSelector::Update()
 		menuUIs_->SetColors(cursorIndex_);
 	}
 	if (decisionPressed && openOperation_) {
+		AudioPlayer::SinglShotPlay("button.mp3", 0.3f);
 		openOperation_ = false;
 		return;
 	}

@@ -24,7 +24,6 @@ void GhostEffect::Init(const Vector2& tileSize){
 	textureSize_ = tileSize;
 	drawRange_ = textureSize_;
 	leftTop_ = { 0.0f, 0.0f };
-	saveItems_.FromJson(JsonItems::GetData(GetName(), saveItems_.GetName()));
 
 	// ----------------------------------------------------------------------------------
 	vertexBuffer_ = CreateBufferResource(pDevice, sizeof(TextureMesh) * 4);
@@ -141,8 +140,6 @@ void GhostEffect::Init(const Vector2& tileSize){
 	textureName_ = "smoke2.png";
 	dissolveTextureName_ = "FireNoize.png";
 	isDestroy_ = false;
-
-	ApplySaveData();
 }
 
 void GhostEffect::Update() {
@@ -230,7 +227,9 @@ void GhostEffect::Debug_Gui() {
 
 }
 
-void GhostEffect::ApplySaveData() {
+void GhostEffect::ApplySaveData(const std::string& effectName) {
+	saveItems_.SetName(effectName);
+	saveItems_.FromJson(JsonItems::GetData(GetName(), saveItems_.GetName()));
 	materialData_->color = saveItems_.color;
 	dissolveParam_->color = saveItems_.dissolveColor;
 	dissolveParam_->edgeColor = saveItems_.edgeColor;

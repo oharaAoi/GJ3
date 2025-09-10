@@ -6,41 +6,34 @@
 #include <Game/Effect/GhostEffect.h>
 
 /// <summary>
-/// Ghostのエフェクト単体を管理するクラス
+/// 制限ブロックのエフェクト単体を管理するクラス
 /// </summary>
-class GhostSmoke :
+class LimitBlockEffect :
 	public AttributeGui {
 public:
 
-	struct AnimationItems : public IJsonConverter {
-		float appearDuration = 0;	// 出現時間
-		float disappearDuration = 0;// 消失時間
-		int appearEaseType = 0;		// イージングの種類
-		int disappearEaseType = 0;	// イージングの種類
-
-		AnimationItems() { SetName("AnimationItems"); }
+	struct UvScrollAnimationItems : public IJsonConverter {
+		float effectDuration[2]{1.0f};
+		
+		UvScrollAnimationItems() { SetName("UvScrollAnimationItems"); }
 
 		json ToJson(const std::string& id) const override {
 			return JsonBuilder(id)
-				.Add("appearDuration", appearDuration)
-				.Add("disappearDuration", disappearDuration)
-				.Add("appearEaseType", appearEaseType)
-				.Add("disappearEaseType", disappearEaseType)
+				.Add("effect1Duration", effectDuration[0])
+				.Add("effect2Duration", effectDuration[1])
 				.Build();
 		}
 
 		void FromJson(const json& jsonData) override {
-			fromJson(jsonData, "appearDuration", appearDuration);
-			fromJson(jsonData, "disappearDuration", disappearDuration);
-			fromJson(jsonData, "appearEaseType", appearEaseType);
-			fromJson(jsonData, "disappearEaseType", disappearEaseType);
+			fromJson(jsonData, "effect1Duration", effectDuration[0]);
+			fromJson(jsonData, "effect2Duration", effectDuration[1]);
 		}
 	};
 
 public:
 
-	GhostSmoke() = default;
-	~GhostSmoke();
+	LimitBlockEffect() = default;
+	~LimitBlockEffect();
 
 	void Init(const Vector2& pos, const Vector2& tileSize);
 
@@ -57,7 +50,6 @@ public:
 	void SetIsDestroy(bool _isDestroy) { isDestroy_ = _isDestroy; }
 	bool GetIsDestroy() const { return isDestroy_; }
 
-
 	const Vector2& GetPos() const { return position_; }
 
 private:
@@ -66,10 +58,9 @@ private:
 
 	bool isDestroy_;
 
-	VectorTween<float> appearanceAnime_;
-	AnimationItems animationItems_;
-
-
+	UvScrollAnimationItems animationItems_;
+	VectorTween<Vector3> uvAnimation_[2];
+	
 	Vector2 position_;
 
 };

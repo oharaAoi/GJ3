@@ -13,6 +13,7 @@
 #include "Game/Actor/Player/Player.h"
 #include "Game/Actor/Effect/GhostSoulManager.h"
 #include "Game/Manager/GhostSmokeManager.h"
+#include "Game/Manager/LimitBlockEffectManager.h"
 #include "Game/Manager/StageRegistry.h"
 #include "Game/Manager/Collision/Common/MapCollisionSystem.h"
 #include "Game/WorldObject/WorldObjects.h"
@@ -93,14 +94,16 @@ private:
 	BaseParticles* orb_;
 	BaseParticles* dust_;
 	GhostSmokeManager* ghostEffectManager_;
+	LimitBlockEffectManager* limitBlockEffectManager_;
 
 	std::unique_ptr<SwirlTransition> swirlTransition_;
 
 	// ------------------- sound ------------------- //
 	std::unique_ptr<AudioPlayer> bgm_;
 
-	float resetTimer_ = 0.0f; // 現在のリセットまでの時間
-	bool isClearConditionMet_ = false; // クリア条件を満たしたかどうか
+	float resetTimer_ = 0.0f;			// 現在のリセットまでの時間
+	bool isClearConditionMet_ = false;	// クリア条件を満たしたかどうか
+	float clearTimer_ = 0.0f;			// クリア時の遷移時間
 
 	SceneRenderer* sceneRenderer_;
 
