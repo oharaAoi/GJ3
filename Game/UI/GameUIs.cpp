@@ -14,7 +14,7 @@ void GameUIs::Init(){
 	auto canvas2d = Engine::GetCanvas2d();
 
 	// undo
-	undoUIs_[0] = canvas2d->AddSprite("Game_undo_k.png","Undo_Keyboard","Sprite_Normal.json",200,false);
+	undoUIs_[0] = canvas2d->AddSprite("Game_undo_k.png","Undo_Keyboard","Sprite_Normal.json",20,false);
 	undoUIs_[1] = canvas2d->AddSprite("Game_undo_p.png","Undo_Pad","Sprite_Normal.json",20,false);
 	undoUIs_[2] = canvas2d->AddSprite("Undo.png","Undo_Icon","Sprite_Normal.json",20,false);
 	undoUIs_[0]->ApplySaveData();
