@@ -36,15 +36,23 @@ public:
 protected:
 	std::unique_ptr<PlayerInputHandler> inputHandler_; // 入力ハンドラ
 private:
-	const float animationTime_ = 0.2f; // アニメーションの時間
-	float animationTimer_ = 0.0f; // アニメーションのタイマー
-	bool isAnimation_ = false;
+	const float moveAnimationTime_ = 0.2f; // アニメーションの時間
+	float moveAnimationTimer_ = 0.0f; // アニメーションのタイマー
+	bool isMoveAnimation_ = false;
+
+	const float kPuniAnimationTime_ = 0.2f; // ぷにぷにアニメーションの時間
+	float puniAnimationTimer_ = 0.0f; // ぷにぷにアニメーションのタイマー
+	bool isPuniAnimation_ = false;
+
 	SpriteDirection spriteDirection_ = SpriteDirection::RIGHT; // プレイヤーの向き
 	Vector2 ConvertIndexToPosition(const Vector2Int& _index);	// 座標計算処理
 	MapCollisionSystem* mapCollision_ = nullptr;
 public:
-	const bool GetIsAnimation() const{ return isAnimation_; }
-	void SetIsAnimation(const bool flag){ isAnimation_ = flag; }
+	bool GetIsMoveAnimation() const{ return isMoveAnimation_; }
+	void SetIsMoveAnimation(const bool flag){ isMoveAnimation_ = flag; }
+
+	bool GetIsPuniAnimation() const{ return isPuniAnimation_; }
+	void SetIsPuniAnimation(const bool flag){ isPuniAnimation_ = flag; }
 
 	const SpriteDirection& GetSpriteDirection() const{ return spriteDirection_; }
 	void SetSpriteDirection(const SpriteDirection& direction){ spriteDirection_ = direction; }

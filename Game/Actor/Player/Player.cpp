@@ -47,24 +47,36 @@ void Player::Update()
 	/// 移動処理
 	Vector2 currentTranslate = transform_->GetTranslate();
 	Vector2 targetPos = ConvertIndexToPosition(index_);
-	if (isAnimation_)
+	if (isMoveAnimation_)
 	{
 		/// 補間処理
-		animationTimer_ += GameTimer::DeltaTime();
+		moveAnimationTimer_ += GameTimer::DeltaTime();
 
-		float t = animationTimer_ / animationTime_;
+		float t = moveAnimationTimer_ / moveAnimationTime_;
 		t = (std::min)(t, 1.f);
 
 		currentTranslate = Lerp(currentTranslate, targetPos, Ease::InOut::Cubic(t));
 		if (t >= 1.f)
 		{
-			animationTimer_ = 0.f;
-			isAnimation_ = false;
+			moveAnimationTimer_ = 0.f;
+			isMoveAnimation_ = false;
 		}
 	}
 	else
 	{
 		currentTranslate = targetPos;
+	}
+
+	/// ぷにぷにアニメーション
+	if(isPuniAnimation_){
+		puniAnimationTimer_ += GameTimer::DeltaTime();
+		float t = puniAnimationTimer_ / kPuniAnimationTime_;
+		t = std::clamp(t,0.0f,1.0f);
+		sprite_->SetScale(Vector2::MochiPuniScaleNormalized(t));
+		if(t == 1.0f){
+			isPuniAnimation_ = false;
+			puniAnimationTimer_ = 0.f;
+		}
 	}
 
 	transform_->SetTranslate(currentTranslate);
