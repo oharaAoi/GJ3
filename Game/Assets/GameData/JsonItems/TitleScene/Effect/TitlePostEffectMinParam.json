@@ -1,9 +1,9 @@
 {
     "TitlePostEffectMinParam": {
-        "bloomIntensity": 3.4800000190734863,
+        "bloomIntensity": 0.23000000417232513,
         "bloomTexelSize": 0.0,
-        "bloomThreshold": 3.2699999809265137,
-        "vignettePower": 0.3100000023841858,
-        "vignetteScale": 1.5099999904632568
+        "bloomThreshold": 0.07000000029802322,
+        "vignettePower": 3.069999933242798,
+        "vignetteScale": 29.290000915527344
     }
 }

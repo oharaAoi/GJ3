@@ -40,6 +40,9 @@ void TitleScene::Init(){
 	// -------------------------------------------------
 	PostProcess* postProcess = Engine::GetPostProcess();
 	postProcess->SetIsActive(true);
+
+	postProcess->GetGotRay()->SetIsEnable(false);
+
 	postProcess->GetBloom()->SetIsEnable(true);
 	postProcess->GetVignette()->SetIsEnable(true);
 	postProcess->GetVignette()->SetColor(Vector4(0.0222f,0.0222f,0.0355f,1.f));
