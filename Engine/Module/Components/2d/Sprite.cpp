@@ -172,9 +172,10 @@ void Sprite::ReSetTexture(const std::string& fileName) {
 	textureSize_ = TextureManager::GetInstance()->GetTextureSize(fileName);
 	spriteSize_ = textureSize_;
 
+	Vector3 anchorPoint = { 0.5f, 0.5f };
 	Vector3 pivotOffset = {
-		textureSize_.x * anchorPoint_.x,
-		textureSize_.y * anchorPoint_.y,
+		textureSize_.x * anchorPoint.x,
+		textureSize_.y * anchorPoint.y,
 		0.0f
 	};
 
@@ -203,9 +204,10 @@ void Sprite::ReSetTexture(const std::string& fileName) {
 
 void Sprite::ReSetTextureSize(const Vector2& size) {
 	spriteSize_ = size;
+	Vector3 anchorPoint = { 0.5f, 0.5f };
 	Vector3 pivotOffset = {
-		size.x * anchorPoint_.x,
-		size.y * anchorPoint_.y,
+		size.x * anchorPoint.x,
+		size.y * anchorPoint.y,
 		0.0f
 	};
 
@@ -296,7 +298,7 @@ void Sprite::ApplySaveData() {
 	textureName_ = spriteData_.textureName;
 
 	ReSetTexture(textureName_);
-	ReSetTextureSize(textureSize_);
+	textureSize_ = spriteData_.textureSize;
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
