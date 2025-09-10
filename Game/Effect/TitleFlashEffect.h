@@ -24,7 +24,7 @@ public:
 
 	void Debug_Gui() override;
 protected:
-	float CalculateCurrentFlushAlpha()const;
+	float CalculateCurrentFlushAlpha();
 
 	struct Parameter
 		: public IJsonConverter{
@@ -43,12 +43,16 @@ protected:
 private:
 	float alpha_ = 0.0f;
 
+	int32_t currentFlashCurveIndex_ = 0;
+	int32_t prevFlashCurveIndex_ = -1;
+
 	Parameter parameter_;
 public:
 	float GetAlpha() const{ return alpha_; }
 	void SetAlpha(float alpha){ alpha_ = alpha; }
 
 };
+
 class LightFlash :
 	public AttributeGui{
 public:
@@ -76,6 +80,7 @@ protected:
 
 private:
 	bool isFinish_ = false;
+	bool isSEPlayed_  = false;
 	// 点滅時に画面を覆う用のSprite
 	Sprite* flashOverlaySprite_;
 
