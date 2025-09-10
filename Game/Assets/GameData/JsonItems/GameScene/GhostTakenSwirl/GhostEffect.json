@@ -20,6 +20,9 @@
             "y": 0.6232558488845825,
             "z": 0.09276366233825684
         },
-        "threshold": 0.2800000011920929
+        "maskTexture": "monokuro.png",
+        "swirlStrength": 6.0,
+        "threshold": 0.47999998927116394,
+        "timeRate": 4.0
     }
 }

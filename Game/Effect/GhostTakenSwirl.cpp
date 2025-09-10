@@ -267,10 +267,12 @@ void GhostTakenSwirl::ApplySaveData(const std::string& effectName) {
 	dissolveParam_->color = saveItems_.dissolveColor;
 	dissolveParam_->edgeColor = saveItems_.edgeColor;
 	dissolveParam_->threshold = saveItems_.threshold;
+	swirlParam_->swirlStrength = saveItems_.swirlStrength;
+	timeRate_ = saveItems_.timeRate;
 
 	textureName_ = saveItems_.baseTexture;
 	dissolveTextureName_ = saveItems_.dissolveTexture;
-
+	maskTextureName_ = saveItems_.maskTexture;
 }
 
 void GhostTakenSwirl::CopyData() {
@@ -278,7 +280,10 @@ void GhostTakenSwirl::CopyData() {
 	saveItems_.dissolveColor = dissolveParam_->color;
 	saveItems_.edgeColor = dissolveParam_->edgeColor;
 	saveItems_.threshold = dissolveParam_->threshold;
+	saveItems_.swirlStrength = swirlParam_->swirlStrength;
+	saveItems_.timeRate = timeRate_;
 
 	saveItems_.baseTexture = textureName_;
 	saveItems_.dissolveTexture = dissolveTextureName_;
+	saveItems_.maskTexture = maskTextureName_;
 }

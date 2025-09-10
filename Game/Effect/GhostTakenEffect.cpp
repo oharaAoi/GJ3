@@ -9,13 +9,11 @@ GhostTakenEffect::~GhostTakenEffect() {
 void GhostTakenEffect::Init(const Vector2& pos, const Vector2& tileSize) {
 	SetName("GhostTakenEffect");
 	position_ = pos;
-	for (uint32_t oi = 0; oi < 2; ++oi) {
-		ghostEffect_[oi] = std::make_unique<GhostTakenSwirl>();
-		ghostEffect_[oi]->Init(tileSize);
-		ghostEffect_[oi]->SetTranslate(pos);
 
-		ghostEffect_[oi]->SetDissolveUvScale(RandomVector3(CVector3::UNIT * -2.0f, CVector3::UNIT * 2.0f));
-	}
+	ghostEffect_ = std::make_unique<GhostTakenSwirl>();
+	ghostEffect_->Init(tileSize);
+	ghostEffect_->SetTranslate(pos);
+	ghostEffect_->SetDissolveUvScale(RandomVector3(CVector3::UNIT * -2.0f, CVector3::UNIT * 2.0f));
 
 	animationItems_.FromJson(JsonItems::GetData(GetName(), animationItems_.GetName()));
 	isDestroy_ = false;
@@ -26,34 +24,39 @@ void GhostTakenEffect::Init(const Vector2& pos, const Vector2& tileSize) {
 
 void GhostTakenEffect::Update() {
 	lifeTimer_ += GameTimer::DeltaTime();
-
-	for (uint32_t oi = 0; oi < 1; ++oi) {
-		ghostEffect_[oi]->Update();
-	}
-
-	/*if (lifeTimer_ >= animationItems_.duration) {
+	// 生存時間の確認
+	if (lifeTimer_ >= animationItems_.duration) {
 		isDestroy_ = true;
-	}*/
+	}
+	// スケールを小さくする
+	float t = lifeTimer_ / animationItems_.duration;
+	Vector2 scale = Vector2::Lerp(CVector2::UNIT, CVector2::ZERO, Ease::In::Back(t));
+	ghostEffect_->SetScale(scale);
+	ghostEffect_->Update();
+
 }
 
 void GhostTakenEffect::Draw() const {
-	for (uint32_t oi = 0; oi < 1; ++oi) {
-		ghostEffect_[oi]->Draw();
-	}
+	ghostEffect_->Draw();
 }
 
 void GhostTakenEffect::ApplySaveData(const std::string& effectName) {
-	for (uint32_t oi = 0; oi < 1; ++oi) {
-		ghostEffect_[oi]->ApplySaveData(effectName);
-	}
+	ghostEffect_->ApplySaveData(effectName);
 }
 
 void GhostTakenEffect::Debug_Gui() {
-	for (uint32_t oi = 0; oi < 1; ++oi) {
-		std::string name = "effect_" + std::to_string(oi);
-		if (ImGui::TreeNode(name.c_str())) {
-			ghostEffect_[oi]->Debug_Gui();
-			ImGui::TreePop();
-		}
+	std::string name = "effect";
+	if (ImGui::TreeNode(name.c_str())) {
+		ghostEffect_->Debug_Gui();
+		ImGui::TreePop();
+	}
+
+	ImGui::DragFloat("duration", &animationItems_.duration, 0.01f);
+	ImGui::Separator();
+	if (ImGui::Button("Save")) {
+		JsonItems::Save(GetName(), animationItems_.ToJson(animationItems_.GetName()));
+	}
+	if (ImGui::Button("Apply")) {
+		animationItems_.FromJson(JsonItems::GetData(GetName(), animationItems_.GetName()));
 	}
 }
