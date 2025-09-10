@@ -31,7 +31,8 @@ void PlayerInputHandler::HandleInput(){
 	AudioPlayer::SinglShotPlay("player_walk.mp3",0.9f);
 
 	// animationする
-	player_->SetIsAnimation(true);
+	player_->SetIsMoveAnimation(true);
+	player_->SetIsPuniAnimation(true);
 
 	// 移動コマンドを生成
 	std::unique_ptr<IPlayerCommand> command = nullptr;
