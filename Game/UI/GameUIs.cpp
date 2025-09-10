@@ -1,6 +1,7 @@
 #include "GameUIs.h"
 
 #include "Engine.h"
+#include "Engine/System/Input/Input.h"
 
 #include "Engine/System/Editer/Window/EditorWindows.h"
 
@@ -46,15 +47,21 @@ void GameUIs::Init(){
 	AddChild(menuUIs_[1]);
 
 	EditorWindows::AddObjectWindow(this,"Game UIs");
+
+	isUndoInput_ = false;
+	isRedoInput_ = false;
+	isMenuInput_ = false;
+
+	undoMoniPuniTime_ = 0.f;
+	redoMoniPuniTime_ = 0.f;
+	menuMoniPuniTime_ = 0.f;
 }
 
 void GameUIs::Update(bool _isKeyInput,bool _isPadInput){
-	if(!_isKeyInput&& !_isPadInput){
-		return;
+	if(_isKeyInput || _isPadInput){
+		activeGamePadUIs_ = _isPadInput;
+		activeKeyboardUIs_ = _isKeyInput;
 	}
-
-	activeGamePadUIs_ = _isPadInput;
-	activeKeyboardUIs_ = _isKeyInput;
 
 
 	if(activeGamePadUIs_){
@@ -77,6 +84,48 @@ void GameUIs::Update(bool _isKeyInput,bool _isPadInput){
 		menuUIs_[1]->SetEnable(false);
 	}
 
+	/// Undo 
+	if(isUndoInput_){
+		undoMoniPuniTime_ += GameTimer::DeltaTime() * 5.0f;
+		undoMoniPuniTime_ = std::clamp(undoMoniPuniTime_,0.0f,1.0f);
+		undoUIs_[0]->SetScale(Vector2::MochiPuniScaleNormalized(undoMoniPuniTime_));
+		undoUIs_[1]->SetScale(Vector2::MochiPuniScaleNormalized(undoMoniPuniTime_));
+		if(undoMoniPuniTime_ == 1.0f){
+			isUndoInput_ = false;
+			undoMoniPuniTime_ = 0.f;
+		}
+	}
+
+	// Redo
+	if(isRedoInput_){
+		redoMoniPuniTime_ += GameTimer::DeltaTime() * 5.0f;
+		redoMoniPuniTime_ = std::clamp(redoMoniPuniTime_,0.0f,1.0f);
+		redoUIs_[0]->SetScale(Vector2::MochiPuniScaleNormalized(redoMoniPuniTime_));
+		redoUIs_[1]->SetScale(Vector2::MochiPuniScaleNormalized(redoMoniPuniTime_));
+		if(redoMoniPuniTime_ == 1.0f){
+			isRedoInput_ = false;
+			redoMoniPuniTime_ = 0.f;
+		}
+	}
+
+	// Menu
+	if(isMenuInput_){
+		menuMoniPuniTime_ += GameTimer::DeltaTime() * 5.0f;
+		menuMoniPuniTime_ = std::clamp(menuMoniPuniTime_,0.0f,1.0f);
+		menuUIs_[0]->SetScale(Vector2::MochiPuniScaleNormalized(menuMoniPuniTime_));
+		menuUIs_[1]->SetScale(Vector2::MochiPuniScaleNormalized(menuMoniPuniTime_));
+		if(menuMoniPuniTime_ == 1.0f){
+			isMenuInput_ = false;
+			menuMoniPuniTime_ = 0.f;
+		}
+	}
+
 }
 
 void GameUIs::Debug_Gui(){}
+
+void GameUIs::ResetUIInputState(){
+	isUndoInput_ = false;
+	isRedoInput_ = false;
+	isMenuInput_ = false;
+}
