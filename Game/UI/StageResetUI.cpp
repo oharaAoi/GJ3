@@ -22,6 +22,8 @@ void StageResetUI::Init(Canvas2d* _canvas2d)
 	AddChild(resetIcon_);
 
 	backTextureUI_ = pCanvas2d_->AddSprite("white.png", "backTexture", "Sprite_Normal.json", 5);
+	backTextureUI_->ApplySaveData();
+	backTextureUI_->ReSetTextureSize(backTextureUI_->GetTextureSize());
 	//backTextureUI_->ApplySaveData();
 	AddChild(backTextureUI_);
 
