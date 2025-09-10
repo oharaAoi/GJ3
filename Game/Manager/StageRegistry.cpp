@@ -148,7 +148,9 @@ void StageRegistry::ClearStageData(const Vector2Int& index){
 void StageRegistry::CreateGhostEffect(const Vector2Int& index) {
 	if (stageData_[index.y][index.x] != nullptr) {
 		TokenGhost* ghost = dynamic_cast<TokenGhost*>(stageData_[index.y][index.x].get());
-		ghost->CreateGhostEffect();
+		if (ghost != nullptr) {
+			ghost->CreateGhostEffect();
+		}
 	}
 }
 
