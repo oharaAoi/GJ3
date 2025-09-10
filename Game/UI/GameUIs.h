@@ -20,9 +20,9 @@ private:
 	// true: gamepad, false: keyboard and mouse
 	bool isInputGamePad_ = false; 
 
-	// [0] = Keyboard , [1] = GamePad
-	std::array<Sprite*,2> undoUIs_{nullptr,nullptr};
-	std::array<Sprite*,2> redoUIs_{nullptr,nullptr};
+	// [0] = Keyboard , [1] = GamePad . [2] = icon
+	std::array<Sprite*,3> undoUIs_{nullptr,nullptr};
+	std::array<Sprite*,3> redoUIs_{nullptr,nullptr};
 
 	// [0] = Keyboard , [1] = GamePad
 	std::array<Sprite*,2> menuUIs_{nullptr,nullptr};

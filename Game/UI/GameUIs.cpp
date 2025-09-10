@@ -13,18 +13,22 @@ void GameUIs::Init(){
 	// undo
 	undoUIs_[0] = canvas2d->AddSprite("Game_undo_k.png","Undo_Keyboard","Sprite_Normal.json",200,false);
 	undoUIs_[1] = canvas2d->AddSprite("Game_undo_p.png","Undo_Pad","Sprite_Normal.json",200,false);
+	undoUIs_[2] = canvas2d->AddSprite("Undo.png","Undo_Icon","Sprite_Normal.json",200,false);
 	undoUIs_[0]->ApplySaveData();
 	undoUIs_[1]->ApplySaveData();
 	AddChild(undoUIs_[0]);
 	AddChild(undoUIs_[1]);
+	AddChild(undoUIs_[2]);
 
 	// redo
 	redoUIs_[0] = canvas2d->AddSprite("Game_redo_k.png","Redo_Keyboard","Sprite_Normal.json",200,false);
 	redoUIs_[1] = canvas2d->AddSprite("Game_redo_p.png","Redo_Pad","Sprite_Normal.json",200,false);
+	redoUIs_[2] = canvas2d->AddSprite("Redo.png","Redo_Icon","Sprite_Normal.json",200,false);
 	redoUIs_[0]->ApplySaveData();
 	redoUIs_[1]->ApplySaveData();
 	AddChild(redoUIs_[0]);
 	AddChild(redoUIs_[1]);
+	AddChild(redoUIs_[2]);
 
 	// menu
 	menuUIs_[0] = canvas2d->AddSprite("Game_menu_k.png","Menu_Keyboard","Sprite_Normal.json",200,false);
