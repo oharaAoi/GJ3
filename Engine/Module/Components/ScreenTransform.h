@@ -36,11 +36,12 @@ public:
 
 	void SetTranslate(const Vector2& centerPos) { transform_.translate.x = centerPos.x, transform_.translate.y = centerPos.y, transform_.translate.z = 1.0f; };
 	void SetScale(const Vector2 scale) { transform_.scale.x = scale.x, transform_.scale.y = scale.y, transform_.scale.z = 1.0f; }
-	void SetRotate(float rotate) { transform_.rotate.z = rotate; }
+	void SetRotateZ(float rotate) { transform_.rotate.z = rotate; }
 
 	const Vector2 GetTranslate() const { return Vector2{ transform_.translate.x, transform_.translate.y }; }
 	const Vector2 GetScale() const { return Vector2(transform_.scale.x, transform_.scale.y); }
-	const float GetRotate() const { return transform_.rotate.z; }
+	const float GetRotateZ() const { return transform_.rotate.z; }
+	const Vector3 GetRotate() const { return transform_.rotate; }
 
 	const SRT& GetTransform() const{ return transform_; }
 	void SetTransform(const SRT& transform){ transform_ = transform; }

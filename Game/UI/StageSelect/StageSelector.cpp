@@ -283,7 +283,7 @@ void StageSelector::RotateAnimationParam::Update(Sprite* _sprite){
 		angle_ = 0.f;
 	}
 
-	_sprite->GetTransform()->SetRotate(angle_);
+	_sprite->GetTransform()->SetRotateZ(angle_);
 
 	_sprite->GetTransform()->GetTransform();
 }
