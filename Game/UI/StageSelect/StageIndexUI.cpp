@@ -29,6 +29,8 @@ void StageIndexUI::Update(int32_t _targetNum){
 		return;
 	}
 
+	_targetNum += 1; // 0スタートを1スタートに
+
 	float lengthAll = param_.tileSpriteSize_.x * float(param_.digitNum) + param_.offset_.x * float(param_.digitNum - 1);
 	float startPosX = param_.centerPos_.x + lengthAll * 0.5f;
 
