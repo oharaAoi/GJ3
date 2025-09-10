@@ -304,7 +304,7 @@ void GameScene::Update()
 			GameScene::Result r;
 			r.ghostCount = mapCollision_->GetGhostCounter();
 			GameScene::s_lastResult_ = r;
-			AudioPlayer::SinglShotPlay("fanfare.wav", 0.5f);
+			AudioPlayer::SinglShotPlay("clear_pot.mp3", 0.5f);
 			nextSceneType_ = SceneType::CLEAR;
 		}
 	}
