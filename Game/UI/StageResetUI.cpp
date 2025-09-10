@@ -6,6 +6,9 @@
 #include "Engine/System/Editer/Window/EditorWindows.h"
 #include "Engine/System/Audio/AudioPlayer.h"
 #include "Engine/Lib/GameTimer.h"
+#include "Engine/Module/PostEffect/PostProcess.h"
+#include "Engine/Module/PostEffect/GlitchNoise.h"
+#include "Engine/System/Audio/AudioPlayer.h"
 
 void StageResetUI::Init(Canvas2d* _canvas2d)
 {
@@ -48,7 +51,15 @@ void StageResetUI::Update()
 			AudioPlayer::SinglShotPlay("button.mp3", 0.5f);
 		}
 		resetTimer_ += (GameTimer::DeltaTime() / param_.resetTime);
-		if (resetTimer_ > 1.0f) { isStageReset_ = true; }
+		if (resetTimer_ > 1.0f) {
+			isStageReset_ = true; 
+
+			// ノイズをかける
+			std::shared_ptr<GlitchNoise> noise = Engine::GetPostProcess()->GetGlitchNoise();
+			noise->StartNoise(0.6f, 0.4f);
+			noise->SetIsEnable(true);
+			AudioPlayer::SinglShotPlay("noiz.mp3", 0.4f);
+		}
 	} else {
 		resetTimer_ -= GameTimer::DeltaTime();
 		isStageReset_ = false;

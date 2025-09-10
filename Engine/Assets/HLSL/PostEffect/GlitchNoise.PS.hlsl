@@ -26,7 +26,7 @@ PixelShaderOutput main(VertexShaderOutput input) {
 
 	float3 color = gTexture.Sample(gSampler, uv).rgb;
 
-	if (gGlitchNoise.glitchStrength > 0.5) {
+	if (gGlitchNoise.glitchStrength > 0.1) {
 		// 横スキャンラインの歪み
 		float scanlineChance = rng.Generated1d();
 		if (scanlineChance > 0.2) {

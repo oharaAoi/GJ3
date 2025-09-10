@@ -123,6 +123,7 @@ void PostProcess::Init(ID3D12Device* device, DescriptorHeap* descriptorHeap, Ren
 	AddEffect(PostEffectType::SWIRL);
 	AddEffect(PostEffectType::TOONMAP);
 
+	afterEffectList_.push_back(glitchNoise_);
 	afterEffectList_.push_back(swirlEffect_);
 
 	EditorWindows::AddObjectWindow(this, "Post Process");
@@ -141,7 +142,7 @@ void PostProcess::Execute(ID3D12GraphicsCommandList* commandList, ShaderResource
 	pingPongBuff_->SetRenderTarget(commandList, BufferType::PONG, depthHandle_.handleCPU);
 	uint32_t cout = 0;
 	for (auto& effect : effectList_) {
-		if (effect != swirlEffect_) {
+		if (effect != swirlEffect_ && effect != glitchNoise_) {
 			if (effect->GetIsEnable()) {
 				effect->SetCommand(commandList, pingPongBuff_->GetPingResource());
 
@@ -182,9 +183,9 @@ void PostProcess::AfterExecute(ID3D12GraphicsCommandList* commandList, ShaderRes
 		}
 	}
 
-	if (afterEffectList_.size() % 2 == 0 && !afterEffectList_.empty()) {
+	/*if (afterEffectList_.size() % 2 == 0 && !afterEffectList_.empty()) {
 		pingPongBuff_->Swap(commandList);
-	}
+	}*/
 
 
 	PostCopy(commandList, shaderResource);

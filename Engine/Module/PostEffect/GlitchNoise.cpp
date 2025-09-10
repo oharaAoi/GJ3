@@ -17,7 +17,7 @@ void GlitchNoise::Init() {
 	glitchBuffer_->CreateResource(sizeof(GlitchSetting));
 	glitchBuffer_->GetResource()->Map(0, nullptr, reinterpret_cast<void**>(&setting_));
 
-	setting_->texelSize = { 2.0f / (float)kWindowWidth_, 2.0f / (float)kWindowHeight_ };
+	setting_->texelSize = { (float)kWindowWidth_ * 0.5f / (float)kWindowWidth_,  (float)kWindowHeight_ * 0.5f / (float)kWindowHeight_ };
 	setting_->time = 0.0f;
 	setting_->strength = 0.0f;
 }
@@ -27,12 +27,17 @@ void GlitchNoise::Init() {
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
 void GlitchNoise::SetCommand(ID3D12GraphicsCommandList* commandList, DxResource* pingResource) {
+
+	CopyData();
+
 	if (setting_->strength != 0.0f) {
 		setting_->time += GameTimer::DeltaTime();
 		setting_->frameIndex++;
 
 		if (setting_->time > noiseTime_) {
 			setting_->strength = 0.0f;
+			setting_->time = 0;
+			isEnable_ = false;
 		}
 	}
 
@@ -56,6 +61,7 @@ void GlitchNoise::StartNoise(float startStrength, float time) {
 	noiseTime_ = time;
 	setting_->time = 0.0f;
 	setting_->frameIndex = 0;
+	isEnable_ = true;
 }
 
 void GlitchNoise::CheckBox() {
@@ -69,9 +75,10 @@ void GlitchNoise::CheckBox() {
 void GlitchNoise::Debug_Gui() {
 	if (ImGui::CollapsingHeader("GlitchNoise")) {
 		ImGui::DragFloat("time", &noiseTime_, 0.01f);
+		ImGui::DragFloat2("texelSize", &param_.texelSize.x, 0.01f);
+		ImGui::DragFloat("strength", &param_.strength, 0.01f);
 		
 		if (ImGui::Button("AddTime")) {
-			setting_->strength = 1.0f;
 			setting_->time = 0.0f;
 			setting_->frameIndex = 0;
 		}

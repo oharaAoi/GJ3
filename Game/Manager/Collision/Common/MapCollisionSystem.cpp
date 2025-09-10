@@ -85,7 +85,7 @@ bool MapCollisionSystem::IsMovable(const Vector2Int& direction,const Vector2Int&
 			return true;
 		}
 	}
-	AudioPlayer::SinglShotPlay("stop.mp3",0.6f); // 壁にあたったときの音
+	AudioPlayer::SinglShotPlay("stop.mp3",1.0f); // 壁にあたったときの音
 	return false;
 }
 
