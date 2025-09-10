@@ -6,7 +6,7 @@
 void OperationButtonUI::Init()
 {
 	SetName("OperationButtonUI");
-	buttonUI_ = Engine::GetCanvas2d()->AddSprite("Menu_operationUI.png", GetName(), "Sprite_Normal.json", 15);
+	buttonUI_ = Engine::GetCanvas2d()->AddSprite("Menu_operationUI.png", GetName(), "Sprite_Normal.json",1015);
 
 	//buttonUI_->ReSetTextureSize(Vector2{ 400.0f,50.0f });
 	buttonUI_->SetTranslate(Vector2{ 640.0f,360.0f });

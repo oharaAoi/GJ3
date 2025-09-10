@@ -118,13 +118,6 @@ void GameObjectWindow::Edit() {
 		ImGui::SameLine();
 
 		ImGui::Text(selectAttribute_->GetName().c_str());
-		/*if (InputTextWithString("NameInput", "input", selectAttributeName_)) {
-			for (auto& [name, attr] : attributeArray_) {
-				if (attr == selectAttribute_) {
-					selectAttribute_->SetName(selectAttributeName_); 
-				}
-			}
-		}*/
 
 		ImGui::Separator();
 		selectAttribute_->Debug_Gui();
