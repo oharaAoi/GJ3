@@ -32,6 +32,7 @@ void ScreenGotRay::Init() {
 
 void ScreenGotRay::SetCommand(ID3D12GraphicsCommandList* commandList, DxResource* pingResource) {
 	CopyData();
+	setting_->time = GameTimer::DeltaTime();
 
 	Pipeline* pso = Engine::SetPipeline(PSOType::ProcessedScene, "PostProcess_GotRay.json");
 	UINT index = pso->GetRootSignatureIndex("g_SceneTex");
@@ -105,7 +106,6 @@ void ScreenGotRay::CopyData() {
 	setting_->ray2Density = param_.ray2Density;
 	setting_->ray3Density = param_.ray3Density;
 	setting_->seed = param_.seed;
-	setting_->time = param_.time;
 }
 
 void ScreenGotRay::SetRayDensity(float _value, uint16_t index) {

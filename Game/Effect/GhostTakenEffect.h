@@ -13,18 +13,21 @@ class GhostTakenEffect :
 public:
 
 	struct AnimationItems : public IJsonConverter {
-		float duration = 10;
+		float scaleDownTime = 10;
+		float scaleUpTime = 10;
 
 		AnimationItems() { SetName("GhostTakenAnimation"); }
 
 		json ToJson(const std::string& id) const override {
 			return JsonBuilder(id)
-				.Add("duration", duration)
+				.Add("scaleDownTime", scaleDownTime)
+				.Add("scaleUpTime", scaleUpTime)
 				.Build();
 		}
 
 		void FromJson(const json& jsonData) override {
-			fromJson(jsonData, "duration", duration);
+			fromJson(jsonData, "scaleDownTime", scaleDownTime);
+			fromJson(jsonData, "scaleUpTime", scaleUpTime);
 		}
 	};
 
@@ -43,6 +46,11 @@ public:
 
 	void ApplySaveData(const std::string& effectName);
 
+private:
+
+	void ScaleUp();
+	void ScaleDown();
+
 public:
 
 	void SetIsDestroy(bool _isDestroy) { isDestroy_ = _isDestroy; }
@@ -59,5 +67,7 @@ private:
 	float lifeTimer_;
 
 	Vector2 position_;
+
+	bool isScaleUp_ = false;
 
 };

@@ -17,6 +17,7 @@ void GhostTakenEffect::Init(const Vector2& pos, const Vector2& tileSize) {
 
 	animationItems_.FromJson(JsonItems::GetData(GetName(), animationItems_.GetName()));
 	isDestroy_ = false;
+	isScaleUp_ = true;
 	lifeTimer_ = 0;
 
 	EditorWindows::AddObjectWindow(this, GetName());
@@ -24,14 +25,12 @@ void GhostTakenEffect::Init(const Vector2& pos, const Vector2& tileSize) {
 
 void GhostTakenEffect::Update() {
 	lifeTimer_ += GameTimer::DeltaTime();
-	// 生存時間の確認
-	if (lifeTimer_ >= animationItems_.duration) {
-		isDestroy_ = true;
+
+	if (isScaleUp_) {
+		ScaleUp();
+	} else {
+		ScaleDown();
 	}
-	// スケールを小さくする
-	float t = lifeTimer_ / animationItems_.duration;
-	Vector2 scale = Vector2::Lerp(CVector2::UNIT * 1.5f, CVector2::ZERO, Ease::In::Back(t));
-	ghostEffect_->SetScale(scale);
 	ghostEffect_->Update();
 
 }
@@ -44,14 +43,40 @@ void GhostTakenEffect::ApplySaveData(const std::string& effectName) {
 	ghostEffect_->ApplySaveData(effectName);
 }
 
+void GhostTakenEffect::ScaleUp() {
+	if (lifeTimer_ <= animationItems_.scaleUpTime) {
+		float t = lifeTimer_ / animationItems_.scaleUpTime;
+		Vector2 scale = Vector2::Lerp(CVector2::ZERO, CVector2::UNIT * 1.5f, Ease::Out::Quart(t));
+		ghostEffect_->SetScale(scale);
+	} else {
+		lifeTimer_ = 0;
+		isScaleUp_ = false;
+	}
+}
+
+void GhostTakenEffect::ScaleDown() {
+	if (lifeTimer_ <= animationItems_.scaleDownTime) {
+		float t = lifeTimer_ / animationItems_.scaleDownTime;
+		Vector2 scale = Vector2::Lerp(CVector2::UNIT * 1.5f, CVector2::ZERO, Ease::In::Back(t));
+		ghostEffect_->SetScale(scale);
+	} else {
+		isDestroy_ = true;
+	}
+}
+
 void GhostTakenEffect::Debug_Gui() {
 	std::string name = "effect";
+	if (ImGui::Button("Replay")) {
+		isScaleUp_ = true;
+		lifeTimer_ = 0;
+	}
 	if (ImGui::TreeNode(name.c_str())) {
 		ghostEffect_->Debug_Gui();
 		ImGui::TreePop();
 	}
 
-	ImGui::DragFloat("duration", &animationItems_.duration, 0.01f);
+	ImGui::DragFloat("scaleDownTime", &animationItems_.scaleDownTime, 0.01f);
+	ImGui::DragFloat("scaleUpTime", &animationItems_.scaleUpTime, 0.01f);
 	ImGui::Separator();
 	if (ImGui::Button("Save")) {
 		JsonItems::Save(GetName(), animationItems_.ToJson(animationItems_.GetName()));

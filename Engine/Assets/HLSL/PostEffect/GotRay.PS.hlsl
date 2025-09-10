@@ -68,7 +68,7 @@ PixelShaderOutput main(VertexShaderOutput input) {
 	float2 ray1 = float2(transformed.x * gGotRay.ray1Density +
                          sin(gGotRay.time * 0.1 * gGotRay.speed) * (gGotRay.ray1Density * 0.2) + gGotRay.seed, 1.0);
 	float2 ray2 = float2(transformed.x * gGotRay.ray2Density +
-                         sin(gGotRay.time * 0.2 * gGotRay.speed) * (gGotRay.ray1Density * 0.2) + gGotRay.seed, 1.0);
+                         sin(gGotRay.time * 0.5 * gGotRay.speed) * (gGotRay.ray2Density * 0.2) + gGotRay.seed, 1.0);
 
     // Cutoff
 	float cut = step(gGotRay.cutoff, transformed.x) * step(gGotRay.cutoff, 1.0 - transformed.x);
@@ -78,8 +78,7 @@ PixelShaderOutput main(VertexShaderOutput input) {
     // Noise rays
 	float rays = 0.0;
 	rays = saturate(noise(ray1) + noise(ray2) * 0.8f);
-	
-
+	    
     // Fade out edges
 	rays *= smoothstep(0.0, gGotRay.falloff, (1.0 - uv.y)); // Bottom
 	rays *= smoothstep(gGotRay.cutoff, gGotRay.edgeFade + gGotRay.cutoff, transformed.x); // Left
