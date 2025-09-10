@@ -62,9 +62,9 @@ public:
 
 	uint32_t GetMaxStageNum() const { return stageLoader_->GetMaxStageNum(); }
 
-private:
+	Vector2 CalculateTilePos(size_t row, size_t col);
 
-	Vector2 CalculateTilePos(size_t row,size_t col);
+private:
 
 	void ResetPlayer(); // playerの位置と情報をリセットする
 

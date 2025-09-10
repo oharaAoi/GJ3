@@ -49,6 +49,7 @@ GhostSmoke* GhostSmokeManager::Create(const Vector2& pos, const Vector2& tileSiz
 
 	auto& newEffect = ghostEffect_.emplace_back(std::make_unique<GhostSmoke>());
 	newEffect->Init(pos, tileSize);
+	newEffect->ApplySaveData("GhostTakenSwirl");
 	return newEffect.get();
 }
 

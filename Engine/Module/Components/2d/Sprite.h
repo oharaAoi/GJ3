@@ -114,7 +114,7 @@ public:
 	void SetAnchorPoint(const Vector2& point){ anchorPoint_ = point; }
 
 	void SetScale(const Vector2 scale){ transform_->SetScale(scale); }
-	void SetRotate(float rotate){ transform_->SetRotate(rotate); }
+	void SetRotate(float rotate){ transform_->SetRotateZ(rotate); }
 
 	const Vector4& GetColor() const{ return materialData_->color; }
 	void SetColor(const Vector4& color){ materialData_->color = color; };
@@ -138,7 +138,7 @@ public:
 
 	const Vector2 GetTranslate() const{ return transform_->GetTranslate(); }
 	const Vector2 GetScale() const{ return transform_->GetScale(); }
-	const float GetRotate() const{ return transform_->GetRotate(); }
+	const float GetRotate() const{ return transform_->GetRotateZ(); }
 	const Vector2 GetTextureSize() const{ return textureSize_; }
 	const Vector2 GetSpriteSize() const{ return spriteSize_; }
 	const bool GetIsFlipX() const{ return isFlipX_; }

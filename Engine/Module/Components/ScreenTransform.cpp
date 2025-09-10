@@ -23,7 +23,7 @@ void ScreenTransform::Init(ID3D12Device* _pDevice) {
 
 void ScreenTransform::Update(const Matrix4x4& correctionMat, const Matrix4x4& viewMat) {
 	screenMat_ = transform_.MakeAffine();
-	transformData_->wvp = Matrix4x4(screenMat_ * correctionMat * viewMat);
+	transformData_->wvp = Matrix4x4(correctionMat * screenMat_ * viewMat);
 }
 
 void ScreenTransform::BindCommand(ID3D12GraphicsCommandList* _cmd, uint32_t index) {

@@ -8,7 +8,7 @@
 #include "Engine/Module/Components/ScreenTransform.h"
 #include "Engine/Module/Components/Attribute/AttributeGui.h"
 
-class GhostEffect :
+class GhostTakenSwirl :
 	public AttributeGui {
 public:
 
@@ -19,7 +19,7 @@ public:
 	};
 
 	struct TextureMaterial {
-		Vector4 color = {1,1,1,1};
+		Vector4 color = { 1,1,1,1 };
 		Matrix4x4 uvTransform;
 	};
 
@@ -28,6 +28,12 @@ public:
 		Vector4 color = { 1,1,1,1 };
 		Vector4 edgeColor = { 1,1,1,1 };
 		float threshold = 0.0f;
+	};
+
+	struct SwirlParam {
+		Vector2 center;        // 渦の中心 (0~1, uv空間で指定)
+		float swirlStrength;  // 渦の強さ (正で右巻き, 負で左巻き)
+		float time;           // アニメーション回転 (不要なら0)
 	};
 
 	struct SaveItems : public IJsonConverter {
@@ -64,8 +70,8 @@ public:
 
 public:
 
-	GhostEffect() = default;
-	~GhostEffect();
+	GhostTakenSwirl() = default;
+	~GhostTakenSwirl();
 
 	void Init(const Vector2& tileSize);
 
@@ -169,10 +175,19 @@ private:
 	std::string dissolveTextureName_;
 
 	// ==========================================
-	
+
+	// ディゾルブ
 	std::unique_ptr<DxResource> dissolveResource_;
 	DissolveParam* dissolveParam_;
 	SRT dissolveUvTransform_;
+
+	// 渦
+	std::unique_ptr<DxResource> swirlResource_;
+	SwirlParam* swirlParam_;
+	float timeRate_ = 1.0f;
+
+	// mask
+	std::string maskTextureName_;
 
 	bool isDestroy_ = false;
 

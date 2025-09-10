@@ -57,7 +57,6 @@ public:
 	void SetIsDestroy(bool _isDestroy) { isDestroy_ = _isDestroy; }
 	bool GetIsDestroy() const { return isDestroy_; }
 
-
 	const Vector2& GetPos() const { return position_; }
 
 private:

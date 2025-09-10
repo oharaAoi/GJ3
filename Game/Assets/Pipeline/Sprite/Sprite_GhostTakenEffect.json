@@ -1,0 +1,12 @@
+{
+    "Pipeline": {
+        "vs": "./Engine/Assets/HLSL/Sprite.VS.hlsl",
+        "ps": "./Game/Assets/HLSL/GhostTakenEffect.PS.hlsl",
+        "blendMode": "Add",
+        "culling" : true,
+        "depth" : true,
+        "rtvFormat" : [
+            "16_RGB"
+        ]
+    }
+}
