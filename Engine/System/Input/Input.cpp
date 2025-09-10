@@ -87,7 +87,7 @@ void Input::Update() {
 //=================================================================================================================
 void Input::KeyboardInitialize(HWND hwnd) {
 	HRESULT result;
-	
+
 	result = directInput_->CreateDevice(GUID_SysKeyboard, &keyboard_, NULL);
 	assert(SUCCEEDED(result));
 
@@ -139,7 +139,7 @@ void Input::GamePadInitialize() {
 bool Input::IsTriggerKey(uint8_t keyNum) {
 	if (!preKey_[keyNum] && key_[keyNum]) {
 		inputDevice_ = Keybord;
- 		return true;
+		return true;
 	}
 
 	return false;
@@ -163,7 +163,7 @@ bool Input::IsReleaseKey(uint8_t keyNum) {
 bool Input::IsPressKey(uint8_t keyNum) {
 	if (key_[keyNum]) {
 		inputDevice_ = Keybord;
-   		return true;
+		return true;
 	}
 
 	return false;
@@ -251,6 +251,10 @@ bool Input::IsTriggerButton(const XInputButtons& bottons) {
 }
 
 bool Input::IsPressButton(const XInputButtons& bottons) {
+	if (bottons == XInputButtons::LT_SHOULDER || bottons == XInputButtons::RT_SHOULDER) {
+		return GetInstance()->PressThumbLR();
+	}
+
 	if ((gamepadState_.Gamepad.wButtons & bottons) &&
 		(preGamepadState_.Gamepad.wButtons & bottons)) {
 		inputDevice_ = Gamepad;
@@ -311,6 +315,16 @@ bool Input::IsThumbLR() {
 		if (gamepadState_.Gamepad.bRightTrigger > XINPUT_GAMEPAD_TRIGGER_THRESHOLD) {
 			return true;
 		}
+	}
+	return false;
+}
+
+bool Input::PressThumbLR() {
+	if (gamepadState_.Gamepad.bLeftTrigger > XINPUT_GAMEPAD_TRIGGER_THRESHOLD) {
+		return true;
+	}
+	if (gamepadState_.Gamepad.bRightTrigger > XINPUT_GAMEPAD_TRIGGER_THRESHOLD) {
+		return true;
 	}
 	return false;
 }

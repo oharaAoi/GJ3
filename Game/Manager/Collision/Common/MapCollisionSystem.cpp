@@ -64,14 +64,14 @@ bool MapCollisionSystem::IsMovable(const Vector2Int& direction,const Vector2Int&
 	if(firstStepIndex->GetType() == BlockType::Wall ||
 	   firstStepIndex->GetType() == BlockType::GraveBlock ||
 	   firstStepIndex->GetType() == BlockType::Goal){
-		AudioPlayer::SinglShotPlay("stop.mp3",0.6f); // 壁にあたったときの音
+		AudioPlayer::SinglShotPlay("stop.mp3",0.3f); // 壁にあたったときの音
 		return false;
 	}
 
 	// 進む方向2マス目ブロック
 	index += direction;
 	if(!OutOfRangeReference(index)){
-		AudioPlayer::SinglShotPlay("stop.mp3",0.6f);
+		AudioPlayer::SinglShotPlay("stop.mp3",0.3f);
 		return false;
 	}
 	IBlock* secondStepIndex = data[index.y][index.x].get();
@@ -85,7 +85,7 @@ bool MapCollisionSystem::IsMovable(const Vector2Int& direction,const Vector2Int&
 			return true;
 		}
 	}
-	AudioPlayer::SinglShotPlay("stop.mp3",1.0f); // 壁にあたったときの音
+	AudioPlayer::SinglShotPlay("stop.mp3",0.3f); // 壁にあたったときの音
 	return false;
 }
 

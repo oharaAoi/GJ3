@@ -155,6 +155,8 @@ private:
 
 	bool IsThumbLR();
 
+	bool PressThumbLR();
+
 private:
 	// DirectInputオブジェクトの生成
 	Microsoft::WRL::ComPtr<IDirectInput8> directInput_ = nullptr;
