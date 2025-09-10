@@ -102,6 +102,7 @@ void ThunderFlash::Update()
 	}
 
 	// alpha値を取得
+	prevFlashCurveIndex_ = currentFlashCurveIndex_;
 	alpha_ = CalculateCurrentFlushAlpha();
 	if(currentFlashCurveIndex_ != prevFlashCurveIndex_){
 		if(alpha_ >= 0.2f){
@@ -173,7 +174,9 @@ void LightFlash::Init(const std::string &_parameterName)
 {
 	SetName("LightFlash");
 
+
 	isFinish_ = false;
+	isSEPlayed_ = false;
 
 	parameterName_ = _parameterName;
 
@@ -225,6 +228,12 @@ float LightFlash::CalculateCurrentFlushAlpha() const
 
 void LightFlash::Update()
 {
+	if(!isSEPlayed_){
+		isSEPlayed_ = true;
+
+		AudioPlayer::SinglShotPlay("light.mp3",0.5f);
+	}
+
 	parameter_.currentFlashTime_ += GameTimer::DeltaTime();
 	// ループしない
 	if (parameter_.currentFlashTime_ >= parameter_.flashDuration_)

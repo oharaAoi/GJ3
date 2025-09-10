@@ -42,6 +42,7 @@ protected:
 
 private:
 	float alpha_ = 0.0f;
+
 	int32_t currentFlashCurveIndex_ = 0;
 	int32_t prevFlashCurveIndex_ = -1;
 
@@ -79,12 +80,11 @@ protected:
 
 private:
 	bool isFinish_ = false;
+	bool isSEPlayed_  = false;
 	// 点滅時に画面を覆う用のSprite
 	Sprite* flashOverlaySprite_;
 
 	std::string parameterName_;
-
-	AudioPlayer* flashSound_;
 
 	Parameter parameter_;
 public:

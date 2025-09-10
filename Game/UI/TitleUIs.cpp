@@ -13,7 +13,6 @@ void TitleUIs::Init(){
 	// Sprites
 	///===========================================
 	backGround_ = Engine::GetCanvas2d()->AddSprite("title_bg.png","BackGround","Sprite_Normal.json",-10,true);
-	backGround_->SetColor({0.15f,0.15f,0.15f,1.f});
 
 	titleWords_[0] = Engine::GetCanvas2d()->AddSprite("Title_su.png","su","Sprite_None.json",-1);   // す
 	titleWords_[1] = Engine::GetCanvas2d()->AddSprite("Title_ki.png","ki","Sprite_None.json",-1);   // き
@@ -28,8 +27,7 @@ void TitleUIs::Init(){
 	spaceKey_ = Engine::GetCanvas2d()->AddSprite("Title_space.png","SpaceKey","Sprite_Normal.json",6);
 
 	shelf_ = Engine::GetCanvas2d()->AddSprite("Title_shelf.png","Shelf","Sprite_Normal.json",-1,true);
-	shelf_->SetColor({0.15f,0.15f,0.15f,1.f});
-
+	
 	ghost_ = Engine::GetCanvas2d()->AddSprite("title_ghost.png","Ghost","Sprite_Normal.json",5);
 
 	///===========================================
@@ -44,6 +42,9 @@ void TitleUIs::Init(){
 	AddChild(ghost_);
 	AddChild(backGround_);
 
+	shelf_->ApplySaveData();
+	backGround_->ApplySaveData();
+
 	spaceKey_->SetAnchorPoint({1.f,1.f});
 	shelf_->SetAnchorPoint({1.f,1.f});
 	ghost_->SetAnchorPoint({1.f,1.f});
@@ -52,6 +53,7 @@ void TitleUIs::Init(){
 	EditorWindows::AddObjectWindow(this,GetName());
 }
 
-void TitleUIs::Update(){}
+void TitleUIs::Update(){
+}
 
 void TitleUIs::Debug_Gui(){}
