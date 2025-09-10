@@ -73,6 +73,7 @@ void ClearSelector::Update()
 	}
 
 	// 入力されていないなら-1で
+	cursorIndex_ = std::clamp(cursorIndex_, 0, 1);
 	if (cursorIndex_ == -1) {
 		if (upPressed) { cursorIndex_ = 0; }
 		if (downPressed) { cursorIndex_ = 1; }
@@ -84,7 +85,7 @@ void ClearSelector::Update()
 			clearUIs_->ResetIndex(cursorIndex_); 
 			--cursorIndex_;
 		}
-		if (downPressed) { 
+		else if (downPressed) { 
 			if (cursorIndex_ == 0) {
 				AudioPlayer::SinglShotPlay("button.mp3", 0.5f);
 			}
