@@ -5,7 +5,7 @@
 
 #include "Engine/System/Editer/Window/EditorWindows.h"
 
-bool GameUIs::activeKeyboardUIs_ = true;
+bool GameUIs::activeKeyboardUIs_ = false;
 bool GameUIs::activeGamePadUIs_ = false;
 
 GameUIs::GameUIs():AttributeGui(){}
@@ -55,6 +55,9 @@ void GameUIs::Init(){
 	undoMoniPuniTime_ = 0.f;
 	redoMoniPuniTime_ = 0.f;
 	menuMoniPuniTime_ = 0.f;
+
+	activeKeyboardUIs_ = true;
+	activeGamePadUIs_ = false;
 }
 
 void GameUIs::Update(bool _isKeyInput,bool _isPadInput){

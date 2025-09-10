@@ -91,19 +91,19 @@ Vector2Int PlayerInputHandler::DecideMoveDirection(){
 		// 十字キー
 		if(input->IsPressButton(kMoveLeftButton)){
 			currentMoveDirection = MoveDirection::LEFT;
-			isKeyInput_ = true;
+			isPadInput_ = true;
 		}
 		if(input->IsPressButton(kMoveRightButton)){
 			currentMoveDirection = MoveDirection::RIGHT;
-			isKeyInput_ = true;
+			isPadInput_ = true;
 		}
 		if(input->IsPressButton(kMoveUpButton)){
 			currentMoveDirection = MoveDirection::UP;
-			isKeyInput_ = true;
+			isPadInput_ = true;
 		}
 		if(input->IsPressButton(kMoveDownButton)){
 			currentMoveDirection = MoveDirection::DOWN;
-			isKeyInput_ = true;
+			isPadInput_ = true;
 		}
 
 		// 左スティック
@@ -112,19 +112,19 @@ Vector2Int PlayerInputHandler::DecideMoveDirection(){
 			// 横移動
 			if(leftStick.x < 0.f){
 				currentMoveDirection = MoveDirection::LEFT;
-				isKeyInput_ = true;
+				isPadInput_ = true;
 			} else if(leftStick.x > 0.f){
 				currentMoveDirection = MoveDirection::RIGHT;
-				isKeyInput_ = true;
+				isPadInput_ = true;
 			}
 		} else if(std::abs(leftStick.x) < std::abs(leftStick.y)){
 			// 縦移動
 			if(leftStick.y < 0.f){
 				currentMoveDirection = MoveDirection::DOWN;
-				isKeyInput_ = true;
+				isPadInput_ = true;
 			} else if(leftStick.y > 0.f){
 				currentMoveDirection = MoveDirection::UP;
-				isKeyInput_ = true;
+				isPadInput_ = true;
 			}
 		}
 	}
