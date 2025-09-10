@@ -159,7 +159,7 @@ void MenuSelector::ChengeScene()
 		chengeScene_ = false;
 		drawEffect_ = true;
 		changeEffect_ = true;
-		effectFrame_ = 4.0f;
+		effectFrame_ = 1.5f;
 		break;
 	case ButtonType::Operation:
 		openOperation_ = true;

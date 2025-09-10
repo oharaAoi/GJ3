@@ -111,7 +111,7 @@ void TutorialDirector::Update()
 					if (moveTimer_ > static_cast<float>(i + 1)) {
 						uis_->GetModeUIs()[i]->SetIsFinished(true);
 						uis_->GetModeUIs()[j]->SetIsFinished(true);
-						moveTimer_ = 3.0f;
+						moveTimer_ = 1.0f;
 					}
 					isFinish = false;
 					break;
@@ -129,7 +129,7 @@ void TutorialDirector::Update()
 					uis_->GetModeUIs()[i]->SetIsFinished(true);
 				}
 			}
-			moveTimer_ = 3.0f;
+			moveTimer_ = 1.0f;
 		}
 
 		// テキストが読み終わっていたら
@@ -506,7 +506,7 @@ bool TutorialDirector::IsSpeechCat(const std::array<std::unique_ptr<ITutorialTex
 			uis[i]->GetSprite()->SetEnable(true);
 			if (time > static_cast<float>(i + 1)) {
 				if (i == static_cast<uint32_t>(uis.size() - 1)) {
-					time = static_cast<float>(i + 2);
+					time = static_cast<float>(i);
 				} else {
 					time = static_cast<float>(i + 1);
 				}
@@ -517,7 +517,7 @@ bool TutorialDirector::IsSpeechCat(const std::array<std::unique_ptr<ITutorialTex
 		}
 	}
 	if (isSpeechSkip_ && !isFinish) {
-		time = static_cast<float>(uis.size() + 1);
+		time = static_cast<float>(uis.size());
 		for (auto& ui : uis) {
 			ui->SetUvMaxSize(1.0f);
 			ui->GetSprite()->SetEnable(true);
