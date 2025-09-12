@@ -22,13 +22,13 @@ public:
 
 	void Draw() const;
 
-	GhostSmoke* Create(const Vector2& pos, const Vector2& tileSize);
+	std::shared_ptr<GhostSmoke> Create(const Vector2& pos, const Vector2& tileSize);
 
 	void Debug_Gui() override;
 
 private:
 
-	std::list<std::unique_ptr<GhostSmoke>> ghostEffect_;
+	std::list<std::shared_ptr<GhostSmoke>> ghostEffect_;
 
 };
 

@@ -263,10 +263,6 @@ void GameScene::Update()
 
 		if (stageResetUI_->GetStageReset())
 		{
-			ghostEffectManager_->Finalize();
-			limitBlockEffectManager_->Finalize();
-			ghostTakenEffectManager_->Finalize();
-
 			stageRegistry_->ResetStage();
 			mapCollision_->ResetGhostCounter();
 			ObjectCommandInvoker::GetInstance().ClearHistory();
@@ -277,6 +273,10 @@ void GameScene::Update()
 			{
 				ghostSoulManager_->DeleteBackSoul();
 			}
+
+			ghostEffectManager_->Finalize();
+			limitBlockEffectManager_->Finalize();
+			ghostTakenEffectManager_->Finalize();
 		}
 	}
 
@@ -370,11 +370,6 @@ void GameScene::ChengeScene()
 			break;
 		case ButtonType::Reset:
 		{
-			// ステージをリセットする
-			ghostEffectManager_->Finalize();
-			limitBlockEffectManager_->Finalize();
-			ghostTakenEffectManager_->Finalize();
-
 			stageRegistry_->ResetStage();
 			if (tutorialDirector_ != nullptr)
 			{
@@ -390,6 +385,12 @@ void GameScene::ChengeScene()
 			menuSelector_->SetChengeScene(false);
 			menuSelector_->SetOpenMenu(false);
 			swirlTransition_->Open();
+
+			// ステージをリセットする
+			ghostEffectManager_->Finalize();
+			limitBlockEffectManager_->Finalize();
+			ghostTakenEffectManager_->Finalize();
+
 			AudioPlayer::SinglShotPlay("start.mp3", 0.3f);
 		}
 		break;

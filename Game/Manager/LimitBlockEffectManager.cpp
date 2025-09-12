@@ -38,17 +38,10 @@ void LimitBlockEffectManager::Draw() const {
 	}
 }
 
-LimitBlockEffect* LimitBlockEffectManager::Create(const Vector2& pos, const Vector2& tileSize) {
-	for (const auto& effect : limitBlockEffect_) {
-		Vector2 effectPos = effect->GetPos();
-		if (pos.x == effectPos.x && pos.y == effectPos.y) {
-			return nullptr;
-		}
-	}
-
-	auto& newEffect = limitBlockEffect_.emplace_back(std::make_unique<LimitBlockEffect>());
+std::shared_ptr<LimitBlockEffect> LimitBlockEffectManager::Create(const Vector2& pos, const Vector2& tileSize) {
+	auto newEffect = limitBlockEffect_.emplace_back(std::make_shared<LimitBlockEffect>());
 	newEffect->Init(pos, tileSize);
-	return newEffect.get();
+	return newEffect;
 }
 
 
