@@ -273,7 +273,7 @@ void GameScene::Update()
 		/// ===============================================
 		if (stageResetUI_->GetStageReset())
 		{
-			Reset(true);
+			Reset(false);
 		}
 	}
 

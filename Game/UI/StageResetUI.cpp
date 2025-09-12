@@ -34,7 +34,7 @@ void StageResetUI::Init(Canvas2d* _canvas2d)
 
 	bool isPad = Input::IsControllerConnected();
 	bool isKey = Input::IsPressKey(DIK_R);
-	Update(isPad,isKey);
+	Update(isKey,isPad);
 }
 
 void StageResetUI::Update(bool& _isKeyInput,bool& _isPadInput)
