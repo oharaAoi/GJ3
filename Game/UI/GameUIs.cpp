@@ -56,8 +56,8 @@ void GameUIs::Init(){
 	redoMoniPuniTime_ = 0.f;
 	menuMoniPuniTime_ = 0.f;
 
-	activeKeyboardUIs_ = true;
-	activeGamePadUIs_ = false;
+	activeKeyboardUIs_ = false;
+	activeGamePadUIs_ =  Input::IsControllerConnected();
 }
 
 void GameUIs::Update(bool _isKeyInput,bool _isPadInput){
@@ -65,7 +65,6 @@ void GameUIs::Update(bool _isKeyInput,bool _isPadInput){
 		activeGamePadUIs_ = _isPadInput;
 		activeKeyboardUIs_ = _isKeyInput;
 	}
-
 
 	if(activeGamePadUIs_){
 		undoUIs_[0]->SetEnable(false);

@@ -61,10 +61,12 @@ void TitleUIs::Init(){
 }
 
 void TitleUIs::Update(){
-	if(Input::IsControllerConnected()){
+	bool isPad = Input::IsControllerConnected();
+	bool isKey = Input::IsPressKey(DIK_SPACE);
+	if(isPad){
 		spaceKey_->SetEnable(false);
 		aButton_->SetEnable(true);
-	} else{
+	} else if(isKey){
 		spaceKey_->SetEnable(true);
 		aButton_->SetEnable(false);
 	}

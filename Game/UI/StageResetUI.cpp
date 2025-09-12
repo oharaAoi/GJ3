@@ -32,16 +32,21 @@ void StageResetUI::Init(Canvas2d* _canvas2d)
 
 	param_.FromJson(JsonItems::GetData(GetName(), param_.GetName()));
 
-	Update();
+	bool isPad = Input::IsControllerConnected();
+	bool isKey = Input::IsPressKey(DIK_R);
+	Update(isPad,isKey);
 }
 
-void StageResetUI::Update()
+void StageResetUI::Update(bool& _isKeyInput,bool& _isPadInput)
 {
 	// Inputを取得
 	Input* input = Input::GetInstance();
 
 	keyInput_ = input->IsPressKey(DIK_R);
+	_isKeyInput |= keyInput_;
 	padInput_ = input->IsPressButton(XInputButtons::BUTTON_X);
+	_isPadInput |= padInput_;
+
 	// リセットボタンが長押しされているなら
 	if (keyInput_ || padInput_) {
 		if (!isPush_) { 
@@ -64,9 +69,9 @@ void StageResetUI::Update()
 		isStageReset_ = false;
 	}
 
-	if (keyInput_) {
+	if (_isKeyInput) {
 		resetButtonUI_->SetTextureName("resetButton_R.png");
-	} else if (padInput_) {
+	} else if (_isPadInput) {
 		resetButtonUI_->SetTextureName("resetButton_X.png");
 	}
 	

@@ -117,7 +117,6 @@ void StageSelector::Update(){
 	}
 }
 
-// StageSelector.cpp
 void StageSelector::InputHandle(){
 	Input* input = Input::GetInstance();
 

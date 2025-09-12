@@ -46,7 +46,7 @@ public:
 
 	void Init(Canvas2d* _canvas2d);
 
-	void Update();
+	void Update(bool& _isKeyInput,bool& _isPadInput);
 
 	void Debug_Gui() override;
 	

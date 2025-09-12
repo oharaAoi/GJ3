@@ -72,10 +72,10 @@ void MenuSelector::Update()
 		}
 		return;
 	}
+	
 	// ======================================================================
 	//								入力処理
 	// ======================================================================
-	
 	const float dt = GameTimer::DeltaTime();
 	const auto lsY = input->GetLeftJoyStick(0.2f).y;
 

@@ -191,6 +191,7 @@ void GameScene::Update()
 		menuSelector_->Update();
 		ChengeScene();
 	}
+
 	// メニューを開いていなければ更新
 	if (!menuSelector_->GetOpenMenu() && isTutorial && !mapCollision_->GetIsClear())
 	{
@@ -215,13 +216,6 @@ void GameScene::Update()
 		behavior_->Update();
 	}
 
-	bool isEnable = !menuSelector_->GetOpenMenu() && isTutorial;
-	if (isEnable && !mapCollision_->GetIsClear())
-	{
-		stageResetUI_->Update();
-	}
-
-
 	if(menuSelector_->GetOpenTrigger()){
 		gameUIs_->ActiveInputMenu();
 		padIsInput = menuSelector_->GetPadInput();
@@ -232,9 +226,6 @@ void GameScene::Update()
 	{
 		// Command
 		UndoRedoState state = ObjectCommandInvoker::GetInstance().InputHandle(padIsInput, keyIsInput);
-
-		padIsInput |= stageResetUI_->GetPadInput();
-		keyIsInput |= stageResetUI_->GetKeyInput();
 
 		padIsInput |= player_->isPadInput();
 		keyIsInput |= player_->isKeyInput();
@@ -261,26 +252,36 @@ void GameScene::Update()
 			ObjectCommandInvoker::GetInstance().ExecuteCommandRequest();
 		}
 
+		bool isEnable = !menuSelector_->GetOpenMenu() && isTutorial;
+		if(isEnable && !mapCollision_->GetIsClear()){
+			stageResetUI_->Update(keyIsInput,padIsInput);
+
+			padIsInput |= stageResetUI_->GetPadInput();
+			keyIsInput |= stageResetUI_->GetKeyInput();
+			gameUIs_->Update(keyIsInput,padIsInput);
+		}
+
 		if (stageResetUI_->GetStageReset())
 		{
-			ghostEffectManager_->Finalize();
-			limitBlockEffectManager_->Finalize();
-			ghostTakenEffectManager_->Finalize();
-
 			stageRegistry_->ResetStage();
 			mapCollision_->ResetGhostCounter();
+
 			ObjectCommandInvoker::GetInstance().ClearHistory();
-			AudioPlayer::SinglShotPlay("button.mp3", 0.5f);
 			stageResetUI_->Reset();
 			size_t size = ghostSoulManager_->GetSoulesSize();
 			for (size_t i = 0; i < size; ++i)
 			{
 				ghostSoulManager_->DeleteBackSoul();
 			}
+
+			ghostEffectManager_->Finalize();
+			limitBlockEffectManager_->Finalize();
+			ghostTakenEffectManager_->Finalize();
+
+			AudioPlayer::SinglShotPlay("button.mp3", 0.5f);
 		}
 	}
 
-	gameUIs_->Update(keyIsInput, padIsInput);
 	getGhostCountUI_->Update(mapCollision_->GetGhostCounter(), stageRegistry_->GetNeedGhostNum());
 
 	// クリア条件を満たしているかの判定
@@ -370,11 +371,6 @@ void GameScene::ChengeScene()
 			break;
 		case ButtonType::Reset:
 		{
-			// ステージをリセットする
-			ghostEffectManager_->Finalize();
-			limitBlockEffectManager_->Finalize();
-			ghostTakenEffectManager_->Finalize();
-
 			stageRegistry_->ResetStage();
 			if (tutorialDirector_ != nullptr)
 			{
@@ -390,6 +386,12 @@ void GameScene::ChengeScene()
 			menuSelector_->SetChengeScene(false);
 			menuSelector_->SetOpenMenu(false);
 			swirlTransition_->Open();
+
+			// ステージをリセットする
+			ghostEffectManager_->Finalize();
+			limitBlockEffectManager_->Finalize();
+			ghostTakenEffectManager_->Finalize();
+
 			AudioPlayer::SinglShotPlay("start.mp3", 0.3f);
 		}
 		break;
