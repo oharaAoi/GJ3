@@ -37,7 +37,8 @@ void SpecialBlockCollision::ChangeBlock()
 			}
 			// 判定結果を反映する
 			if (!isHit) {
-				if (data[sIndex.y][sIndex.x]->GetIsSpecialBlock()) {
+				if (data[sIndex.y][sIndex.x]->GetIsSpecialBlock() &&
+					data[sIndex.y][sIndex.x]->GetIsChengeBlock()) {
 					system_->GetStageRegi()->CreateStageData(sIndex, BlockType::SpecialBlock);
 				}
 			}
