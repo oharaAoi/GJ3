@@ -57,6 +57,16 @@ void TitleUIs::Init(){
 	ghost_->SetTranslate(Vector2{kWindowWidth_ / 2.0f,kWindowHeight_ / 2.0f});
 	backGround_->SetTranslate(Vector2{kWindowWidth_ / 2.0f,kWindowHeight_ / 2.0f});
 
+	bool isPad = Input::IsControllerConnected();
+	bool isKey = Input::IsPressKey(DIK_SPACE);
+	if(isPad){
+		spaceKey_->SetEnable(false);
+		aButton_->SetEnable(true);
+	} else {
+		spaceKey_->SetEnable(true);
+		aButton_->SetEnable(false);
+	}
+
 	EditorWindows::AddObjectWindow(this,GetName());
 }
 
