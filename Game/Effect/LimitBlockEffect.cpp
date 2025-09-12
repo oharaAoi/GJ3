@@ -11,18 +11,17 @@ void LimitBlockEffect::Init(const Vector2& pos, const Vector2& tileSize) {
 	position_ = pos;
 	animationItems_.FromJson(JsonItems::GetData(GetName(), animationItems_.GetName()));
 
-	for (uint32_t oi = 0; oi < 2; ++oi) {
-		ghostEffect_[oi] = std::make_unique<GhostEffect>();
-		ghostEffect_[oi]->Init(tileSize);
-		ghostEffect_[oi]->SetTranslate(pos);
+	ghostEffect_ = std::make_unique<GhostEffect>();
+	ghostEffect_->Init(tileSize);
+	ghostEffect_->SetTranslate(pos);
 
-		ghostEffect_[oi]->SetDissolveUvScale(RandomVector3(CVector3::UNIT * -1.0f, CVector3::UNIT * 1.0f));
+	ghostEffect_->SetDissolveUvScale(RandomVector3(CVector3::UNIT * -1.0f, CVector3::UNIT * 1.0f));
 
-		Vector3 min = RandomVector3(CVector3::UNIT * -1.0f, CVector3::UNIT * 1.0f);
-		Vector3 max = RandomVector3(CVector3:: UNIT * 1.0f, CVector3::UNIT * 1.0f);
-		uvAnimation_[oi].Init(min, max, animationItems_.effectDuration[oi], (int)EasingType::None::Liner, LoopType::RETURN);
-	}
+	Vector3 min = RandomVector3(CVector3::UNIT * -1.0f, CVector3::UNIT * 1.0f);
+	Vector3 max = RandomVector3(CVector3::UNIT * 1.0f, CVector3::UNIT * 1.0f);
+	uvAnimation_.Init(min, max, animationItems_.effectDuration, (int)EasingType::None::Liner, LoopType::RETURN);
 
+	effectAlpha_.Init(0.5f, 1.0f, 1.5f, (int)EasingType::None::Liner, LoopType::RETURN);
 	isDestroy_ = false;
 
 	animationItems_.FromJson(JsonItems::GetData(GetName(), animationItems_.GetName()));
@@ -30,49 +29,42 @@ void LimitBlockEffect::Init(const Vector2& pos, const Vector2& tileSize) {
 }
 
 void LimitBlockEffect::Update() {
-	for (uint32_t oi = 0; oi < 2; ++oi) {
-		uvAnimation_[oi].Update(GameTimer::DeltaTime());
-		ghostEffect_[oi]->SetDissolveUvTranslate(uvAnimation_[oi].GetValue());
-		ghostEffect_[oi]->Update();
-	}
+	uvAnimation_.Update(GameTimer::DeltaTime());
+	effectAlpha_.Update(GameTimer::DeltaTime());
+	ghostEffect_->SetDissolveUvTranslate(uvAnimation_.GetValue());
+	ghostEffect_->SetAlpha(effectAlpha_.GetValue());
+	ghostEffect_->Update();
 }
 
 void LimitBlockEffect::Draw() const {
-	for (uint32_t oi = 0; oi < 2; ++oi) {
-		ghostEffect_[oi]->Draw();
-	}
+	ghostEffect_->Draw();
 }
 
 void LimitBlockEffect::ApplySaveData(const std::string& effectName) {
-	for (uint32_t oi = 0; oi < 2; ++oi) {
-		ghostEffect_[oi]->ApplySaveData(effectName);
-	}
+	ghostEffect_->ApplySaveData(effectName);
 }
 
 void LimitBlockEffect::SetPos(const Vector2& pos) {
-	for (uint32_t oi = 0; oi < 2; ++oi) {
-		ghostEffect_[oi]->SetTranslate(pos);
-	}
+	ghostEffect_->SetTranslate(pos);
 }
 
 void LimitBlockEffect::Debug_Gui() {
-	for (uint32_t oi = 0; oi < 2; ++oi) {
-		std::string name = "effect_" + std::to_string(oi);
-		if (ImGui::TreeNode(name.c_str())) {
-			ghostEffect_[oi]->Debug_Gui();
-			ImGui::TreePop();
-		}
 
-		std::string duration = "duration_" + std::to_string(oi);
-		ImGui::DragFloat(duration.c_str(), &animationItems_.effectDuration[oi], 0.01f);
+	std::string name = "effect_";
+	if (ImGui::TreeNode(name.c_str())) {
+		ghostEffect_->Debug_Gui();
+		ImGui::TreePop();
 	}
 
+	std::string duration = "duration_";
+	ImGui::DragFloat(duration.c_str(), &animationItems_.effectDuration, 0.01f);
+
+
 	if (ImGui::Button("Replay")) {
-		for (uint32_t oi = 0; oi < 2; ++oi) {
-			Vector3 min = RandomVector3(CVector3::UNIT * -1.0f, CVector3::UNIT * 1.0f);
-			Vector3 max = RandomVector3(CVector3::UNIT * 1.0f, CVector3::UNIT * 1.0f);
-			uvAnimation_[oi].Init(min, max, animationItems_.effectDuration[oi], (int)EasingType::None::Liner, LoopType::RETURN);
-		}
+
+		Vector3 min = RandomVector3(CVector3::UNIT * -1.0f, CVector3::UNIT * 1.0f);
+		Vector3 max = RandomVector3(CVector3::UNIT * 1.0f, CVector3::UNIT * 1.0f);
+		uvAnimation_.Init(min, max, animationItems_.effectDuration, (int)EasingType::None::Liner, LoopType::RETURN);
 	}
 
 	ImGui::Separator();

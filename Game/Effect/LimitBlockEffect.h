@@ -13,20 +13,18 @@ class LimitBlockEffect :
 public:
 
 	struct UvScrollAnimationItems : public IJsonConverter {
-		float effectDuration[2]{1.0f};
+		float effectDuration{1.0f};
 		
 		UvScrollAnimationItems() { SetName("UvScrollAnimationItems"); }
 
 		json ToJson(const std::string& id) const override {
 			return JsonBuilder(id)
-				.Add("effect1Duration", effectDuration[0])
-				.Add("effect2Duration", effectDuration[1])
+				.Add("effect1Duration", effectDuration)
 				.Build();
 		}
 
 		void FromJson(const json& jsonData) override {
-			fromJson(jsonData, "effect1Duration", effectDuration[0]);
-			fromJson(jsonData, "effect2Duration", effectDuration[1]);
+			fromJson(jsonData, "effect1Duration", effectDuration);
 		}
 	};
 
@@ -55,12 +53,13 @@ public:
 
 private:
 
-	std::unique_ptr<GhostEffect> ghostEffect_[2];
+	std::unique_ptr<GhostEffect> ghostEffect_;
 
 	bool isDestroy_;
 
 	UvScrollAnimationItems animationItems_;
-	VectorTween<Vector3> uvAnimation_[2];
+	VectorTween<Vector3> uvAnimation_;
+	VectorTween<float> effectAlpha_;
 	
 	Vector2 position_;
 

@@ -109,7 +109,7 @@ void SwirlTransition::Close() {
 
 void SwirlTransition::Open() {
 	isOpen_ = true;
-	swirl_->Reset();
+	//swirl_->Reset();
 	swirl_->SetIsEnable(true);
 	swirl_->SetRadiusKernel(startData_.radiusKernel);
 	swirl_->SetRotateSpeed(startData_.rotateSpeed);

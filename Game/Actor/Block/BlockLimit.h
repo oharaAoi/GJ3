@@ -2,6 +2,8 @@
 #include <memory>
 #include "Game/Actor/Block/IBlock.h"
 #include "Game/Effect/LimitBlockEffect.h"
+#include "Engine/Module/Components/Animation/VectorTween.h"
+
 
 class BlockLimit :
 	public IBlock {

@@ -43,7 +43,7 @@ public:
 	/// <param name="deltaTime">: デルタタイム</param>
 	void Update(float deltaTime) {
 		if (isStop_) { return; }
-		if (currentTime_ >= duration_) { 
+		if (currentTime_ >= duration_) {
 			isFinish_ = true;
 			return;
 		}
@@ -51,7 +51,7 @@ public:
 		currentTime_ += deltaTime;
 		float t = currentTime_ / duration_;
 		value_ = Lerp(start_, end_, CallEasing(easeIndex_, t));
-		
+
 
 		// 現在の進行状態を変更するかを判別
 		ChangeState();
@@ -95,6 +95,9 @@ public:
 	bool GetIsFinish() const { return isFinish_; }
 
 	void SetLoopType(LoopType type) { loopType_ = type; }
+
+	void SetStart(const T& _start) { start_ = _start; }
+	void SetEnd(const T& _end) { end_ = _end; }
 
 	/// <summary>
 	/// Tweenをやり直す

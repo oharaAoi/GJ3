@@ -112,6 +112,8 @@ public:
 	const Vector3& GetDissolveUvRotate() const { return dissolveUvTransform_.rotate; }
 	const Vector3& GetDissolveUvTranslate() const { return dissolveUvTransform_.translate; }
 
+	void SetAlpha(float _alpha) { materialData_->color.w = _alpha; }
+
 	// color
 	const Vector4& GetColor() const { return materialData_->color; }
 	void SetColor(const Vector4& color) { materialData_->color = color; }
