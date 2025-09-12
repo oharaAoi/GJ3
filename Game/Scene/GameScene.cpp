@@ -163,6 +163,9 @@ void GameScene::Init()
 
 	resetTimer_ = 0.f;
 	isClearConditionMet_ = false;
+
+	mapCollision_->GetGhostBlockCollision()->SetGhostUpdate(true);
+	mapCollision_->Update();
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -261,6 +264,9 @@ void GameScene::Update()
 			gameUIs_->Update(keyIsInput,padIsInput);
 		}
 
+		/// ===============================================
+		//				ステージリセット
+		/// ===============================================
 		if (stageResetUI_->GetStageReset())
 		{
 			stageRegistry_->ResetStage();
@@ -277,6 +283,10 @@ void GameScene::Update()
 			ghostEffectManager_->Finalize();
 			limitBlockEffectManager_->Finalize();
 			ghostTakenEffectManager_->Finalize();
+
+			// ghostを検知する
+			mapCollision_->GetGhostBlockCollision()->SetGhostUpdate(true);
+			mapCollision_->Update();
 
 			AudioPlayer::SinglShotPlay("button.mp3", 0.5f);
 		}
