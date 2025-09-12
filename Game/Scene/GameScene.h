@@ -58,7 +58,7 @@ private:
 
 	void ChangeBehavior(std::unique_ptr<IGameSceneBehavior> newBehavior);
 
-	void Reset();
+	void Reset(bool _inMenu);
 private:
 	// ------------------- camera ------------------- //
 	std::unique_ptr<DebugCamera> debugCamera_;

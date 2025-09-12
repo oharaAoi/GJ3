@@ -273,25 +273,7 @@ void GameScene::Update()
 		/// ===============================================
 		if (stageResetUI_->GetStageReset())
 		{
-			ghostEffectManager_->Finalize();
-			limitBlockEffectManager_->Finalize();
-			ghostTakenEffectManager_->Finalize();
-
-			stageRegistry_->ResetStage();
-			mapCollision_->ResetGhostCounter();
-
-			ObjectCommandInvoker::GetInstance().ClearHistory();
-			stageResetUI_->Reset();
-			size_t size = ghostSoulManager_->GetSoulesSize();
-			for (size_t i = 0; i < size; ++i)
-			{
-				ghostSoulManager_->DeleteBackSoul();
-			}
-
-			// ghostを検知する
-			mapCollision_->GetGhostBlockCollision()->SetGhostUpdate(true);
-
-			AudioPlayer::SinglShotPlay("button.mp3", 0.5f);
+			Reset(true);
 		}
 	}
 
@@ -384,28 +366,7 @@ void GameScene::ChengeScene()
 			break;
 		case ButtonType::Reset:
 		{
-			// ステージをリセットする
-			ghostEffectManager_->Finalize();
-			limitBlockEffectManager_->Finalize();
-			ghostTakenEffectManager_->Finalize();
-			
-			stageRegistry_->ResetStage();
-			if (tutorialDirector_ != nullptr)
-			{
-				tutorialDirector_->TutorialReset();
-			}
-			mapCollision_->ResetGhostCounter();
-			stageResetUI_->Reset();
-			size_t size = ghostSoulManager_->GetSoulesSize();
-			for (size_t i = 0; i < size; ++i)
-			{
-				ghostSoulManager_->DeleteBackSoul();
-			}
-			menuSelector_->SetChengeScene(false);
-			menuSelector_->SetOpenMenu(false);
-			swirlTransition_->Open();
-
-			AudioPlayer::SinglShotPlay("start.mp3", 0.3f);
+				Reset(true);
 		}
 		break;
 		default:
@@ -426,6 +387,34 @@ void GameScene::ChengeScene()
 			menuSelector_->SetChangeEffect(false);
 		}
 	}
+}
+
+void GameScene::Reset(bool _inMenu){
+	ghostEffectManager_->Finalize();
+	limitBlockEffectManager_->Finalize();
+	ghostTakenEffectManager_->Finalize();
+
+	stageRegistry_->ResetStage();
+	mapCollision_->ResetGhostCounter();
+
+	ObjectCommandInvoker::GetInstance().ClearHistory();
+	stageResetUI_->Reset();
+	size_t size = ghostSoulManager_->GetSoulesSize();
+	for(size_t i = 0; i < size; ++i){
+		ghostSoulManager_->DeleteBackSoul();
+	}
+
+	// ghostを検知する
+	mapCollision_->GetGhostBlockCollision()->SetGhostUpdate(true);
+	mapCollision_->SetPlayerIndex(player_->GetIndex());
+
+	AudioPlayer::SinglShotPlay("button.mp3",0.5f);
+
+	if(_inMenu){
+		menuSelector_->SetChengeScene(false);
+		menuSelector_->SetOpenMenu(false);
+		swirlTransition_->Open();
+	} 
 }
 
 void GameScene::ChangeBehavior(std::unique_ptr<IGameSceneBehavior> newBehavior)
