@@ -64,11 +64,13 @@ void StageResetUI::Update()
 		resetTimer_ -= GameTimer::DeltaTime();
 		isStageReset_ = false;
 	}
+
 	if (keyInput_) {
 		resetButtonUI_->SetTextureName("resetButton_R.png");
-	} else if (padInput_ || isPad) {
+	} else if (padInput_) {
 		resetButtonUI_->SetTextureName("resetButton_X.png");
 	}
+	
 	resetTimer_ = std::clamp(resetTimer_, 0.0f, 1.0f);
 	backTextureUI_->SetUvMinSize({ 0.0f,1.0f - resetTimer_ });
 
