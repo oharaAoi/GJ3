@@ -134,6 +134,7 @@ void StageRegistry::CreateStageData(const Vector2Int& index,BlockType type){
 	newBlock->SetIndex(index);
 
 	// 位置を決定
+	newBlock->GetSprite()->SetEnable(true);
 	newBlock->GetSprite()->ReSetTextureSize(tileSize_);
 	newBlock->SetOffset(mapOffset_);
 	newBlock->SetTileSize(tileSize_);
