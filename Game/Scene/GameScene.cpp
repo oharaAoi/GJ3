@@ -242,6 +242,7 @@ void GameScene::Update()
 		if (state == UndoRedoState::UNDO)
 		{
 			ObjectCommandInvoker::GetInstance().UndoCommand();
+			ObjectCommandInvoker::GetInstance().ClearFrameCommand();
 			resetTimer_ = 0.f;
 			AudioPlayer::SinglShotPlay("button.mp3", 0.5f);
 			gameUIs_->ActiveInputUndo();
@@ -250,6 +251,7 @@ void GameScene::Update()
 		{
 			resetTimer_ = 0.f;
 			ObjectCommandInvoker::GetInstance().RedoCommand();
+			ObjectCommandInvoker::GetInstance().ClearFrameCommand();
 			AudioPlayer::SinglShotPlay("button.mp3", 0.5f);
 			gameUIs_->ActiveInputRedo();
 		}

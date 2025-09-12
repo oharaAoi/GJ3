@@ -143,6 +143,10 @@ void ObjectCommandInvoker::PushCommand(std::unique_ptr<IObjectCommand>&& command
 	commandRequests_.commandQueue_.emplace_back(std::move(command));
 }
 
+void ObjectCommandInvoker::ClearFrameCommand(){
+	commandRequests_ = FrameCommand{};
+}
+
 void ObjectCommandInvoker::ClearHistory(){
 	commandHistory_.clear();
 	currentIndex_ = 0;

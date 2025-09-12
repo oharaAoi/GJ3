@@ -55,6 +55,7 @@ public:
 
 	void PushCommand(std::unique_ptr<IObjectCommand>&& command);
 
+	void ClearFrameCommand();
 	void ClearHistory();
 private:
 	ObjectCommandInvoker() = default;

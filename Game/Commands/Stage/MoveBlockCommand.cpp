@@ -32,6 +32,9 @@ void MoveBlockCommand::Undo(){
 	if(stageData_[fromIndex_.y][fromIndex_.x] != nullptr){
 		stageData_[fromIndex_.y][fromIndex_.x]->Destroy();
 	}
+	if(stageData_[toIndex_.y][toIndex_.x] == nullptr){
+		return;
+	}
 	stageData_[fromIndex_.y][fromIndex_.x] = std::move(stageData_[toIndex_.y][toIndex_.x]);
 	stageData_[fromIndex_.y][fromIndex_.x]->SetIndex(fromIndex_);
 	stageData_[toIndex_.y][toIndex_.x] = nullptr;
