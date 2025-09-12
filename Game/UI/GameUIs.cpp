@@ -58,6 +58,27 @@ void GameUIs::Init(){
 
 	activeKeyboardUIs_ = false;
 	activeGamePadUIs_ =  Input::IsControllerConnected();
+
+	if(activeGamePadUIs_){
+		undoUIs_[0]->SetEnable(false);
+		undoUIs_[1]->SetEnable(true);
+
+		redoUIs_[0]->SetEnable(false);
+		redoUIs_[1]->SetEnable(true);
+
+		menuUIs_[0]->SetEnable(false);
+		menuUIs_[1]->SetEnable(true);
+	} else {
+		undoUIs_[0]->SetEnable(true);
+		undoUIs_[1]->SetEnable(false);
+
+		redoUIs_[0]->SetEnable(true);
+		redoUIs_[1]->SetEnable(false);
+
+		menuUIs_[0]->SetEnable(true);
+		menuUIs_[1]->SetEnable(false);
+	}
+
 }
 
 void GameUIs::Update(bool _isKeyInput,bool _isPadInput){
