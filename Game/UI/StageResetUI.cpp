@@ -39,7 +39,6 @@ void StageResetUI::Update()
 {
 	// Inputを取得
 	Input* input = Input::GetInstance();
-	bool isPad = input->IsControllerConnected();
 
 	keyInput_ = input->IsPressKey(DIK_R);
 	padInput_ = input->IsPressButton(XInputButtons::BUTTON_X);

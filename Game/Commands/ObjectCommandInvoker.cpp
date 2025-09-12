@@ -58,16 +58,15 @@ UndoRedoState ObjectCommandInvoker::InputHandle(bool& _padIsInput,bool& _keyIsIn
 	// すべて Undo済み ならスキップ
 	if(currentAutoUndoRedoState == UndoRedoState::UNDO){
 		if(currentIndex_ == 0){
-			return;
+			currentAutoUndoRedoState = UndoRedoState::MANUAL;
 		}
 	}
 	// すべて Redo済み ならスキップ
 	if(currentAutoUndoRedoState == UndoRedoState::REDO){
 		if(currentIndex_ >= commandHistory_.size()){
-			return;
+			currentAutoUndoRedoState = UndoRedoState::MANUAL;
 		}
 	}
-
 
 	if(currentAutoUndoRedoState == UndoRedoState::MANUAL || currentAutoUndoRedoState != preAutoUndoRedoState_){
 		isAutoUndoRedo_ = false;
