@@ -51,7 +51,7 @@ void SpecialBlockCollision::RecursionBlockChecker(const Vector2Int& _index)
 	// ステージデータからおばけを取得
 	const auto& data = system_->GetStageRegi()->GetStageData();
 	// おばけ以外ならreturn
-	if (data[_index.y][_index.x]->GetType() != BlockType::Ghost) { return; }
+	if (!data[_index.y][_index.x] || data[_index.y][_index.x]->GetType() != BlockType::Ghost) { return; }
 	// おばけだったら中心から3x3に特殊ブロックを判定する
 	for (auto& index : system_->GetNeighborOffsets()) {
 		Vector2Int nextIndex = index + _index;

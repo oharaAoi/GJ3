@@ -240,6 +240,8 @@ void GameScene::Update()
 			resetTimer_ = 0.f;
 			AudioPlayer::SinglShotPlay("button.mp3", 0.5f);
 			gameUIs_->ActiveInputUndo();
+
+			mapCollision_->SetPlayerIndex(player_->GetIndex());
 		}
 		else if (state == UndoRedoState::REDO)
 		{
@@ -248,6 +250,8 @@ void GameScene::Update()
 			ObjectCommandInvoker::GetInstance().ClearFrameCommand();
 			AudioPlayer::SinglShotPlay("button.mp3", 0.5f);
 			gameUIs_->ActiveInputRedo();
+
+			mapCollision_->SetPlayerIndex(player_->GetIndex());
 		}
 		else
 		{
@@ -286,7 +290,6 @@ void GameScene::Update()
 
 			// ghostを検知する
 			mapCollision_->GetGhostBlockCollision()->SetGhostUpdate(true);
-			mapCollision_->Update();
 
 			AudioPlayer::SinglShotPlay("button.mp3", 0.5f);
 		}

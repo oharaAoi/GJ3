@@ -80,6 +80,7 @@ public:
 	const std::array<Vector2Int, 8> &GetNeighborOffsets() const { return neighborOffsets_; }
 
 	const Vector2Int &GetPlayerIndex() { return playerIndex_; }
+	void SetPlayerIndex(const Vector2Int& _index){ playerIndex_  = _index;}
 
 	const bool GetCreateGhost()const { return ghostBlockCollision_->GetCreateGhost(); }
 
