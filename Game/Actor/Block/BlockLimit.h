@@ -1,4 +1,5 @@
 #pragma once
+#include <memory>
 #include "Game/Actor/Block/IBlock.h"
 #include "Game/Effect/LimitBlockEffect.h"
 
@@ -17,6 +18,6 @@ private:
 
 	Vector2 ConvertIndexToPosition(const Vector2Int& _index);
 
-	LimitBlockEffect* effect_;
+	std::shared_ptr<LimitBlockEffect> effect_;
 };
 

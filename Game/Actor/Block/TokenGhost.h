@@ -1,4 +1,5 @@
 #pragma once
+#include <memory>
 #include "Game/Actor/Block/IBlock.h"
 #include "Game/Effect/GhostSmoke.h"
 
@@ -21,6 +22,6 @@ private:
 
 	Vector2 ConvertIndexToPosition(const Vector2Int& _index);
 
-	GhostSmoke* effect_;
+	std::shared_ptr<GhostSmoke> effect_;
 };
 
