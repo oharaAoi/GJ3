@@ -22,13 +22,13 @@ public:
 
 	void Draw() const;
 
-	LimitBlockEffect* Create(const Vector2& pos, const Vector2& tileSize);
+	std::shared_ptr<LimitBlockEffect> Create(const Vector2& pos, const Vector2& tileSize);
 
 	void Debug_Gui() override;
 
 private:
 
-	std::list<std::unique_ptr<LimitBlockEffect>> limitBlockEffect_;
+	std::list<std::shared_ptr<LimitBlockEffect>> limitBlockEffect_;
 
 };
 

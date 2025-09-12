@@ -39,18 +39,11 @@ void GhostSmokeManager::Draw() const {
 	}
 }
 
-GhostSmoke* GhostSmokeManager::Create(const Vector2& pos, const Vector2& tileSize) {
-	for (const auto& effect : ghostEffect_) {
-		Vector2 effectPos = effect->GetPos();
-		if (pos.x == effectPos.x && pos.y == effectPos.y) {
-			return nullptr;
-		}
-	}
-
-	auto& newEffect = ghostEffect_.emplace_back(std::make_unique<GhostSmoke>());
+std::shared_ptr<GhostSmoke> GhostSmokeManager::Create(const Vector2& pos, const Vector2& tileSize) {
+	auto& newEffect = ghostEffect_.emplace_back(std::make_shared<GhostSmoke>());
 	newEffect->Init(pos, tileSize);
 	newEffect->ApplySaveData("GhostTakenSwirl");
-	return newEffect.get();
+	return newEffect;
 }
 
 void GhostSmokeManager::Debug_Gui() {
