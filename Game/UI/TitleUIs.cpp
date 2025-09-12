@@ -58,7 +58,6 @@ void TitleUIs::Init(){
 	backGround_->SetTranslate(Vector2{kWindowWidth_ / 2.0f,kWindowHeight_ / 2.0f});
 
 	bool isPad = Input::IsControllerConnected();
-	bool isKey = Input::IsPressKey(DIK_SPACE);
 	if(isPad){
 		spaceKey_->SetEnable(false);
 		aButton_->SetEnable(true);
